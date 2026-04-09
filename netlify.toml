@@ -1,0 +1,10 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+# Map the same path the dev proxy uses, so client code is unchanged.
+[[redirects]]
+  from = "/api/marco"
+  to = "/.netlify/functions/marco"
+  status = 200
