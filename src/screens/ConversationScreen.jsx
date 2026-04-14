@@ -34,6 +34,8 @@ export default function ConversationScreen({
   const silenceTimer = useRef(null);
   const turnCount = useRef(0);
   const micPromise = useRef(null);
+  const [ending, setEnding] = useState(false);
+  const endingRef = useRef(false);
 
   const characterName = scenario.characterName || 'Marco';
   const whisperHints = scenario.whisperHints || [];
@@ -150,7 +152,17 @@ export default function ConversationScreen({
     setError(null);
     try {
       const text = await sendMessage(systemPrompt.current, nextMessages, difficulty);
-      const { spoken, debrief, characterMemory, hint, english } = parseResponse(text);
+      let { spoken, debrief, characterMemory, hint, english } = parseResponse(text);
+      // If the user asked to end but the character didn't cooperate by emitting
+      // a debrief, fabricate one so we exit after their farewell line plays.
+      if (endingRef.current && !debrief) {
+        debrief = {
+          learned: [],
+          retry: [],
+          [scenario.characterSaysKey || 'character_says']: 'Conversazione terminata.',
+          transitionTo: null
+        };
+      }
       setMessages([...nextMessages, { role: 'assistant', content: text }]);
       if (hint) {
         lastHint.current = `Try: "${hint}"`;
@@ -194,8 +206,31 @@ export default function ConversationScreen({
   };
 
   const handleEndClick = async () => {
-    if (loading) return;
-    await submitUserText('Grazie, arrivederci!');
+    // Second click (or click while AI is processing) = hard exit right now.
+    // First click while idle = graceful end: give the character one more turn.
+    if (endingRef.current || loading) {
+      hardExit();
+      return;
+    }
+    endingRef.current = true;
+    setEnding(true);
+    await submitUserText('Grazie, devo andare. Arrivederci!');
+  };
+
+  const hardExit = () => {
+    cancelSpeech();
+    const marked = collectMarkedWords();
+    onEnd({
+      debrief: {
+        learned: marked.known,
+        retry: marked.unknown,
+        [scenario.characterSaysKey || 'character_says']: 'Conversazione terminata.',
+        transitionTo: null
+      },
+      transcript: lines,
+      characterMemory: null,
+      lifelineUsed
+    });
   };
 
   const handleWordTap = (key, token) => {
@@ -241,8 +276,12 @@ export default function ConversationScreen({
           <div className="theater-inner">
             <div className="scene-header">
               <h2>{scenario.title}</h2>
-              <button className="end-btn" onClick={handleEndClick} disabled={loading}>
-                Termina conversazione
+              <button
+                className="end-btn"
+                onClick={handleEndClick}
+                disabled={loading && !ending}
+              >
+                {ending ? 'Esci adesso' : 'Termina conversazione'}
               </button>
             </div>
 
