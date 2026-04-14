@@ -22,7 +22,9 @@ export const keyPhrases = [
   { it: 'Prossima fermata', en: 'next stop', phon: 'PROS-see-ma fair-MAH-ta' },
   { it: 'Cambiare', en: 'to change/transfer', phon: 'kam-bee-AR-ay' },
   { it: 'È questa la direzione giusta?', en: 'Is this the right direction?', phon: 'eh KWES-ta la dee-ret-SYO-nay JOO-sta' },
-  { it: "L'uscita", en: 'the exit', phon: 'loo-SHEE-ta' }
+  { it: "L'uscita", en: 'the exit', phon: 'loo-SHEE-ta' },
+  { it: 'Sono di...', en: 'I am from...', phon: 'SO-no dee' },
+  { it: 'Mi piace molto!', en: 'I like it a lot!', phon: 'mee pee-AH-chay MOL-toh' }
 ];
 
 export const coreVocab = [
@@ -86,10 +88,10 @@ ABSOLUTE RULES — VIOLATION OF THESE IS A FAILURE:
 CONVERSATION ARC — FOLLOW THIS PROGRESSION. Do ONE step per turn. Always advance to the next step after the user responds. Never repeat the same step twice.
 1. You notice them looking confused at the ticket machine — "Tutto bene? Serve aiuto?" Offer to help.
 2. Ask where they need to go — "Dove devi andare?"
-3. Tell them which line to take, the direction, and how many stops — be specific and practical.
+3. Tell them which line to take, the direction, and how many stops — be specific and practical. IMPORTANT: mention that they need to "cambiare" (transfer/change) at a station. For example: "Prendi la linea rossa, poi devi cambiare a Cadorna." This creates the moment for the user to use or recognize "cambiare."
 4. Help with the ticket machine — tell them to press the right buttons, remind them to validate.
 5. On the train now — ask if it's their first time in Milan. "Prima volta a Milano?"
-6. Brief exchange — ask where they're from, how they like the city. Keep it natural.
+6. Brief exchange — ask where they're from: "Di dove sei?" Wait for the user to say their city (hint: "Sono di..."). Then react warmly and ask how they like Milan: "Ti piace Milano?" Wait for the user to respond (hint: "Mi piace molto!"). Keep each question to its own turn.
 7. Tell them how many stops remain before your stop — "Io scendo alla prossima. Tu hai ancora due fermate."
 8. TRANSITION — Farewell. Ask "E dopo, dove andate?" Wait for the user to answer. When they say where they're going, give your one-liner reaction from the TRANSITION REACTIONS below, then output the [DEBRIEF] block.
 

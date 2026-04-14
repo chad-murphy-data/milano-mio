@@ -1,0 +1,457 @@
+{
+  "location": "metro",
+  "characterName": "Davide",
+  "obedientRun": {
+    "completed": true,
+    "turnCount": 12,
+    "stalled": false,
+    "phrasesUsed": [
+      "Il biglietto",
+      "La linea",
+      "La fermata",
+      "Quante fermate?",
+      "Devo andare a...",
+      "Scusi, sa dove...?",
+      "Prossima fermata",
+      "È questa la direzione giusta?",
+      "L'uscita",
+      "Sono di...",
+      "Mi piace molto!"
+    ],
+    "phrasesUnused": [
+      "Cambiare"
+    ],
+    "phraseUtilization": "11/12",
+    "sufficiencyGaps": [],
+    "characterViolations": [],
+    "transcript": [
+      {
+        "turn": 0,
+        "speaker": "Davide",
+        "raw": "Tutto bene? Serve aiuto?\n\n[ENGLISH: Everything okay? Do you need help?]\n\n[HINT: Sì, grazie! Devo andare a...]",
+        "spoken": "Tutto bene? Serve aiuto?",
+        "hint": "Sì, grazie! Devo andare a..."
+      },
+      {
+        "turn": 1,
+        "speaker": "Chad",
+        "raw": "\"Scusi, sa dove...? La fermata?\" \n\n*points at metro map looking confused but smiling*",
+        "spoken": "\"Scusi, sa dove...? La fermata?\" \n\n*points at metro map looking confused but smiling*"
+      },
+      {
+        "turn": 1,
+        "speaker": "Davide",
+        "raw": "Dove devi andare?\n\n[ENGLISH: Where do you need to go?]\n\n[HINT: Devo andare a... (say your destination!)]",
+        "spoken": "Dove devi andare?",
+        "hint": "Devo andare a... (say your destination!)"
+      },
+      {
+        "turn": 2,
+        "speaker": "Chad",
+        "raw": "\"Devo andare a... il Duomo!\" \n\n*grins and gives thumbs up*",
+        "spoken": "\"Devo andare a... il Duomo!\" \n\n*grins and gives thumbs up*"
+      },
+      {
+        "turn": 2,
+        "speaker": "Davide",
+        "raw": "Ah, vai al Duomo! Prendi la linea rossa — la M1 — direzione San Donato, e devi cambiare a... no, aspetta, sei già a Cadorna sulla linea rossa, sono solo tre fermate!\n\n[ENGLISH: Ah, you're going to the Duomo! Take the red line — the M1 — direction San Donato, and you need to change at... no, wait, you're already at Cadorna on the red line, it's only three stops!]\n\n[HINT: Quante fermate?]",
+        "spoken": "Ah, vai al Duomo! Prendi la linea rossa — la M1 — direzione San Donato, e devi cambiare a... no, aspetta, sei già a Cadorna sulla linea rossa, sono solo tre fermate!",
+        "hint": "Quante fermate?"
+      },
+      {
+        "turn": 3,
+        "speaker": "Chad",
+        "raw": "\"Quante fermate?\" \n\n*holds up fingers, looking hopeful*",
+        "spoken": "\"Quante fermate?\" \n\n*holds up fingers, looking hopeful*"
+      },
+      {
+        "turn": 3,
+        "speaker": "Davide",
+        "raw": "Tre fermate — Cairoli, Cordusio, Duomo!\n\n[ENGLISH: Three stops — Cairoli, Cordusio, Duomo!]\n\n[HINT: Come compro il biglietto? — How do I buy the ticket?]",
+        "spoken": "Tre fermate — Cairoli, Cordusio, Duomo!",
+        "hint": "Come compro il biglietto? — How do I buy the ticket?"
+      },
+      {
+        "turn": 4,
+        "speaker": "Chad",
+        "raw": "\"Tre! La linea... è questa la direzione giusta?\" \n\n*points down the platform with a questioning look*",
+        "spoken": "\"Tre! La linea... è questa la direzione giusta?\" \n\n*points down the platform with a questioning look*"
+      },
+      {
+        "turn": 4,
+        "speaker": "Davide",
+        "raw": "Sì, esatta direzione! Ma prima — il biglietto! Premi qui, \"biglietto singolo\", poi valida il biglietto alla macchinetta gialla prima di entrare.\n\n[ENGLISH: Yes, exactly the right direction! But first — the ticket! Press here, \"single ticket\", then validate the ticket at the yellow machine before you get on.]\n\n[HINT: Validare il biglietto — to validate the ticket]",
+        "spoken": "Sì, esatta direzione! Ma prima — il biglietto! Premi qui, \"biglietto singolo\", poi valida il biglietto alla macchinetta gialla prima di entrare.",
+        "hint": "Validare il biglietto — to validate the ticket"
+      },
+      {
+        "turn": 5,
+        "speaker": "Chad",
+        "raw": "\"Il biglietto!\" \n\n*pats pockets nervously and then pulls out a ticket, smiling with relief*",
+        "spoken": "\"Il biglietto!\" \n\n*pats pockets nervously and then pulls out a ticket, smiling with relief*"
+      },
+      {
+        "turn": 5,
+        "speaker": "Davide",
+        "raw": "Perfetto! Ora valida il biglietto — quella macchinetta gialla lì!\n\n[ENGLISH: Perfect! Now validate the ticket — that yellow machine right there!]\n\n[HINT: Grazie mille!]",
+        "spoken": "Perfetto! Ora valida il biglietto — quella macchinetta gialla lì!",
+        "hint": "Grazie mille!"
+      },
+      {
+        "turn": 6,
+        "speaker": "Chad",
+        "raw": "\"Mi piace molto!\" \n\n*walks over to the yellow machine and validates the ticket, giving a big thumbs up*",
+        "spoken": "\"Mi piace molto!\" \n\n*walks over to the yellow machine and validates the ticket, giving a big thumbs up*"
+      },
+      {
+        "turn": 6,
+        "speaker": "Davide",
+        "raw": "Bravo! Andiamo — il treno arriva!\n\n[ENGLISH: Well done! Let's go — the train is coming!]\n\n[HINT: Sì, è la prima volta!]",
+        "spoken": "Bravo! Andiamo — il treno arriva!",
+        "hint": "Sì, è la prima volta!"
+      },
+      {
+        "turn": 7,
+        "speaker": "Chad",
+        "raw": "\"Prossima fermata... il Duomo!\" \n\n*rushes toward the train excitedly*",
+        "spoken": "\"Prossima fermata... il Duomo!\" \n\n*rushes toward the train excitedly*"
+      },
+      {
+        "turn": 7,
+        "speaker": "Davide",
+        "raw": "Quasi — tre fermate, non una! Prima volta a Milano?\n\n[ENGLISH: Almost — three stops, not one! Is this your first time in Milan?]\n\n[HINT: Sì, è la prima volta a Milano!]",
+        "spoken": "Quasi — tre fermate, non una! Prima volta a Milano?",
+        "hint": "Sì, è la prima volta a Milano!"
+      },
+      {
+        "turn": 8,
+        "speaker": "Chad",
+        "raw": "\"Sono di... America!\" \n\n*laughs and nods enthusiastically*",
+        "spoken": "\"Sono di... America!\" \n\n*laughs and nods enthusiastically*"
+      },
+      {
+        "turn": 8,
+        "speaker": "Davide",
+        "raw": "Di dove sei, esattamente — quale città?\n\n[ENGLISH: Where are you from, exactly — which city?]\n\n[HINT: Sono di New York / Chicago / Los Angeles...]",
+        "spoken": "Di dove sei, esattamente — quale città?",
+        "hint": "Sono di New York / Chicago / Los Angeles..."
+      },
+      {
+        "turn": 9,
+        "speaker": "Chad",
+        "raw": "\"Sono di... Chicago!\" \n\n*big smile and nods proudly*",
+        "spoken": "\"Sono di... Chicago!\" \n\n*big smile and nods proudly*"
+      },
+      {
+        "turn": 9,
+        "speaker": "Davide",
+        "raw": "Chicago! Bella città! Ti piace Milano?\n\n[ENGLISH: Chicago! Beautiful city! Do you like Milan?]\n\n[HINT: Sì, mi piace molto Milano!]",
+        "spoken": "Chicago! Bella città! Ti piace Milano?",
+        "hint": "Sì, mi piace molto Milano!"
+      },
+      {
+        "turn": 10,
+        "speaker": "Chad",
+        "raw": "\"Mi piace molto!\" \n\n*gestures enthusiastically at everything around them*",
+        "spoken": "\"Mi piace molto!\" \n\n*gestures enthusiastically at everything around them*"
+      },
+      {
+        "turn": 10,
+        "speaker": "Davide",
+        "raw": "Sono contento! Io scendo alla prossima — tu hai ancora due fermate.\n\n[ENGLISH: I'm glad! I get off at the next stop — you still have two stops to go.]\n\n[HINT: Grazie mille, sei molto gentile!]",
+        "spoken": "Sono contento! Io scendo alla prossima — tu hai ancora due fermate.",
+        "hint": "Grazie mille, sei molto gentile!"
+      },
+      {
+        "turn": 11,
+        "speaker": "Chad",
+        "raw": "\"Prossima fermata... l'uscita?\" \n\n*looks a little worried, counts on fingers*",
+        "spoken": "\"Prossima fermata... l'uscita?\" \n\n*looks a little worried, counts on fingers*"
+      },
+      {
+        "turn": 11,
+        "speaker": "Davide",
+        "raw": "No no, tu scendi a Duomo — ancora due fermate! E dopo, dove andate?\n\n[ENGLISH: No no, you get off at Duomo — still two stops! And after, where are you going?]\n\n[HINT: Andiamo a... (say your destination!)]",
+        "spoken": "No no, tu scendi a Duomo — ancora due fermate! E dopo, dove andate?",
+        "hint": "Andiamo a... (say your destination!)"
+      },
+      {
+        "turn": 12,
+        "speaker": "Chad",
+        "raw": "\"Devo andare a... la fermata... il Duomo!\" \n\n*grins and holds up two fingers*",
+        "spoken": "\"Devo andare a... la fermata... il Duomo!\" \n\n*grins and holds up two fingers*"
+      },
+      {
+        "turn": 12,
+        "speaker": "Davide",
+        "raw": "Il Duomo — fermata Duomo, ovviamente!\n\n[ENGLISH: The Duomo — Duomo stop, obviously!]\n\n[DEBRIEF]\n{\n  \"learned\": [\"il biglietto — the ticket\", \"la fermata — the stop\", \"quante fermate — how many stops\", \"validare il biglietto — to validate the ticket\", \"devo andare a — I need to go to\", \"è questa la direzione giusta — is this the right direction\", \"mi piace molto — I like it a lot\", \"sono di — I am from\"],\n  \"retry\": [\"cambiare — to change (transfer)\", \"ci sono ancora — there are still (X stops)\", \"l'uscita — the exit\"],\n  \"davide_says\": \"Chad did a solid job — he picked up key phrases fast and wasn't afraid to try, even when he mixed up the stops. A little more practice with numbers and directions and he'll be navigating Milan like a local.\",\n  \"transitionTo\": \"duomo\"\n}\n[/DEBRIEF]",
+        "spoken": "Il Duomo — fermata Duomo, ovviamente!",
+        "hint": null
+      }
+    ],
+    "debrief": {
+      "learned": [
+        "il biglietto — the ticket",
+        "la fermata — the stop",
+        "quante fermate — how many stops",
+        "validare il biglietto — to validate the ticket",
+        "devo andare a — I need to go to",
+        "è questa la direzione giusta — is this the right direction",
+        "mi piace molto — I like it a lot",
+        "sono di — I am from"
+      ],
+      "retry": [
+        "cambiare — to change (transfer)",
+        "ci sono ancora — there are still (X stops)",
+        "l'uscita — the exit"
+      ],
+      "davide_says": "Chad did a solid job — he picked up key phrases fast and wasn't afraid to try, even when he mixed up the stops. A little more practice with numbers and directions and he'll be navigating Milan like a local.",
+      "transitionTo": "duomo"
+    }
+  },
+  "improvisingRun": {
+    "completed": true,
+    "turnCount": 12,
+    "stalled": false,
+    "phrasesUsed": [
+      "Il biglietto",
+      "La linea",
+      "La fermata",
+      "Quante fermate?",
+      "Devo andare a...",
+      "Prossima fermata",
+      "Cambiare",
+      "È questa la direzione giusta?",
+      "L'uscita",
+      "Sono di...",
+      "Mi piace molto!"
+    ],
+    "phrasesUnused": [
+      "Scusi, sa dove...?"
+    ],
+    "phraseUtilization": "11/12",
+    "sufficiencyGaps": [],
+    "characterViolations": [],
+    "transcript": [
+      {
+        "turn": 0,
+        "speaker": "Davide",
+        "raw": "Tutto bene? Serve aiuto?\n\n[ENGLISH: Everything okay? Do you need help?]\n\n[HINT: Sì, grazie! Devo andare a...]",
+        "spoken": "Tutto bene? Serve aiuto?",
+        "hint": "Sì, grazie! Devo andare a..."
+      },
+      {
+        "turn": 1,
+        "speaker": "Chad",
+        "raw": "\"Oh! Sì, sì! Grazie!\" \n\n*pats pockets nervously*\n\n\"Scusi... devo andare a... il Duomo? È questa la direzione giusta?\"",
+        "spoken": "\"Oh! Sì, sì! Grazie!\" \n\n*pats pockets nervously*\n\n\"Scusi... devo andare a... il Duomo? È questa la direzione giusta?\""
+      },
+      {
+        "turn": 1,
+        "speaker": "Davide",
+        "raw": "Ah, vai al Duomo! Dove devi andare esattamente — il Duomo, sì?\n\n[ENGLISH: Ah, you're going to the Duomo! Where exactly do you need to go — the Duomo, yes?]\n\n[HINT: Sì, devo andare al Duomo.]",
+        "spoken": "Ah, vai al Duomo! Dove devi andare esattamente — il Duomo, sì?",
+        "hint": "Sì, devo andare al Duomo."
+      },
+      {
+        "turn": 2,
+        "speaker": "Chad",
+        "raw": "\"Sì, sì! Il Duomo!\" \n\n*nods enthusiastically*\n\n\"Devo andare a... il Duomo. Mi piace molto il Duomo! Very big, very... bellissimo?\"",
+        "spoken": "\"Sì, sì! Il Duomo!\" \n\n*nods enthusiastically*\n\n\"Devo andare a... il Duomo. Mi piace molto il Duomo! Very big, very... bellissimo?\""
+      },
+      {
+        "turn": 2,
+        "speaker": "Davide",
+        "raw": "Allora, prendi la linea rossa — la M1 — in direzione Sesto. Poi devi cambiare a Stazione Centrale e prendere la linea gialla, la M3, fino al Duomo.\n\n[ENGLISH: So, take the red line — the M1 — towards Sesto. Then you need to transfer at Stazione Centrale and take the yellow line, the M3, to the Duomo.]\n\n[HINT: Cambiare? Quante fermate?]",
+        "spoken": "Allora, prendi la linea rossa — la M1 — in direzione Sesto. Poi devi cambiare a Stazione Centrale e prendere la linea gialla, la M3, fino al Duomo.",
+        "hint": "Cambiare? Quante fermate?"
+      },
+      {
+        "turn": 3,
+        "speaker": "Chad",
+        "raw": "*furrows brow, counting on fingers*\n\n\"Okay, okay... la linea rossa, M1... cambiare a... Stazione Centrale... e poi la linea... gialla, M3?\"\n\n*looks worried*\n\n\"Quante fermate? A... Stazione Centrale?\"",
+        "spoken": "*furrows brow, counting on fingers*\n\n\"Okay, okay... la linea rossa, M1... cambiare a... Stazione Centrale... e poi la linea... gialla, M3?\"\n\n*looks worried*\n\n\"Quante fermate? A... Stazione Centrale?\""
+      },
+      {
+        "turn": 3,
+        "speaker": "Davide",
+        "raw": "Dalla linea rossa, sono tre fermate fino a Stazione Centrale. Poi sulla linea gialla, sono due fermate fino al Duomo.\n\n[ENGLISH: On the red line, it's three stops to Stazione Centrale. Then on the yellow line, it's two stops to the Duomo.]\n\n[HINT: Capito! E il biglietto?]",
+        "spoken": "Dalla linea rossa, sono tre fermate fino a Stazione Centrale. Poi sulla linea gialla, sono due fermate fino al Duomo.",
+        "hint": "Capito! E il biglietto?"
+      },
+      {
+        "turn": 4,
+        "speaker": "Chad",
+        "raw": "\"Tre fermate... e poi due fermate! Okay, okay, capisco!\"\n\n*holds up three fingers, then two fingers*\n\n\"Ho bisogno di... un biglietto? O... due biglietti?\"",
+        "spoken": "\"Tre fermate... e poi due fermate! Okay, okay, capisco!\"\n\n*holds up three fingers, then two fingers*\n\n\"Ho bisogno di... un biglietto? O... due biglietti?\""
+      },
+      {
+        "turn": 4,
+        "speaker": "Davide",
+        "raw": "Un solo biglietto — vale per tutta la corsa, anche con il cambio!\n\n[ENGLISH: Just one ticket — it's valid for the whole journey, including the transfer!]\n\n[HINT: Come si compra il biglietto?]",
+        "spoken": "Un solo biglietto — vale per tutta la corsa, anche con il cambio!",
+        "hint": "Come si compra il biglietto?"
+      },
+      {
+        "turn": 5,
+        "speaker": "Chad",
+        "raw": "\"Ohhhh, un biglietto - solo uno! Perfetto!\"\n\n*gives thumbs up*\n\n\"Scusi, dove... dove è la... l'uscita per il biglietto? Il... ticket machine?\"",
+        "spoken": "\"Ohhhh, un biglietto - solo uno! Perfetto!\"\n\n*gives thumbs up*\n\n\"Scusi, dove... dove è la... l'uscita per il biglietto? Il... ticket machine?\""
+      },
+      {
+        "turn": 5,
+        "speaker": "Davide",
+        "raw": "È qui, questa macchina! Premi \"biglietto singolo\" e poi ricordati di validare il biglietto prima di entrare.\n\n[ENGLISH: It's right here, this machine! Press \"single ticket\" and then remember to validate the ticket before you enter.]\n\n[HINT: Validare? Cosa significa \"validare\"?]",
+        "spoken": "È qui, questa macchina! Premi \"biglietto singolo\" e poi ricordati di validare il biglietto prima di entrare.",
+        "hint": "Validare? Cosa significa \"validare\"?"
+      },
+      {
+        "turn": 6,
+        "speaker": "Chad",
+        "raw": "*squints at the machine*\n\n\"Okay... 'biglietto singolo'... sì, vedo!\"\n\n*presses button, takes ticket*\n\n\"E... validare? È questa la... la macchina per validare?\"\n\n*points at the validator uncertainly*",
+        "spoken": "*squints at the machine*\n\n\"Okay... 'biglietto singolo'... sì, vedo!\"\n\n*presses button, takes ticket*\n\n\"E... validare? È questa la... la macchina per validare?\"\n\n*points at the validator uncertainly*"
+      },
+      {
+        "turn": 6,
+        "speaker": "Davide",
+        "raw": "Sì, esatto! Metti il biglietto lì e aspetti il \"bip.\"\n\n[ENGLISH: Yes, exactly! Put the ticket in there and wait for the beep.]\n\n[HINT: Grazie mille! Sei molto gentile.]",
+        "spoken": "Sì, esatto! Metti il biglietto lì e aspetti il \"bip.\"",
+        "hint": "Grazie mille! Sei molto gentile."
+      },
+      {
+        "turn": 7,
+        "speaker": "Chad",
+        "raw": "*puts ticket in validator*\n\n*BEEP*\n\n\"BIP! Sì!! Ha funzionato!\"\n\n*laughs excitedly*\n\n\"Grazie mille! Lei è molto... molto gentile! Mi piace molto Milano!\"",
+        "spoken": "*puts ticket in validator*\n\n*BEEP*\n\n\"BIP! Sì!! Ha funzionato!\"\n\n*laughs excitedly*\n\n\"Grazie mille! Lei è molto... molto gentile! Mi piace molto Milano!\""
+      },
+      {
+        "turn": 7,
+        "speaker": "Davide",
+        "raw": "Prego! Vieni, prendiamo il treno insieme. Prima volta a Milano?\n\n[ENGLISH: You're welcome! Come on, let's take the train together. First time in Milan?]\n\n[HINT: Sì, è la mia prima volta!]",
+        "spoken": "Prego! Vieni, prendiamo il treno insieme. Prima volta a Milano?",
+        "hint": "Sì, è la mia prima volta!"
+      },
+      {
+        "turn": 8,
+        "speaker": "Chad",
+        "raw": "\"Sì, sì! Prima volta a Milano!\" \n\n*follows along*\n\n\"Sono di... Ohio! America! Io e mia moglie... primo viaggio in Italia. Mi piace molto!\"",
+        "spoken": "\"Sì, sì! Prima volta a Milano!\" \n\n*follows along*\n\n\"Sono di... Ohio! America! Io e mia moglie... primo viaggio in Italia. Mi piace molto!\""
+      },
+      {
+        "turn": 8,
+        "speaker": "Davide",
+        "raw": "Che bello! Di dove sei esattamente — di quale città in Ohio?\n\n[ENGLISH: How wonderful! Where exactly are you from — which city in Ohio?]\n\n[HINT: Sono di Columbus. / Sono di Cleveland.]",
+        "spoken": "Che bello! Di dove sei esattamente — di quale città in Ohio?",
+        "hint": "Sono di Columbus. / Sono di Cleveland."
+      },
+      {
+        "turn": 9,
+        "speaker": "Chad",
+        "raw": "\"Sono di... Columbus! Columbus, Ohio!\"\n\n*grins*\n\n\"È una... una città grande, ma... non come Milano! Milano è molto più... bella? Bellissima!\"",
+        "spoken": "\"Sono di... Columbus! Columbus, Ohio!\"\n\n*grins*\n\n\"È una... una città grande, ma... non come Milano! Milano è molto più... bella? Bellissima!\""
+      },
+      {
+        "turn": 9,
+        "speaker": "Davide",
+        "raw": "Columbus! E ti piace Milano finora?\n\n[ENGLISH: Columbus! And do you like Milan so far?]\n\n[HINT: Sì, mi piace molto! È bellissima!]",
+        "spoken": "Columbus! E ti piace Milano finora?",
+        "hint": "Sì, mi piace molto! È bellissima!"
+      },
+      {
+        "turn": 10,
+        "speaker": "Chad",
+        "raw": "\"Oh sì, mi piace MOLTO Milano!\"\n\n*gestures enthusiastically*\n\n\"Il cibo è... fantastico! Ieri ho mangiato... una pizza? No no... una... risotto! Mi piace molto il risotto!\"",
+        "spoken": "\"Oh sì, mi piace MOLTO Milano!\"\n\n*gestures enthusiastically*\n\n\"Il cibo è... fantastico! Ieri ho mangiato... una pizza? No no... una... risotto! Mi piace molto il risotto!\""
+      },
+      {
+        "turn": 10,
+        "speaker": "Davide",
+        "raw": "Il risotto alla milanese — perfetto! Io scendo alla prossima. Tu hai ancora due fermate.\n\n[ENGLISH: Risotto alla milanese — perfect! I'm getting off at the next stop. You still have two more stops.]\n\n[HINT: Grazie! E dopo, dove andiamo... dove andate?]",
+        "spoken": "Il risotto alla milanese — perfetto! Io scendo alla prossima. Tu hai ancora due fermate.",
+        "hint": "Grazie! E dopo, dove andiamo... dove andate?"
+      },
+      {
+        "turn": 11,
+        "speaker": "Chad",
+        "raw": "\"Ah, prossima fermata per lei!\"\n\n*counts on fingers*\n\n\"E per me... due fermate ancora, sì? Stazione Centrale, poi cambiare... linea gialla, M3!\"\n\n*waves warmly*\n\n\"Grazie mille! Lei è molto gentile! Ciao ciao!\"",
+        "spoken": "\"Ah, prossima fermata per lei!\"\n\n*counts on fingers*\n\n\"E per me... due fermate ancora, sì? Stazione Centrale, poi cambiare... linea gialla, M3!\"\n\n*waves warmly*\n\n\"Grazie mille! Lei è molto gentile! Ciao ciao!\""
+      },
+      {
+        "turn": 11,
+        "speaker": "Davide",
+        "raw": "Ciao! Ah, dimmi — e dopo il Duomo, dove andate?\n\n[ENGLISH: Bye! Oh, tell me — and after the Duomo, where are you going?]\n\n[HINT: Dopo, andiamo a... / Vogliamo andare ai Navigli!]",
+        "spoken": "Ciao! Ah, dimmi — e dopo il Duomo, dove andate?",
+        "hint": "Dopo, andiamo a... / Vogliamo andare ai Navigli!"
+      },
+      {
+        "turn": 12,
+        "speaker": "Chad",
+        "raw": "\"Dopo il Duomo... andiamo a... \" \n\n*thinks hard*\n\n\"La... Galleria? Vicino al Duomo? E poi... io e mia moglie vogliamo mangiare! La fermata per... un bel ristorante?\"\n\n*laughs*\n\n\"Non so il nome!\"",
+        "spoken": "\"Dopo il Duomo... andiamo a... \" \n\n*thinks hard*\n\n\"La... Galleria? Vicino al Duomo? E poi... io e mia moglie vogliamo mangiare! La fermata per... un bel ristorante?\"\n\n*laughs*\n\n\"Non so il nome!\""
+      },
+      {
+        "turn": 12,
+        "speaker": "Davide",
+        "raw": "La Galleria è bellissima — è proprio accanto al Duomo, a piedi! Per mangiare bene, provate i Navigli — fermata Porta Genova, bella zona!\n\n[ENGLISH: The Galleria is beautiful — it's right next to the Duomo, on foot! For a good meal, try the Navigli — Porta Genova stop, great area!]\n\n[DEBRIEF]\n{\n  \"learned\": [\"il biglietto — the ticket\", \"la linea — the line\", \"cambiare — to change/transfer\", \"la fermata — the stop\", \"validare il biglietto — to validate the ticket\", \"quante fermate — how many stops\", \"devo andare a — I need to go to\", \"è questa la direzione giusta — is this the right direction\"],\n  \"retry\": [\"ci vuole quanto — how long does it take\", \"l'uscita — the exit\", \"ci sono ancora — there are still (X stops)\"],\n  \"davide_says\": \"Chad did really well for a first timer — he picked up 'cambiare' fast, used 'quante fermate' perfectly, and wasn't afraid to jump in even when he wasn't sure. His Italian is rough around the edges but totally functional, and that enthusiasm will take him far.\",\n  \"transitionTo\": \"navigli\"\n}\n[/DEBRIEF]",
+        "spoken": "La Galleria è bellissima — è proprio accanto al Duomo, a piedi! Per mangiare bene, provate i Navigli — fermata Porta Genova, bella zona!",
+        "hint": null
+      }
+    ],
+    "debrief": {
+      "learned": [
+        "il biglietto — the ticket",
+        "la linea — the line",
+        "cambiare — to change/transfer",
+        "la fermata — the stop",
+        "validare il biglietto — to validate the ticket",
+        "quante fermate — how many stops",
+        "devo andare a — I need to go to",
+        "è questa la direzione giusta — is this the right direction"
+      ],
+      "retry": [
+        "ci vuole quanto — how long does it take",
+        "l'uscita — the exit",
+        "ci sono ancora — there are still (X stops)"
+      ],
+      "davide_says": "Chad did really well for a first timer — he picked up 'cambiare' fast, used 'quante fermate' perfectly, and wasn't afraid to jump in even when he wasn't sure. His Italian is rough around the edges but totally functional, and that enthusiasm will take him far.",
+      "transitionTo": "navigli"
+    },
+    "derailmentMoments": [
+      {
+        "turn": 4,
+        "chadSaid": "\"Tre fermate... e poi due fermate! Okay, okay, capisco!\"\n\n*holds up three fingers, then two fingers*\n\n\"Ho bisogno di... un biglietto? O... due biglietti?\"",
+        "characterResponse": "Un solo biglietto — vale per tutta la corsa, anche con il cambio!",
+        "handled": true
+      },
+      {
+        "turn": 6,
+        "chadSaid": "*squints at the machine*\n\n\"Okay... 'biglietto singolo'... sì, vedo!\"\n\n*presses button, takes ticket*\n\n\"E... validare? È questa la... la macchina per validare?\"\n\n*points at the validator uncertainly*",
+        "characterResponse": "Sì, esatto! Metti il biglietto lì e aspetti il \"bip.\"",
+        "handled": true
+      },
+      {
+        "turn": 7,
+        "chadSaid": "*puts ticket in validator*\n\n*BEEP*\n\n\"BIP! Sì!! Ha funzionato!\"\n\n*laughs excitedly*\n\n\"Grazie mille! Lei è molto... molto gentile! Mi piace molto Milano!\"",
+        "characterResponse": "Prego! Vieni, prendiamo il treno insieme. Prima volta a Milano?",
+        "handled": true
+      },
+      {
+        "turn": 10,
+        "chadSaid": "\"Oh sì, mi piace MOLTO Milano!\"\n\n*gestures enthusiastically*\n\n\"Il cibo è... fantastico! Ieri ho mangiato... una pizza? No no... una... risotto! Mi piace molto il risotto!\"",
+        "characterResponse": "Il risotto alla milanese — perfetto! Io scendo alla prossima. Tu hai ancora due fermate.",
+        "handled": true
+      }
+    ]
+  },
+  "summary": {
+    "completable": true,
+    "phraseUtilization": "11/12",
+    "missingPhrases": [],
+    "unusedPhrases": [
+      "Cambiare"
+    ],
+    "derailmentHandling": "good",
+    "overallGrade": "A",
+    "fixesNeeded": []
+  }
+}

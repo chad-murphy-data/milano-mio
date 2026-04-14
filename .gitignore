@@ -4,3 +4,20 @@ dist
 .env.local
 .DS_Store
 .netlify
+
+# Claude Code session data
+.claude/
+
+# Python / asset pipeline
+__pycache__/
+*.pyc
+scripts/jaw_debug/
+
+# Editor / OS
+.vscode/
+.idea/
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*

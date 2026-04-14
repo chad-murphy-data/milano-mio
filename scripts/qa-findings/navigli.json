@@ -1,0 +1,402 @@
+{
+  "location": "navigli",
+  "characterName": "Sofia",
+  "obedientRun": {
+    "completed": true,
+    "turnCount": 12,
+    "stalled": false,
+    "phrasesUsed": [
+      "Un Negroni",
+      "Uno Spritz",
+      "Gli stuzzichini",
+      "Cin cin / Salute",
+      "Di dove siete?",
+      "Siamo americani",
+      "Cosa consigliate?",
+      "Un posto segreto",
+      "Ci piace molto",
+      "È stata una bella serata",
+      "Una settimana",
+      "Crepi!"
+    ],
+    "phrasesUnused": [
+      "Tre giorni",
+      "In bocca al lupo"
+    ],
+    "phraseUtilization": "12/14",
+    "sufficiencyGaps": [],
+    "characterViolations": [],
+    "transcript": [
+      {
+        "turn": 0,
+        "speaker": "Sofia",
+        "raw": "Buonasera! Benvenuti al Navigli!\n\n[ENGLISH: Good evening! Welcome to the Navigli!]\n\n[HINT: Buonasera! È bellissimo qui!]",
+        "spoken": "Buonasera! Benvenuti al Navigli!",
+        "hint": "Buonasera! È bellissimo qui!"
+      },
+      {
+        "turn": 1,
+        "speaker": "Chad",
+        "raw": "\"Cin cin! ...uh... Siamo americani!\"\n\n*gives a big thumbs up and a goofy grin*",
+        "spoken": "\"Cin cin! ...uh... Siamo americani!\"\n\n*gives a big thumbs up and a goofy grin*"
+      },
+      {
+        "turn": 1,
+        "speaker": "Sofia",
+        "raw": "Ah, americani! Benvenuti a Milano! Cosa volete bere?\n\n[ENGLISH: Americans! Welcome to Milan! What would you like to drink?]\n\n[HINT: Un Negroni, per favore.]",
+        "spoken": "Ah, americani! Benvenuti a Milano! Cosa volete bere?",
+        "hint": "Un Negroni, per favore."
+      },
+      {
+        "turn": 2,
+        "speaker": "Chad",
+        "raw": "\"Uno Spritz! ...uh... Cosa consigliate?\"\n\n*points eagerly at the menu and nods*",
+        "spoken": "\"Uno Spritz! ...uh... Cosa consigliate?\"\n\n*points eagerly at the menu and nods*"
+      },
+      {
+        "turn": 2,
+        "speaker": "Sofia",
+        "raw": "Uno Spritz — ottima scelta! E per la signora?\n\n[ENGLISH: A Spritz — great choice! And for the lady?]\n\n[HINT: Anche uno Spritz, per favore. / Un Negroni, per favore.]",
+        "spoken": "Uno Spritz — ottima scelta! E per la signora?",
+        "hint": "Anche uno Spritz, per favore. / Un Negroni, per favore."
+      },
+      {
+        "turn": 3,
+        "speaker": "Chad",
+        "raw": "\"Un Negroni!\"\n\n*gestures enthusiastically toward my wife and gives two thumbs up*",
+        "spoken": "\"Un Negroni!\"\n\n*gestures enthusiastically toward my wife and gives two thumbs up*"
+      },
+      {
+        "turn": 3,
+        "speaker": "Sofia",
+        "raw": "Perfetto — uno Spritz e un Negroni!\n\n[ENGLISH: Perfect — one Spritz and one Negroni!]\n\n[HINT: Grazie mille!]",
+        "spoken": "Perfetto — uno Spritz e un Negroni!",
+        "hint": "Grazie mille!"
+      },
+      {
+        "turn": 4,
+        "speaker": "Chad",
+        "raw": "\"Cin cin! Salute!\"\n\n*raises an imaginary glass and grins*",
+        "spoken": "\"Cin cin! Salute!\"\n\n*raises an imaginary glass and grins*"
+      },
+      {
+        "turn": 4,
+        "speaker": "Sofia",
+        "raw": "Ecco i vostri drink! E gli stuzzichini sono inclusi — c'è il buffet lì.\n\n[ENGLISH: Here are your drinks! And the nibbles are included — the buffet is right over there.]\n\n[HINT: Grazie! Gli stuzzichini — che bello!]",
+        "spoken": "Ecco i vostri drink! E gli stuzzichini sono inclusi — c'è il buffet lì.",
+        "hint": "Grazie! Gli stuzzichini — che bello!"
+      },
+      {
+        "turn": 5,
+        "speaker": "Chad",
+        "raw": "\"Gli stuzzichini! Ci piace molto!\"\n\n*eyes light up and heads toward the buffet looking very excited*",
+        "spoken": "\"Gli stuzzichini! Ci piace molto!\"\n\n*eyes light up and heads toward the buffet looking very excited*"
+      },
+      {
+        "turn": 5,
+        "speaker": "Sofia",
+        "raw": "Ciao! Scusate — siamo Luca e Marta. Di dove siete?\n\n[ENGLISH: Hi! Excuse us — we're Luca and Marta. Where are you from?]\n\n[HINT: Siamo americani!]",
+        "spoken": "Ciao! Scusate — siamo Luca e Marta. Di dove siete?",
+        "hint": "Siamo americani!"
+      },
+      {
+        "turn": 6,
+        "speaker": "Chad",
+        "raw": "\"Siamo americani! Di dove siete?\"\n\n*shakes hands enthusiastically and smiles*",
+        "spoken": "\"Siamo americani! Di dove siete?\"\n\n*shakes hands enthusiastically and smiles*"
+      },
+      {
+        "turn": 6,
+        "speaker": "Sofia",
+        "raw": "Siamo di Milano — milanesi doc! Benvenuti nella città più bella del mondo!\n\n[ENGLISH: We're from Milan — true Milanese! Welcome to the most beautiful city in the world!]\n\n[HINT: Ci piace molto Milano!]",
+        "spoken": "Siamo di Milano — milanesi doc! Benvenuti nella città più bella del mondo!",
+        "hint": "Ci piace molto Milano!"
+      },
+      {
+        "turn": 7,
+        "speaker": "Chad",
+        "raw": "\"Ci piace molto! ...Un posto segreto?\"\n\n*makes a little \"show me the hidden gems\" gesture with hands*",
+        "spoken": "\"Ci piace molto! ...Un posto segreto?\"\n\n*makes a little \"show me the hidden gems\" gesture with hands*"
+      },
+      {
+        "turn": 7,
+        "speaker": "Sofia",
+        "raw": "Quanto tempo restate a Milano — tre giorni o una settimana?\n\n[ENGLISH: How long are you staying in Milan — three days or a week?]\n\n[HINT: Restiamo tre giorni. / Restiamo una settimana.]",
+        "spoken": "Quanto tempo restate a Milano — tre giorni o una settimana?",
+        "hint": "Restiamo tre giorni. / Restiamo una settimana."
+      },
+      {
+        "turn": 8,
+        "speaker": "Chad",
+        "raw": "\"Una settimana!\"\n\n*holds up all ten fingers, then laughs and holds up seven*",
+        "spoken": "\"Una settimana!\"\n\n*holds up all ten fingers, then laughs and holds up seven*"
+      },
+      {
+        "turn": 8,
+        "speaker": "Sofia",
+        "raw": "Una settimana — perfetto, avete tempo! Cosa consigliate voi — un posto segreto, qualcosa che i turisti non conoscono?\n\n[ENGLISH: A week — perfect, you have time! What do you recommend — a hidden gem, something tourists don't know?]\n\n[HINT: Cosa consigliate? Un posto segreto?]",
+        "spoken": "Una settimana — perfetto, avete tempo! Cosa consigliate voi — un posto segreto, qualcosa che i turisti non conoscono?",
+        "hint": "Cosa consigliate? Un posto segreto?"
+      },
+      {
+        "turn": 9,
+        "speaker": "Chad",
+        "raw": "\"...Un posto segreto? Cosa consigliate?\"\n\n*laughs and shrugs, pointing back at Luca and Marta as if to say \"YOU tell ME!\"*",
+        "spoken": "\"...Un posto segreto? Cosa consigliate?\"\n\n*laughs and shrugs, pointing back at Luca and Marta as if to say \"YOU tell ME!\"*"
+      },
+      {
+        "turn": 9,
+        "speaker": "Sofia",
+        "raw": "Ah, il Mercato Comunale di Viale Papiniano — apre il sabato mattina. Non ci sono turisti, solo milanesi!\n\n[ENGLISH: Ah, the Mercato Comunale on Viale Papiniano — it opens Saturday morning. No tourists, just locals!]\n\n[HINT: Ottimo! Grazie mille!]",
+        "spoken": "Ah, il Mercato Comunale di Viale Papiniano — apre il sabato mattina. Non ci sono turisti, solo milanesi!",
+        "hint": "Ottimo! Grazie mille!"
+      },
+      {
+        "turn": 10,
+        "speaker": "Chad",
+        "raw": "\"Ci piace molto! ...Un posto segreto!\"\n\n*nods vigorously and pulls out phone to take notes, very impressed*",
+        "spoken": "\"Ci piace molto! ...Un posto segreto!\"\n\n*nods vigorously and pulls out phone to take notes, very impressed*"
+      },
+      {
+        "turn": 10,
+        "speaker": "Sofia",
+        "raw": "Cin cin! Salute! In bocca al lupo per il viaggio!\n\n[ENGLISH: Cheers! Cheers! Good luck on your trip!]\n\n[HINT: Crepi!]",
+        "spoken": "Cin cin! Salute! In bocca al lupo per il viaggio!",
+        "hint": "Crepi!"
+      },
+      {
+        "turn": 11,
+        "speaker": "Chad",
+        "raw": "\"Crepi! Cin cin! È stata una bella serata!\"\n\n*clinks glasses warmly and beams with joy*",
+        "spoken": "\"Crepi! Cin cin! È stata una bella serata!\"\n\n*clinks glasses warmly and beams with joy*"
+      },
+      {
+        "turn": 11,
+        "speaker": "Sofia",
+        "raw": "È stata una bella serata! Dove andate adesso?\n\n[ENGLISH: It's been a lovely evening! Where are you going now?]\n\n[HINT: Andiamo al Duomo!]",
+        "spoken": "È stata una bella serata! Dove andate adesso?",
+        "hint": "Andiamo al Duomo!"
+      },
+      {
+        "turn": 12,
+        "speaker": "Chad",
+        "raw": "\"Il Duomo! ...È stata una bella serata!\"\n\n*points dramatically into the distance and mimes walking with fingers, grinning*",
+        "spoken": "\"Il Duomo! ...È stata una bella serata!\"\n\n*points dramatically into the distance and mimes walking with fingers, grinning*"
+      },
+      {
+        "turn": 12,
+        "speaker": "Sofia",
+        "raw": "Il Duomo di notte — bellissimo con le luci!\n\n[ENGLISH: The Duomo at night — beautiful with the lights!]\n\n[DEBRIEF]\n{\n  \"learned\": [\"cin cin / salute — cheers\", \"siamo americani — we're American\", \"gli stuzzichini — the nibbles\", \"ci piace molto — we really like it\", \"un posto segreto — a hidden gem\", \"crepi — the response to in bocca al lupo\", \"è stata una bella serata — it's been a lovely evening\"],\n  \"retry\": [\"quanto tempo restate — how long are you staying\", \"cosa consigliate — what do you recommend\"],\n  \"sofia_says\": \"Chad jumped in with real enthusiasm and picked up the key phrases fast — 'crepi' landed perfectly, and that big grin when the stuzzichini arrived? That's the Navigli spirit right there.\",\n  \"transitionTo\": \"duomo\"\n}\n[/DEBRIEF]",
+        "spoken": "Il Duomo di notte — bellissimo con le luci!",
+        "hint": null
+      }
+    ],
+    "debrief": {
+      "learned": [
+        "cin cin / salute — cheers",
+        "siamo americani — we're American",
+        "gli stuzzichini — the nibbles",
+        "ci piace molto — we really like it",
+        "un posto segreto — a hidden gem",
+        "crepi — the response to in bocca al lupo",
+        "è stata una bella serata — it's been a lovely evening"
+      ],
+      "retry": [
+        "quanto tempo restate — how long are you staying",
+        "cosa consigliate — what do you recommend"
+      ],
+      "sofia_says": "Chad jumped in with real enthusiasm and picked up the key phrases fast — 'crepi' landed perfectly, and that big grin when the stuzzichini arrived? That's the Navigli spirit right there.",
+      "transitionTo": "duomo"
+    }
+  },
+  "improvisingRun": {
+    "completed": true,
+    "turnCount": 9,
+    "stalled": false,
+    "phrasesUsed": [
+      "Un Negroni",
+      "Uno Spritz",
+      "Gli stuzzichini",
+      "Cin cin / Salute",
+      "Siamo americani",
+      "Cosa consigliate?",
+      "Un posto segreto",
+      "Ci piace molto",
+      "È stata una bella serata",
+      "Una settimana",
+      "Tre giorni",
+      "Crepi!"
+    ],
+    "phrasesUnused": [
+      "Di dove siete?",
+      "In bocca al lupo"
+    ],
+    "phraseUtilization": "12/14",
+    "sufficiencyGaps": [],
+    "characterViolations": [],
+    "transcript": [
+      {
+        "turn": 0,
+        "speaker": "Sofia",
+        "raw": "Buonasera! Benvenuti al Navigli!\n\n[ENGLISH: Good evening! Welcome to the Navigli!]\n\n[HINT: Buonasera! Grazie!]",
+        "spoken": "Buonasera! Benvenuti al Navigli!",
+        "hint": "Buonasera! Grazie!"
+      },
+      {
+        "turn": 1,
+        "speaker": "Chad",
+        "raw": "Buonasera! Grazie, grazie! Siamo americani — io sono Chad! È... bella, questa place? *gestures around* Ci piace molto!",
+        "spoken": "Buonasera! Grazie, grazie! Siamo americani — io sono Chad! È... bella, questa place? *gestures around* Ci piace molto!"
+      },
+      {
+        "turn": 1,
+        "speaker": "Sofia",
+        "raw": "Ah, siete americani! Benvenuti, Chad! Cosa volete bere? Un Negroni? Uno Spritz?\n\n[ENGLISH: Ah, you're American! Welcome, Chad! What would you like to drink? A Negroni? A Spritz?]\n\n[HINT: Uno Spritz, per favore!]",
+        "spoken": "Ah, siete americani! Benvenuti, Chad! Cosa volete bere? Un Negroni? Uno Spritz?",
+        "hint": "Uno Spritz, per favore!"
+      },
+      {
+        "turn": 2,
+        "speaker": "Chad",
+        "raw": "Oh sì, sì! Un Negroni per me, e... uno Spritz per mia moglie! Grazie! *gives thumbs up* Cosa consigliate? Gli stuzzichini?",
+        "spoken": "Oh sì, sì! Un Negroni per me, e... uno Spritz per mia moglie! Grazie! *gives thumbs up* Cosa consigliate? Gli stuzzichini?"
+      },
+      {
+        "turn": 2,
+        "speaker": "Sofia",
+        "raw": "Perfetto! Un Negroni e uno Spritz — ottima scelta! Gli stuzzichini sono inclusi con il drink — c'è il buffet, là!\n\n[ENGLISH: Perfect! A Negroni and a Spritz — great choice! The nibbles are included with the drink — the buffet is over there!]\n\n[HINT: Grazie mille!]",
+        "spoken": "Perfetto! Un Negroni e uno Spritz — ottima scelta! Gli stuzzichini sono inclusi con il drink — c'è il buffet, là!",
+        "hint": "Grazie mille!"
+      },
+      {
+        "turn": 3,
+        "speaker": "Chad",
+        "raw": "Oh magnifico! Grazie, grazie! *looks at buffet excitedly* Ci piace molto! Gli stuzzichini sono... bellissimi? *laughs* Cin cin! Salute!",
+        "spoken": "Oh magnifico! Grazie, grazie! *looks at buffet excitedly* Ci piace molto! Gli stuzzichini sono... bellissimi? *laughs* Cin cin! Salute!"
+      },
+      {
+        "turn": 3,
+        "speaker": "Sofia",
+        "raw": "Salute! Cin cin, Chad!\n\n*A moment later, from the next table...*\n\nCiao! Sono Luca, e lei è Marta! Di dove siete?\n\n[ENGLISH: Cheers! Cheers, Chad! / Hi! I'm Luca, and this is Marta! Where are you from?]\n\n[HINT: Siamo americani!]",
+        "spoken": "Salute! Cin cin, Chad!\n\n*A moment later, from the next table...*\n\nCiao! Sono Luca, e lei è Marta! Di dove siete?",
+        "hint": "Siamo americani!"
+      },
+      {
+        "turn": 4,
+        "speaker": "Chad",
+        "raw": "Oh ciao Luca, ciao Marta! Siamo americani! Di dove siete... voi? *points back at them* Io sono di... Chicago!",
+        "spoken": "Oh ciao Luca, ciao Marta! Siamo americani! Di dove siete... voi? *points back at them* Io sono di... Chicago!"
+      },
+      {
+        "turn": 4,
+        "speaker": "Sofia",
+        "raw": "Ah, Chicago! Bellissima città! Siamo di Milano — milanesi doc!\n\n[ENGLISH: Ah, Chicago! Beautiful city! We're from Milan — true Milanese through and through!]\n\n[HINT: Quanto tempo siete a Milano?]",
+        "spoken": "Ah, Chicago! Bellissima città! Siamo di Milano — milanesi doc!",
+        "hint": "Quanto tempo siete a Milano?"
+      },
+      {
+        "turn": 5,
+        "speaker": "Chad",
+        "raw": "Milano, bellissimo! Ci piace molto! Siamo qui per... una settimana! *holds up one finger* Una settimana! È... un posto segreto, questo? Il Navigli? Very beautiful!",
+        "spoken": "Milano, bellissimo! Ci piace molto! Siamo qui per... una settimana! *holds up one finger* Una settimana! È... un posto segreto, questo? Il Navigli? Very beautiful!"
+      },
+      {
+        "turn": 5,
+        "speaker": "Sofia",
+        "raw": "Una settimana — perfetto! Avete abbastanza tempo per vedere tutto! Cosa consigliate — un posto segreto, qualcosa che i turisti non conoscono?\n\n[ENGLISH: One week — perfect! You have enough time to see everything! What do you recommend — a hidden gem, something tourists don't know?]\n\n[HINT: Cosa consigliate? Un posto segreto?]",
+        "spoken": "Una settimana — perfetto! Avete abbastanza tempo per vedere tutto! Cosa consigliate — un posto segreto, qualcosa che i turisti non conoscono?",
+        "hint": "Cosa consigliate? Un posto segreto?"
+      },
+      {
+        "turn": 6,
+        "speaker": "Chad",
+        "raw": "Oh sì sì! *laughs* Io chiedo a voi! Cosa consigliate? Un posto segreto... per noi! *gestures to self and wife* Siamo americani — non sappiamo! Voi siete milanesi, no?",
+        "spoken": "Oh sì sì! *laughs* Io chiedo a voi! Cosa consigliate? Un posto segreto... per noi! *gestures to self and wife* Siamo americani — non sappiamo! Voi siete milanesi, no?"
+      },
+      {
+        "turn": 6,
+        "speaker": "Sofia",
+        "raw": "Ah sì, sì! Allora — andate a vedere il Cimitero Monumentale! Non è triste, è bellissimo — come un museo all'aperto!\n\n[ENGLISH: Ah yes, yes! Then — go see the Monumental Cemetery! It's not sad, it's beautiful — like an open-air museum!]\n\n[HINT: Ah, interessante! Grazie mille!]",
+        "spoken": "Ah sì, sì! Allora — andate a vedere il Cimitero Monumentale! Non è triste, è bellissimo — come un museo all'aperto!",
+        "hint": "Ah, interessante! Grazie mille!"
+      },
+      {
+        "turn": 7,
+        "speaker": "Chad",
+        "raw": "Oh! Cimitero... *thinks* ...monumentale? Come un... museo? *makes confused but intrigued face* Okay, okay! Ci piace molto — un posto segreto! Grazie, Luca! *writes it down on phone* Tre giorni... quattro giorni... abbiamo tempo!",
+        "spoken": "Oh! Cimitero... *thinks* ...monumentale? Come un... museo? *makes confused but intrigued face* Okay, okay! Ci piace molto — un posto segreto! Grazie, Luca! *writes it down on phone* Tre giorni... quattro giorni... abbiamo tempo!"
+      },
+      {
+        "turn": 7,
+        "speaker": "Sofia",
+        "raw": "Perfetto! Vedrete — è straordinario! In bocca al lupo per il viaggio, Chad!\n\n[ENGLISH: Perfect! You'll see — it's extraordinary! Good luck on your trip, Chad!]\n\n[HINT: Crepi!]",
+        "spoken": "Perfetto! Vedrete — è straordinario! In bocca al lupo per il viaggio, Chad!",
+        "hint": "Crepi!"
+      },
+      {
+        "turn": 8,
+        "speaker": "Chad",
+        "raw": "Crepi! *laughs proudly* Sì, sì — crepi! *to wife* Honey, I said the right thing! *back to Luca* Grazie mille, Luca e Marta! È stata una bella serata! Cin cin!",
+        "spoken": "Crepi! *laughs proudly* Sì, sì — crepi! *to wife* Honey, I said the right thing! *back to Luca* Grazie mille, Luca e Marta! È stata una bella serata! Cin cin!"
+      },
+      {
+        "turn": 8,
+        "speaker": "Sofia",
+        "raw": "Cin cin! È stata una bella serata davvero! Dove andate adesso?\n\n[ENGLISH: Cheers! It really has been a lovely evening! Where are you going now?]\n\n[HINT: Andiamo al Duomo!]",
+        "spoken": "Cin cin! È stata una bella serata davvero! Dove andate adesso?",
+        "hint": "Andiamo al Duomo!"
+      },
+      {
+        "turn": 9,
+        "speaker": "Chad",
+        "raw": "Adesso... andiamo a... *thinks hard* ...mangiare? La pizza? *laughs* No no — la pasta! Andiamo al... ristorante vicino? *makes eating gesture* Honey, come si dice \"we're hungry?\" *shrugs at Luca* Abbiamo... hunger? Fame?",
+        "spoken": "Adesso... andiamo a... *thinks hard* ...mangiare? La pizza? *laughs* No no — la pasta! Andiamo al... ristorante vicino? *makes eating gesture* Honey, come si dice \"we're hungry?\" *shrugs at Luca* Abbiamo... hunger? Fame?"
+      },
+      {
+        "turn": 9,
+        "speaker": "Sofia",
+        "raw": "Una trattoria dopo l'aperitivo? Avete fame!\n\n[ENGLISH: A trattoria after aperitivo? You're hungry!]\n\n[DEBRIEF]\n{\n  \"learned\": [\"cin cin / salute — cheers\", \"siamo americani — we're American\", \"gli stuzzichini — the nibbles\", \"ci piace molto — we really like it\", \"crepi — the response to in bocca al lupo\", \"è stata una bella serata — it's been a lovely evening\", \"un posto segreto — a hidden gem\", \"cosa consigliate — what do you recommend\"],\n  \"retry\": [\"in bocca al lupo — good luck (Chad needed a nudge to remember 'crepi')\", \"abbiamo fame — we're hungry (Chad reached for 'fame' but mixed in English first)\"],\n  \"sofia_says\": \"Chad, you were a genuinely fun presence at my bar tonight — your enthusiasm is infectious, your Italian is coming along nicely, and the fact that you nailed 'crepi' without hesitation tells me you're really listening.\",\n  \"transitionTo\": null\n}\n[/DEBRIEF]",
+        "spoken": "Una trattoria dopo l'aperitivo? Avete fame!",
+        "hint": null
+      }
+    ],
+    "debrief": {
+      "learned": [
+        "cin cin / salute — cheers",
+        "siamo americani — we're American",
+        "gli stuzzichini — the nibbles",
+        "ci piace molto — we really like it",
+        "crepi — the response to in bocca al lupo",
+        "è stata una bella serata — it's been a lovely evening",
+        "un posto segreto — a hidden gem",
+        "cosa consigliate — what do you recommend"
+      ],
+      "retry": [
+        "in bocca al lupo — good luck (Chad needed a nudge to remember 'crepi')",
+        "abbiamo fame — we're hungry (Chad reached for 'fame' but mixed in English first)"
+      ],
+      "sofia_says": "Chad, you were a genuinely fun presence at my bar tonight — your enthusiasm is infectious, your Italian is coming along nicely, and the fact that you nailed 'crepi' without hesitation tells me you're really listening.",
+      "transitionTo": null
+    },
+    "derailmentMoments": [
+      {
+        "turn": 9,
+        "chadSaid": "Adesso... andiamo a... *thinks hard* ...mangiare? La pizza? *laughs* No no — la pasta! Andiamo al... ristorante vicino? *makes eating gesture* Honey, come si dice \"we're hungry?\" *shrugs at Luca* Abbiamo... hunger? Fame?",
+        "characterResponse": "Una trattoria dopo l'aperitivo? Avete fame!",
+        "handled": true
+      }
+    ]
+  },
+  "summary": {
+    "completable": true,
+    "phraseUtilization": "12/14",
+    "missingPhrases": [],
+    "unusedPhrases": [
+      "Tre giorni",
+      "In bocca al lupo"
+    ],
+    "derailmentHandling": "good",
+    "overallGrade": "A",
+    "fixesNeeded": []
+  }
+}

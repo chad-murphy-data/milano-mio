@@ -1,0 +1,465 @@
+{
+  "location": "sanSiro",
+  "characterName": "Vendor / Giuseppe",
+  "obedientRun": {
+    "completed": true,
+    "turnCount": 12,
+    "stalled": false,
+    "phrasesUsed": [
+      "La sciarpa",
+      "Il settore",
+      "La curva",
+      "Forza Milan!",
+      "Che gol!",
+      "L'arbitro",
+      "Che scandalo!",
+      "Fuorigioco!",
+      "Abbiamo perso",
+      "Che partita!",
+      "In bocca al lupo"
+    ],
+    "phrasesUnused": [
+      "Abbiamo vinto!",
+      "Il primo tempo",
+      "Il secondo tempo"
+    ],
+    "phraseUtilization": "11/14",
+    "sufficiencyGaps": [],
+    "characterViolations": [
+      {
+        "turn": 6,
+        "violation": "Character may have used English in dialogue: \"*Chad enters the stadium and finds his seat. A man in his 50s in the next seat turns and notices him\"",
+        "severity": "medium"
+      }
+    ],
+    "transcript": [
+      {
+        "turn": 0,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"Sciarpa! Programma! Ehi, voi due — prima volta a San Siro?\"\n\n[ENGLISH: \"Scarf! Program! Hey, you two — first time at San Siro?\"]\n\n[HINT: Sì, è la prima volta! — \"Yes, it's the first time!\"]",
+        "spoken": "\"Sciarpa! Programma! Ehi, voi due — prima volta a San Siro?\"",
+        "hint": "Sì, è la prima volta! — \"Yes, it's the first time!\""
+      },
+      {
+        "turn": 1,
+        "speaker": "Chad",
+        "raw": "\"Yes! First time! Forza Milan!\" \n\n*grins and points to the scarf for sale* \"La sciarpa! La sciarpa!\"",
+        "spoken": "\"Yes! First time! Forza Milan!\" \n\n*grins and points to the scarf for sale* \"La sciarpa! La sciarpa!\""
+      },
+      {
+        "turn": 1,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"La sciarpa! Bellissima scelta — solo quindici euro per te, amico!\"\n\n[ENGLISH: \"The scarf! Beautiful choice — only fifteen euros for you, my friend!\"]\n\n[HINT: Quindici euro? Troppo! — \"Fifteen euros? Too much!\"]",
+        "spoken": "\"La sciarpa! Bellissima scelta — solo quindici euro per te, amico!\"",
+        "hint": "Quindici euro? Troppo! — \"Fifteen euros? Too much!\""
+      },
+      {
+        "turn": 2,
+        "speaker": "Chad",
+        "raw": "*pulls out money eagerly*\n\n\"La sciarpa! Sì, sì!\" \n\n*holds up fingers trying to count* \"Fifteen euro... Forza Milan!\"",
+        "spoken": "*pulls out money eagerly*\n\n\"La sciarpa! Sì, sì!\" \n\n*holds up fingers trying to count* \"Fifteen euro... Forza Milan!\""
+      },
+      {
+        "turn": 2,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"Forza Milan! Eccola, è tua — e stasera battiamo la Juventus, eh?\"\n\n[ENGLISH: \"Come on Milan! Here you go, it's yours — and tonight we beat Juventus, eh?\"]\n\n[HINT: Sì, vinciamo! Chi segna stasera? — \"Yes, we win! Who scores tonight?\"]",
+        "spoken": "\"Forza Milan! Eccola, è tua — e stasera battiamo la Juventus, eh?\"",
+        "hint": "Sì, vinciamo! Chi segna stasera? — \"Yes, we win! Who scores tonight?\""
+      },
+      {
+        "turn": 3,
+        "speaker": "Chad",
+        "raw": "*wraps the scarf around neck proudly*\n\n\"Forza Milan! Che partita!\"",
+        "spoken": "*wraps the scarf around neck proudly*\n\n\"Forza Milan! Che partita!\""
+      },
+      {
+        "turn": 3,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"Che partita! Senti, il tuo biglietto — fammi vedere il settore!\"\n\n[ENGLISH: \"What a match! Listen, your ticket — let me see the section!\"]\n\n[HINT: Ecco il biglietto — settore... — \"Here's the ticket — section...\"]",
+        "spoken": "\"Che partita! Senti, il tuo biglietto — fammi vedere il settore!\"",
+        "hint": "Ecco il biglietto — settore... — \"Here's the ticket — section...\""
+      },
+      {
+        "turn": 4,
+        "speaker": "Chad",
+        "raw": "*pulls out ticket and points to it excitedly*\n\n\"Il settore! Il settore!\" \n\n*shrugs and smiles, clearly not sure which section he's in*",
+        "spoken": "*pulls out ticket and points to it excitedly*\n\n\"Il settore! Il settore!\" \n\n*shrugs and smiles, clearly not sure which section he's in*"
+      },
+      {
+        "turn": 4,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"Settore Blu, cancello cinque — vai dritto, poi a sinistra!\"\n\n[ENGLISH: \"Blue section, gate five — go straight, then left!\"]\n\n[HINT: Grazie mille! Dov'è il cancello? — \"Thank you very much! Where is the gate?\"]",
+        "spoken": "\"Settore Blu, cancello cinque — vai dritto, poi a sinistra!\"",
+        "hint": "Grazie mille! Dov'è il cancello? — \"Thank you very much! Where is the gate?\""
+      },
+      {
+        "turn": 5,
+        "speaker": "Chad",
+        "raw": "*nods enthusiastically, pointing straight ahead then left*\n\n\"Il settore! Sì, sì — in bocca al lupo!\"",
+        "spoken": "*nods enthusiastically, pointing straight ahead then left*\n\n\"Il settore! Sì, sì — in bocca al lupo!\""
+      },
+      {
+        "turn": 5,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"Crepi! Buona partita — e forza Milan!\"\n\n[ENGLISH: \"Thanks! Have a great match — and come on Milan!\"]\n\n[HINT: Grazie! Forza Milan! — \"Thanks! Come on Milan!\"]",
+        "spoken": "\"Crepi! Buona partita — e forza Milan!\"",
+        "hint": "Grazie! Forza Milan! — \"Thanks! Come on Milan!\""
+      },
+      {
+        "turn": 6,
+        "speaker": "Chad",
+        "raw": "\"Forza Milan! Che partita!\"\n\n*gives a thumbs up and heads toward the gate, scarf proudly around neck*",
+        "spoken": "\"Forza Milan! Che partita!\"\n\n*gives a thumbs up and heads toward the gate, scarf proudly around neck*"
+      },
+      {
+        "turn": 6,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "*Chad enters the stadium and finds his seat. A man in his 50s in the next seat turns and notices him.*\n\n---\n\n\"Ciao! Forza Milan? Benvenuto a San Siro!\"\n\n[ENGLISH: \"Hi! Come on Milan? Welcome to San Siro!\"]\n\n[HINT: Sì, forza Milan! È fantastico qui! — \"Yes, come on Milan! It's fantastic here!\"]",
+        "spoken": "*Chad enters the stadium and finds his seat. A man in his 50s in the next seat turns and notices him.*\n\n---\n\n\"Ciao! Forza Milan? Benvenuto a San Siro!\"",
+        "hint": "Sì, forza Milan! È fantastico qui! — \"Yes, come on Milan! It's fantastic here!\""
+      },
+      {
+        "turn": 7,
+        "speaker": "Chad",
+        "raw": "*beams and points to scarf*\n\n\"Forza Milan! La sciarpa!\" \n\n*laughs and extends hand for a handshake*",
+        "spoken": "*beams and points to scarf*\n\n\"Forza Milan! La sciarpa!\" \n\n*laughs and extends hand for a handshake*"
+      },
+      {
+        "turn": 7,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"Ah, la sciarpa nuova — si vede! Di dove sei? E tifi Milan o sei qui per caso?\"\n\n[ENGLISH: \"Ah, the new scarf — it shows! Where are you from? And do you support Milan or are you here by chance?\"]\n\n[HINT: Sono americano — tifo Milan stasera! — \"I'm American — I support Milan tonight!\"]",
+        "spoken": "\"Ah, la sciarpa nuova — si vede! Di dove sei? E tifi Milan o sei qui per caso?\"",
+        "hint": "Sono americano — tifo Milan stasera! — \"I'm American — I support Milan tonight!\""
+      },
+      {
+        "turn": 8,
+        "speaker": "Chad",
+        "raw": "\"Forza Milan!\" \n\n*points to himself and gives a big thumbs up, then gestures around the stadium in wonder*",
+        "spoken": "\"Forza Milan!\" \n\n*points to himself and gives a big thumbs up, then gestures around the stadium in wonder*"
+      },
+      {
+        "turn": 8,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"Americano! Benvenuto, benvenuto — San Siro è il tempio del calcio, eh!\"\n\n[ENGLISH: \"American! Welcome, welcome — San Siro is the temple of football, eh!\"]\n\n[HINT: Sì, è incredibile! Il stadio è bellissimo! — \"Yes, it's incredible! The stadium is beautiful!\"]",
+        "spoken": "\"Americano! Benvenuto, benvenuto — San Siro è il tempio del calcio, eh!\"",
+        "hint": "Sì, è incredibile! Il stadio è bellissimo! — \"Yes, it's incredible! The stadium is beautiful!\""
+      },
+      {
+        "turn": 9,
+        "speaker": "Chad",
+        "raw": "\"Che partita! Forza Milan!\"\n\n*looks around the stadium with wide eyes, clearly amazed*",
+        "spoken": "\"Che partita! Forza Milan!\"\n\n*looks around the stadium with wide eyes, clearly amazed*"
+      },
+      {
+        "turn": 9,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"GOL! GOL! Che gol! Uno a zero al primo tempo! Senti la curva — sono pazzi!\"\n\n[ENGLISH: \"GOAL! GOAL! What a goal! One nil at half time! Hear the ultras end — they're crazy!\"]\n\n[HINT: Che gol! Incredibile! Forza Milan! — \"What a goal! Incredible! Come on Milan!\"]",
+        "spoken": "\"GOL! GOL! Che gol! Uno a zero al primo tempo! Senti la curva — sono pazzi!\"",
+        "hint": "Che gol! Incredibile! Forza Milan! — \"What a goal! Incredible! Come on Milan!\""
+      },
+      {
+        "turn": 10,
+        "speaker": "Chad",
+        "raw": "*leaps to his feet*\n\n\"Che gol! CHE GOL!\" \n\n*points toward the ultras section* \"La curva! La curva!\"",
+        "spoken": "*leaps to his feet*\n\n\"Che gol! CHE GOL!\" \n\n*points toward the ultras section* \"La curva! La curva!\""
+      },
+      {
+        "turn": 10,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"Il secondo tempo! Forza— aspetta, aspetta... L'arbitro! Fuorigioco! Che scandalo!\"\n\n[ENGLISH: \"The second half! Come on— wait, wait... The referee! Offside! What a scandal!\"]\n\n[HINT: Che scandalo! L'arbitro è pazzo! — \"What a scandal! The referee is crazy!\"]",
+        "spoken": "\"Il secondo tempo! Forza— aspetta, aspetta... L'arbitro! Fuorigioco! Che scandalo!\"",
+        "hint": "Che scandalo! L'arbitro è pazzo! — \"What a scandal! The referee is crazy!\""
+      },
+      {
+        "turn": 11,
+        "speaker": "Chad",
+        "raw": "*jumps up furiously pointing at the referee*\n\n\"L'arbitro! Fuorigioco! CHE SCANDALO!\"",
+        "spoken": "*jumps up furiously pointing at the referee*\n\n\"L'arbitro! Fuorigioco! CHE SCANDALO!\""
+      },
+      {
+        "turn": 11,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"Abbiamo perso... due a uno. Sempre così, sempre così. Dove vai adesso?\"\n\n[ENGLISH: \"We lost... two to one. Always like this, always like this. Where are you going now?\"]\n\n[HINT: Vado a... una trattoria! — \"I'm going to... a restaurant!\"]",
+        "spoken": "\"Abbiamo perso... due a uno. Sempre così, sempre così. Dove vai adesso?\"",
+        "hint": "Vado a... una trattoria! — \"I'm going to... a restaurant!\""
+      },
+      {
+        "turn": 12,
+        "speaker": "Chad",
+        "raw": "*sighs heavily and shakes head*\n\n\"Abbiamo perso...\" \n\n*pauses, then brightens a little* \"Il Duomo?\"",
+        "spoken": "*sighs heavily and shakes head*\n\n\"Abbiamo perso...\" \n\n*pauses, then brightens a little* \"Il Duomo?\""
+      },
+      {
+        "turn": 12,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"Il Duomo di notte dopo San Siro — Milano al massimo.\"\n\n[ENGLISH: \"The Duomo at night after San Siro — Milan at its finest.\"]\n\n[DEBRIEF]\n{\n  \"learned\": [\"forza Milan — come on Milan\", \"che gol — what a goal\", \"l'arbitro — the referee\", \"fuorigioco — offside\", \"che scandalo — what a scandal\", \"abbiamo perso — we lost\", \"la curva — the ultras end\", \"il primo tempo — the first half\", \"il secondo tempo — the second half\", \"la sciarpa — the scarf\", \"il biglietto — the ticket\", \"il settore — the section\"],\n  \"retry\": [\"il cancello — the gate\", \"il posto — the seat\", \"pareggio — draw\", \"il fischio — the whistle\"],\n  \"giuseppe_says\": \"Chad threw himself into every moment with real heart — the scarf, the goal, the outrage at the referee — he was a San Siro fan tonight, even if he barely had the words for it.\",\n  \"transitionTo\": \"duomo\"\n}\n[/DEBRIEF]",
+        "spoken": "\"Il Duomo di notte dopo San Siro — Milano al massimo.\"",
+        "hint": null
+      }
+    ],
+    "debrief": {
+      "learned": [
+        "forza Milan — come on Milan",
+        "che gol — what a goal",
+        "l'arbitro — the referee",
+        "fuorigioco — offside",
+        "che scandalo — what a scandal",
+        "abbiamo perso — we lost",
+        "la curva — the ultras end",
+        "il primo tempo — the first half",
+        "il secondo tempo — the second half",
+        "la sciarpa — the scarf",
+        "il biglietto — the ticket",
+        "il settore — the section"
+      ],
+      "retry": [
+        "il cancello — the gate",
+        "il posto — the seat",
+        "pareggio — draw",
+        "il fischio — the whistle"
+      ],
+      "giuseppe_says": "Chad threw himself into every moment with real heart — the scarf, the goal, the outrage at the referee — he was a San Siro fan tonight, even if he barely had the words for it.",
+      "transitionTo": "duomo"
+    }
+  },
+  "improvisingRun": {
+    "completed": true,
+    "turnCount": 12,
+    "stalled": false,
+    "phrasesUsed": [
+      "La sciarpa",
+      "Il settore",
+      "La curva",
+      "Forza Milan!",
+      "Che gol!",
+      "L'arbitro",
+      "Che scandalo!",
+      "Abbiamo perso",
+      "Che partita!",
+      "Il primo tempo",
+      "In bocca al lupo"
+    ],
+    "phrasesUnused": [
+      "Fuorigioco!",
+      "Abbiamo vinto!",
+      "Il secondo tempo"
+    ],
+    "phraseUtilization": "11/14",
+    "sufficiencyGaps": [],
+    "characterViolations": [],
+    "transcript": [
+      {
+        "turn": 0,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"Sciarpa! Programma! Ehi, voi due — benvenuti a San Siro!\"\n\n[ENGLISH: Scarf! Program! Hey, you two — welcome to San Siro!]\n\n[HINT: Quanto costa la sciarpa?]",
+        "spoken": "\"Sciarpa! Programma! Ehi, voi due — benvenuti a San Siro!\"",
+        "hint": "Quanto costa la sciarpa?"
+      },
+      {
+        "turn": 1,
+        "speaker": "Chad",
+        "raw": "\"Grazie, grazie! Forza Milan! Uh... due scarpe— no, no, due *sciarpe*, per favore! E... il programma!\"",
+        "spoken": "\"Grazie, grazie! Forza Milan! Uh... due scarpe— no, no, due *sciarpe*, per favore! E... il programma!\""
+      },
+      {
+        "turn": 1,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"Due sciarpe e un programma — perfetto! Le sciarpe, quindici euro l'una, e il programma cinque euro!\"\n\n[ENGLISH: Two scarves and a program — perfect! The scarves are fifteen euros each, and the program is five euros!]\n\n[HINT: Quindici euro? È caro! Puoi fare un prezzo migliore?]",
+        "spoken": "\"Due sciarpe e un programma — perfetto! Le sciarpe, quindici euro l'una, e il programma cinque euro!\"",
+        "hint": "Quindici euro? È caro! Puoi fare un prezzo migliore?"
+      },
+      {
+        "turn": 2,
+        "speaker": "Chad",
+        "raw": "\"Okay, okay... quindici più quindici più cinque... trentacinque euro! Sì?\" \n\n*holds out money*\n\n\"Forza Milan!\"",
+        "spoken": "\"Okay, okay... quindici più quindici più cinque... trentacinque euro! Sì?\" \n\n*holds out money*\n\n\"Forza Milan!\""
+      },
+      {
+        "turn": 2,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"Trentacinque euro, esatto — sei un matematico! Forza Milan! Allora, chi vince stasera secondo te?\"\n\n[ENGLISH: Thirty-five euros, exactly — you're a mathematician! Come on Milan! So, who do you think wins tonight?]\n\n[HINT: Milan vince, due a zero!]",
+        "spoken": "\"Trentacinque euro, esatto — sei un matematico! Forza Milan! Allora, chi vince stasera secondo te?\"",
+        "hint": "Milan vince, due a zero!"
+      },
+      {
+        "turn": 3,
+        "speaker": "Chad",
+        "raw": "\"Ah... secondo me... Milan vince! Sì, sì!\" \n\n*pumps fist*\n\n\"Che gol! Uh... no, no, not yet... che *partita*! In bocca al lupo, Milan!\"",
+        "spoken": "\"Ah... secondo me... Milan vince! Sì, sì!\" \n\n*pumps fist*\n\n\"Che gol! Uh... no, no, not yet... che *partita*! In bocca al lupo, Milan!\""
+      },
+      {
+        "turn": 3,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"In bocca al lupo! Milan stasera è fortissimo — vedrai una partita incredibile!\"\n\n[ENGLISH: In bocca al lupo! Milan is very strong tonight — you'll see an incredible match!]\n\n[HINT: Dov'è il mio settore? Ho il biglietto qui.]",
+        "spoken": "\"In bocca al lupo! Milan stasera è fortissimo — vedrai una partita incredibile!\"",
+        "hint": "Dov'è il mio settore? Ho il biglietto qui."
+      },
+      {
+        "turn": 4,
+        "speaker": "Chad",
+        "raw": "\"Sì, sì, incredibile! Che partita!\" \n\n*big smile*\n\n\"Uh... il primo tempo... Milan... gol, gol, gol! E l'arbitro... no scandalo, per favore!\"",
+        "spoken": "\"Sì, sì, incredibile! Che partita!\" \n\n*big smile*\n\n\"Uh... il primo tempo... Milan... gol, gol, gol! E l'arbitro... no scandalo, per favore!\""
+      },
+      {
+        "turn": 4,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"Sì, sì, niente scandali stasera! Ehi, hai il biglietto? Fammi vedere — ti dico dov'è il tuo cancello!\"\n\n[ENGLISH: Yes, yes, no scandals tonight! Hey, do you have your ticket? Let me see it — I'll tell you where your gate is!]\n\n[HINT: Sì, ecco il biglietto. Dov'è il cancello?]",
+        "spoken": "\"Sì, sì, niente scandali stasera! Ehi, hai il biglietto? Fammi vedere — ti dico dov'è il tuo cancello!\"",
+        "hint": "Sì, ecco il biglietto. Dov'è il cancello?"
+      },
+      {
+        "turn": 5,
+        "speaker": "Chad",
+        "raw": "\"Sì, sì, momento!\" \n\n*digs through pockets and pulls out ticket*\n\n\"Ecco! Uh... il settore... B? Sì, settore B! Dov'è il... cancello per settore B?\"",
+        "spoken": "\"Sì, sì, momento!\" \n\n*digs through pockets and pulls out ticket*\n\n\"Ecco! Uh... il settore... B? Sì, settore B! Dov'è il... cancello per settore B?\""
+      },
+      {
+        "turn": 5,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"Settore B — il cancello è là, a destra, vicino alla fontana! Vai dritto e poi gira a destra. Buona partita!\"\n\n[ENGLISH: Section B — the gate is over there, on the right, near the fountain! Go straight and then turn right. Enjoy the match!]\n\n[HINT: Grazie mille! Arrivederci!]",
+        "spoken": "\"Settore B — il cancello è là, a destra, vicino alla fontana! Vai dritto e poi gira a destra. Buona partita!\"",
+        "hint": "Grazie mille! Arrivederci!"
+      },
+      {
+        "turn": 6,
+        "speaker": "Chad",
+        "raw": "\"Ah, a destra! Vicino la... fontana! Sì, capisco!\" \n\n*points right*\n\n\"Grazie mille! Forza Milan!\"",
+        "spoken": "\"Ah, a destra! Vicino la... fontana! Sì, capisco!\" \n\n*points right*\n\n\"Grazie mille! Forza Milan!\""
+      },
+      {
+        "turn": 6,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"Forza Milan! Vai, vai — non perdere il fischio iniziale!\"\n\n[ENGLISH: Come on Milan! Go, go — don't miss the opening whistle!]\n\n---\n\n*Chad and Charlie head inside, find their seats in Settore B. A man in his 50s is already seated next to them, wearing a well-worn Milan scarf.*\n\n\"Ciao! Forza Milan, eh? Prima volta a San Siro?\"\n\n[ENGLISH: Hi! Come on Milan, eh? First time at San Siro?]\n\n[HINT: Sì, è la nostra prima volta! Siamo americani.]",
+        "spoken": "\"Forza Milan! Vai, vai — non perdere il fischio iniziale!\"\n\n\n\n---\n\n*Chad and Charlie head inside, find their seats in Settore B. A man in his 50s is already seated next to them, wearing a well-worn Milan scarf.*\n\n\"Ciao! Forza Milan, eh? Prima volta a San Siro?\"\n\n[ENGLISH: Hi! Come on Milan, eh? First time at San Siro?]",
+        "hint": "Sì, è la nostra prima volta! Siamo americani."
+      },
+      {
+        "turn": 7,
+        "speaker": "Chad",
+        "raw": "\"Sì, sì! Prima volta! Sono... turista Americano. Sono Chad!\"\n\n*extends hand for handshake*\n\n\"San Siro è... bellissimo! Incredibile stadio!\"",
+        "spoken": "\"Sì, sì! Prima volta! Sono... turista Americano. Sono Chad!\"\n\n*extends hand for handshake*\n\n\"San Siro è... bellissimo! Incredibile stadio!\""
+      },
+      {
+        "turn": 7,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"Piacere, Chad! Io sono Giuseppe. Americano! E tu — sei tifoso del Milan o sei qui per vedere lo stadio?\"\n\n[ENGLISH: Nice to meet you, Chad! I'm Giuseppe. American! And you — are you a Milan fan or are you here to see the stadium?]\n\n[HINT: Sono tifoso del Milan! Forza Milan!]",
+        "spoken": "\"Piacere, Chad! Io sono Giuseppe. Americano! E tu — sei tifoso del Milan o sei qui per vedere lo stadio?\"",
+        "hint": "Sono tifoso del Milan! Forza Milan!"
+      },
+      {
+        "turn": 8,
+        "speaker": "Chad",
+        "raw": "\"Ah, piacere Giuseppe! Io sono... tifoso del Milan! Sì!\" \n\n*points to new scarf*\n\n\"La sciarpa nuova! Forza Milan!\" \n\n*laughs*\n\n\"Ma... prima volta, sì. Sono un... nuovo tifoso!\"",
+        "spoken": "\"Ah, piacere Giuseppe! Io sono... tifoso del Milan! Sì!\" \n\n*points to new scarf*\n\n\"La sciarpa nuova! Forza Milan!\" \n\n*laughs*\n\n\"Ma... prima volta, sì. Sono un... nuovo tifoso!\""
+      },
+      {
+        "turn": 8,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"Un nuovo tifoso! Benvenuto nella famiglia, Chad! Milano è la città più bella del mondo e il Milan è la squadra più bella del mondo!\"\n\n[ENGLISH: A new fan! Welcome to the family, Chad! Milan is the most beautiful city in the world and Milan is the most beautiful team in the world!]\n\n[HINT: Sì, sono d'accordo! Forza Milan!]",
+        "spoken": "\"Un nuovo tifoso! Benvenuto nella famiglia, Chad! Milano è la città più bella del mondo e il Milan è la squadra più bella del mondo!\"",
+        "hint": "Sì, sono d'accordo! Forza Milan!"
+      },
+      {
+        "turn": 9,
+        "speaker": "Chad",
+        "raw": "\"Sì, sì, assolutamente! La città più bella... e la squadra più bella!\" \n\n*nods enthusiastically*\n\n\"Io sono di... Chicago. Ma stasera... sono Milanese! Sì?\"\n\n*laughs and wraps scarf tighter*",
+        "spoken": "\"Sì, sì, assolutamente! La città più bella... e la squadra più bella!\" \n\n*nods enthusiastically*\n\n\"Io sono di... Chicago. Ma stasera... sono Milanese! Sì?\"\n\n*laughs and wraps scarf tighter*"
+      },
+      {
+        "turn": 9,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"Chicago! Stasera sei Milanese, sì — e domani? Sempre Milanese! Che gol! Uno a zero al primo tempo! Senti la curva!\"\n\n[ENGLISH: Chicago! Tonight you're Milanese, yes — and tomorrow? Always Milanese! What a goal! One nil at half time! Listen to the curva!]\n\n[HINT: Che gol! Incredibile! Forza Milan!]",
+        "spoken": "\"Chicago! Stasera sei Milanese, sì — e domani? Sempre Milanese! Che gol! Uno a zero al primo tempo! Senti la curva!\"",
+        "hint": "Che gol! Incredibile! Forza Milan!"
+      },
+      {
+        "turn": 10,
+        "speaker": "Chad",
+        "raw": "\"CHE GOL! Sì, sì!\" \n\n*jumps up*\n\n\"La curva! Incredibile! Il primo tempo — uno a zero, bellissimo!\"\n\n*turns to Giuseppe*\n\n\"Che partita, Giuseppe, che partita!\"",
+        "spoken": "\"CHE GOL! Sì, sì!\" \n\n*jumps up*\n\n\"La curva! Incredibile! Il primo tempo — uno a zero, bellissimo!\"\n\n*turns to Giuseppe*\n\n\"Che partita, Giuseppe, che partita!\""
+      },
+      {
+        "turn": 10,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"Il secondo tempo adesso! Ma attento — l'arbitro! Fuorigioco! Che scandalo, l'arbitro è cieco!\"\n\n[ENGLISH: The second half now! But careful — the referee! Offside! What a scandal, the referee is blind!]\n\n[HINT: Che scandalo! L'arbitro è pazzo!]",
+        "spoken": "\"Il secondo tempo adesso! Ma attento — l'arbitro! Fuorigioco! Che scandalo, l'arbitro è cieco!\"",
+        "hint": "Che scandalo! L'arbitro è pazzo!"
+      },
+      {
+        "turn": 11,
+        "speaker": "Chad",
+        "raw": "\"FUORIGIOCO?! Che scandalo!\" \n\n*waves arms*\n\n\"L'arbitro è... pazzo! Sì, pazzo!\" \n\n*looks at Giuseppe*\n\n\"Che scandalo, Giuseppe, che scandalo!\"",
+        "spoken": "\"FUORIGIOCO?! Che scandalo!\" \n\n*waves arms*\n\n\"L'arbitro è... pazzo! Sì, pazzo!\" \n\n*looks at Giuseppe*\n\n\"Che scandalo, Giuseppe, che scandalo!\""
+      },
+      {
+        "turn": 11,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"Pazzo! Cieco e pazzo! Ma... il fischio finale... abbiamo perso, due a uno. Due a uno, Chad.\"\n\n*sighs heavily*\n\n\"Abbiamo perso... due a uno. Eh. Così è il calcio. Dove vai adesso?\"\n\n[ENGLISH: Crazy! Blind and crazy! But... the final whistle... we lost, two one. Two one, Chad. We lost... two one. Eh. That's football. Where are you going now?]\n\n[HINT: Andiamo ai Navigli!]",
+        "spoken": "\"Pazzo! Cieco e pazzo! Ma... il fischio finale... abbiamo perso, due a uno. Due a uno, Chad.\"\n\n*sighs heavily*\n\n\"Abbiamo perso... due a uno. Eh. Così è il calcio. Dove vai adesso?\"",
+        "hint": "Andiamo ai Navigli!"
+      },
+      {
+        "turn": 12,
+        "speaker": "Chad",
+        "raw": "\"Ah... abbiamo perso. Due a uno.\"\n\n*shakes head sadly*\n\n\"Che partita...\"\n\n*brightens up a little*\n\n\"Ma... adesso io vado a... mangiare! Sì! Uh... pizzeria? Vicino San Siro? Conosci un buon... ristorante, Giuseppe?\"",
+        "spoken": "\"Ah... abbiamo perso. Due a uno.\"\n\n*shakes head sadly*\n\n\"Che partita...\"\n\n*brightens up a little*\n\n\"Ma... adesso io vado a... mangiare! Sì! Uh... pizzeria? Vicino San Siro? Conosci un buon... ristorante, Giuseppe?\""
+      },
+      {
+        "turn": 12,
+        "speaker": "Vendor / Giuseppe",
+        "raw": "\"Una cena! Dopo novanta minuti, ci vuole un piatto enorme!\"\n\n[ENGLISH: Dinner! After ninety minutes, you need an enormous plate of food!]\n\n[DEBRIEF]\n{\n  \"learned\": [\"la sciarpa — the scarf\", \"il cancello — the gate\", \"il settore — the section\", \"il primo tempo — the first half\", \"il secondo tempo — the second half\", \"fuorigioco — offside\", \"l'arbitro — the referee\", \"abbiamo perso — we lost\", \"che gol — what a goal\", \"la curva — the ultras end\"],\n  \"retry\": [\"il programma — the matchday program\", \"la tribuna — the main stand\", \"pareggio — draw\", \"il fischio — the whistle\"],\n  \"giuseppe_says\": \"Chad, you threw yourself in completely tonight — the scarf, the goals, the outrage at the referee — you felt it like a real Milanese. Work on linking your sentences a little more naturally, but your heart was absolutely in the right place.\",\n  \"transitionTo\": \"trattoria\"\n}\n[/DEBRIEF]",
+        "spoken": "\"Una cena! Dopo novanta minuti, ci vuole un piatto enorme!\"",
+        "hint": null
+      }
+    ],
+    "debrief": {
+      "learned": [
+        "la sciarpa — the scarf",
+        "il cancello — the gate",
+        "il settore — the section",
+        "il primo tempo — the first half",
+        "il secondo tempo — the second half",
+        "fuorigioco — offside",
+        "l'arbitro — the referee",
+        "abbiamo perso — we lost",
+        "che gol — what a goal",
+        "la curva — the ultras end"
+      ],
+      "retry": [
+        "il programma — the matchday program",
+        "la tribuna — the main stand",
+        "pareggio — draw",
+        "il fischio — the whistle"
+      ],
+      "giuseppe_says": "Chad, you threw yourself in completely tonight — the scarf, the goals, the outrage at the referee — you felt it like a real Milanese. Work on linking your sentences a little more naturally, but your heart was absolutely in the right place.",
+      "transitionTo": "trattoria"
+    },
+    "derailmentMoments": [
+      {
+        "turn": 7,
+        "chadSaid": "\"Sì, sì! Prima volta! Sono... turista Americano. Sono Chad!\"\n\n*extends hand for handshake*\n\n\"San Siro è... bellissimo! Incredibile stadio!\"",
+        "characterResponse": "\"Piacere, Chad! Io sono Giuseppe. Americano! E tu — sei tifoso del Milan o sei qui per vedere lo sta",
+        "handled": true
+      },
+      {
+        "turn": 9,
+        "chadSaid": "\"Sì, sì, assolutamente! La città più bella... e la squadra più bella!\" \n\n*nods enthusiastically*\n\n\"Io sono di... Chicago. Ma stasera... sono Milanese! Sì?\"\n\n*laughs and wraps scarf tighter*",
+        "characterResponse": "\"Chicago! Stasera sei Milanese, sì — e domani? Sempre Milanese! Che gol! Uno a zero al primo tempo! ",
+        "handled": true
+      }
+    ]
+  },
+  "summary": {
+    "completable": true,
+    "phraseUtilization": "11/14",
+    "missingPhrases": [],
+    "unusedPhrases": [
+      "Abbiamo vinto!",
+      "Il primo tempo",
+      "Il secondo tempo"
+    ],
+    "derailmentHandling": "good",
+    "overallGrade": "A",
+    "fixesNeeded": []
+  }
+}

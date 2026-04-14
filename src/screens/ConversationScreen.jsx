@@ -7,6 +7,7 @@ import BriefingPanel from '../components/BriefingPanel.jsx';
 import MicButton from '../components/MicButton.jsx';
 import Transcript from '../components/Transcript.jsx';
 import WhisperPrompt from '../components/WhisperPrompt.jsx';
+import PuppetStage from '../components/PuppetStage.jsx';
 
 export default function ConversationScreen({
   scenario,
@@ -38,7 +39,8 @@ export default function ConversationScreen({
   const whisperHints = scenario.whisperHints || [];
 
   const { supported, listening, interim, start, stop } = useSpeechRecognition();
-  const { speak, cancel: cancelSpeech } = useSpeechSynthesis();
+  const { speak, cancel: cancelSpeech, speaking } = useSpeechSynthesis();
+  const [fallbackTalking, setFallbackTalking] = useState(false);
 
   // Kick off conversation — character speaks first.
   useEffect(() => {
@@ -80,6 +82,20 @@ export default function ConversationScreen({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Drive puppet "talking" state: active whenever TTS is speaking OR for up
+  // to 3s after a new character line arrives (fallback for browsers with
+  // no / slow speech synthesis).
+  useEffect(() => {
+    const last = lines[lines.length - 1];
+    if (!last || last.role !== 'character') return;
+    setFallbackTalking(true);
+    const t = setTimeout(() => setFallbackTalking(false), 3000);
+    return () => clearTimeout(t);
+  }, [lines]);
+  const isTalking = speaking || fallbackTalking;
+  const latestCharacterLine = [...lines].reverse().find((l) => l.role === 'character');
+  const speechText = isTalking && latestCharacterLine ? latestCharacterLine.text : '';
 
   // Whisper hint on silence (Easy mode, story mode only).
   // Uses the AI-provided hint from the last response (stored in lastHint ref).
@@ -221,67 +237,79 @@ export default function ConversationScreen({
   return (
     <div className={`screen conversation-screen ${panelOpen ? 'panel-open' : ''}`}>
       <div className="conversation-main">
-        <div className="scene-header">
-          <h2>{scenario.title}</h2>
-          <button className="end-btn" onClick={handleEndClick} disabled={loading}>
-            Termina conversazione
-          </button>
-        </div>
+        <div className="puppet-theater">
+          <div className="theater-inner">
+            <div className="scene-header">
+              <h2>{scenario.title}</h2>
+              <button className="end-btn" onClick={handleEndClick} disabled={loading}>
+                Termina conversazione
+              </button>
+            </div>
 
-        {!supported && (
-          <div className="warning">
-            Your browser doesn't support Web Speech API. Try Chrome or Edge.
-          </div>
-        )}
-        {error && <div className="warning">Errore: {error}</div>}
-
-        <Transcript
-          lines={lines}
-          characterName={characterName}
-          wordMarks={wordMarks}
-          onWordTap={handleWordTap}
-        />
-
-        {!isCL && difficulty === 'facile' && <WhisperPrompt hint={whisperHint} />}
-
-        {/* Lifeline for CL mode */}
-        {isCL && lifeline?.words?.length > 0 && !lifelineUsed && (
-          <button className="lifeline-btn" onClick={handleLifeline}>
-            Aiuto! (usa una volta)
-          </button>
-        )}
-        {lifelineWords && (
-          <div className="lifeline-words">
-            <span className="lifeline-label">Le tue parole difficili:</span>
-            {lifelineWords.map((w) => (
-              <span key={w} className="lifeline-word">{w}</span>
-            ))}
-          </div>
-        )}
-
-        <div className="input-row">
-          <MicButton
-            listening={listening}
-            disabled={loading || !supported}
-            onToggle={handleMicToggle}
-            interim={interim}
-          />
-          <span className="input-divider">oppure</span>
-          <form className="type-form" onSubmit={handleTypedSubmit}>
-            <input
-              type="text"
-              className="type-input"
-              placeholder="Scrivi in italiano..."
-              value={typedInput}
-              onChange={(e) => setTypedInput(e.target.value)}
-              disabled={loading}
+            <PuppetStage
+              characterName={characterName}
+              characterKey={characterName.toLowerCase()}
+              backdropKey={scenario.id}
+              isTalking={isTalking}
+              speechText={speechText}
             />
-            <button type="submit" className="type-send" disabled={loading || !typedInput.trim()}>
-              Invia
-            </button>
-          </form>
+
+            {!supported && (
+              <div className="warning">
+                Your browser doesn't support Web Speech API. Try Chrome or Edge.
+              </div>
+            )}
+            {error && <div className="warning">Errore: {error}</div>}
+
+            <Transcript
+              lines={lines}
+              characterName={characterName}
+              wordMarks={wordMarks}
+              onWordTap={handleWordTap}
+            />
+
+            {!isCL && difficulty === 'facile' && <WhisperPrompt hint={whisperHint} />}
+
+            {/* Lifeline for CL mode */}
+            {isCL && lifeline?.words?.length > 0 && !lifelineUsed && (
+              <button className="lifeline-btn" onClick={handleLifeline}>
+                Aiuto! (usa una volta)
+              </button>
+            )}
+            {lifelineWords && (
+              <div className="lifeline-words">
+                <span className="lifeline-label">Le tue parole difficili:</span>
+                {lifelineWords.map((w) => (
+                  <span key={w} className="lifeline-word">{w}</span>
+                ))}
+              </div>
+            )}
+
+            <div className="input-row">
+              <MicButton
+                listening={listening}
+                disabled={loading || !supported}
+                onToggle={handleMicToggle}
+                interim={interim}
+              />
+              <span className="input-divider">oppure</span>
+              <form className="type-form" onSubmit={handleTypedSubmit}>
+                <input
+                  type="text"
+                  className="type-input"
+                  placeholder="Scrivi in italiano..."
+                  value={typedInput}
+                  onChange={(e) => setTypedInput(e.target.value)}
+                  disabled={loading}
+                />
+                <button type="submit" className="type-send" disabled={loading || !typedInput.trim()}>
+                  Invia
+                </button>
+              </form>
+            </div>
+            {loading && <div className="loading">{characterName} sta pensando...</div>}
+          </div>
         </div>
-        {loading && <div className="loading">{characterName} sta pensando...</div>}
       </div>
 
       {/* Briefing panel — story mode only */}

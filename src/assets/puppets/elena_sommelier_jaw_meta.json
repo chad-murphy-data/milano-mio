@@ -1,0 +1,14 @@
+{
+  "canvas": {
+    "width": 1196,
+    "height": 1462
+  },
+  "jawBbox": {
+    "left": 560,
+    "top": 400,
+    "right": 830,
+    "bottom": 490,
+    "width": 270,
+    "height": 90
+  }
+}

@@ -1,0 +1,571 @@
+{
+  "location": "casaMilan",
+  "characterName": "Paolo",
+  "obedientRun": {
+    "completed": true,
+    "turnCount": 18,
+    "stalled": false,
+    "phrasesUsed": [
+      "Il tifoso",
+      "Tifare per",
+      "La maglia",
+      "Il campionato",
+      "La Champions League",
+      "Segnare",
+      "Il portiere",
+      "L'attaccante",
+      "La vittoria",
+      "Il mister",
+      "Forza Milan!"
+    ],
+    "phrasesUnused": [
+      "La sconfitta"
+    ],
+    "phraseUtilization": "11/12",
+    "sufficiencyGaps": [],
+    "characterViolations": [],
+    "transcript": [
+      {
+        "turn": 0,
+        "speaker": "Paolo",
+        "raw": "Benvenuti a Casa Milan! Siete nel posto giusto, lo sento!\n\n[ENGLISH: Welcome to Casa Milan! You're in the right place, I can feel it!]\n\n[HINT: Grazie! Sono un grande tifoso del calcio.]",
+        "spoken": "Benvenuti a Casa Milan! Siete nel posto giusto, lo sento!",
+        "hint": "Grazie! Sono un grande tifoso del calcio."
+      },
+      {
+        "turn": 1,
+        "speaker": "Chad",
+        "raw": "\"Forza Milan!\" \n\n*big thumbs up and huge grin*",
+        "spoken": "\"Forza Milan!\" \n\n*big thumbs up and huge grin*"
+      },
+      {
+        "turn": 1,
+        "speaker": "Paolo",
+        "raw": "Ah, un vero tifoso! Benvenuto, benvenuto!\n\nPer chi tifi, allora?\n\n[ENGLISH: Ah, a real fan! Welcome, welcome! So who do you support?]\n\n[HINT: Tifo per il City, ma ammiro il Milan.]",
+        "spoken": "Ah, un vero tifoso! Benvenuto, benvenuto!\n\nPer chi tifi, allora?",
+        "hint": "Tifo per il City, ma ammiro il Milan."
+      },
+      {
+        "turn": 2,
+        "speaker": "Chad",
+        "raw": "\"Il tifoso... Forza Milan!\" \n\n*points at self enthusiastically and gives two thumbs up*",
+        "spoken": "\"Il tifoso... Forza Milan!\" \n\n*points at self enthusiastically and gives two thumbs up*"
+      },
+      {
+        "turn": 2,
+        "speaker": "Paolo",
+        "raw": "Ah, tifi per il Milan — benissimo! Ma dai, sei di Milano o vieni da lontano?\n\n[ENGLISH: Ah, you support Milan — excellent! But come on, are you from Milan or do you come from far away?]\n\n[HINT: Vengo da Manchester, ma tifo anche per il Milan.]",
+        "spoken": "Ah, tifi per il Milan — benissimo! Ma dai, sei di Milano o vieni da lontano?",
+        "hint": "Vengo da Manchester, ma tifo anche per il Milan."
+      },
+      {
+        "turn": 3,
+        "speaker": "Chad",
+        "raw": "*laughs and shrugs, pointing at himself*\n\n\"Il tifoso... la maglia!\" \n\n*grabs his AC Milan jersey and points at it proudly*",
+        "spoken": "*laughs and shrugs, pointing at himself*\n\n\"Il tifoso... la maglia!\" \n\n*grabs his AC Milan jersey and points at it proudly*"
+      },
+      {
+        "turn": 3,
+        "speaker": "Paolo",
+        "raw": "Bella maglia! Ma sei tifoso del Milan, o tifi per un'altra squadra anche tu?\n\n[ENGLISH: Nice jersey! But are you a Milan fan, or do you support another team too?]\n\n[HINT: Tifo per il City, ma ammiro il Milan.]",
+        "spoken": "Bella maglia! Ma sei tifoso del Milan, o tifi per un'altra squadra anche tu?",
+        "hint": "Tifo per il City, ma ammiro il Milan."
+      },
+      {
+        "turn": 4,
+        "speaker": "Chad",
+        "raw": "\"Tifare per... Milan! Forza Milan!\"\n\n*pumps fist in the air excitedly*",
+        "spoken": "\"Tifare per... Milan! Forza Milan!\"\n\n*pumps fist in the air excitedly*"
+      },
+      {
+        "turn": 4,
+        "speaker": "Paolo",
+        "raw": "Perfetto, tifi per il Milan! Allora sei a casa!\n\n[ENGLISH: Perfect, you support Milan! Then you're at home!]\n\n[HINT: Sì! Sono anche tifoso del Manchester City.]",
+        "spoken": "Perfetto, tifi per il Milan! Allora sei a casa!",
+        "hint": "Sì! Sono anche tifoso del Manchester City."
+      },
+      {
+        "turn": 5,
+        "speaker": "Chad",
+        "raw": "*huge smile, looking around Casa Milan in awe*\n\n\"La vittoria! Forza Milan!\"",
+        "spoken": "*huge smile, looking around Casa Milan in awe*\n\n\"La vittoria! Forza Milan!\""
+      },
+      {
+        "turn": 5,
+        "speaker": "Paolo",
+        "raw": "Sì, tante vittorie qui! Vieni, ti faccio vedere una cosa speciale!\n\n[ENGLISH: Yes, so many victories here! Come, let me show you something special!]\n\n[HINT: Che cos'è quello? — What is that?]",
+        "spoken": "Sì, tante vittorie qui! Vieni, ti faccio vedere una cosa speciale!",
+        "hint": "Che cos'è quello? — What is that?"
+      },
+      {
+        "turn": 6,
+        "speaker": "Chad",
+        "raw": "*eyes wide with excitement, following eagerly*\n\n\"La Champions League!\"\n\n*claps hands together*",
+        "spoken": "*eyes wide with excitement, following eagerly*\n\n\"La Champions League!\"\n\n*claps hands together*"
+      },
+      {
+        "turn": 6,
+        "speaker": "Paolo",
+        "raw": "Esatto! Sette Champions League — un record fantastico per il Milan!\n\n[ENGLISH: Exactly! Seven Champions Leagues — a fantastic record for Milan!]\n\n[HINT: La maglia di Maldini — posso vedere?]",
+        "spoken": "Esatto! Sette Champions League — un record fantastico per il Milan!",
+        "hint": "La maglia di Maldini — posso vedere?"
+      },
+      {
+        "turn": 7,
+        "speaker": "Chad",
+        "raw": "*jaw drops, counts on fingers*\n\n\"Sette! La Champions League... la vittoria!\"\n\n*chef's kiss*",
+        "spoken": "*jaw drops, counts on fingers*\n\n\"Sette! La Champions League... la vittoria!\"\n\n*chef's kiss*"
+      },
+      {
+        "turn": 7,
+        "speaker": "Paolo",
+        "raw": "Sette coppe europee — siamo grandi, no? Quale vuoi vedere più da vicino — una coppa, una maglia, una foto?\n\n[ENGLISH: Seven European cups — we're great, aren't we? Which do you want to see up close — a trophy, a jersey, a photo?]\n\n[HINT: Voglio vedere la maglia di Maldini!]",
+        "spoken": "Sette coppe europee — siamo grandi, no? Quale vuoi vedere più da vicino — una coppa, una maglia, una foto?",
+        "hint": "Voglio vedere la maglia di Maldini!"
+      },
+      {
+        "turn": 8,
+        "speaker": "Chad",
+        "raw": "*points excitedly at the jerseys*\n\n\"La maglia! La maglia!\"",
+        "spoken": "*points excitedly at the jerseys*\n\n\"La maglia! La maglia!\""
+      },
+      {
+        "turn": 8,
+        "speaker": "Paolo",
+        "raw": "Ah, la maglia! Questa è la maglia di Paolo Maldini — il capitano leggendario del Milan!\n\n[ENGLISH: Ah, the jersey! This is Paolo Maldini's jersey — the legendary captain of Milan!]\n\n[HINT: Maldini — il capitano! Che numero?]",
+        "spoken": "Ah, la maglia! Questa è la maglia di Paolo Maldini — il capitano leggendario del Milan!",
+        "hint": "Maldini — il capitano! Che numero?"
+      },
+      {
+        "turn": 9,
+        "speaker": "Chad",
+        "raw": "*gasps and reaches out excitedly but stops himself from touching*\n\n\"La maglia... il portiere? L'attaccante?\"\n\n*looks confused but amazed, trying to ask what position Maldini played*",
+        "spoken": "*gasps and reaches out excitedly but stops himself from touching*\n\n\"La maglia... il portiere? L'attaccante?\"\n\n*looks confused but amazed, trying to ask what position Maldini played*"
+      },
+      {
+        "turn": 9,
+        "speaker": "Paolo",
+        "raw": "Maldini era il difensore — il migliore del mondo, per me!\n\n[ENGLISH: Maldini was the defender — the best in the world, in my opinion!]\n\n[HINT: Che numero aveva Maldini?]",
+        "spoken": "Maldini era il difensore — il migliore del mondo, per me!",
+        "hint": "Che numero aveva Maldini?"
+      },
+      {
+        "turn": 10,
+        "speaker": "Chad",
+        "raw": "*nods enthusiastically, not quite understanding \"difensore\" but catching the vibe*\n\n\"Il mister! Forza Milan!\"\n\n*gives a big thumbs up to show he thinks Maldini is great*",
+        "spoken": "*nods enthusiastically, not quite understanding \"difensore\" but catching the vibe*\n\n\"Il mister! Forza Milan!\"\n\n*gives a big thumbs up to show he thinks Maldini is great*"
+      },
+      {
+        "turn": 10,
+        "speaker": "Paolo",
+        "raw": "Sì, Maldini era un mito! Ma dimmi — chi segna stasera? L'attaccante o il portiere?\n\n[ENGLISH: Yes, Maldini was a legend! But tell me — who scores tonight? The striker or the goalkeeper?]\n\n[HINT: L'attaccante segna stasera!]",
+        "spoken": "Sì, Maldini era un mito! Ma dimmi — chi segna stasera? L'attaccante o il portiere?",
+        "hint": "L'attaccante segna stasera!"
+      },
+      {
+        "turn": 11,
+        "speaker": "Chad",
+        "raw": "*laughs loudly and waves hands*\n\n\"L'attaccante! Segnare! Forza Milan!\"\n\n*mimes kicking a ball into a goal*",
+        "spoken": "*laughs loudly and waves hands*\n\n\"L'attaccante! Segnare! Forza Milan!\"\n\n*mimes kicking a ball into a goal*"
+      },
+      {
+        "turn": 11,
+        "speaker": "Paolo",
+        "raw": "Bravo! L'attaccante segna, il portiere para — questo è il calcio!\n\n[ENGLISH: Bravo! The striker scores, the goalkeeper saves — that's football!]\n\n[HINT: Chi è l'attaccante del Milan adesso?]",
+        "spoken": "Bravo! L'attaccante segna, il portiere para — questo è il calcio!",
+        "hint": "Chi è l'attaccante del Milan adesso?"
+      },
+      {
+        "turn": 12,
+        "speaker": "Chad",
+        "raw": "*nodding vigorously and laughing*\n\n\"Il portiere... la vittoria! Forza Milan!\"",
+        "spoken": "*nodding vigorously and laughing*\n\n\"Il portiere... la vittoria! Forza Milan!\""
+      },
+      {
+        "turn": 12,
+        "speaker": "Paolo",
+        "raw": "Esatto! E il Milan quest'anno è forte nel campionato — siamo in alto in classifica!\n\n[ENGLISH: Exactly! And Milan this year is strong in the league — we're high up in the standings!]\n\n[HINT: Il Milan è primo nel campionato?]",
+        "spoken": "Esatto! E il Milan quest'anno è forte nel campionato — siamo in alto in classifica!",
+        "hint": "Il Milan è primo nel campionato?"
+      },
+      {
+        "turn": 13,
+        "speaker": "Chad",
+        "raw": "*pumps fist*\n\n\"Il campionato! La vittoria! Forza Milan!\"\n\n*does a little happy dance*",
+        "spoken": "*pumps fist*\n\n\"Il campionato! La vittoria! Forza Milan!\"\n\n*does a little happy dance*"
+      },
+      {
+        "turn": 13,
+        "speaker": "Paolo",
+        "raw": "Eh, speriamo! Ma guarda chi arriva — un tifoso del Napoli!\n\n*a man in a Napoli shirt walks by*\n\n\"Ehi, Ciro! Il Milan è primo, eh!\"\n\nCiro: \"Macché! Il Napoli vi supera presto, vedete!\"\n\n[ENGLISH: Well, let's hope! But look who's coming — a Napoli fan! \"Hey, Ciro! Milan is first, right!\" Ciro: \"No way! Napoli will overtake you soon, you'll see!\"]\n\n[HINT: Forza Milan! Il campionato è nostro!]",
+        "spoken": "Eh, speriamo! Ma guarda chi arriva — un tifoso del Napoli!\n\n*a man in a Napoli shirt walks by*\n\n\"Ehi, Ciro! Il Milan è primo, eh!\"\n\nCiro: \"Macché! Il Napoli vi supera presto, vedete!\"",
+        "hint": "Forza Milan! Il campionato è nostro!"
+      },
+      {
+        "turn": 14,
+        "speaker": "Chad",
+        "raw": "*turns to Ciro with a big grin and no hesitation*\n\n\"La vittoria! Forza Milan!\"\n\n*laughs and shakes head at Ciro playfully*",
+        "spoken": "*turns to Ciro with a big grin and no hesitation*\n\n\"La vittoria! Forza Milan!\"\n\n*laughs and shakes head at Ciro playfully*"
+      },
+      {
+        "turn": 14,
+        "speaker": "Paolo",
+        "raw": "Bravo, hai capito tutto! Ciro, questo ragazzo è già più milanista di te!\n\n[ENGLISH: Bravo, you understood everything! Ciro, this guy is already more of a Milan fan than you!]\n\n[HINT: Voglio comprare una maglia del Milan!]",
+        "spoken": "Bravo, hai capito tutto! Ciro, questo ragazzo è già più milanista di te!",
+        "hint": "Voglio comprare una maglia del Milan!"
+      },
+      {
+        "turn": 15,
+        "speaker": "Chad",
+        "raw": "*laughs and pats his Milan jersey proudly*\n\n\"Il tifoso! La maglia! Forza Milan!\"\n\n*points at Ciro's Napoli shirt and shakes head with a smile*",
+        "spoken": "*laughs and pats his Milan jersey proudly*\n\n\"Il tifoso! La maglia! Forza Milan!\"\n\n*points at Ciro's Napoli shirt and shakes head with a smile*"
+      },
+      {
+        "turn": 15,
+        "speaker": "Paolo",
+        "raw": "Allora, andiamo al negozio — cosa vuoi comprare? Una maglia, una sciarpa, qualcosa per ricordare Casa Milan?\n\n[ENGLISH: Right then, let's go to the shop — what do you want to buy? A jersey, a scarf, something to remember Casa Milan?]\n\n[HINT: Voglio comprare una sciarpa del Milan!]",
+        "spoken": "Allora, andiamo al negozio — cosa vuoi comprare? Una maglia, una sciarpa, qualcosa per ricordare Casa Milan?",
+        "hint": "Voglio comprare una sciarpa del Milan!"
+      },
+      {
+        "turn": 16,
+        "speaker": "Chad",
+        "raw": "*eyes light up immediately*\n\n\"La maglia! La maglia!\"\n\n*mimes putting on a jersey with huge excitement*",
+        "spoken": "*eyes light up immediately*\n\n\"La maglia! La maglia!\"\n\n*mimes putting on a jersey with huge excitement*"
+      },
+      {
+        "turn": 16,
+        "speaker": "Paolo",
+        "raw": "Perfetta scelta! La maglia ufficiale del Milan — un classico rossonero!\n\n[ENGLISH: Perfect choice! The official Milan jersey — a classic red and black!]\n\n[HINT: Grazie mille, Paolo! Arrivederci!]",
+        "spoken": "Perfetta scelta! La maglia ufficiale del Milan — un classico rossonero!",
+        "hint": "Grazie mille, Paolo! Arrivederci!"
+      },
+      {
+        "turn": 17,
+        "speaker": "Chad",
+        "raw": "*rubbing hands together excitedly, looking at price tag nervously then smiling*\n\n\"La maglia... Forza Milan!\"\n\n*pulls out wallet enthusiastically*",
+        "spoken": "*rubbing hands together excitedly, looking at price tag nervously then smiling*\n\n\"La maglia... Forza Milan!\"\n\n*pulls out wallet enthusiastically*"
+      },
+      {
+        "turn": 17,
+        "speaker": "Paolo",
+        "raw": "Eccola! Benvenuto nella famiglia rossonera — ora sei ufficialmente tifoso del Milan!\n\nDove vai adesso?\n\n[ENGLISH: Here you go! Welcome to the red and black family — now you're officially a Milan fan! Where are you going now?]\n\n[HINT: Vado a San Siro!]",
+        "spoken": "Eccola! Benvenuto nella famiglia rossonera — ora sei ufficialmente tifoso del Milan!\n\nDove vai adesso?",
+        "hint": "Vado a San Siro!"
+      },
+      {
+        "turn": 18,
+        "speaker": "Chad",
+        "raw": "*takes the jersey and hugs it*\n\n\"Il Duomo! Forza Milan!\"\n\n*waves goodbye enthusiastically with the jersey in hand*",
+        "spoken": "*takes the jersey and hugs it*\n\n\"Il Duomo! Forza Milan!\"\n\n*waves goodbye enthusiastically with the jersey in hand*"
+      },
+      {
+        "turn": 18,
+        "speaker": "Paolo",
+        "raw": "Il Duomo! Un'altra cattedrale, ma senza gol.\n\n[ENGLISH: The Duomo! Another cathedral, but without goals.]\n\n[DEBRIEF]\n{\n  \"learned\": [\"la maglia — the jersey\", \"il tifoso — the fan\", \"la vittoria — victory\", \"il campionato — the league\", \"l'attaccante — the striker\", \"il portiere — the goalkeeper\", \"segnare — to score\", \"il capitano — the captain\", \"il difensore — the defender\"],\n  \"retry\": [\"la Champions League — Champions League\", \"il mister — the manager\", \"il pareggio — draw\"],\n  \"paolo_says\": \"Chad came in with pure enthusiasm and zero fear — he might not have full sentences yet, but he grabbed every word I threw at him and ran with it like Leão on the counter-attack. The energy was perfect, and 'l'attaccante segna stasera' landed beautifully. Next time, let's get him building a full sentence or two.\",\n  \"transitionTo\": \"duomo\"\n}\n[/DEBRIEF]",
+        "spoken": "Il Duomo! Un'altra cattedrale, ma senza gol.",
+        "hint": null
+      }
+    ],
+    "debrief": {
+      "learned": [
+        "la maglia — the jersey",
+        "il tifoso — the fan",
+        "la vittoria — victory",
+        "il campionato — the league",
+        "l'attaccante — the striker",
+        "il portiere — the goalkeeper",
+        "segnare — to score",
+        "il capitano — the captain",
+        "il difensore — the defender"
+      ],
+      "retry": [
+        "la Champions League — Champions League",
+        "il mister — the manager",
+        "il pareggio — draw"
+      ],
+      "paolo_says": "Chad came in with pure enthusiasm and zero fear — he might not have full sentences yet, but he grabbed every word I threw at him and ran with it like Leão on the counter-attack. The energy was perfect, and 'l'attaccante segna stasera' landed beautifully. Next time, let's get him building a full sentence or two.",
+      "transitionTo": "duomo"
+    }
+  },
+  "improvisingRun": {
+    "completed": true,
+    "turnCount": 16,
+    "stalled": false,
+    "phrasesUsed": [
+      "La maglia",
+      "Il campionato",
+      "La Champions League",
+      "Segnare",
+      "Il portiere",
+      "L'attaccante",
+      "La vittoria",
+      "Il mister",
+      "Forza Milan!"
+    ],
+    "phrasesUnused": [
+      "Il tifoso",
+      "Tifare per",
+      "La sconfitta"
+    ],
+    "phraseUtilization": "9/12",
+    "sufficiencyGaps": [],
+    "characterViolations": [],
+    "transcript": [
+      {
+        "turn": 0,
+        "speaker": "Paolo",
+        "raw": "Benvenuti a Casa Milan! Questo posto è speciale — si sente subito, vero?\n\n[ENGLISH: Welcome to Casa Milan! This place is special — you can feel it right away, can't you?]\n\n[HINT: Sì, è incredibile! — \"Yes, it's incredible!\"]",
+        "spoken": "Benvenuti a Casa Milan! Questo posto è speciale — si sente subito, vero?",
+        "hint": "Sì, è incredibile! — \"Yes, it's incredible!\""
+      },
+      {
+        "turn": 1,
+        "speaker": "Chad",
+        "raw": "Oh sì, sì! Questo posto è... molto speciale! Forza Milan! \n\n*looks around excitedly*\n\nIo sono un grande tifoso! Da America... uh... sono venuto per... il campionato? Si dice così?",
+        "spoken": "Oh sì, sì! Questo posto è... molto speciale! Forza Milan! \n\n*looks around excitedly*\n\nIo sono un grande tifoso! Da America... uh... sono venuto per... il campionato? Si dice così?"
+      },
+      {
+        "turn": 1,
+        "speaker": "Paolo",
+        "raw": "Forza Milan! Un tifoso americano — benvenissimo! Allora, la domanda importante... per chi tifi?\n\n[ENGLISH: Forza Milan! An American fan — very welcome! So, the important question... who do you support?]\n\n[HINT: Tifo per il City, ma ammiro il Milan.]",
+        "spoken": "Forza Milan! Un tifoso americano — benvenissimo! Allora, la domanda importante... per chi tifi?",
+        "hint": "Tifo per il City, ma ammiro il Milan."
+      },
+      {
+        "turn": 2,
+        "speaker": "Chad",
+        "raw": "*grins big*\n\nIo tifo per... Milan, ovviamente! Forza Milan!\n\nMa... uh... a casa, in America, io tifo per i Chicago Bulls. Basketball, no? Ma adesso... io sono un tifoso di Milan. Il mister è... molto bravo? \n\n*gives thumbs up*",
+        "spoken": "*grins big*\n\nIo tifo per... Milan, ovviamente! Forza Milan!\n\nMa... uh... a casa, in America, io tifo per i Chicago Bulls. Basketball, no? Ma adesso... io sono un tifoso di Milan. Il mister è... molto bravo? \n\n*gives thumbs up*"
+      },
+      {
+        "turn": 2,
+        "speaker": "Paolo",
+        "raw": "Ah, tifi per il Milan — rispetto! E i Chicago Bulls... Michael Jordan, un mito! Ma adesso sei a casa tua, qui a Casa Milan.\n\n[ENGLISH: Ah, you support Milan — respect! And the Chicago Bulls... Michael Jordan, a legend! But now you're in your own home, here at Casa Milan.]\n\n[HINT: Sì, sono a casa mia! Possiamo vedere il museo?]",
+        "spoken": "Ah, tifi per il Milan — rispetto! E i Chicago Bulls... Michael Jordan, un mito! Ma adesso sei a casa tua, qui a Casa Milan.",
+        "hint": "Sì, sono a casa mia! Possiamo vedere il museo?"
+      },
+      {
+        "turn": 3,
+        "speaker": "Chad",
+        "raw": "Sì, sì! Michael Jordan — il migliore! Un... uh... un attaccante? No no... *laughs* ...non è calcio!\n\nMa qui, il mio attaccante preferito è... uh... numero nove? L'attaccante è molto... uh... *mimes kicking a ball* ...segnare, segnare! Molto bravo per segnare!\n\nForza Milan! 🔴⚫",
+        "spoken": "Sì, sì! Michael Jordan — il migliore! Un... uh... un attaccante? No no... *laughs* ...non è calcio!\n\nMa qui, il mio attaccante preferito è... uh... numero nove? L'attaccante è molto... uh... *mimes kicking a ball* ...segnare, segnare! Molto bravo per segnare!\n\nForza Milan! 🔴⚫"
+      },
+      {
+        "turn": 3,
+        "speaker": "Paolo",
+        "raw": "Benvenuto nel museo — vieni, ti faccio vedere una cosa straordinaria!\n\n[ENGLISH: Welcome to the museum — come, let me show you something extraordinary!]\n\n[HINT: Cosa è questo? — \"What is this?\"]",
+        "spoken": "Benvenuto nel museo — vieni, ti faccio vedere una cosa straordinaria!",
+        "hint": "Cosa è questo? — \"What is this?\""
+      },
+      {
+        "turn": 4,
+        "speaker": "Chad",
+        "raw": "Oh, grazie mille! Sì, sì, voglio vedere!\n\n*follows eagerly*\n\nQuesto museo è... bellissimo! Io voglio... uh... comprare una maglia? La maglia di Milan per me e... uh... mia moglie! Lei è molto... uh... entusiasta? No... *laughs* ...lei preferisce shopping, non calcio!",
+        "spoken": "Oh, grazie mille! Sì, sì, voglio vedere!\n\n*follows eagerly*\n\nQuesto museo è... bellissimo! Io voglio... uh... comprare una maglia? La maglia di Milan per me e... uh... mia moglie! Lei è molto... uh... entusiasta? No... *laughs* ...lei preferisce shopping, non calcio!"
+      },
+      {
+        "turn": 4,
+        "speaker": "Paolo",
+        "raw": "Guarda qui — questa è la Coppa dei Campioni del 1969, la prima Champions League del Milan!\n\n[ENGLISH: Look here — this is the European Cup from 1969, Milan's first Champions League!]\n\n[HINT: La Champions League! È bellissima!]",
+        "spoken": "Guarda qui — questa è la Coppa dei Campioni del 1969, la prima Champions League del Milan!",
+        "hint": "La Champions League! È bellissima!"
+      },
+      {
+        "turn": 5,
+        "speaker": "Chad",
+        "raw": "OH MIO DIO! \n\n*stares with wide eyes*\n\nLa Champions League... del... millenovecentosessantanove? Wow! La vittoria più... uh... più grande! \n\n*takes out phone for a photo*\n\nPosso fare una foto? Per mia moglie! Lei non crede... uh... she won't believe this! Incredibile!",
+        "spoken": "OH MIO DIO! \n\n*stares with wide eyes*\n\nLa Champions League... del... millenovecentosessantanove? Wow! La vittoria più... uh... più grande! \n\n*takes out phone for a photo*\n\nPosso fare una foto? Per mia moglie! Lei non crede... uh... she won't believe this! Incredibile!"
+      },
+      {
+        "turn": 5,
+        "speaker": "Paolo",
+        "raw": "Certo, fai pure la foto! E sai, il Milan ha vinto la Champions League sette volte in totale — un record leggendario!\n\n[ENGLISH: Of course, go ahead and take the photo! And you know, Milan have won the Champions League seven times in total — a legendary record!]\n\n[HINT: Sette volte! Incredibile! E questa maglia, chi è?]",
+        "spoken": "Certo, fai pure la foto! E sai, il Milan ha vinto la Champions League sette volte in totale — un record leggendario!",
+        "hint": "Sette volte! Incredibile! E questa maglia, chi è?"
+      },
+      {
+        "turn": 6,
+        "speaker": "Chad",
+        "raw": "SETTE?! Sette volte?! \n\n*counts on fingers*\n\nUno, due, tre... sette! Mamma mia!\n\nIn America noi diciamo... uh... \"dynasty!\" La... la dinastia di Milan! Il campionato europeo, sette volte... il portiere, l'attaccante, il mister — tutti leggendari! \n\n*shakes head in disbelief*\n\nForza Milan! Io non sapevo... wow!",
+        "spoken": "SETTE?! Sette volte?! \n\n*counts on fingers*\n\nUno, due, tre... sette! Mamma mia!\n\nIn America noi diciamo... uh... \"dynasty!\" La... la dinastia di Milan! Il campionato europeo, sette volte... il portiere, l'attaccante, il mister — tutti leggendari! \n\n*shakes head in disbelief*\n\nForza Milan! Io non sapevo... wow!"
+      },
+      {
+        "turn": 6,
+        "speaker": "Paolo",
+        "raw": "Sì, una dinastia vera! E vedi questa maglia qui — è di Franco Baresi, il capitano più grande della storia del Milan!\n\n[ENGLISH: Yes, a true dynasty! And look at this jersey here — it's Franco Baresi's, the greatest captain in Milan's history!]\n\n[HINT: Chi è Franco Baresi? Era un difensore?]",
+        "spoken": "Sì, una dinastia vera! E vedi questa maglia qui — è di Franco Baresi, il capitano più grande della storia del Milan!",
+        "hint": "Chi è Franco Baresi? Era un difensore?"
+      },
+      {
+        "turn": 7,
+        "speaker": "Chad",
+        "raw": "Franco Baresi! Sì, sì, conosco questo nome!\n\n*leans in close to look at the jersey*\n\nLa maglia di Baresi... numero... uh... *squints* ...numero sei? È bellissima! \n\nIl capitano... uh... è come il... il \"quarterback\" di Milan? *laughs at own joke*\n\nPosso... uh... toccare la maglia? No no, probabilmente no... *steps back respectfully* ...è molto importante, capisco!",
+        "spoken": "Franco Baresi! Sì, sì, conosco questo nome!\n\n*leans in close to look at the jersey*\n\nLa maglia di Baresi... numero... uh... *squints* ...numero sei? È bellissima! \n\nIl capitano... uh... è come il... il \"quarterback\" di Milan? *laughs at own joke*\n\nPosso... uh... toccare la maglia? No no, probabilmente no... *steps back respectfully* ...è molto importante, capisco!"
+      },
+      {
+        "turn": 7,
+        "speaker": "Paolo",
+        "raw": "Esatto, numero sei — ritirato per sempre, nessuno può usarlo più! Baresi era il difensore più forte del mondo, non il quarterback! *laughs*\n\n[ENGLISH: Exactly, number six — retired forever, nobody can use it anymore! Baresi was the strongest defender in the world, not the quarterback!]\n\n[HINT: E adesso, chi è il migliore attaccante del Milan?]",
+        "spoken": "Esatto, numero sei — ritirato per sempre, nessuno può usarlo più! Baresi era il difensore più forte del mondo, non il quarterback! *laughs*",
+        "hint": "E adesso, chi è il migliore attaccante del Milan?"
+      },
+      {
+        "turn": 8,
+        "speaker": "Chad",
+        "raw": "*laughs and slaps forehead*\n\nAh sì, il difensore! Non il quarterback — mi dispiace, mi dispiace! Io sono americano, è normale... *laughs*\n\nIl numero sei... ritirato per sempre! Come... uh... come Michael Jordan e il numero ventitré a Chicago! Stesso stesso... uh... la stessa... tradizione?\n\nBaresi — un leggenda! Un mito!",
+        "spoken": "*laughs and slaps forehead*\n\nAh sì, il difensore! Non il quarterback — mi dispiace, mi dispiace! Io sono americano, è normale... *laughs*\n\nIl numero sei... ritirato per sempre! Come... uh... come Michael Jordan e il numero ventitré a Chicago! Stesso stesso... uh... la stessa... tradizione?\n\nBaresi — un leggenda! Un mito!"
+      },
+      {
+        "turn": 8,
+        "speaker": "Paolo",
+        "raw": "Perfetto, esattamente come Jordan e il ventitré — la stessa tradizione! E adesso, parliamo della squadra di oggi — l'attaccante più importante si chiama Morata, molto pericoloso!\n\n[ENGLISH: Perfect, exactly like Jordan and twenty-three — the same tradition! And now, let's talk about today's squad — the most important striker is called Morata, very dangerous!]\n\n[HINT: Morata segnerà stasera? — \"Will Morata score tonight?\"]",
+        "spoken": "Perfetto, esattamente come Jordan e il ventitré — la stessa tradizione! E adesso, parliamo della squadra di oggi — l'attaccante più importante si chiama Morata, molto pericoloso!",
+        "hint": "Morata segnerà stasera? — \"Will Morata score tonight?\""
+      },
+      {
+        "turn": 9,
+        "speaker": "Chad",
+        "raw": "Morata! Sì, sì, conosco Morata!\n\n*gets excited*\n\nLui è... spagnolo, no? Io so un poco di... uh... español también! *laughs* \n\nMorata è molto bravo per segnare! L'attaccante più... uh... più pericoloso! Come un... *mimes shooting a ball* ...gol, gol, gol!\n\nForza Milan! Forza Morata! 🔴⚫",
+        "spoken": "Morata! Sì, sì, conosco Morata!\n\n*gets excited*\n\nLui è... spagnolo, no? Io so un poco di... uh... español también! *laughs* \n\nMorata è molto bravo per segnare! L'attaccante più... uh... più pericoloso! Come un... *mimes shooting a ball* ...gol, gol, gol!\n\nForza Milan! Forza Morata! 🔴⚫"
+      },
+      {
+        "turn": 9,
+        "speaker": "Paolo",
+        "raw": "Sì, spagnolo — bravo! E il nostro portiere, Maignan, è fortissimo, uno dei migliori in Europa. Secondo te, chi segnerà stasera?\n\n[ENGLISH: Yes, Spanish — well done! And our goalkeeper, Maignan, is very strong, one of the best in Europe. In your opinion, who will score tonight?]\n\n[HINT: Morata segnerà stasera! — \"Morata will score tonight!\"]",
+        "spoken": "Sì, spagnolo — bravo! E il nostro portiere, Maignan, è fortissimo, uno dei migliori in Europa. Secondo te, chi segnerà stasera?",
+        "hint": "Morata segnerà stasera! — \"Morata will score tonight!\""
+      },
+      {
+        "turn": 10,
+        "speaker": "Chad",
+        "raw": "Ohhh, stasera c'è una partita?! \n\n*jumps excitedly*\n\nIo dico... Morata segna! Uh... Morata segna... due gol! Sì, due gol per l'attaccante!\n\nE il portiere... Maignan... uh... zero gol per l'altro squadra! *makes blocking gesture* Il portiere è fortissimo, la vittoria è per Milan!\n\nUh... quanto costa un biglietto? Posso venire?! 🔴⚫",
+        "spoken": "Ohhh, stasera c'è una partita?! \n\n*jumps excitedly*\n\nIo dico... Morata segna! Uh... Morata segna... due gol! Sì, due gol per l'attaccante!\n\nE il portiere... Maignan... uh... zero gol per l'altro squadra! *makes blocking gesture* Il portiere è fortissimo, la vittoria è per Milan!\n\nUh... quanto costa un biglietto? Posso venire?! 🔴⚫"
+      },
+      {
+        "turn": 10,
+        "speaker": "Paolo",
+        "raw": "Purtroppo la partita è sold out stasera! Ma nel campionato, il Milan è in ottima posizione quest'anno — stiamo lottando per il titolo!\n\n*a Neapolitan fan nearby overhears and laughs*\n\n\"Ottima posizione? Il Napoli è davanti a voi, amico!\"\n\n[ENGLISH: Unfortunately the match is sold out tonight! But in the league, Milan are in a great position this year — we're fighting for the title! / \"Great position? Napoli are ahead of you, friend!\"]\n\n[HINT: Ma il Milan è più forte del Napoli!]",
+        "spoken": "Purtroppo la partita è sold out stasera! Ma nel campionato, il Milan è in ottima posizione quest'anno — stiamo lottando per il titolo!\n\n*a Neapolitan fan nearby overhears and laughs*\n\n\"Ottima posizione? Il Napoli è davanti a voi, amico!\"",
+        "hint": "Ma il Milan è più forte del Napoli!"
+      },
+      {
+        "turn": 11,
+        "speaker": "Chad",
+        "raw": "*laughs and looks back and forth between the two*\n\nOh no, no no... una rivalità! Come... uh... Cubs e White Sox a Chicago!\n\n*turns to Neapolitan fan*\n\nUh... il Napoli è... buono, sì... ma il Milan è più... uh... più leggendario! Sette Champions League, amico! Sette!\n\n*turns back and whispers*\n\nHo detto bene? *laughs nervously* Forza Milan! 🔴⚫",
+        "spoken": "*laughs and looks back and forth between the two*\n\nOh no, no no... una rivalità! Come... uh... Cubs e White Sox a Chicago!\n\n*turns to Neapolitan fan*\n\nUh... il Napoli è... buono, sì... ma il Milan è più... uh... più leggendario! Sette Champions League, amico! Sette!\n\n*turns back and whispers*\n\nHo detto bene? *laughs nervously* Forza Milan! 🔴⚫"
+      },
+      {
+        "turn": 11,
+        "speaker": "Paolo",
+        "raw": "Hai detto benissimo — sette Champions League, il Napoli non può rispondere! Il tifoso napoletano se n'è andato in silenzio!\n\n[ENGLISH: You said it perfectly — seven Champions League titles, Napoli can't answer that! The Neapolitan fan left in silence!]\n\n[HINT: Perfetto! Adesso voglio comprare una maglia!]",
+        "spoken": "Hai detto benissimo — sette Champions League, il Napoli non può rispondere! Il tifoso napoletano se n'è andato in silenzio!",
+        "hint": "Perfetto! Adesso voglio comprare una maglia!"
+      },
+      {
+        "turn": 12,
+        "speaker": "Chad",
+        "raw": "*pumps fist in the air*\n\nSì, sì! La vittoria... anche senza partita! *laughs*\n\nIo sono un tifoso di Milan adesso... uh... ufficialmente! Quando torno a Chicago, io dico a tutti — il Milan è il migliore! Il campionato, la Champions League... tutto!\n\n*looks around the museum*\n\nCosa c'è ancora da vedere qui? Voglio vedere tutto!",
+        "spoken": "*pumps fist in the air*\n\nSì, sì! La vittoria... anche senza partita! *laughs*\n\nIo sono un tifoso di Milan adesso... uh... ufficialmente! Quando torno a Chicago, io dico a tutti — il Milan è il migliore! Il campionato, la Champions League... tutto!\n\n*looks around the museum*\n\nCosa c'è ancora da vedere qui? Voglio vedere tutto!"
+      },
+      {
+        "turn": 12,
+        "speaker": "Paolo",
+        "raw": "Il museo è bellissimo, ma adesso — vieni nel negozio! Cosa vuoi comprare, una maglia o una sciarpa?\n\n[ENGLISH: The museum is beautiful, but now — come to the shop! What do you want to buy, a jersey or a scarf?]\n\n[HINT: Voglio una maglia di Milan, numero nove!]",
+        "spoken": "Il museo è bellissimo, ma adesso — vieni nel negozio! Cosa vuoi comprare, una maglia o una sciarpa?",
+        "hint": "Voglio una maglia di Milan, numero nove!"
+      },
+      {
+        "turn": 13,
+        "speaker": "Chad",
+        "raw": "OH SÌ! Il negozio! \n\n*walks fast toward the shop*\n\nIo voglio... uh... tutti e due! La maglia E la sciarpa! \n\n*counts on fingers*\n\nUna maglia per me... una maglia per mia moglie... e una sciarpa per... uh... mio figlio a Chicago! Lui ha otto anni e lui è già un tifoso... uh... un piccolo tifoso di Milan!\n\nQuanto costa la maglia? 🔴⚫",
+        "spoken": "OH SÌ! Il negozio! \n\n*walks fast toward the shop*\n\nIo voglio... uh... tutti e due! La maglia E la sciarpa! \n\n*counts on fingers*\n\nUna maglia per me... una maglia per mia moglie... e una sciarpa per... uh... mio figlio a Chicago! Lui ha otto anni e lui è già un tifoso... uh... un piccolo tifoso di Milan!\n\nQuanto costa la maglia? 🔴⚫"
+      },
+      {
+        "turn": 13,
+        "speaker": "Paolo",
+        "raw": "Un piccolo tifoso di otto anni — bellissimo, la passione si eredita! La maglia costa circa novanta euro, la sciarpa venti.\n\n[ENGLISH: A little fan of eight years old — beautiful, passion is inherited! The jersey costs about ninety euros, the scarf twenty.]\n\n[HINT: Perfetto! Prendo due maglie e una sciarpa!]",
+        "spoken": "Un piccolo tifoso di otto anni — bellissimo, la passione si eredita! La maglia costa circa novanta euro, la sciarpa venti.",
+        "hint": "Perfetto! Prendo due maglie e una sciarpa!"
+      },
+      {
+        "turn": 14,
+        "speaker": "Chad",
+        "raw": "Novanta euro... *does mental math*\n\nUh... novanta più novanta più venti... è... duecento euro? *counts on fingers nervously* \n\nMia moglie... uh... lei non è molto felice! *laughs* \n\nMa! La maglia di Milan è... uh... un investimento! Come Baresi, numero sei — molto importante per la famiglia Chad! \n\n*pulls out wallet*\n\nOkay, okay... io compro due maglie e una sciarpa. Accettate... uh... credit card? Visa?",
+        "spoken": "Novanta euro... *does mental math*\n\nUh... novanta più novanta più venti... è... duecento euro? *counts on fingers nervously* \n\nMia moglie... uh... lei non è molto felice! *laughs* \n\nMa! La maglia di Milan è... uh... un investimento! Come Baresi, numero sei — molto importante per la famiglia Chad! \n\n*pulls out wallet*\n\nOkay, okay... io compro due maglie e una sciarpa. Accettate... uh... credit card? Visa?"
+      },
+      {
+        "turn": 14,
+        "speaker": "Paolo",
+        "raw": "Certo, carta di credito, nessun problema! E hai ragione — non è una spesa, è un investimento per la famiglia!\n\n[ENGLISH: Of course, credit card, no problem! And you're right — it's not an expense, it's an investment for the family!]\n\n[HINT: Grazie mille, Paolo! È stato bellissimo!]",
+        "spoken": "Certo, carta di credito, nessun problema! E hai ragione — non è una spesa, è un investimento per la famiglia!",
+        "hint": "Grazie mille, Paolo! È stato bellissimo!"
+      },
+      {
+        "turn": 15,
+        "speaker": "Chad",
+        "raw": "*laughs and nods enthusiastically*\n\nSì, sì! Un investimento! Io dico questo a mia moglie stasera... *mimics explaining to wife* ...\"non è spesa, è investimento!\" \n\n*hands over credit card*\n\nE... uh... posso avere... uh... una foto con la maglia? Per Instagram! I miei amici a Chicago non credono... uh... che io sono qui a Casa Milan!\n\nForza Milan! 🔴⚫",
+        "spoken": "*laughs and nods enthusiastically*\n\nSì, sì! Un investimento! Io dico questo a mia moglie stasera... *mimics explaining to wife* ...\"non è spesa, è investimento!\" \n\n*hands over credit card*\n\nE... uh... posso avere... uh... una foto con la maglia? Per Instagram! I miei amici a Chicago non credono... uh... che io sono qui a Casa Milan!\n\nForza Milan! 🔴⚫"
+      },
+      {
+        "turn": 15,
+        "speaker": "Paolo",
+        "raw": "Certo, foto subito — sorridi! Forza Milan! E adesso, dove vai adesso?\n\n[ENGLISH: Of course, photo right away — smile! Forza Milan! And now, where are you going next?]\n\n[HINT: Vado a San Siro! — \"I'm going to San Siro!\"]",
+        "spoken": "Certo, foto subito — sorridi! Forza Milan! E adesso, dove vai adesso?",
+        "hint": "Vado a San Siro! — \"I'm going to San Siro!\""
+      },
+      {
+        "turn": 16,
+        "speaker": "Chad",
+        "raw": "*big smile for photo*\n\nFORZA MILAN! 🔴⚫\n\n*thinks hard*\n\nAdesso io vado... uh... al Duomo! Sì, il Duomo di Milano! Mia moglie aspetta lì con... uh... molto shopping! *laughs*\n\nE poi stasera... un ristorante! Io voglio... uh... la pasta e... uh... il vino rosso! Come i colori di Milan — rosso e nero! *points to jersey proudly*",
+        "spoken": "*big smile for photo*\n\nFORZA MILAN! 🔴⚫\n\n*thinks hard*\n\nAdesso io vado... uh... al Duomo! Sì, il Duomo di Milano! Mia moglie aspetta lì con... uh... molto shopping! *laughs*\n\nE poi stasera... un ristorante! Io voglio... uh... la pasta e... uh... il vino rosso! Come i colori di Milan — rosso e nero! *points to jersey proudly*"
+      },
+      {
+        "turn": 16,
+        "speaker": "Paolo",
+        "raw": "Il Duomo! Un'altra cattedrale, ma senza gol.\n\n[ENGLISH: The Duomo! Another cathedral, but without goals.]\n\n[DEBRIEF]\n{\n  \"learned\": [\"il tifoso — the fan\", \"la maglia — the jersey\", \"l'attaccante — the striker\", \"il portiere — the goalkeeper\", \"segnare — to score\", \"il campionato — the league\", \"la vittoria — the victory\", \"il capitano — the captain\", \"il difensore — the defender\"],\n  \"retry\": [\"il calcio di rigore — penalty kick\", \"fuorigioco — offside\", \"il pareggio — draw\"],\n  \"paolo_says\": \"Chad is an absolute natural — his enthusiasm is genuine, his Italian is coming along beautifully, and honestly, any guy who calls a Milan jersey 'an investment' is already thinking like a true tifoso.\",\n  \"transitionTo\": \"duomo\"\n}\n[/DEBRIEF]",
+        "spoken": "Il Duomo! Un'altra cattedrale, ma senza gol.",
+        "hint": null
+      }
+    ],
+    "debrief": {
+      "learned": [
+        "il tifoso — the fan",
+        "la maglia — the jersey",
+        "l'attaccante — the striker",
+        "il portiere — the goalkeeper",
+        "segnare — to score",
+        "il campionato — the league",
+        "la vittoria — the victory",
+        "il capitano — the captain",
+        "il difensore — the defender"
+      ],
+      "retry": [
+        "il calcio di rigore — penalty kick",
+        "fuorigioco — offside",
+        "il pareggio — draw"
+      ],
+      "paolo_says": "Chad is an absolute natural — his enthusiasm is genuine, his Italian is coming along beautifully, and honestly, any guy who calls a Milan jersey 'an investment' is already thinking like a true tifoso.",
+      "transitionTo": "duomo"
+    },
+    "derailmentMoments": [
+      {
+        "turn": 8,
+        "chadSaid": "*laughs and slaps forehead*\n\nAh sì, il difensore! Non il quarterback — mi dispiace, mi dispiace! Io sono americano, è normale... *laughs*\n\nIl numero sei... ritirato per sempre! Come... uh... come Michael Jordan e il numero ventitré a Chicago! Stesso stesso... uh... la stessa... tradizione?\n\nBaresi — un leggenda! Un mito!",
+        "characterResponse": "Perfetto, esattamente come Jordan e il ventitré — la stessa tradizione! E adesso, parliamo della squ",
+        "handled": true
+      }
+    ]
+  },
+  "summary": {
+    "completable": true,
+    "phraseUtilization": "11/12",
+    "missingPhrases": [],
+    "unusedPhrases": [
+      "La sconfitta"
+    ],
+    "derailmentHandling": "good",
+    "overallGrade": "A",
+    "fixesNeeded": []
+  }
+}

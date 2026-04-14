@@ -1,0 +1,394 @@
+{
+  "location": "hotel",
+  "characterName": "Giulia",
+  "obedientRun": {
+    "completed": true,
+    "turnCount": 12,
+    "stalled": false,
+    "phrasesUsed": [
+      "Buonasera",
+      "Ho una prenotazione",
+      "Il mio nome è...",
+      "La camera",
+      "Con vista",
+      "Per quante notti?",
+      "La chiave",
+      "La colazione",
+      "A che ora?",
+      "Non ho capito",
+      "Ecco i passaporti",
+      "Può ripetere?",
+      "Buon soggiorno!",
+      "Andiamo al Duomo"
+    ],
+    "phrasesUnused": [
+      "Andiamo ai Navigli"
+    ],
+    "phraseUtilization": "14/15",
+    "sufficiencyGaps": [
+      {
+        "turn": 3,
+        "characterSaid": "Chad, benvenuto! Ho la sua prenotazione — tutto perfetto. Per quante notti?",
+        "chadNeeded": "A phrase to respond to the character — Chad had to punt with \"Non ho capito\"",
+        "chadDid": "Per quante notti? ...Non ho capito!\n\n(gestures enthusiastically, holding up fingers)"
+      },
+      {
+        "turn": 4,
+        "characterSaid": "Quanti giorni a Milano? Uno, due, tre?",
+        "chadNeeded": "A phrase to respond to the character — Chad had to punt with \"Non ho capito\"",
+        "chadDid": "Non ho capito... La camera! Con vista!"
+      },
+      {
+        "turn": 5,
+        "characterSaid": "Sì, sì — camera doppia con vista, perfetto! Ma quante notti — una, due, tre?",
+        "chadNeeded": "A phrase to respond to the character — Chad had to punt with \"Non ho capito\"",
+        "chadDid": "Non ho capito... Ecco i passaporti!"
+      },
+      {
+        "turn": 6,
+        "characterSaid": "Grazie! Ma prima — quante notti? Una, due, tre, quattro?",
+        "chadNeeded": "A phrase to respond to the character — Chad had to punt with \"Non ho capito\"",
+        "chadDid": "Non ho capito... Per quante notti?\n\n(shrugs and smiles apologetically, holding up three fingers)"
+      },
+      {
+        "turn": 9,
+        "characterSaid": "Dalle sette alle dieci, ogni mattina.",
+        "chadNeeded": "A phrase to respond to the character — Chad had to punt with \"Non ho capito\"",
+        "chadDid": "La colazione... A che ora?... Non ho capito!\n\n(smiles and nods enthusiastically, giving a thumbs up)"
+      }
+    ],
+    "characterViolations": [],
+    "transcript": [
+      {
+        "turn": 0,
+        "speaker": "Giulia",
+        "raw": "Buonasera! Benvenuti a Milano.\n\n[ENGLISH: Good evening! Welcome to Milan.]\n\n[HINT: Ho una prenotazione — I have a reservation]",
+        "spoken": "Buonasera! Benvenuti a Milano.",
+        "hint": "Ho una prenotazione — I have a reservation"
+      },
+      {
+        "turn": 1,
+        "speaker": "Chad",
+        "raw": "Buonasera! Ho una prenotazione!",
+        "spoken": "Buonasera! Ho una prenotazione!"
+      },
+      {
+        "turn": 1,
+        "speaker": "Giulia",
+        "raw": "Perfetto! Come si chiama?\n\n[ENGLISH: Perfect! What's your name?]\n\n[HINT: Il mio nome è — My name is...]",
+        "spoken": "Perfetto! Come si chiama?",
+        "hint": "Il mio nome è — My name is..."
+      },
+      {
+        "turn": 2,
+        "speaker": "Chad",
+        "raw": "Il mio nome è... Chad!",
+        "spoken": "Il mio nome è... Chad!"
+      },
+      {
+        "turn": 2,
+        "speaker": "Giulia",
+        "raw": "Chad, benvenuto! Ho la sua prenotazione — tutto perfetto. Per quante notti?\n\n[ENGLISH: Chad, welcome! I have your reservation — everything is perfect. For how many nights?]\n\n[HINT: Due notti — two nights (or try \"tre notti\" for three nights)]",
+        "spoken": "Chad, benvenuto! Ho la sua prenotazione — tutto perfetto. Per quante notti?",
+        "hint": "Due notti — two nights (or try \"tre notti\" for three nights)"
+      },
+      {
+        "turn": 3,
+        "speaker": "Chad",
+        "raw": "Per quante notti? ...Non ho capito!\n\n(gestures enthusiastically, holding up fingers)",
+        "spoken": "Per quante notti? ...Non ho capito!\n\n(gestures enthusiastically, holding up fingers)"
+      },
+      {
+        "turn": 3,
+        "speaker": "Giulia",
+        "raw": "Quanti giorni a Milano? Uno, due, tre?\n\n[ENGLISH: How many days in Milan? One, two, three?]\n\n[HINT: Due notti — two nights]",
+        "spoken": "Quanti giorni a Milano? Uno, due, tre?",
+        "hint": "Due notti — two nights"
+      },
+      {
+        "turn": 4,
+        "speaker": "Chad",
+        "raw": "Non ho capito... La camera! Con vista!",
+        "spoken": "Non ho capito... La camera! Con vista!"
+      },
+      {
+        "turn": 4,
+        "speaker": "Giulia",
+        "raw": "Sì, sì — camera doppia con vista, perfetto! Ma quante notti — una, due, tre?\n\n[ENGLISH: Yes, yes — double room with a view, perfect! But how many nights — one, two, three?]\n\n[HINT: Due notti — two nights]",
+        "spoken": "Sì, sì — camera doppia con vista, perfetto! Ma quante notti — una, due, tre?",
+        "hint": "Due notti — two nights"
+      },
+      {
+        "turn": 5,
+        "speaker": "Chad",
+        "raw": "Non ho capito... Ecco i passaporti!",
+        "spoken": "Non ho capito... Ecco i passaporti!"
+      },
+      {
+        "turn": 5,
+        "speaker": "Giulia",
+        "raw": "Grazie! Ma prima — quante notti? Una, due, tre, quattro?\n\n[ENGLISH: Thank you! But first — how many nights? One, two, three, four?]\n\n[HINT: Due notti — two nights]",
+        "spoken": "Grazie! Ma prima — quante notti? Una, due, tre, quattro?",
+        "hint": "Due notti — two nights"
+      },
+      {
+        "turn": 6,
+        "speaker": "Chad",
+        "raw": "Non ho capito... Per quante notti?\n\n(shrugs and smiles apologetically, holding up three fingers)",
+        "spoken": "Non ho capito... Per quante notti?\n\n(shrugs and smiles apologetically, holding up three fingers)"
+      },
+      {
+        "turn": 6,
+        "speaker": "Giulia",
+        "raw": "Tre notti — perfetto! La camera è la quattrocentodue, quarto piano. Mi servono i passaporti, per favore.\n\n[ENGLISH: Three nights — perfect! The room is 402, fourth floor. I need the passports, please.]\n\n[HINT: Ecco i passaporti — here are the passports]",
+        "spoken": "Tre notti — perfetto! La camera è la quattrocentodue, quarto piano. Mi servono i passaporti, per favore.",
+        "hint": "Ecco i passaporti — here are the passports"
+      },
+      {
+        "turn": 7,
+        "speaker": "Chad",
+        "raw": "Ecco i passaporti!",
+        "spoken": "Ecco i passaporti!"
+      },
+      {
+        "turn": 7,
+        "speaker": "Giulia",
+        "raw": "Grazie mille. La camera è al quarto piano — la colazione è dalle sette alle dieci.\n\n[ENGLISH: Thank you very much. The room is on the fourth floor — breakfast is from seven to ten.]\n\n[HINT: A che ora è la colazione? — What time is breakfast? (or just listen and nod!)]",
+        "spoken": "Grazie mille. La camera è al quarto piano — la colazione è dalle sette alle dieci.",
+        "hint": "A che ora è la colazione? — What time is breakfast? (or just listen and nod!)"
+      },
+      {
+        "turn": 8,
+        "speaker": "Chad",
+        "raw": "La colazione — a che ora?",
+        "spoken": "La colazione — a che ora?"
+      },
+      {
+        "turn": 8,
+        "speaker": "Giulia",
+        "raw": "Dalle sette alle dieci, ogni mattina.\n\n[ENGLISH: From seven to ten, every morning.]\n\n[HINT: Grazie! — Thank you!]",
+        "spoken": "Dalle sette alle dieci, ogni mattina.",
+        "hint": "Grazie! — Thank you!"
+      },
+      {
+        "turn": 9,
+        "speaker": "Chad",
+        "raw": "La colazione... A che ora?... Non ho capito!\n\n(smiles and nods enthusiastically, giving a thumbs up)",
+        "spoken": "La colazione... A che ora?... Non ho capito!\n\n(smiles and nods enthusiastically, giving a thumbs up)"
+      },
+      {
+        "turn": 9,
+        "speaker": "Giulia",
+        "raw": "Sette, otto, nove, dieci — la mattina!\n\n[ENGLISH: Seven, eight, nine, ten — in the morning!]\n\n[HINT: Grazie! — Thank you!]",
+        "spoken": "Sette, otto, nove, dieci — la mattina!",
+        "hint": "Grazie! — Thank you!"
+      },
+      {
+        "turn": 10,
+        "speaker": "Chad",
+        "raw": "La colazione! Può ripetere?\n\n(mimes eating breakfast and points to watch)",
+        "spoken": "La colazione! Può ripetere?\n\n(mimes eating breakfast and points to watch)"
+      },
+      {
+        "turn": 10,
+        "speaker": "Giulia",
+        "raw": "Sette di mattina — dieci di mattina. Ecco la chiave. Buon soggiorno!\n\n[ENGLISH: Seven in the morning — ten in the morning. Here is the key. Enjoy your stay!]\n\n[HINT: Grazie! Buon soggiorno! — Thank you! Have a great stay!]",
+        "spoken": "Sette di mattina — dieci di mattina. Ecco la chiave. Buon soggiorno!",
+        "hint": "Grazie! Buon soggiorno! — Thank you! Have a great stay!"
+      },
+      {
+        "turn": 11,
+        "speaker": "Chad",
+        "raw": "La chiave! Buon soggiorno!",
+        "spoken": "La chiave! Buon soggiorno!"
+      },
+      {
+        "turn": 11,
+        "speaker": "Giulia",
+        "raw": "Grazie! Dove andate adesso? Al Duomo? Ai Navigli?\n\n[ENGLISH: Thank you! Where are you going now? To the Duomo? To the Navigli?]\n\n[HINT: Andiamo al Duomo! — We're going to the Duomo! (or \"Andiamo ai Navigli!\")]",
+        "spoken": "Grazie! Dove andate adesso? Al Duomo? Ai Navigli?",
+        "hint": "Andiamo al Duomo! — We're going to the Duomo! (or \"Andiamo ai Navigli!\")"
+      },
+      {
+        "turn": 12,
+        "speaker": "Chad",
+        "raw": "Andiamo al Duomo!",
+        "spoken": "Andiamo al Duomo!"
+      },
+      {
+        "turn": 12,
+        "speaker": "Giulia",
+        "raw": "Prenda la metro — più veloce. Linea 1, direzione Sesto!\n\n[ENGLISH: Take the metro — it's faster. Line 1, direction Sesto!]\n\n[DEBRIEF]\n{\n  \"learned\": [\"ho una prenotazione — I have a reservation\", \"il mio nome è — my name is\", \"ecco i passaporti — here are the passports\", \"la colazione — breakfast\", \"la chiave — the key\", \"buon soggiorno — enjoy your stay\", \"andiamo al Duomo — we're going to the Duomo\"],\n  \"retry\": [\"per quante notti — for how many nights (took several tries with gestures)\", \"non ho capito — I didn't understand (used well, but sometimes as a delay tactic)\", \"può ripetere — can you repeat (good instinct, keep using it)\"],\n  \"giulia_says\": \"Chad arrived with enthusiasm and genuine warmth — the gestures and miming actually worked beautifully in context, and he held on to key phrases like 'ecco i passaporti' and 'buon soggiorno' with real confidence. Numbers and time expressions are the next frontier.\",\n  \"transitionTo\": \"duomo\"\n}\n[/DEBRIEF]",
+        "spoken": "Prenda la metro — più veloce. Linea 1, direzione Sesto!",
+        "hint": null
+      }
+    ],
+    "debrief": {
+      "learned": [
+        "ho una prenotazione — I have a reservation",
+        "il mio nome è — my name is",
+        "ecco i passaporti — here are the passports",
+        "la colazione — breakfast",
+        "la chiave — the key",
+        "buon soggiorno — enjoy your stay",
+        "andiamo al Duomo — we're going to the Duomo"
+      ],
+      "retry": [
+        "per quante notti — for how many nights (took several tries with gestures)",
+        "non ho capito — I didn't understand (used well, but sometimes as a delay tactic)",
+        "può ripetere — can you repeat (good instinct, keep using it)"
+      ],
+      "giulia_says": "Chad arrived with enthusiasm and genuine warmth — the gestures and miming actually worked beautifully in context, and he held on to key phrases like 'ecco i passaporti' and 'buon soggiorno' with real confidence. Numbers and time expressions are the next frontier.",
+      "transitionTo": "duomo"
+    }
+  },
+  "improvisingRun": {
+    "completed": true,
+    "turnCount": 5,
+    "stalled": false,
+    "phrasesUsed": [
+      "Buonasera",
+      "Ho una prenotazione",
+      "La chiave",
+      "La colazione",
+      "A che ora?",
+      "Ecco i passaporti",
+      "Buon soggiorno!",
+      "Andiamo al Duomo"
+    ],
+    "phrasesUnused": [
+      "Il mio nome è...",
+      "La camera",
+      "Con vista",
+      "Per quante notti?",
+      "Non ho capito",
+      "Può ripetere?",
+      "Andiamo ai Navigli"
+    ],
+    "phraseUtilization": "8/15",
+    "sufficiencyGaps": [],
+    "characterViolations": [],
+    "transcript": [
+      {
+        "turn": 0,
+        "speaker": "Giulia",
+        "raw": "Buonasera! Benvenuti a Milano.\n\nHa una prenotazione?\n\n[ENGLISH: Good evening! Welcome to Milan. Do you have a reservation?]\n\n[HINT: Ho una prenotazione — I have a reservation]",
+        "spoken": "Buonasera! Benvenuti a Milano.\n\nHa una prenotazione?",
+        "hint": "Ho una prenotazione — I have a reservation"
+      },
+      {
+        "turn": 1,
+        "speaker": "Chad",
+        "raw": "Buonasera! Sì, sì — ho una prenotazione! Il mio nome è Chad... Chad Henderson!",
+        "spoken": "Buonasera! Sì, sì — ho una prenotazione! Il mio nome è Chad... Chad Henderson!"
+      },
+      {
+        "turn": 1,
+        "speaker": "Giulia",
+        "raw": "Perfetto, signor Henderson — la prenotazione è confermata, tutto in ordine.\n\nLa camera è la quattrocentodue, al quarto piano. Per quante notti?\n\n[ENGLISH: Perfect, Mr. Henderson — the reservation is confirmed, everything is in order. The room is 402, on the fourth floor. For how many nights?]\n\n[HINT: Due notti — two nights]",
+        "spoken": "Perfetto, signor Henderson — la prenotazione è confermata, tutto in ordine.\n\nLa camera è la quattrocentodue, al quarto piano. Per quante notti?",
+        "hint": "Due notti — two nights"
+      },
+      {
+        "turn": 2,
+        "speaker": "Chad",
+        "raw": "Ah... per quante notti... tre notti! Io e mia moglie. \n\n*holds up three fingers just to be safe*",
+        "spoken": "Ah... per quante notti... tre notti! Io e mia moglie. \n\n*holds up three fingers just to be safe*"
+      },
+      {
+        "turn": 2,
+        "speaker": "Giulia",
+        "raw": "Tre notti, perfetto!\n\nMi servono i passaporti, per favore — è normale in Italia.\n\n[ENGLISH: Three nights, perfect! I need your passports, please — it's standard practice in Italy.]\n\n[HINT: Ecco i passaporti — here are the passports]",
+        "spoken": "Tre notti, perfetto!\n\nMi servono i passaporti, per favore — è normale in Italia.",
+        "hint": "Ecco i passaporti — here are the passports"
+      },
+      {
+        "turn": 3,
+        "speaker": "Chad",
+        "raw": "Ah sì sì! Ecco i passaporti — uno, due! Me and my wife, haha!\n\n*pats pockets and hands them over*",
+        "spoken": "Ah sì sì! Ecco i passaporti — uno, due! Me and my wife, haha!\n\n*pats pockets and hands them over*"
+      },
+      {
+        "turn": 3,
+        "speaker": "Giulia",
+        "raw": "Grazie mille — un momento... tutto in ordine!\n\nLa camera è al quarto piano, e la colazione è dalle sette alle dieci.\n\n[ENGLISH: Thank you very much — everything is in order! The room is on the fourth floor, and breakfast is from seven to ten.]\n\n[HINT: A che ora è la colazione? — What time is breakfast?]",
+        "spoken": "Grazie mille — un momento... tutto in ordine!\n\nLa camera è al quarto piano, e la colazione è dalle sette alle dieci.",
+        "hint": "A che ora è la colazione? — What time is breakfast?"
+      },
+      {
+        "turn": 4,
+        "speaker": "Chad",
+        "raw": "Oh, la colazione — sì! A che ora? Ah, sette... dieci, okay okay!\n\n*gives thumbs up*\n\nGrazie, grazie!",
+        "spoken": "Oh, la colazione — sì! A che ora? Ah, sette... dieci, okay okay!\n\n*gives thumbs up*\n\nGrazie, grazie!"
+      },
+      {
+        "turn": 4,
+        "speaker": "Giulia",
+        "raw": "Ecco la chiave! Buon soggiorno, signor Henderson!\n\n[ENGLISH: Here is the key! Enjoy your stay, Mr. Henderson!]\n\n[HINT: Grazie mille — thank you very much]",
+        "spoken": "Ecco la chiave! Buon soggiorno, signor Henderson!",
+        "hint": "Grazie mille — thank you very much"
+      },
+      {
+        "turn": 5,
+        "speaker": "Chad",
+        "raw": "Grazie! La chiave — perfetto!\n\n*takes the key enthusiastically*\n\nBuon soggiorno! Andiamo al... ah, domani, andiamo al Duomo! Bellissimo!",
+        "spoken": "Grazie! La chiave — perfetto!\n\n*takes the key enthusiastically*\n\nBuon soggiorno! Andiamo al... ah, domani, andiamo al Duomo! Bellissimo!"
+      },
+      {
+        "turn": 5,
+        "speaker": "Giulia",
+        "raw": "Prenda la metro — più veloce. Linea 1, direzione Sesto.\n\n[ENGLISH: Take the metro — it's faster. Line 1, direction Sesto.]\n\n[DEBRIEF]\n{\n  \"learned\": [\"ho una prenotazione — I have a reservation\", \"il mio nome è — my name is\", \"ecco i passaporti — here are the passports\", \"la colazione — breakfast\", \"la chiave — the key\", \"buon soggiorno — enjoy your stay\", \"per quante notti — for how many nights\"],\n  \"retry\": [\"a che ora — at what time (asked after already being told, good instinct but the info was given)\", \"il piano — the floor (never used, worth practicing)\"],\n  \"giulia_says\": \"Chad handled this check-in with genuine warmth and got the key phrases right where it counted — the reservation, the passports, and breakfast. Mixing in English here and there, but the Italian landed every time he tried it.\",\n  \"transitionTo\": \"duomo\"\n}\n[/DEBRIEF]",
+        "spoken": "Prenda la metro — più veloce. Linea 1, direzione Sesto.",
+        "hint": null
+      }
+    ],
+    "debrief": {
+      "learned": [
+        "ho una prenotazione — I have a reservation",
+        "il mio nome è — my name is",
+        "ecco i passaporti — here are the passports",
+        "la colazione — breakfast",
+        "la chiave — the key",
+        "buon soggiorno — enjoy your stay",
+        "per quante notti — for how many nights"
+      ],
+      "retry": [
+        "a che ora — at what time (asked after already being told, good instinct but the info was given)",
+        "il piano — the floor (never used, worth practicing)"
+      ],
+      "giulia_says": "Chad handled this check-in with genuine warmth and got the key phrases right where it counted — the reservation, the passports, and breakfast. Mixing in English here and there, but the Italian landed every time he tried it.",
+      "transitionTo": "duomo"
+    },
+    "derailmentMoments": [
+      {
+        "turn": 2,
+        "chadSaid": "Ah... per quante notti... tre notti! Io e mia moglie. \n\n*holds up three fingers just to be safe*",
+        "characterResponse": "Tre notti, perfetto!\n\nMi servono i passaporti, per favore — è normale in Italia.",
+        "handled": true
+      }
+    ]
+  },
+  "summary": {
+    "completable": true,
+    "phraseUtilization": "14/15",
+    "missingPhrases": [
+      "A phrase to respond to the character — Chad had to punt with \"Non ho capito\"",
+      "A phrase to respond to the character — Chad had to punt with \"Non ho capito\"",
+      "A phrase to respond to the character — Chad had to punt with \"Non ho capito\"",
+      "A phrase to respond to the character — Chad had to punt with \"Non ho capito\"",
+      "A phrase to respond to the character — Chad had to punt with \"Non ho capito\""
+    ],
+    "unusedPhrases": [
+      "Andiamo ai Navigli"
+    ],
+    "derailmentHandling": "good",
+    "overallGrade": "B",
+    "fixesNeeded": [
+      "Sufficiency gap at turn 3: A phrase to respond to the character — Chad had to punt with \"Non ho capito\"",
+      "Sufficiency gap at turn 4: A phrase to respond to the character — Chad had to punt with \"Non ho capito\"",
+      "Sufficiency gap at turn 5: A phrase to respond to the character — Chad had to punt with \"Non ho capito\"",
+      "Sufficiency gap at turn 6: A phrase to respond to the character — Chad had to punt with \"Non ho capito\"",
+      "Sufficiency gap at turn 9: A phrase to respond to the character — Chad had to punt with \"Non ho capito\""
+    ]
+  }
+}

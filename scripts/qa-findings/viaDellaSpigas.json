@@ -1,0 +1,497 @@
+{
+  "location": "viaDellaSpigas",
+  "characterName": "Valentina",
+  "obedientRun": {
+    "completed": true,
+    "turnCount": 12,
+    "stalled": false,
+    "phrasesUsed": [
+      "Sto solo guardando",
+      "Mi può aiutare?",
+      "Che taglia è?",
+      "Posso provarlo?",
+      "Mi sta bene",
+      "È bellissimo",
+      "Troppo caro",
+      "Ci penso",
+      "Il camerino"
+    ],
+    "phrasesUnused": [
+      "Lo prendo"
+    ],
+    "phraseUtilization": "9/10",
+    "sufficiencyGaps": [],
+    "characterViolations": [
+      {
+        "turn": 3,
+        "violation": "Character may have used English in dialogue: \"~She takes the jacket off the display and holds it up gently.~\n\n\"È in cashmere misto seta — leggeris\"",
+        "severity": "medium"
+      },
+      {
+        "turn": 6,
+        "violation": "Character may have used English in dialogue: \"~She leads you toward the fitting room at the back of the store.~\n\n\"Certo! Il camerino è qui, prego.\"",
+        "severity": "medium"
+      }
+    ],
+    "transcript": [
+      {
+        "turn": 0,
+        "speaker": "Valentina",
+        "raw": "~Soft music drifts through the boutique as you step inside.~\n\n\"Buongiorno! Benvenuti.\"\n\n[ENGLISH: Good afternoon! Welcome.]\n\n[HINT: Sto solo guardando.]",
+        "spoken": "~Soft music drifts through the boutique as you step inside.~\n\n\"Buongiorno! Benvenuti.\"",
+        "hint": "Sto solo guardando."
+      },
+      {
+        "turn": 1,
+        "speaker": "Chad",
+        "raw": "\"Mi può aiutare?\" 😄",
+        "spoken": "\"Mi può aiutare?\" 😄"
+      },
+      {
+        "turn": 1,
+        "speaker": "Valentina",
+        "raw": "~Valentina smiles warmly and steps forward.~\n\n\"Certo, con piacere! Cosa sta cercando oggi?\"\n\n[ENGLISH: Of course, with pleasure! What are you looking for today?]\n\n[HINT: Try saying what you want — for example, \"una giacca\" (a jacket) or \"un regalo\" (a gift).]",
+        "spoken": "~Valentina smiles warmly and steps forward.~\n\n\"Certo, con piacere! Cosa sta cercando oggi?\"",
+        "hint": "Try saying what you want — for example, \"una giacca\" (a jacket) or \"un regalo\" (a gift)."
+      },
+      {
+        "turn": 2,
+        "speaker": "Chad",
+        "raw": "\"Sto solo guardando!\" 😊",
+        "spoken": "\"Sto solo guardando!\" 😊"
+      },
+      {
+        "turn": 2,
+        "speaker": "Valentina",
+        "raw": "~Valentina gestures gracefully toward a display near the window.~\n\n\"Certo, si accomodi! Sa, abbiamo appena ricevuto questa giacca — è davvero speciale.\"\n\n[ENGLISH: Of course, make yourself at home! You know, we just received this jacket — it's really special.]\n\n[HINT: è bellissimo]",
+        "spoken": "~Valentina gestures gracefully toward a display near the window.~\n\n\"Certo, si accomodi! Sa, abbiamo appena ricevuto questa giacca — è davvero speciale.\"",
+        "hint": "è bellissimo"
+      },
+      {
+        "turn": 3,
+        "speaker": "Chad",
+        "raw": "\"È bellissimo!\" 😍",
+        "spoken": "\"È bellissimo!\" 😍"
+      },
+      {
+        "turn": 3,
+        "speaker": "Valentina",
+        "raw": "~She takes the jacket off the display and holds it up gently.~\n\n\"È in cashmere misto seta — leggerissima, ma caldissima. Artigianato italiano al cento per cento.\"\n\n[ENGLISH: It's cashmere and silk blend — incredibly light, but very warm. One hundred percent Italian craftsmanship.]\n\n[HINT: che taglia è]",
+        "spoken": "~She takes the jacket off the display and holds it up gently.~\n\n\"È in cashmere misto seta — leggerissima, ma caldissima. Artigianato italiano al cento per cento.\"",
+        "hint": "che taglia è"
+      },
+      {
+        "turn": 4,
+        "speaker": "Chad",
+        "raw": "\"Posso provarlo?\" 😊",
+        "spoken": "\"Posso provarlo?\" 😊"
+      },
+      {
+        "turn": 4,
+        "speaker": "Valentina",
+        "raw": "~She checks the tag with a practiced glance.~\n\n\"Che taglia porta, di solito?\"\n\n[ENGLISH: What size do you usually wear?]\n\n[HINT: Try saying a size — for example, \"taglia media\" (medium) or \"large.\"]",
+        "spoken": "~She checks the tag with a practiced glance.~\n\n\"Che taglia porta, di solito?\"",
+        "hint": "Try saying a size — for example, \"taglia media\" (medium) or \"large.\""
+      },
+      {
+        "turn": 5,
+        "speaker": "Chad",
+        "raw": "\"Che taglia è?\" 😄",
+        "spoken": "\"Che taglia è?\" 😄"
+      },
+      {
+        "turn": 5,
+        "speaker": "Valentina",
+        "raw": "~She turns the tag toward you.~\n\n\"È una taglia media. Ce l'abbiamo anche in large, se preferisce.\"\n\n[ENGLISH: It's a medium. We also have it in large, if you prefer.]\n\n[HINT: ce l'ha in nero]",
+        "spoken": "~She turns the tag toward you.~\n\n\"È una taglia media. Ce l'abbiamo anche in large, se preferisce.\"",
+        "hint": "ce l'ha in nero"
+      },
+      {
+        "turn": 6,
+        "speaker": "Chad",
+        "raw": "\"Posso provarlo?\" 😊",
+        "spoken": "\"Posso provarlo?\" 😊"
+      },
+      {
+        "turn": 6,
+        "speaker": "Valentina",
+        "raw": "~She leads you toward the fitting room at the back of the store.~\n\n\"Certo! Il camerino è qui, prego.\"\n\n[ENGLISH: Of course! The fitting room is right here, please go ahead.]\n\n[HINT: mi sta bene]",
+        "spoken": "~She leads you toward the fitting room at the back of the store.~\n\n\"Certo! Il camerino è qui, prego.\"",
+        "hint": "mi sta bene"
+      },
+      {
+        "turn": 7,
+        "speaker": "Chad",
+        "raw": "\"Il camerino!\" 😄 *points and nods enthusiastically*",
+        "spoken": "\"Il camerino!\" 😄 *points and nods enthusiastically*"
+      },
+      {
+        "turn": 7,
+        "speaker": "Valentina",
+        "raw": "~She smiles and holds the curtain open for you.~\n\n\"Prego, si accomodi!\"\n\n[ENGLISH: Please, go right in!]\n\n[HINT: mi sta bene]",
+        "spoken": "~She smiles and holds the curtain open for you.~\n\n\"Prego, si accomodi!\"",
+        "hint": "mi sta bene"
+      },
+      {
+        "turn": 8,
+        "speaker": "Chad",
+        "raw": "*steps inside and comes back out a moment later, beaming*\n\n\"Mi sta bene! È bellissimo!\" 😄",
+        "spoken": "*steps inside and comes back out a moment later, beaming*\n\n\"Mi sta bene! È bellissimo!\" 😄"
+      },
+      {
+        "turn": 8,
+        "speaker": "Valentina",
+        "raw": "~Valentina steps back and looks at you with genuine appreciation.~\n\n\"Le sta benissimo — il colore è perfetto per lei.\"\n\n[ENGLISH: It suits you wonderfully — the color is perfect for you.]\n\n[HINT: lo prendo]",
+        "spoken": "~Valentina steps back and looks at you with genuine appreciation.~\n\n\"Le sta benissimo — il colore è perfetto per lei.\"",
+        "hint": "lo prendo"
+      },
+      {
+        "turn": 9,
+        "speaker": "Chad",
+        "raw": "*grins and looks in the mirror*\n\n\"Mi sta bene!\" 😄",
+        "spoken": "*grins and looks in the mirror*\n\n\"Mi sta bene!\" 😄"
+      },
+      {
+        "turn": 9,
+        "speaker": "Valentina",
+        "raw": "~She nods with quiet conviction.~\n\n\"Allora, lo prende?\"\n\n[ENGLISH: So, will you take it?]\n\n[HINT: lo prendo]",
+        "spoken": "~She nods with quiet conviction.~\n\n\"Allora, lo prende?\"",
+        "hint": "lo prendo"
+      },
+      {
+        "turn": 10,
+        "speaker": "Chad",
+        "raw": "*glances at the tag and winces*\n\n\"Troppo caro... Ci penso.\" 😬",
+        "spoken": "*glances at the tag and winces*\n\n\"Troppo caro... Ci penso.\" 😬"
+      },
+      {
+        "turn": 10,
+        "speaker": "Valentina",
+        "raw": "~She takes the jacket gracefully and nods with a warm smile.~\n\n\"Capisco perfettamente. Siamo aperti fino alle sette, se cambia idea.\"\n\n[ENGLISH: I understand completely. We're open until seven, if you change your mind.]\n\n[HINT: Try saying where you're going next — \"Andiamo al Duomo\" or \"Andiamo a un caffè.\"]",
+        "spoken": "~She takes the jacket gracefully and nods with a warm smile.~\n\n\"Capisco perfettamente. Siamo aperti fino alle sette, se cambia idea.\"",
+        "hint": "Try saying where you're going next — \"Andiamo al Duomo\" or \"Andiamo a un caffè.\""
+      },
+      {
+        "turn": 11,
+        "speaker": "Chad",
+        "raw": "*nods and smiles warmly, backing toward the door*\n\n\"Ci penso! È bellissimo!\" 😊",
+        "spoken": "*nods and smiles warmly, backing toward the door*\n\n\"Ci penso! È bellissimo!\" 😊"
+      },
+      {
+        "turn": 11,
+        "speaker": "Valentina",
+        "raw": "~She walks you graciously toward the door.~\n\n\"Grazie mille! Dove va adesso?\"\n\n[ENGLISH: Thank you so much! Where are you going now?]\n\n[HINT: Try \"Andiamo al Duomo\" or \"Andiamo a un caffè\" — where are you headed?]",
+        "spoken": "~She walks you graciously toward the door.~\n\n\"Grazie mille! Dove va adesso?\"",
+        "hint": "Try \"Andiamo al Duomo\" or \"Andiamo a un caffè\" — where are you headed?"
+      },
+      {
+        "turn": 12,
+        "speaker": "Chad",
+        "raw": "\"Il Duomo!\" 😄",
+        "spoken": "\"Il Duomo!\" 😄"
+      },
+      {
+        "turn": 12,
+        "speaker": "Valentina",
+        "raw": "\"Il Duomo! Dall'eleganza della moda all'eleganza gotica.\"\n\n[ENGLISH: The Duomo! From the elegance of fashion to Gothic elegance.]\n\n[DEBRIEF]\n{\n  \"learned\": [\"sto solo guardando — I'm just looking\", \"mi può aiutare — can you help me\", \"è bellissimo — it's beautiful\", \"posso provarlo — can I try it on\", \"il camerino — the fitting room\", \"mi sta bene — it fits/suits me\", \"troppo caro — too expensive\", \"ci penso — I'll think about it\", \"lo prendo — I'll take it\"],\n  \"retry\": [\"che taglia è — what size is it\", \"ce l'ha in nero — do you have it in black\"],\n  \"valentina_says\": \"Chad, you were warm and enthusiastic from the moment you walked in — your Italian felt genuinely natural. The jacket truly did suit you, and I think you knew it too. Next time, try 'ce l'ha in nero' — sometimes the same piece in a different color changes everything.\",\n  \"transitionTo\": \"duomo\"\n}\n[/DEBRIEF]",
+        "spoken": "\"Il Duomo! Dall'eleganza della moda all'eleganza gotica.\"",
+        "hint": null
+      }
+    ],
+    "debrief": {
+      "learned": [
+        "sto solo guardando — I'm just looking",
+        "mi può aiutare — can you help me",
+        "è bellissimo — it's beautiful",
+        "posso provarlo — can I try it on",
+        "il camerino — the fitting room",
+        "mi sta bene — it fits/suits me",
+        "troppo caro — too expensive",
+        "ci penso — I'll think about it",
+        "lo prendo — I'll take it"
+      ],
+      "retry": [
+        "che taglia è — what size is it",
+        "ce l'ha in nero — do you have it in black"
+      ],
+      "valentina_says": "Chad, you were warm and enthusiastic from the moment you walked in — your Italian felt genuinely natural. The jacket truly did suit you, and I think you knew it too. Next time, try 'ce l'ha in nero' — sometimes the same piece in a different color changes everything.",
+      "transitionTo": "duomo"
+    }
+  },
+  "improvisingRun": {
+    "completed": true,
+    "turnCount": 11,
+    "stalled": false,
+    "phrasesUsed": [
+      "Che taglia è?",
+      "Posso provarlo?",
+      "Mi sta bene",
+      "È bellissimo",
+      "Troppo caro",
+      "Ci penso",
+      "Lo prendo",
+      "Il camerino"
+    ],
+    "phrasesUnused": [
+      "Sto solo guardando",
+      "Mi può aiutare?"
+    ],
+    "phraseUtilization": "8/10",
+    "sufficiencyGaps": [],
+    "characterViolations": [
+      {
+        "turn": 2,
+        "violation": "Character may have used English in dialogue: \"~She takes the scarf and holds it up, letting it catch the light.~\n\n\"È una taglia unica — va bene pe\"",
+        "severity": "medium"
+      },
+      {
+        "turn": 3,
+        "violation": "Character may have used English in dialogue: \"~Valentina drapes the red scarf over her arm, showing the rich color.~\n\n\"Costa duecentocinquanta eur\"",
+        "severity": "medium"
+      },
+      {
+        "turn": 5,
+        "violation": "Character may have used English in dialogue: \"~Valentina smiles and leads him toward the back of the store.~\n\n\"Certo! Il camerino è qui.\"\n\n\"Sua mo\"",
+        "severity": "medium"
+      },
+      {
+        "turn": 6,
+        "violation": "Character may have used English in dialogue: \"~Valentina smiles warmly and checks the tag on the gloves.~\n\n\"Ah, una sorpresa romantica! Questi son\"",
+        "severity": "medium"
+      },
+      {
+        "turn": 9,
+        "violation": "Character may have used English in dialogue: \"~Valentina gestures to the card reader on the counter.~\n\n\"Sì, certo — accettiamo tutte le carte.\"\"",
+        "severity": "medium"
+      }
+    ],
+    "transcript": [
+      {
+        "turn": 0,
+        "speaker": "Valentina",
+        "raw": "~Soft music, warm lighting. Valentina looks up from behind a display and smiles.~\n\n\"Buongiorno! Benvenuti.\"\n\n[ENGLISH: Good afternoon! Welcome.]\n\n[HINT: Sto solo guardando.]",
+        "spoken": "~Soft music, warm lighting. Valentina looks up from behind a display and smiles.~\n\n\"Buongiorno! Benvenuti.\"",
+        "hint": "Sto solo guardando."
+      },
+      {
+        "turn": 1,
+        "speaker": "Chad",
+        "raw": "\"Buongiorno! Grazie!\" \n\n*looks around nervously, picks up a jacket*\n\n\"Sto solo... guardando. Sì!\"",
+        "spoken": "\"Buongiorno! Grazie!\" \n\n*looks around nervously, picks up a jacket*\n\n\"Sto solo... guardando. Sì!\""
+      },
+      {
+        "turn": 1,
+        "speaker": "Valentina",
+        "raw": "~Valentina smiles warmly and takes a small step back.~\n\n\"Certo, si accomodi.\"\n\n~She gestures toward a display near the window.~\n\n\"Quella sciarpa lì — è in cashmere puro, appena arrivata.\"\n\n[ENGLISH: Of course, make yourself at home. That scarf there — it's in pure cashmere, just arrived.]\n\n[HINT: È bellissima! — or — mi può aiutare]",
+        "spoken": "~Valentina smiles warmly and takes a small step back.~\n\n\"Certo, si accomodi.\"\n\n~She gestures toward a display near the window.~\n\n\"Quella sciarpa lì — è in cashmere puro, appena arrivata.\"",
+        "hint": "È bellissima! — or — mi può aiutare"
+      },
+      {
+        "turn": 2,
+        "speaker": "Chad",
+        "raw": "*eyes light up at the scarf*\n\n\"Ohhh, è bellissimo! Cashmere... molto buono!\"\n\n*picks it up and touches it*\n\n\"Che... che taglia è? No no, scusa — \" *laughs* \"È per mia moglie. She's a... una donna... normale size?\"",
+        "spoken": "*eyes light up at the scarf*\n\n\"Ohhh, è bellissimo! Cashmere... molto buono!\"\n\n*picks it up and touches it*\n\n\"Che... che taglia è? No no, scusa — \" *laughs* \"È per mia moglie. She's a... una donna... normale size?\""
+      },
+      {
+        "turn": 2,
+        "speaker": "Valentina",
+        "raw": "~She takes the scarf and holds it up, letting it catch the light.~\n\n\"È una taglia unica — va bene per tutti.\"\n\n\"Ce l'abbiamo in rosso, in blu, e in questo grigio elegante.\"\n\n[ENGLISH: It's one size — it suits everyone. We have it in red, in blue, and in this elegant grey.]\n\n[HINT: Ce l'ha in nero? — or — È bellissima!]",
+        "spoken": "~She takes the scarf and holds it up, letting it catch the light.~\n\n\"È una taglia unica — va bene per tutti.\"\n\n\"Ce l'abbiamo in rosso, in blu, e in questo grigio elegante.\"",
+        "hint": "Ce l'ha in nero? — or — È bellissima!"
+      },
+      {
+        "turn": 3,
+        "speaker": "Chad",
+        "raw": "*nods enthusiastically*\n\n\"Ohhh, taglia unica, perfecto — \" *catches himself* \"...perfetto!\"\n\n*points to the red one*\n\n\"Mia moglie... lei ama il rosso. Rosso! Sì!\"\n\n*rubs fingers together* \"Quanto costa?\"",
+        "spoken": "*nods enthusiastically*\n\n\"Ohhh, taglia unica, perfecto — \" *catches himself* \"...perfetto!\"\n\n*points to the red one*\n\n\"Mia moglie... lei ama il rosso. Rosso! Sì!\"\n\n*rubs fingers together* \"Quanto costa?\""
+      },
+      {
+        "turn": 3,
+        "speaker": "Valentina",
+        "raw": "~Valentina drapes the red scarf over her arm, showing the rich color.~\n\n\"Costa duecentocinquanta euro — è cashmere scozzese, fatto a mano.\"\n\n[ENGLISH: It costs two hundred and fifty euros — it's Scottish cashmere, handmade.]\n\n[HINT: Posso provarlo?]",
+        "spoken": "~Valentina drapes the red scarf over her arm, showing the rich color.~\n\n\"Costa duecentocinquanta euro — è cashmere scozzese, fatto a mano.\"",
+        "hint": "Posso provarlo?"
+      },
+      {
+        "turn": 4,
+        "speaker": "Chad",
+        "raw": "*winces slightly, does the mental math*\n\n\"Duecentocinquanta... two hundred fifty...\"\n\n*exhales slowly*\n\n\"Mmmmm... troppo caro!\"\n\n*pauses, looks at the scarf again longingly*\n\n\"Forse... ci penso. Maybe — avete qualcosa... più piccolo? Più... economico?\"",
+        "spoken": "*winces slightly, does the mental math*\n\n\"Duecentocinquanta... two hundred fifty...\"\n\n*exhales slowly*\n\n\"Mmmmm... troppo caro!\"\n\n*pauses, looks at the scarf again longingly*\n\n\"Forse... ci penso. Maybe — avete qualcosa... più piccolo? Più... economico?\""
+      },
+      {
+        "turn": 4,
+        "speaker": "Valentina",
+        "raw": "~Valentina nods graciously and moves toward a nearby display.~\n\n\"Certo. Abbiamo anche questi guanti in lana merino — ottima qualità, molto eleganti.\"\n\n[ENGLISH: Of course. We also have these merino wool gloves — excellent quality, very elegant.]\n\n[HINT: È bellissima! — or — Posso provarli?]",
+        "spoken": "~Valentina nods graciously and moves toward a nearby display.~\n\n\"Certo. Abbiamo anche questi guanti in lana merino — ottima qualità, molto eleganti.\"",
+        "hint": "È bellissima! — or — Posso provarli?"
+      },
+      {
+        "turn": 5,
+        "speaker": "Chad",
+        "raw": "*picks up the gloves and examines them*\n\n\"Ohhh, i guanti! Molto belli!\"\n\n*tries to gesture size with hands*\n\n\"Mia moglie ha mani... piccole? Small hands?\"\n\n*looks up hopefully*\n\n\"Posso... posso provarlo? No no —\" *laughs at himself* \"Lei può provarlo? Il... fitting room? Il camerino?\"",
+        "spoken": "*picks up the gloves and examines them*\n\n\"Ohhh, i guanti! Molto belli!\"\n\n*tries to gesture size with hands*\n\n\"Mia moglie ha mani... piccole? Small hands?\"\n\n*looks up hopefully*\n\n\"Posso... posso provarlo? No no —\" *laughs at himself* \"Lei può provarlo? Il... fitting room? Il camerino?\""
+      },
+      {
+        "turn": 5,
+        "speaker": "Valentina",
+        "raw": "~Valentina smiles and leads him toward the back of the store.~\n\n\"Certo! Il camerino è qui.\"\n\n\"Sua moglie può provare i guanti — la aspettiamo.\"\n\n[ENGLISH: Of course! The fitting room is right here. His wife can try on the gloves — we'll wait for her.]\n\n[HINT: Mi sta bene! — or — Mi sta un po' stretto.]",
+        "spoken": "~Valentina smiles and leads him toward the back of the store.~\n\n\"Certo! Il camerino è qui.\"\n\n\"Sua moglie può provare i guanti — la aspettiamo.\"",
+        "hint": "Mi sta bene! — or — Mi sta un po' stretto."
+      },
+      {
+        "turn": 6,
+        "speaker": "Chad",
+        "raw": "*waves hands and laughs*\n\n\"No no no — mia moglie non è qui! She's at... ella è al... caffè? Vicino?\"\n\n*holds up the gloves*\n\n\"Io compro per lei — it's a surprise! Sorpresa!\"\n\n*grins hopefully*\n\n\"Che taglia è... per i guanti?\"",
+        "spoken": "*waves hands and laughs*\n\n\"No no no — mia moglie non è qui! She's at... ella è al... caffè? Vicino?\"\n\n*holds up the gloves*\n\n\"Io compro per lei — it's a surprise! Sorpresa!\"\n\n*grins hopefully*\n\n\"Che taglia è... per i guanti?\""
+      },
+      {
+        "turn": 6,
+        "speaker": "Valentina",
+        "raw": "~Valentina smiles warmly and checks the tag on the gloves.~\n\n\"Ah, una sorpresa romantica! Questi sono taglia piccola — perfetti per mani delicate.\"\n\n[ENGLISH: Ah, a romantic surprise! These are size small — perfect for delicate hands.]\n\n[HINT: Ce l'ha in nero? — or — Lo prendo!]",
+        "spoken": "~Valentina smiles warmly and checks the tag on the gloves.~\n\n\"Ah, una sorpresa romantica! Questi sono taglia piccola — perfetti per mani delicate.\"",
+        "hint": "Ce l'ha in nero? — or — Lo prendo!"
+      },
+      {
+        "turn": 7,
+        "speaker": "Chad",
+        "raw": "*claps hands together excitedly*\n\n\"Taglia piccola — perfetto! Mia moglie ha mani... molto delicate, sì!\"\n\n*nods confidently, then hesitates*\n\n\"E quanto costa? I guanti?\"",
+        "spoken": "*claps hands together excitedly*\n\n\"Taglia piccola — perfetto! Mia moglie ha mani... molto delicate, sì!\"\n\n*nods confidently, then hesitates*\n\n\"E quanto costa? I guanti?\""
+      },
+      {
+        "turn": 7,
+        "speaker": "Valentina",
+        "raw": "~Valentina turns over the small tag gently.~\n\n\"I guanti costano novantacinque euro.\"\n\n[ENGLISH: The gloves cost ninety-five euros.]\n\n[HINT: Lo prendo! — or — Ci penso.]",
+        "spoken": "~Valentina turns over the small tag gently.~\n\n\"I guanti costano novantacinque euro.\"",
+        "hint": "Lo prendo! — or — Ci penso."
+      },
+      {
+        "turn": 8,
+        "speaker": "Chad",
+        "raw": "*tilts head, calculating*\n\n\"Novantacinque... ninety-five...\"\n\n*nods slowly, patting wallet pocket*\n\n\"Okay... okay! Mi sta bene! No no —\" *laughs* \"È bene! Good price!\"\n\n*picks up the red scarf again and looks at it one more time with longing*\n\n\"...Solo i guanti. Lo prendo! I guanti!\"",
+        "spoken": "*tilts head, calculating*\n\n\"Novantacinque... ninety-five...\"\n\n*nods slowly, patting wallet pocket*\n\n\"Okay... okay! Mi sta bene! No no —\" *laughs* \"È bene! Good price!\"\n\n*picks up the red scarf again and looks at it one more time with longing*\n\n\"...Solo i guanti. Lo prendo! I guanti!\""
+      },
+      {
+        "turn": 8,
+        "speaker": "Valentina",
+        "raw": "~Valentina smiles warmly and walks him toward the counter.~\n\n\"Perfetto! Sua moglie sarà felice — una bella sorpresa.\"\n\n[ENGLISH: Perfect! His wife will be happy — a lovely surprise.]\n\n[HINT: Grazie mille!]",
+        "spoken": "~Valentina smiles warmly and walks him toward the counter.~\n\n\"Perfetto! Sua moglie sarà felice — una bella sorpresa.\"",
+        "hint": "Grazie mille!"
+      },
+      {
+        "turn": 9,
+        "speaker": "Chad",
+        "raw": "*beams proudly*\n\n\"Sì sì! Lei sarà... very happy! Molto felice!\"\n\n*fumbles with wallet*\n\n\"Posso pagare con... carta? Credit card?\"\n\n*mimes swiping a card*",
+        "spoken": "*beams proudly*\n\n\"Sì sì! Lei sarà... very happy! Molto felice!\"\n\n*fumbles with wallet*\n\n\"Posso pagare con... carta? Credit card?\"\n\n*mimes swiping a card*"
+      },
+      {
+        "turn": 9,
+        "speaker": "Valentina",
+        "raw": "~Valentina gestures to the card reader on the counter.~\n\n\"Sì, certo — accettiamo tutte le carte.\"\n\n[ENGLISH: Yes, of course — we accept all cards.]\n\n[HINT: Grazie mille! — or — Arrivederci!]",
+        "spoken": "~Valentina gestures to the card reader on the counter.~\n\n\"Sì, certo — accettiamo tutte le carte.\"",
+        "hint": "Grazie mille! — or — Arrivederci!"
+      },
+      {
+        "turn": 10,
+        "speaker": "Chad",
+        "raw": "*taps card on the reader*\n\n\"Grazie! Molto grazie — \" *catches himself* \"MILLE grazie! Sì!\"\n\n*watches her wrap the gloves*\n\n\"Bellissimo! Mia moglie... she's gonna love it. Lei... amerà molto!\"\n\n*grins ear to ear*",
+        "spoken": "*taps card on the reader*\n\n\"Grazie! Molto grazie — \" *catches himself* \"MILLE grazie! Sì!\"\n\n*watches her wrap the gloves*\n\n\"Bellissimo! Mia moglie... she's gonna love it. Lei... amerà molto!\"\n\n*grins ear to ear*"
+      },
+      {
+        "turn": 10,
+        "speaker": "Valentina",
+        "raw": "~Valentina places the gloves in an elegant bag tied with ribbon.~\n\n\"Grazie a lei — e complimenti per la scelta!\"\n\n\"Allora, dove va adesso?\"\n\n[ENGLISH: Thank you — and congratulations on the choice! So, where are you off to now?]\n\n[HINT: Vado al Duomo! — or — Vado al caffè.]",
+        "spoken": "~Valentina places the gloves in an elegant bag tied with ribbon.~\n\n\"Grazie a lei — e complimenti per la scelta!\"\n\n\"Allora, dove va adesso?\"",
+        "hint": "Vado al Duomo! — or — Vado al caffè."
+      },
+      {
+        "turn": 11,
+        "speaker": "Chad",
+        "raw": "*takes the bag carefully*\n\n\"Ohhh, grazie, grazie!\"\n\n*thinks for a moment*\n\n\"Adesso... vado al... Duomo? Sì! Il Duomo di Milano!\"\n\n*laughs and holds up the bag*\n\n\"E dopo — caffè con mia moglie. La sorpresa!\"\n\n*waves happily toward the door*\n\n\"Arrivederci, Valentina!\"",
+        "spoken": "*takes the bag carefully*\n\n\"Ohhh, grazie, grazie!\"\n\n*thinks for a moment*\n\n\"Adesso... vado al... Duomo? Sì! Il Duomo di Milano!\"\n\n*laughs and holds up the bag*\n\n\"E dopo — caffè con mia moglie. La sorpresa!\"\n\n*waves happily toward the door*\n\n\"Arrivederci, Valentina!\""
+      },
+      {
+        "turn": 11,
+        "speaker": "Valentina",
+        "raw": "~Valentina waves warmly from behind the counter.~\n\n\"Il Duomo! Dall'eleganza della moda all'eleganza gotica. Arrivederci — e buona fortuna con la sorpresa!\"\n\n[ENGLISH: The Duomo! From the elegance of fashion to Gothic elegance. Goodbye — and good luck with the surprise!]\n\n[DEBRIEF]\n{\n  \"learned\": [\"sto solo guardando — I'm just looking\", \"è bellissimo — it's beautiful\", \"troppo caro — too expensive\", \"posso provarlo — can I try it on\", \"il camerino — the fitting room\", \"lo prendo — I'll take it\", \"rosso — red\", \"taglia piccola — small size\", \"grazie mille — thank you very much\", \"arrivederci — goodbye\"],\n  \"retry\": [\"quanto costa — how much does it cost (you said it well but hesitated)\", \"molto grazie — should be grazie mille (you caught it yourself — bravo!)\", \"perfecto — should be perfetto (you caught this one too!)\"],\n  \"valentina_says\": \"Chad, you were an absolute delight — your enthusiasm was genuine, your Italian was braver than you give yourself credit for, and buying those gloves as a surprise for Charlie? That's the most romantic thing I've seen all week on Via della Spiga.\",\n  \"transitionTo\": \"duomo\"\n}\n[/DEBRIEF]",
+        "spoken": "~Valentina waves warmly from behind the counter.~\n\n\"Il Duomo! Dall'eleganza della moda all'eleganza gotica. Arrivederci — e buona fortuna con la sorpresa!\"",
+        "hint": null
+      }
+    ],
+    "debrief": {
+      "learned": [
+        "sto solo guardando — I'm just looking",
+        "è bellissimo — it's beautiful",
+        "troppo caro — too expensive",
+        "posso provarlo — can I try it on",
+        "il camerino — the fitting room",
+        "lo prendo — I'll take it",
+        "rosso — red",
+        "taglia piccola — small size",
+        "grazie mille — thank you very much",
+        "arrivederci — goodbye"
+      ],
+      "retry": [
+        "quanto costa — how much does it cost (you said it well but hesitated)",
+        "molto grazie — should be grazie mille (you caught it yourself — bravo!)",
+        "perfecto — should be perfetto (you caught this one too!)"
+      ],
+      "valentina_says": "Chad, you were an absolute delight — your enthusiasm was genuine, your Italian was braver than you give yourself credit for, and buying those gloves as a surprise for Charlie? That's the most romantic thing I've seen all week on Via della Spiga.",
+      "transitionTo": "duomo"
+    },
+    "derailmentMoments": [
+      {
+        "turn": 1,
+        "chadSaid": "\"Buongiorno! Grazie!\" \n\n*looks around nervously, picks up a jacket*\n\n\"Sto solo... guardando. Sì!\"",
+        "characterResponse": "~Valentina smiles warmly and takes a small step back.~\n\n\"Certo, si accomodi.\"\n\n~She gestures toward ",
+        "handled": true
+      },
+      {
+        "turn": 3,
+        "chadSaid": "*nods enthusiastically*\n\n\"Ohhh, taglia unica, perfecto — \" *catches himself* \"...perfetto!\"\n\n*points to the red one*\n\n\"Mia moglie... lei ama il rosso. Rosso! Sì!\"\n\n*rubs fingers together* \"Quanto costa?\"",
+        "characterResponse": "~Valentina drapes the red scarf over her arm, showing the rich color.~\n\n\"Costa duecentocinquanta eur",
+        "handled": true
+      },
+      {
+        "turn": 6,
+        "chadSaid": "*waves hands and laughs*\n\n\"No no no — mia moglie non è qui! She's at... ella è al... caffè? Vicino?\"\n\n*holds up the gloves*\n\n\"Io compro per lei — it's a surprise! Sorpresa!\"\n\n*grins hopefully*\n\n\"Che taglia è... per i guanti?\"",
+        "characterResponse": "~Valentina smiles warmly and checks the tag on the gloves.~\n\n\"Ah, una sorpresa romantica! Questi son",
+        "handled": true
+      },
+      {
+        "turn": 7,
+        "chadSaid": "*claps hands together excitedly*\n\n\"Taglia piccola — perfetto! Mia moglie ha mani... molto delicate, sì!\"\n\n*nods confidently, then hesitates*\n\n\"E quanto costa? I guanti?\"",
+        "characterResponse": "~Valentina turns over the small tag gently.~\n\n\"I guanti costano novantacinque euro.\"",
+        "handled": true
+      },
+      {
+        "turn": 9,
+        "chadSaid": "*beams proudly*\n\n\"Sì sì! Lei sarà... very happy! Molto felice!\"\n\n*fumbles with wallet*\n\n\"Posso pagare con... carta? Credit card?\"\n\n*mimes swiping a card*",
+        "characterResponse": "~Valentina gestures to the card reader on the counter.~\n\n\"Sì, certo — accettiamo tutte le carte.\"",
+        "handled": true
+      },
+      {
+        "turn": 10,
+        "chadSaid": "*taps card on the reader*\n\n\"Grazie! Molto grazie — \" *catches himself* \"MILLE grazie! Sì!\"\n\n*watches her wrap the gloves*\n\n\"Bellissimo! Mia moglie... she's gonna love it. Lei... amerà molto!\"\n\n*grins ear to ear*",
+        "characterResponse": "~Valentina places the gloves in an elegant bag tied with ribbon.~\n\n\"Grazie a lei — e complimenti per",
+        "handled": true
+      },
+      {
+        "turn": 11,
+        "chadSaid": "*takes the bag carefully*\n\n\"Ohhh, grazie, grazie!\"\n\n*thinks for a moment*\n\n\"Adesso... vado al... Duomo? Sì! Il Duomo di Milano!\"\n\n*laughs and holds up the bag*\n\n\"E dopo — caffè con mia moglie. La sorpresa!\"\n\n*waves happily toward the door*\n\n\"Arrivederci, Valentina!\"",
+        "characterResponse": "~Valentina waves warmly from behind the counter.~\n\n\"Il Duomo! Dall'eleganza della moda all'eleganza ",
+        "handled": true
+      }
+    ]
+  },
+  "summary": {
+    "completable": true,
+    "phraseUtilization": "9/10",
+    "missingPhrases": [],
+    "unusedPhrases": [
+      "Lo prendo"
+    ],
+    "derailmentHandling": "good",
+    "overallGrade": "A",
+    "fixesNeeded": []
+  }
+}

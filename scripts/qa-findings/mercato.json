@@ -1,0 +1,384 @@
+{
+  "location": "mercato",
+  "characterName": "Rosa",
+  "obedientRun": {
+    "completed": true,
+    "turnCount": 10,
+    "stalled": false,
+    "phrasesUsed": [
+      "Cosa consiglia?",
+      "Cos'è questo?",
+      "Quanto costa?",
+      "Un etto",
+      "Vorrei assaggiare",
+      "Lo prendo",
+      "È fresco?",
+      "È di stagione",
+      "Buonissimo!",
+      "Ne prendo due",
+      "Il resto"
+    ],
+    "phrasesUnused": [
+      "Mezzo chilo"
+    ],
+    "phraseUtilization": "11/12",
+    "sufficiencyGaps": [],
+    "characterViolations": [],
+    "transcript": [
+      {
+        "turn": 0,
+        "speaker": "Rosa",
+        "raw": "Buongiorno, buongiorno! Benvenuti al mercato!\n\n[ENGLISH: Good morning, good morning! Welcome to the market!]\n\n[HINT: Buongiorno!]",
+        "spoken": "Buongiorno, buongiorno! Benvenuti al mercato!",
+        "hint": "Buongiorno!"
+      },
+      {
+        "turn": 1,
+        "speaker": "Chad",
+        "raw": "\"Cosa consiglia?\" 😄",
+        "spoken": "\"Cosa consiglia?\" 😄"
+      },
+      {
+        "turn": 1,
+        "speaker": "Rosa",
+        "raw": "Oh, che bella domanda! Venga, venga — guardi qui!\n\n[ENGLISH: Oh, what a great question! Come, come — look at this!]\n\n[HINT: Cos'è questo?]",
+        "spoken": "Oh, che bella domanda! Venga, venga — guardi qui!",
+        "hint": "Cos'è questo?"
+      },
+      {
+        "turn": 2,
+        "speaker": "Chad",
+        "raw": "\"Cos'è questo?\" 😊",
+        "spoken": "\"Cos'è questo?\" 😊"
+      },
+      {
+        "turn": 2,
+        "speaker": "Rosa",
+        "raw": "Questo è il cardo gobbo di Nizza — è di stagione adesso, solo in inverno!\n\n[ENGLISH: This is the \"gobbo\" cardoon from Nizza — it's in season right now, only in winter!]\n\n[HINT: È di stagione?]",
+        "spoken": "Questo è il cardo gobbo di Nizza — è di stagione adesso, solo in inverno!",
+        "hint": "È di stagione?"
+      },
+      {
+        "turn": 3,
+        "speaker": "Chad",
+        "raw": "\"È di stagione!\" 😄 \"Vorrei assaggiare!\"",
+        "spoken": "\"È di stagione!\" 😄 \"Vorrei assaggiare!\""
+      },
+      {
+        "turn": 3,
+        "speaker": "Rosa",
+        "raw": "Certo, certo! Quanto ne vuole — un etto o mezzo chilo?\n\n[ENGLISH: Of course, of course! How much would you like — 100 grams or half a kilo?]\n\n[HINT: Un etto, per favore.]",
+        "spoken": "Certo, certo! Quanto ne vuole — un etto o mezzo chilo?",
+        "hint": "Un etto, per favore."
+      },
+      {
+        "turn": 4,
+        "speaker": "Chad",
+        "raw": "\"Un etto!\" 😊",
+        "spoken": "\"Un etto!\" 😊"
+      },
+      {
+        "turn": 4,
+        "speaker": "Rosa",
+        "raw": "Perfetto! Ecco — assaggi, assaggi! È fresco, freschissimo!\n\n[ENGLISH: Perfect! Here — taste, taste! It's fresh, very fresh!]\n\n[HINT: È fresco!]",
+        "spoken": "Perfetto! Ecco — assaggi, assaggi! È fresco, freschissimo!",
+        "hint": "È fresco!"
+      },
+      {
+        "turn": 5,
+        "speaker": "Chad",
+        "raw": "\"È fresco?\" 😄 *tries a bite* \"Buonissimo!\" 🤤",
+        "spoken": "\"È fresco?\" 😄 *tries a bite* \"Buonissimo!\" 🤤"
+      },
+      {
+        "turn": 5,
+        "speaker": "Rosa",
+        "raw": "Sì, freschissimo! Ne prende due?\n\n[ENGLISH: Yes, very fresh! Will you take two?]\n\n[HINT: Ne prendo due!]",
+        "spoken": "Sì, freschissimo! Ne prende due?",
+        "hint": "Ne prendo due!"
+      },
+      {
+        "turn": 6,
+        "speaker": "Chad",
+        "raw": "\"Ne prendo due!\" 😄",
+        "spoken": "\"Ne prendo due!\" 😄"
+      },
+      {
+        "turn": 6,
+        "speaker": "Rosa",
+        "raw": "Bravissimo! Quanto costa?\n\n[ENGLISH: Wonderful! How much does it cost?]\n\n[HINT: Quanto costa?]",
+        "spoken": "Bravissimo! Quanto costa?",
+        "hint": "Quanto costa?"
+      },
+      {
+        "turn": 7,
+        "speaker": "Chad",
+        "raw": "\"Quanto costa?\" 😄",
+        "spoken": "\"Quanto costa?\" 😄"
+      },
+      {
+        "turn": 7,
+        "speaker": "Rosa",
+        "raw": "Tre euro e cinquanta, prego!\n\n[ENGLISH: Three euros fifty, please!]\n\n[HINT: Ecco! (as you hand over the money)]",
+        "spoken": "Tre euro e cinquanta, prego!",
+        "hint": "Ecco! (as you hand over the money)"
+      },
+      {
+        "turn": 8,
+        "speaker": "Chad",
+        "raw": "*hands over some money* \"Il resto?\" 😊",
+        "spoken": "*hands over some money* \"Il resto?\" 😊"
+      },
+      {
+        "turn": 8,
+        "speaker": "Rosa",
+        "raw": "Ecco il resto — cinquanta centesimi!\n\n[ENGLISH: Here's the change — fifty cents!]\n\n[HINT: Grazie mille!]",
+        "spoken": "Ecco il resto — cinquanta centesimi!",
+        "hint": "Grazie mille!"
+      },
+      {
+        "turn": 9,
+        "speaker": "Chad",
+        "raw": "\"Buonissimo!\" 😄 \"Lo prendo!\"",
+        "spoken": "\"Buonissimo!\" 😄 \"Lo prendo!\""
+      },
+      {
+        "turn": 9,
+        "speaker": "Rosa",
+        "raw": "Grazie, grazie! Dove andate adesso?\n\n[ENGLISH: Thank you, thank you! Where are you going now?]\n\n[HINT: Andiamo al Duomo!]",
+        "spoken": "Grazie, grazie! Dove andate adesso?",
+        "hint": "Andiamo al Duomo!"
+      },
+      {
+        "turn": 10,
+        "speaker": "Chad",
+        "raw": "\"Il Duomo!\" 😄",
+        "spoken": "\"Il Duomo!\" 😄"
+      },
+      {
+        "turn": 10,
+        "speaker": "Rosa",
+        "raw": "Il Duomo! Porti qualcosa da mangiare sulla terrazza... ah no, è vietato!\n\n[ENGLISH: The Duomo! Bring something to eat on the terrace... ah no, it's forbidden!]\n\n[DEBRIEF]\n{\n  \"learned\": [\"cos'è questo — what is this\", \"è di stagione — it's in season\", \"un etto — 100 grams\", \"è fresco — it's fresh\", \"buonissimo — delicious\", \"ne prendo due — I'll take two\", \"quanto costa — how much does it cost\", \"il resto — the change\", \"ecco — here you go\"],\n  \"retry\": [\"lo prendo — I'll take it (said at the wrong moment — the purchase was already done!)\"],\n  \"rosa_says\": \"Chad did a wonderful job today — he jumped in with real confidence, used 'cos'è questo' and 'è di stagione' beautifully, and his 'ne prendo due' was perfect. Next time, watch the timing of 'lo prendo' — save it for the moment of decision, not after you've already bought!\",\n  \"transitionTo\": \"duomo\"\n}\n[/DEBRIEF]",
+        "spoken": "Il Duomo! Porti qualcosa da mangiare sulla terrazza... ah no, è vietato!",
+        "hint": null
+      }
+    ],
+    "debrief": {
+      "learned": [
+        "cos'è questo — what is this",
+        "è di stagione — it's in season",
+        "un etto — 100 grams",
+        "è fresco — it's fresh",
+        "buonissimo — delicious",
+        "ne prendo due — I'll take two",
+        "quanto costa — how much does it cost",
+        "il resto — the change",
+        "ecco — here you go"
+      ],
+      "retry": [
+        "lo prendo — I'll take it (said at the wrong moment — the purchase was already done!)"
+      ],
+      "rosa_says": "Chad did a wonderful job today — he jumped in with real confidence, used 'cos'è questo' and 'è di stagione' beautifully, and his 'ne prendo due' was perfect. Next time, watch the timing of 'lo prendo' — save it for the moment of decision, not after you've already bought!",
+      "transitionTo": "duomo"
+    }
+  },
+  "improvisingRun": {
+    "completed": true,
+    "turnCount": 10,
+    "stalled": false,
+    "phrasesUsed": [
+      "Cosa consiglia?",
+      "Cos'è questo?",
+      "Quanto costa?",
+      "Un etto",
+      "Vorrei assaggiare",
+      "Lo prendo",
+      "È fresco?",
+      "È di stagione",
+      "Buonissimo!",
+      "Ne prendo due",
+      "Il resto"
+    ],
+    "phrasesUnused": [
+      "Mezzo chilo"
+    ],
+    "phraseUtilization": "11/12",
+    "sufficiencyGaps": [],
+    "characterViolations": [],
+    "transcript": [
+      {
+        "turn": 0,
+        "speaker": "Rosa",
+        "raw": "Buongiorno, buongiorno! Benvenuti al mercato!\n\n[ENGLISH: Good morning, good morning! Welcome to the market!]\n\n[HINT: Buongiorno!]",
+        "spoken": "Buongiorno, buongiorno! Benvenuti al mercato!",
+        "hint": "Buongiorno!"
+      },
+      {
+        "turn": 1,
+        "speaker": "Chad",
+        "raw": "Buongiorno! Uhh... *looks around excitedly* ...buonissimo! I mean — questo mercato è... molto bello? \n\nCosa consiglia?",
+        "spoken": "Buongiorno! Uhh... *looks around excitedly* ...buonissimo! I mean — questo mercato è... molto bello? \n\nCosa consiglia?"
+      },
+      {
+        "turn": 1,
+        "speaker": "Rosa",
+        "raw": "Ah, grazie, grazie — lei è gentile! Guardi, guardi qui —\n\n[ENGLISH: Oh, thank you, thank you — you're very kind! Look, look here —]\n\n[HINT: Cos'è questo?]",
+        "spoken": "Ah, grazie, grazie — lei è gentile! Guardi, guardi qui —",
+        "hint": "Cos'è questo?"
+      },
+      {
+        "turn": 2,
+        "speaker": "Chad",
+        "raw": "Oh wow, sì sì! Cos'è questo? *leans in curiously*",
+        "spoken": "Oh wow, sì sì! Cos'è questo? *leans in curiously*"
+      },
+      {
+        "turn": 2,
+        "speaker": "Rosa",
+        "raw": "Questi sono i missoltini — pesci del lago di Como, essiccati al sole!\n\n[ENGLISH: These are missoltini — fish from Lake Como, dried in the sun!]\n\n[HINT: È di stagione?]",
+        "spoken": "Questi sono i missoltini — pesci del lago di Como, essiccati al sole!",
+        "hint": "È di stagione?"
+      },
+      {
+        "turn": 3,
+        "speaker": "Chad",
+        "raw": "Ohhh... pesce! Sì, sì! È fresco? \n\n*pauses and realizes that might be a weird question for dried fish*\n\nI mean... è... buono? Vorrei assaggiare!",
+        "spoken": "Ohhh... pesce! Sì, sì! È fresco? \n\n*pauses and realizes that might be a weird question for dried fish*\n\nI mean... è... buono? Vorrei assaggiare!"
+      },
+      {
+        "turn": 3,
+        "speaker": "Rosa",
+        "raw": "È di stagione adesso — giugno è il mese perfetto per i missoltini!\n\n[ENGLISH: They're in season right now — June is the perfect month for missoltini!]\n\n[HINT: Quanto ne vuole?]",
+        "spoken": "È di stagione adesso — giugno è il mese perfetto per i missoltini!",
+        "hint": "Quanto ne vuole?"
+      },
+      {
+        "turn": 4,
+        "speaker": "Chad",
+        "raw": "Ah, è di stagione! Perfetto, perfetto! \n\nVorrei assaggiare... uno? Per favore?",
+        "spoken": "Ah, è di stagione! Perfetto, perfetto! \n\nVorrei assaggiare... uno? Per favore?"
+      },
+      {
+        "turn": 4,
+        "speaker": "Rosa",
+        "raw": "Certo! Quanto ne vuole — un etto o mezzo chilo?\n\n[ENGLISH: Of course! How much would you like — 100 grams or half a kilo?]\n\n[HINT: Un etto, per favore.]",
+        "spoken": "Certo! Quanto ne vuole — un etto o mezzo chilo?",
+        "hint": "Un etto, per favore."
+      },
+      {
+        "turn": 5,
+        "speaker": "Chad",
+        "raw": "Uhh... un etto! Sì, un etto. Quanto costa?",
+        "spoken": "Uhh... un etto! Sì, un etto. Quanto costa?"
+      },
+      {
+        "turn": 5,
+        "speaker": "Rosa",
+        "raw": "Prima assaggi, assaggi — è freschissimo!\n\n[ENGLISH: First, taste, taste — it's absolutely fresh!]\n\n[HINT: Buonissimo!]",
+        "spoken": "Prima assaggi, assaggi — è freschissimo!",
+        "hint": "Buonissimo!"
+      },
+      {
+        "turn": 6,
+        "speaker": "Chad",
+        "raw": "Oh, grazie! *takes a bite* \n\nMmm... buonissimo! Lo prendo! Un etto, per favore!",
+        "spoken": "Oh, grazie! *takes a bite* \n\nMmm... buonissimo! Lo prendo! Un etto, per favore!"
+      },
+      {
+        "turn": 6,
+        "speaker": "Rosa",
+        "raw": "Ne prende due? Ho anche un secondo pacchetto pronto!\n\n[ENGLISH: Will you take two? I have a second packet ready too!]\n\n[HINT: Ne prendo due.]",
+        "spoken": "Ne prende due? Ho anche un secondo pacchetto pronto!",
+        "hint": "Ne prendo due."
+      },
+      {
+        "turn": 7,
+        "speaker": "Chad",
+        "raw": "Ah, sì sì! Ne prendo due! Per me e mia... mia moglie! Lei ama il pesce!",
+        "spoken": "Ah, sì sì! Ne prendo due! Per me e mia... mia moglie! Lei ama il pesce!"
+      },
+      {
+        "turn": 7,
+        "speaker": "Rosa",
+        "raw": "Benissimo! Allora due etti — tre euro e cinquanta, per favore!\n\n[ENGLISH: Wonderful! So two portions — three euros fifty, please!]\n\n[HINT: Quanto costa? / Ecco!]",
+        "spoken": "Benissimo! Allora due etti — tre euro e cinquanta, per favore!",
+        "hint": "Quanto costa? / Ecco!"
+      },
+      {
+        "turn": 8,
+        "speaker": "Chad",
+        "raw": "Tre euro e cinquanta! Sì! *fumbles with wallet*\n\nEcco... quattro euro? Il resto, per favore!",
+        "spoken": "Tre euro e cinquanta! Sì! *fumbles with wallet*\n\nEcco... quattro euro? Il resto, per favore!"
+      },
+      {
+        "turn": 8,
+        "speaker": "Rosa",
+        "raw": "Ecco il resto — cinquanta centesimi!\n\n[ENGLISH: Here's the change — fifty cents!]\n\n[HINT: Grazie mille!]",
+        "spoken": "Ecco il resto — cinquanta centesimi!",
+        "hint": "Grazie mille!"
+      },
+      {
+        "turn": 9,
+        "speaker": "Chad",
+        "raw": "Grazie mille! Buonissimo! *holds up the fish happily*\n\nUhh... dove è... il next mercato? Altri... cose? \n\n*gestures around the market*",
+        "spoken": "Grazie mille! Buonissimo! *holds up the fish happily*\n\nUhh... dove è... il next mercato? Altri... cose? \n\n*gestures around the market*"
+      },
+      {
+        "turn": 9,
+        "speaker": "Rosa",
+        "raw": "Dove andate adesso — al Duomo, ai Navigli?\n\n[ENGLISH: Where are you going now — to the Duomo, to the Navigli?]\n\n[HINT: Andiamo al Duomo!]",
+        "spoken": "Dove andate adesso — al Duomo, ai Navigli?",
+        "hint": "Andiamo al Duomo!"
+      },
+      {
+        "turn": 10,
+        "speaker": "Chad",
+        "raw": "Ah, sì! Navigli! Io e mia moglie... andiamo ai Navigli! Per... cena? Dinner? \n\n*gives thumbs up*",
+        "spoken": "Ah, sì! Navigli! Io e mia moglie... andiamo ai Navigli! Per... cena? Dinner? \n\n*gives thumbs up*"
+      },
+      {
+        "turn": 10,
+        "speaker": "Rosa",
+        "raw": "I Navigli! C'è un mercatino anche lì la domenica!\n\n[ENGLISH: The Navigli! There's a little market there on Sundays too!]\n\n[DEBRIEF]\n{\n  \"learned\": [\"cos'è questo — what is this\", \"è di stagione — it's in season\", \"un etto — 100 grams\", \"ne prendo due — I'll take two\", \"ecco — here you go\", \"il resto — the change\", \"buonissimo — delicious\"],\n  \"retry\": [\"quanto costa — how much does it cost\", \"è fresco — it's fresh\"],\n  \"rosa_says\": \"Chad, you did beautifully for a first time at the market — you asked real questions, you tasted, you bought, and you even handled the money like a pro. 'Ne prendo due' came out perfectly!\",\n  \"transitionTo\": \"navigli\"\n}\n[/DEBRIEF]",
+        "spoken": "I Navigli! C'è un mercatino anche lì la domenica!",
+        "hint": null
+      }
+    ],
+    "debrief": {
+      "learned": [
+        "cos'è questo — what is this",
+        "è di stagione — it's in season",
+        "un etto — 100 grams",
+        "ne prendo due — I'll take two",
+        "ecco — here you go",
+        "il resto — the change",
+        "buonissimo — delicious"
+      ],
+      "retry": [
+        "quanto costa — how much does it cost",
+        "è fresco — it's fresh"
+      ],
+      "rosa_says": "Chad, you did beautifully for a first time at the market — you asked real questions, you tasted, you bought, and you even handled the money like a pro. 'Ne prendo due' came out perfectly!",
+      "transitionTo": "navigli"
+    },
+    "derailmentMoments": [
+      {
+        "turn": 10,
+        "chadSaid": "Ah, sì! Navigli! Io e mia moglie... andiamo ai Navigli! Per... cena? Dinner? \n\n*gives thumbs up*",
+        "characterResponse": "I Navigli! C'è un mercatino anche lì la domenica!",
+        "handled": true
+      }
+    ]
+  },
+  "summary": {
+    "completable": true,
+    "phraseUtilization": "11/12",
+    "missingPhrases": [],
+    "unusedPhrases": [
+      "Mezzo chilo"
+    ],
+    "derailmentHandling": "good",
+    "overallGrade": "A",
+    "fixesNeeded": []
+  }
+}

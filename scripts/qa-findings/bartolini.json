@@ -1,0 +1,524 @@
+{
+  "location": "bartolini",
+  "characterName": "Alessandro",
+  "obedientRun": {
+    "completed": true,
+    "turnCount": 13,
+    "stalled": false,
+    "phrasesUsed": [
+      "Il menu degustazione",
+      "L'abbinamento vini",
+      "Stagionale",
+      "Il sapore",
+      "Complimenti allo chef",
+      "E straordinario",
+      "Potrei sapere...?",
+      "Di che regione?",
+      "Secco o dolce?",
+      "Corposo",
+      "Leggero",
+      "L'annata"
+    ],
+    "phrasesUnused": [],
+    "phraseUtilization": "12/12",
+    "sufficiencyGaps": [],
+    "characterViolations": [],
+    "transcript": [
+      {
+        "turn": 0,
+        "speaker": "Alessandro",
+        "raw": "Buonasera, benvenuti al MUDEC.\n\n[ENGLISH: Good evening, welcome to the MUDEC.]\n\n[HINT: Buonasera, ho una prenotazione.]",
+        "spoken": "Buonasera, benvenuti al MUDEC.",
+        "hint": "Buonasera, ho una prenotazione."
+      },
+      {
+        "turn": 1,
+        "speaker": "Chad",
+        "raw": "\"Buonasera! ...Uh— E straordinario!\" \n\n*gestures enthusiastically at the building around him*",
+        "spoken": "\"Buonasera! ...Uh— E straordinario!\" \n\n*gestures enthusiastically at the building around him*"
+      },
+      {
+        "turn": 1,
+        "speaker": "Alessandro",
+        "raw": "Grazie mille — il suo nome, prego?\n\n[ENGLISH: Thank you very much — your name, please?]\n\n[HINT: Ho una prenotazione — il mio nome è...]",
+        "spoken": "Grazie mille — il suo nome, prego?",
+        "hint": "Ho una prenotazione — il mio nome è..."
+      },
+      {
+        "turn": 2,
+        "speaker": "Chad",
+        "raw": "\"Uh... Chad! Mi chiamo Chad!\" \n\n*grins and points to himself*\n\n\"Potrei sapere...?\"",
+        "spoken": "\"Uh... Chad! Mi chiamo Chad!\" \n\n*grins and points to himself*\n\n\"Potrei sapere...?\""
+      },
+      {
+        "turn": 2,
+        "speaker": "Alessandro",
+        "raw": "Benvenuto, signor Chad — prego, la segua.\n\n[ENGLISH: Welcome, Mr. Chad — please, follow me.]\n\n[HINT: Il menu degustazione, per favore.]",
+        "spoken": "Benvenuto, signor Chad — prego, la segua.",
+        "hint": "Il menu degustazione, per favore."
+      },
+      {
+        "turn": 3,
+        "speaker": "Chad",
+        "raw": "*nods eagerly and follows*\n\n\"Sì, sì! E straordinario!\"",
+        "spoken": "*nods eagerly and follows*\n\n\"Sì, sì! E straordinario!\""
+      },
+      {
+        "turn": 3,
+        "speaker": "Alessandro",
+        "raw": "Il menu degustazione di questa sera è stagionale — Chef Bartolini celebra il territorio lombardo in ogni piatto.\n\n[ENGLISH: This evening's tasting menu is seasonal — Chef Bartolini celebrates the Lombard terroir in every dish.]\n\n[HINT: Che cosa c'è nel menu?]",
+        "spoken": "Il menu degustazione di questa sera è stagionale — Chef Bartolini celebra il territorio lombardo in ogni piatto.",
+        "hint": "Che cosa c'è nel menu?"
+      },
+      {
+        "turn": 4,
+        "speaker": "Chad",
+        "raw": "\"Il menu degustazione! Stagionale — sì, sì!\" \n\n*claps hands together excitedly*\n\n\"E straordinario!\"",
+        "spoken": "\"Il menu degustazione! Stagionale — sì, sì!\" \n\n*claps hands together excitedly*\n\n\"E straordinario!\""
+      },
+      {
+        "turn": 4,
+        "speaker": "Alessandro",
+        "raw": "Buonasera — sono Elena, la sommelier. Il primo vino questa sera è un Barolo di Serralunga d'Alba, annata 2018.\n\n[ENGLISH: Good evening — I am Elena, the sommelier. The first wine this evening is a Barolo from Serralunga d'Alba, vintage 2018.]\n\n[HINT: Di che regione?]",
+        "spoken": "Buonasera — sono Elena, la sommelier. Il primo vino questa sera è un Barolo di Serralunga d'Alba, annata 2018.",
+        "hint": "Di che regione?"
+      },
+      {
+        "turn": 5,
+        "speaker": "Chad",
+        "raw": "\"Buonasera, Elena! L'annata — 2018!\" \n\n*nods approvingly*\n\n\"Corposo?\"",
+        "spoken": "\"Buonasera, Elena! L'annata — 2018!\" \n\n*nods approvingly*\n\n\"Corposo?\""
+      },
+      {
+        "turn": 5,
+        "speaker": "Alessandro",
+        "raw": "Sì, molto corposo — un Barolo perfetto per accompagnare i primi piatti.\n\n[ENGLISH: Yes, very full-bodied — a Barolo perfect for accompanying the first courses.]\n\n[HINT: E straordinario!]",
+        "spoken": "Sì, molto corposo — un Barolo perfetto per accompagnare i primi piatti.",
+        "hint": "E straordinario!"
+      },
+      {
+        "turn": 6,
+        "speaker": "Chad",
+        "raw": "\"Corposo — e straordinario!\" \n\n*gives a thumbs up*\n\n\"L'abbinamento vini — bellissimo!\"",
+        "spoken": "\"Corposo — e straordinario!\" \n\n*gives a thumbs up*\n\n\"L'abbinamento vini — bellissimo!\""
+      },
+      {
+        "turn": 6,
+        "speaker": "Alessandro",
+        "raw": "Ecco il primo piatto — un risotto allo zafferano con midollo e foglia d'oro. Le piace?\n\n[ENGLISH: Here is the first course — a saffron risotto with bone marrow and gold leaf. Do you like it?]\n\n[HINT: È straordinario! Complimenti allo chef!]",
+        "spoken": "Ecco il primo piatto — un risotto allo zafferano con midollo e foglia d'oro. Le piace?",
+        "hint": "È straordinario! Complimenti allo chef!"
+      },
+      {
+        "turn": 7,
+        "speaker": "Chad",
+        "raw": "*takes a bite and eyes go wide*\n\n\"E straordinario! Complimenti allo chef!\"\n\n*rubs stomach happily*\n\n\"Il sapore — magnifico!\"",
+        "spoken": "*takes a bite and eyes go wide*\n\n\"E straordinario! Complimenti allo chef!\"\n\n*rubs stomach happily*\n\n\"Il sapore — magnifico!\""
+      },
+      {
+        "turn": 7,
+        "speaker": "Alessandro",
+        "raw": "Elena, di nuovo — il secondo vino è un Vermentino di Sardegna, leggero ed elegante.\n\n[ENGLISH: Elena again — the second wine is a Vermentino from Sardinia, light and elegant.]\n\n[HINT: Leggero — mi piace!]",
+        "spoken": "Elena, di nuovo — il secondo vino è un Vermentino di Sardegna, leggero ed elegante.",
+        "hint": "Leggero — mi piace!"
+      },
+      {
+        "turn": 8,
+        "speaker": "Chad",
+        "raw": "\"Leggero!\" \n\n*nods knowingly*\n\n\"Di che regione?\"",
+        "spoken": "\"Leggero!\" \n\n*nods knowingly*\n\n\"Di che regione?\""
+      },
+      {
+        "turn": 8,
+        "speaker": "Alessandro",
+        "raw": "La Sardegna — un'isola dal territorio unico.\n\n[ENGLISH: Sardinia — an island with a unique terroir.]\n\n[HINT: È straordinario!]",
+        "spoken": "La Sardegna — un'isola dal territorio unico.",
+        "hint": "È straordinario!"
+      },
+      {
+        "turn": 9,
+        "speaker": "Chad",
+        "raw": "\"Sardegna! E straordinario!\"\n\n*pauses and tilts head curiously*\n\n\"Secco o dolce?\"",
+        "spoken": "\"Sardegna! E straordinario!\"\n\n*pauses and tilts head curiously*\n\n\"Secco o dolce?\""
+      },
+      {
+        "turn": 9,
+        "speaker": "Alessandro",
+        "raw": "Secco — fresco e minerale, perfetto per pulire il palato.\n\n[ENGLISH: Dry — fresh and mineral, perfect for cleansing the palate.]\n\n[HINT: Complimenti allo chef!]",
+        "spoken": "Secco — fresco e minerale, perfetto per pulire il palato.",
+        "hint": "Complimenti allo chef!"
+      },
+      {
+        "turn": 10,
+        "speaker": "Chad",
+        "raw": "\"Secco — sì, sì! Leggero, secco...\" \n\n*swirls glass and takes a sip*\n\n\"E straordinario!\"",
+        "spoken": "\"Secco — sì, sì! Leggero, secco...\" \n\n*swirls glass and takes a sip*\n\n\"E straordinario!\""
+      },
+      {
+        "turn": 10,
+        "speaker": "Alessandro",
+        "raw": "Ed ora, il dolce — una sfera di cioccolato fondente con cremoso al lampone. Il sapore?\n\n[ENGLISH: And now, the dessert — a dark chocolate sphere with raspberry cream. The flavor?]\n\n[HINT: È straordinario! Complimenti allo chef!]",
+        "spoken": "Ed ora, il dolce — una sfera di cioccolato fondente con cremoso al lampone. Il sapore?",
+        "hint": "È straordinario! Complimenti allo chef!"
+      },
+      {
+        "turn": 11,
+        "speaker": "Chad",
+        "raw": "*takes a spoonful and closes eyes dramatically*\n\n\"Il sapore — E straordinario!\"\n\n*looks toward the kitchen*\n\n\"Complimenti allo chef!\"",
+        "spoken": "*takes a spoonful and closes eyes dramatically*\n\n\"Il sapore — E straordinario!\"\n\n*looks toward the kitchen*\n\n\"Complimenti allo chef!\""
+      },
+      {
+        "turn": 11,
+        "speaker": "Alessandro",
+        "raw": "È stato un onore averla con noi questa sera, signor Chad — una serata indimenticabile.\n\n[ENGLISH: It has been an honor to have you with us this evening, Mr. Chad — an unforgettable evening.]\n\n[HINT: Dove andate adesso? ...I Navigli!]",
+        "spoken": "È stato un onore averla con noi questa sera, signor Chad — una serata indimenticabile.",
+        "hint": "Dove andate adesso? ...I Navigli!"
+      },
+      {
+        "turn": 12,
+        "speaker": "Chad",
+        "raw": "\"E straordinario! Complimenti allo chef!\" \n\n*shakes hands warmly*\n\n\"Il menu degustazione, l'abbinamento vini — magnifico! Grazie, grazie!\"",
+        "spoken": "\"E straordinario! Complimenti allo chef!\" \n\n*shakes hands warmly*\n\n\"Il menu degustazione, l'abbinamento vini — magnifico! Grazie, grazie!\""
+      },
+      {
+        "turn": 12,
+        "speaker": "Alessandro",
+        "raw": "Grazie a lei, signor Chad — dove andate adesso?\n\n[ENGLISH: Thank you, Mr. Chad — where are you going now?]\n\n[HINT: Andiamo ai Navigli!]",
+        "spoken": "Grazie a lei, signor Chad — dove andate adesso?",
+        "hint": "Andiamo ai Navigli!"
+      },
+      {
+        "turn": 13,
+        "speaker": "Chad",
+        "raw": "*thinks for a moment, then grins*\n\n\"Il Duomo! Sì — il Duomo!\"\n\n*waves enthusiastically and heads for the door*",
+        "spoken": "*thinks for a moment, then grins*\n\n\"Il Duomo! Sì — il Duomo!\"\n\n*waves enthusiastically and heads for the door*"
+      },
+      {
+        "turn": 13,
+        "speaker": "Alessandro",
+        "raw": "Il Duomo di notte — una degustazione per gli occhi.\n\n[ENGLISH: The Duomo at night — a tasting menu for the eyes.]\n\n[DEBRIEF]\n{\n  \"learned\": [\"il menu degustazione — the tasting menu\", \"l'abbinamento vini — the wine pairing\", \"corposo — full-bodied\", \"leggero — light\", \"secco — dry\", \"il sapore — the flavor\", \"stagionale — seasonal\", \"complimenti allo chef — compliments to the chef\", \"è straordinario — it's extraordinary\", \"l'annata — the vintage\"],\n  \"retry\": [\"potrei sapere — could I know/may I ask (Chad started to use this but didn't complete it)\", \"la consistenza — the texture (never came up)\", \"il territorio — the terroir/region (heard but not used actively)\"],\n  \"alessandro_says\": \"Chad arrived with boundless enthusiasm and not a trace of self-consciousness — and honestly, that energy is a gift in a formal dining room. He latched onto the vocabulary beautifully: corposo, leggero, secco, il sapore — all used in context and with genuine feeling. With a little more practice forming full sentences rather than enthusiastic fragments, he'll be conversing like a natural.\",\n  \"transitionTo\": null\n}\n[/DEBRIEF]",
+        "spoken": "Il Duomo di notte — una degustazione per gli occhi.",
+        "hint": null
+      }
+    ],
+    "debrief": {
+      "learned": [
+        "il menu degustazione — the tasting menu",
+        "l'abbinamento vini — the wine pairing",
+        "corposo — full-bodied",
+        "leggero — light",
+        "secco — dry",
+        "il sapore — the flavor",
+        "stagionale — seasonal",
+        "complimenti allo chef — compliments to the chef",
+        "è straordinario — it's extraordinary",
+        "l'annata — the vintage"
+      ],
+      "retry": [
+        "potrei sapere — could I know/may I ask (Chad started to use this but didn't complete it)",
+        "la consistenza — the texture (never came up)",
+        "il territorio — the terroir/region (heard but not used actively)"
+      ],
+      "alessandro_says": "Chad arrived with boundless enthusiasm and not a trace of self-consciousness — and honestly, that energy is a gift in a formal dining room. He latched onto the vocabulary beautifully: corposo, leggero, secco, il sapore — all used in context and with genuine feeling. With a little more practice forming full sentences rather than enthusiastic fragments, he'll be conversing like a natural.",
+      "transitionTo": null
+    }
+  },
+  "improvisingRun": {
+    "completed": true,
+    "turnCount": 16,
+    "stalled": false,
+    "phrasesUsed": [
+      "Il menu degustazione",
+      "L'abbinamento vini",
+      "Stagionale",
+      "Il sapore",
+      "Complimenti allo chef",
+      "Di che regione?",
+      "Secco o dolce?",
+      "Corposo",
+      "Leggero",
+      "L'annata"
+    ],
+    "phrasesUnused": [
+      "E straordinario",
+      "Potrei sapere...?"
+    ],
+    "phraseUtilization": "10/12",
+    "sufficiencyGaps": [],
+    "characterViolations": [],
+    "transcript": [
+      {
+        "turn": 0,
+        "speaker": "Alessandro",
+        "raw": "Buonasera, benvenuti al MUDEC. Il vostro nome, prego?\n\n[ENGLISH: Good evening, welcome to the MUDEC. Your name, please?]\n\n[HINT: Ho una prenotazione — a nome di Chad.]",
+        "spoken": "Buonasera, benvenuti al MUDEC. Il vostro nome, prego?",
+        "hint": "Ho una prenotazione — a nome di Chad."
+      },
+      {
+        "turn": 1,
+        "speaker": "Chad",
+        "raw": "\"Ah, buonasera! Sì, sì! Ho una... reservacion? Per Chad. Chad Miller. E mia moglie!\"",
+        "spoken": "\"Ah, buonasera! Sì, sì! Ho una... reservacion? Per Chad. Chad Miller. E mia moglie!\""
+      },
+      {
+        "turn": 1,
+        "speaker": "Alessandro",
+        "raw": "Ah, benvenuti, signor e signora Miller — la vostra prenotazione è perfetta.\n\n[ENGLISH: Ah, welcome, Mr. and Mrs. Miller — your reservation is all in order.]\n\n[HINT: Grazie mille!]",
+        "spoken": "Ah, benvenuti, signor e signora Miller — la vostra prenotazione è perfetta.",
+        "hint": "Grazie mille!"
+      },
+      {
+        "turn": 2,
+        "speaker": "Chad",
+        "raw": "\"Grazie mille! E... straordinario! Questo posto è bellissimo!\" \n\n*gestures around excitedly*",
+        "spoken": "\"Grazie mille! E... straordinario! Questo posto è bellissimo!\" \n\n*gestures around excitedly*"
+      },
+      {
+        "turn": 2,
+        "speaker": "Alessandro",
+        "raw": "Prego, seguitemi — il vostro tavolo è pronto.\n\n[ENGLISH: Please, follow me — your table is ready.]\n\n[HINT: Il menu degustazione, per favore.]",
+        "spoken": "Prego, seguitemi — il vostro tavolo è pronto.",
+        "hint": "Il menu degustazione, per favore."
+      },
+      {
+        "turn": 3,
+        "speaker": "Chad",
+        "raw": "\"Sì, sì, grazie! Oh, potrei sapere... il menu degustazione? Ce l'avete stasera?\"",
+        "spoken": "\"Sì, sì, grazie! Oh, potrei sapere... il menu degustazione? Ce l'avete stasera?\""
+      },
+      {
+        "turn": 3,
+        "speaker": "Alessandro",
+        "raw": "Naturalmente — il menu degustazione di questa sera è stagionale, un viaggio attraverso la cucina milanese dello chef Bartolini.\n\n[ENGLISH: Of course — this evening's tasting menu is seasonal, a journey through Chef Bartolini's Milanese cuisine.]\n\n[HINT: E straordinario! / Quanti piatti?]",
+        "spoken": "Naturalmente — il menu degustazione di questa sera è stagionale, un viaggio attraverso la cucina milanese dello chef Bartolini.",
+        "hint": "E straordinario! / Quanti piatti?"
+      },
+      {
+        "turn": 4,
+        "speaker": "Chad",
+        "raw": "\"Ohhh, stagionale! Magnifico!\" \n\n*nudges wife excitedly*\n\n\"E... l'abbinamento vini? È incluso?\"",
+        "spoken": "\"Ohhh, stagionale! Magnifico!\" \n\n*nudges wife excitedly*\n\n\"E... l'abbinamento vini? È incluso?\""
+      },
+      {
+        "turn": 4,
+        "speaker": "Alessandro",
+        "raw": "Permettetemi di presentare Elena, la nostra sommelier — sarà lei a guidarvi.\n\n[ENGLISH: Allow me to introduce Elena, our sommelier — she will guide you.]\n\n[HINT: Di che regione?]",
+        "spoken": "Permettetemi di presentare Elena, la nostra sommelier — sarà lei a guidarvi.",
+        "hint": "Di che regione?"
+      },
+      {
+        "turn": 5,
+        "speaker": "Chad",
+        "raw": "\"Ah, perfetto! Benvenuta, Elena!\" \n\n*turns to Elena eagerly*\n\n\"Potrei sapere... i vini, sono... corposo o leggero stasera?\"",
+        "spoken": "\"Ah, perfetto! Benvenuta, Elena!\" \n\n*turns to Elena eagerly*\n\n\"Potrei sapere... i vini, sono... corposo o leggero stasera?\""
+      },
+      {
+        "turn": 5,
+        "speaker": "Alessandro",
+        "raw": "\"Buonasera — iniziamo con un Franciacorta del 2019, un vino elegante della Lombardia, perfetto per aprire la serata.\"\n\n[ENGLISH: \"Good evening — we begin with a Franciacorta from 2019, an elegant wine from Lombardy, perfect to open the evening.\"]\n\n[HINT: Di che regione? / L'annata?]",
+        "spoken": "\"Buonasera — iniziamo con un Franciacorta del 2019, un vino elegante della Lombardia, perfetto per aprire la serata.\"",
+        "hint": "Di che regione? / L'annata?"
+      },
+      {
+        "turn": 6,
+        "speaker": "Chad",
+        "raw": "\"Oh, Franciacorta! Sì, sì!\" \n\n*tries to sound knowledgeable*\n\n\"E... l'annata... 2019? È buona, no? E... di che regione? Lombardia?\"\n\n*realizes she just said Lombardia*\n\n\"Ah, Lombardia! Milano! Siamo qui!\"",
+        "spoken": "\"Oh, Franciacorta! Sì, sì!\" \n\n*tries to sound knowledgeable*\n\n\"E... l'annata... 2019? È buona, no? E... di che regione? Lombardia?\"\n\n*realizes she just said Lombardia*\n\n\"Ah, Lombardia! Milano! Siamo qui!\""
+      },
+      {
+        "turn": 6,
+        "speaker": "Alessandro",
+        "raw": "\"Esattamente, signor Miller — la Lombardia, proprio qui a casa nostra.\"\n\n[ENGLISH: \"Exactly, Mr. Miller — Lombardy, right here at home.\"]\n\n[HINT: È straordinario!]",
+        "spoken": "\"Esattamente, signor Miller — la Lombardia, proprio qui a casa nostra.\"",
+        "hint": "È straordinario!"
+      },
+      {
+        "turn": 7,
+        "speaker": "Chad",
+        "raw": "\"Ah, magnifico! E... è secco o dolce? Il Franciacorta?\"",
+        "spoken": "\"Ah, magnifico! E... è secco o dolce? Il Franciacorta?\""
+      },
+      {
+        "turn": 7,
+        "speaker": "Alessandro",
+        "raw": "\"È secco, signor Miller — fresco e vivace.\"\n\n[ENGLISH: \"It is dry, Mr. Miller — fresh and lively.\"]\n\n[HINT: È straordinario!]",
+        "spoken": "\"È secco, signor Miller — fresco e vivace.\"",
+        "hint": "È straordinario!"
+      },
+      {
+        "turn": 8,
+        "speaker": "Chad",
+        "raw": "\"Secco! Perfetto, perfetto!\" \n\n*gives thumbs up*\n\n\"Io preferisco... secco. E mia moglie anche!\"",
+        "spoken": "\"Secco! Perfetto, perfetto!\" \n\n*gives thumbs up*\n\n\"Io preferisco... secco. E mia moglie anche!\""
+      },
+      {
+        "turn": 8,
+        "speaker": "Alessandro",
+        "raw": "Il primo piatto arriva — carpaccio di manzo con tartufo e olio d'oliva del territorio. Le piace?\n\n[ENGLISH: The first course arrives — beef carpaccio with truffle and local olive oil. Do you like it?]\n\n[HINT: È straordinario! / Complimenti allo chef!]",
+        "spoken": "Il primo piatto arriva — carpaccio di manzo con tartufo e olio d'oliva del territorio. Le piace?",
+        "hint": "È straordinario! / Complimenti allo chef!"
+      },
+      {
+        "turn": 9,
+        "speaker": "Chad",
+        "raw": "\"Ohhhh!\" \n\n*takes a bite and closes eyes dramatically*\n\n\"È... straordinario! Il sapore... wow, il tartufo! Complimenti allo chef!\"",
+        "spoken": "\"Ohhhh!\" \n\n*takes a bite and closes eyes dramatically*\n\n\"È... straordinario! Il sapore... wow, il tartufo! Complimenti allo chef!\""
+      },
+      {
+        "turn": 9,
+        "speaker": "Alessandro",
+        "raw": "Grazie, signor Miller — lo chef sarà felice.\n\n[ENGLISH: Thank you, Mr. Miller — the chef will be pleased.]\n\n[HINT: E il prossimo piatto?]",
+        "spoken": "Grazie, signor Miller — lo chef sarà felice.",
+        "hint": "E il prossimo piatto?"
+      },
+      {
+        "turn": 10,
+        "speaker": "Chad",
+        "raw": "\"Sì, sì! E... potrei sapere... il tartufo, è stagionale? Di che regione?\"",
+        "spoken": "\"Sì, sì! E... potrei sapere... il tartufo, è stagionale? Di che regione?\""
+      },
+      {
+        "turn": 10,
+        "speaker": "Alessandro",
+        "raw": "Sì, stagionale — dall'Umbria, il territorio più celebre per il tartufo in Italia.\n\n[ENGLISH: Yes, seasonal — from Umbria, Italy's most celebrated region for truffle.]\n\n[HINT: Che bello! / Magnifico!]",
+        "spoken": "Sì, stagionale — dall'Umbria, il territorio più celebre per il tartufo in Italia.",
+        "hint": "Che bello! / Magnifico!"
+      },
+      {
+        "turn": 11,
+        "speaker": "Chad",
+        "raw": "\"Umbria! Oh, interessante!\" \n\n*whispers to wife* \n\n\"Honey, we gotta go to Umbria next!\"\n\n*turns back*\n\n\"È... corposo, il sapore! Molto... molto buono!\"",
+        "spoken": "\"Umbria! Oh, interessante!\" \n\n*whispers to wife* \n\n\"Honey, we gotta go to Umbria next!\"\n\n*turns back*\n\n\"È... corposo, il sapore! Molto... molto buono!\""
+      },
+      {
+        "turn": 11,
+        "speaker": "Alessandro",
+        "raw": "Elena ritorna — \"Il prossimo vino è un Barolo 2017, leggero ma profondo, dal Piemonte.\"\n\n[ENGLISH: Elena returns — \"The next wine is a 2017 Barolo, delicate but profound, from Piedmont.\"]\n\n[HINT: Corposo o leggero?]",
+        "spoken": "Elena ritorna — \"Il prossimo vino è un Barolo 2017, leggero ma profondo, dal Piemonte.\"",
+        "hint": "Corposo o leggero?"
+      },
+      {
+        "turn": 12,
+        "speaker": "Chad",
+        "raw": "\"Barolo! Sì, conosco Barolo!\" \n\n*very excited*\n\n\"L'annata 2017... è buona? E... di che regione? Piemonte!\"\n\n*catches himself*\n\n\"Ah, lei ha detto Piemonte! Scusi, scusi!\"",
+        "spoken": "\"Barolo! Sì, conosco Barolo!\" \n\n*very excited*\n\n\"L'annata 2017... è buona? E... di che regione? Piemonte!\"\n\n*catches himself*\n\n\"Ah, lei ha detto Piemonte! Scusi, scusi!\""
+      },
+      {
+        "turn": 12,
+        "speaker": "Alessandro",
+        "raw": "\"Perfetto, signor Miller — il 2017 è stata un'annata eccellente.\"\n\n[ENGLISH: \"Perfect, Mr. Miller — 2017 was an excellent vintage.\"]\n\n[HINT: È straordinario!]",
+        "spoken": "\"Perfetto, signor Miller — il 2017 è stata un'annata eccellente.\"",
+        "hint": "È straordinario!"
+      },
+      {
+        "turn": 13,
+        "speaker": "Chad",
+        "raw": "\"Eccellente! Oh, magnifico!\" \n\n*takes a sip*\n\n\"Mmm... è... corposo! Molto corposo! Non leggero, no no!\"\n\n*looks at Elena with wide eyes*\n\n\"È straordinario!\"",
+        "spoken": "\"Eccellente! Oh, magnifico!\" \n\n*takes a sip*\n\n\"Mmm... è... corposo! Molto corposo! Non leggero, no no!\"\n\n*looks at Elena with wide eyes*\n\n\"È straordinario!\""
+      },
+      {
+        "turn": 13,
+        "speaker": "Alessandro",
+        "raw": "Ed ora, il dessert — una sfera di cioccolato con gelato al caramello salato e foglia d'oro. Il sapore?\n\n[ENGLISH: And now, dessert — a chocolate sphere with salted caramel ice cream and gold leaf. The flavor?]\n\n[HINT: È straordinario! / Dolce e magnifico!]",
+        "spoken": "Ed ora, il dessert — una sfera di cioccolato con gelato al caramello salato e foglia d'oro. Il sapore?",
+        "hint": "È straordinario! / Dolce e magnifico!"
+      },
+      {
+        "turn": 14,
+        "speaker": "Chad",
+        "raw": "\"Oh mio dio!\" \n\n*takes a bite, nearly speechless*\n\n\"Il sapore è... straordinario! Il cioccolato e... caramello... wow!\"\n\n*puts hand on heart*\n\n\"Complimenti allo chef! Davvero!\"",
+        "spoken": "\"Oh mio dio!\" \n\n*takes a bite, nearly speechless*\n\n\"Il sapore è... straordinario! Il cioccolato e... caramello... wow!\"\n\n*puts hand on heart*\n\n\"Complimenti allo chef! Davvero!\""
+      },
+      {
+        "turn": 14,
+        "speaker": "Alessandro",
+        "raw": "Signor Miller, è stato un onore avervi questa sera — una serata perfetta.\n\n[ENGLISH: Mr. Miller, it has been an honor to have you this evening — a perfect evening.]\n\n[HINT: Grazie mille, Alessandro!]",
+        "spoken": "Signor Miller, è stato un onore avervi questa sera — una serata perfetta.",
+        "hint": "Grazie mille, Alessandro!"
+      },
+      {
+        "turn": 15,
+        "speaker": "Chad",
+        "raw": "\"Ah, grazie mille! È stato... straordinario! Tutto! Il menu degustazione, l'abbinamento vini, il tartufo... tutto perfetto!\"\n\n*shakes hand warmly*\n\n\"Complimenti allo chef e a tutta la... squadra? Il team!\"",
+        "spoken": "\"Ah, grazie mille! È stato... straordinario! Tutto! Il menu degustazione, l'abbinamento vini, il tartufo... tutto perfetto!\"\n\n*shakes hand warmly*\n\n\"Complimenti allo chef e a tutta la... squadra? Il team!\""
+      },
+      {
+        "turn": 15,
+        "speaker": "Alessandro",
+        "raw": "La squadra è onorata, signor Miller. Dove andate adesso?\n\n[ENGLISH: The team is honored, Mr. Miller. Where are you going now?]\n\n[HINT: Andiamo al Duomo! / Andiamo all'hotel.]",
+        "spoken": "La squadra è onorata, signor Miller. Dove andate adesso?",
+        "hint": "Andiamo al Duomo! / Andiamo all'hotel."
+      },
+      {
+        "turn": 16,
+        "speaker": "Chad",
+        "raw": "\"Adesso... andiamo al... Duomo! Sì, il Duomo di notte! È bellissimo, no?\"\n\n*grabs wife's hand excitedly*\n\n\"E forse un gelato! Per mia moglie!\"",
+        "spoken": "\"Adesso... andiamo al... Duomo! Sì, il Duomo di notte! È bellissimo, no?\"\n\n*grabs wife's hand excitedly*\n\n\"E forse un gelato! Per mia moglie!\""
+      },
+      {
+        "turn": 16,
+        "speaker": "Alessandro",
+        "raw": "Il Duomo di notte — una degustazione per gli occhi.\n\n[ENGLISH: The Duomo at night — a tasting menu for the eyes.]\n\n[DEBRIEF]\n{\n  \"learned\": [\"il menu degustazione — the tasting menu\", \"l'abbinamento vini — the wine pairing\", \"stagionale — seasonal\", \"il sapore — the flavor\", \"il territorio — the terroir/region\", \"l'annata — the vintage\", \"secco — dry\", \"corposo — full-bodied\", \"è straordinario — it's extraordinary\", \"complimenti allo chef — compliments to the chef\", \"di che regione — from which region\"],\n  \"retry\": [\"la consistenza — the texture\", \"potrei sapere — could I know/may I ask\", \"dolce — sweet\"],\n  \"alessandro_says\": \"Chad brought genuine enthusiasm and a good instinct for the vocabulary — he reached for the right words at the right moments, and 'complimenti allo chef' landed with real sincerity. A little more patience before self-correcting would add polish, but this was a very promising first visit to a three-star table.\",\n  \"transitionTo\": \"duomo\"\n}\n[/DEBRIEF]",
+        "spoken": "Il Duomo di notte — una degustazione per gli occhi.",
+        "hint": null
+      }
+    ],
+    "debrief": {
+      "learned": [
+        "il menu degustazione — the tasting menu",
+        "l'abbinamento vini — the wine pairing",
+        "stagionale — seasonal",
+        "il sapore — the flavor",
+        "il territorio — the terroir/region",
+        "l'annata — the vintage",
+        "secco — dry",
+        "corposo — full-bodied",
+        "è straordinario — it's extraordinary",
+        "complimenti allo chef — compliments to the chef",
+        "di che regione — from which region"
+      ],
+      "retry": [
+        "la consistenza — the texture",
+        "potrei sapere — could I know/may I ask",
+        "dolce — sweet"
+      ],
+      "alessandro_says": "Chad brought genuine enthusiasm and a good instinct for the vocabulary — he reached for the right words at the right moments, and 'complimenti allo chef' landed with real sincerity. A little more patience before self-correcting would add polish, but this was a very promising first visit to a three-star table.",
+      "transitionTo": "duomo"
+    },
+    "derailmentMoments": [
+      {
+        "turn": 1,
+        "chadSaid": "\"Ah, buonasera! Sì, sì! Ho una... reservacion? Per Chad. Chad Miller. E mia moglie!\"",
+        "characterResponse": "Ah, benvenuti, signor e signora Miller — la vostra prenotazione è perfetta.",
+        "handled": true
+      },
+      {
+        "turn": 2,
+        "chadSaid": "\"Grazie mille! E... straordinario! Questo posto è bellissimo!\" \n\n*gestures around excitedly*",
+        "characterResponse": "Prego, seguitemi — il vostro tavolo è pronto.",
+        "handled": true
+      },
+      {
+        "turn": 8,
+        "chadSaid": "\"Secco! Perfetto, perfetto!\" \n\n*gives thumbs up*\n\n\"Io preferisco... secco. E mia moglie anche!\"",
+        "characterResponse": "Il primo piatto arriva — carpaccio di manzo con tartufo e olio d'oliva del territorio. Le piace?",
+        "handled": true
+      },
+      {
+        "turn": 16,
+        "chadSaid": "\"Adesso... andiamo al... Duomo! Sì, il Duomo di notte! È bellissimo, no?\"\n\n*grabs wife's hand excitedly*\n\n\"E forse un gelato! Per mia moglie!\"",
+        "characterResponse": "Il Duomo di notte — una degustazione per gli occhi.",
+        "handled": true
+      }
+    ]
+  },
+  "summary": {
+    "completable": true,
+    "phraseUtilization": "12/12",
+    "missingPhrases": [],
+    "unusedPhrases": [],
+    "derailmentHandling": "good",
+    "overallGrade": "A",
+    "fixesNeeded": []
+  }
+}

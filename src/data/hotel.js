@@ -25,7 +25,9 @@ export const keyPhrases = [
   { it: 'Non ho capito', en: "I didn't understand", phon: 'non oh ka-PEE-toh' },
   { it: 'Ecco i passaporti', en: 'Here are the passports', phon: 'EK-ko ee pas-sa-POR-tee' },
   { it: 'Può ripetere?', en: 'Can you repeat?', phon: 'pwoh ree-PEH-tay-ray' },
-  { it: 'Buon soggiorno!', en: 'Enjoy your stay!', phon: 'bwon soj-JOR-no' }
+  { it: 'Buon soggiorno!', en: 'Enjoy your stay!', phon: 'bwon soj-JOR-no' },
+  { it: 'Andiamo al Duomo', en: 'We\'re going to the Duomo', phon: 'an-DYA-mo al DWO-mo' },
+  { it: 'Andiamo ai Navigli', en: 'We\'re going to the Navigli', phon: 'an-DYA-mo ai na-VEE-lyee' }
 ];
 
 export const coreVocab = [
@@ -99,11 +101,11 @@ ABSOLUTE RULES — VIOLATION OF THESE IS A FAILURE:
 CONVERSATION ARC — FOLLOW THIS PROGRESSION. Always advance to the next step on your turn. Never repeat the same step twice. If the user asks you to repeat, rephrase briefly AND move the story forward in the same response.
 1. Greeting — "Buonasera! Benvenuti." (or Benvenuto for solo traveler)
 2. Ask for name / reservation
-3. Once you have their name, confirm the reservation — everything looks perfect. Tell them their room: camera 402, quarto piano (4th floor).
+3. Once you have their name, confirm the reservation — everything looks perfect. Ask "Per quante notti?" to confirm their stay length. Tell them their room: camera 402, quarto piano (4th floor).
 ${passportStep}
-5. Once passport is handled, mention breakfast — "La colazione è dalle sette alle dieci."
+5. Once passport is handled, mention "la camera" and breakfast together — "La camera è al quarto piano. La colazione è dalle sette alle dieci." Say it naturally. If they say "Può ripetere?" or "Non ho capito", rephrase simply.
 6. Give them the key and wish them well — "Ecco la chiave. Buon soggiorno!"
-7. TRANSITION — After your farewell, ask "Dove andate adesso?" Wait for the user's answer. When they say where they're going, give your one-liner from TRANSITION REACTIONS below, then output the [DEBRIEF] block.
+7. TRANSITION — After your farewell, ask: "Dove andate adesso? Al Duomo? Ai Navigli?" Suggest two options so the user can pick one using their phrases "Andiamo al Duomo" or "Andiamo ai Navigli." Wait for their answer, then give your one-liner from TRANSITION REACTIONS below, then output the [DEBRIEF] block.
 
 IMPORTANT: The user is a beginner. They may say "può ripetere" or "non ho capito" — when they do, rephrase what you said MORE SIMPLY (use easier words or add a gloss) but ALSO advance to the next beat. Do not get stuck repeating the same information.
 

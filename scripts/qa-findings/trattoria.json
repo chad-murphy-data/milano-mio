@@ -1,0 +1,478 @@
+{
+  "location": "trattoria",
+  "characterName": "Lorenzo",
+  "obedientRun": {
+    "completed": true,
+    "turnCount": 13,
+    "stalled": false,
+    "phrasesUsed": [
+      "Ho una prenotazione",
+      "Il menù",
+      "Il primo",
+      "Il secondo",
+      "Il contorno",
+      "Il dolce",
+      "Cosa consiglia?",
+      "Vorrei...",
+      "Per me",
+      "Una bottiglia di...",
+      "Il vino della casa",
+      "Il conto, per favore",
+      "Era squisito",
+      "È compreso il servizio?",
+      "Rosso, per favore"
+    ],
+    "phrasesUnused": [
+      "Bianco, per favore"
+    ],
+    "phraseUtilization": "15/16",
+    "sufficiencyGaps": [],
+    "characterViolations": [
+      {
+        "turn": 4,
+        "violation": "Character may have used English in dialogue: \"Ah, vorrebbe il risotto come primo e la cotoletta come secondo — con il contorno! Perfetta scelta.\n\n\"",
+        "severity": "medium"
+      }
+    ],
+    "transcript": [
+      {
+        "turn": 0,
+        "speaker": "Lorenzo",
+        "raw": "Buonasera! Benvenuti alla nostra trattoria.\n\n[ENGLISH: Good evening! Welcome to our trattoria.]\n\n[HINT: Ho una prenotazione.]",
+        "spoken": "Buonasera! Benvenuti alla nostra trattoria.",
+        "hint": "Ho una prenotazione."
+      },
+      {
+        "turn": 1,
+        "speaker": "Chad",
+        "raw": "\"Ho una prenotazione!\" 😊",
+        "spoken": "\"Ho una prenotazione!\" 😊"
+      },
+      {
+        "turn": 1,
+        "speaker": "Lorenzo",
+        "raw": "Perfetto! Il nome, prego?\n\n[ENGLISH: Perfect! The name, please?]\n\n[HINT: La prenotazione è a nome Chad.]",
+        "spoken": "Perfetto! Il nome, prego?",
+        "hint": "La prenotazione è a nome Chad."
+      },
+      {
+        "turn": 2,
+        "speaker": "Chad",
+        "raw": "*looks confused and smiles apologetically*\n\n\"Il menù? Il menù?\" 😅",
+        "spoken": "*looks confused and smiles apologetically*\n\n\"Il menù? Il menù?\" 😅"
+      },
+      {
+        "turn": 2,
+        "speaker": "Lorenzo",
+        "raw": "Certo, certo — prego, si accomodi!\n\nEcco il menù. Stasera abbiamo un risotto alla Milanese speciale e una cotoletta alla Milanese croccante.\n\n[ENGLISH: Of course, of course — please, make yourself comfortable! Here is the menu. This evening we have a special risotto alla Milanese and a crispy cotoletta alla Milanese.]\n\n[HINT: Cosa consiglia?]",
+        "spoken": "Certo, certo — prego, si accomodi!\n\nEcco il menù. Stasera abbiamo un risotto alla Milanese speciale e una cotoletta alla Milanese croccante.",
+        "hint": "Cosa consiglia?"
+      },
+      {
+        "turn": 3,
+        "speaker": "Chad",
+        "raw": "\"Cosa consiglia?\" 😊",
+        "spoken": "\"Cosa consiglia?\" 😊"
+      },
+      {
+        "turn": 3,
+        "speaker": "Lorenzo",
+        "raw": "Ah, ottima domanda! Il risotto alla Milanese è il cuore della cucina milanese — cremoso, profumato, assolutamente straordinario.\n\nE dopo, la cotoletta con un contorno di verdure — perfetto.\n\n[ENGLISH: Ah, excellent question! The risotto alla Milanese is the heart of Milanese cuisine — creamy, fragrant, absolutely extraordinary. And after, the cotoletta with a side of vegetables — perfect.]\n\n[HINT: Vorrei il risotto, per favore.]",
+        "spoken": "Ah, ottima domanda! Il risotto alla Milanese è il cuore della cucina milanese — cremoso, profumato, assolutamente straordinario.\n\nE dopo, la cotoletta con un contorno di verdure — perfetto.",
+        "hint": "Vorrei il risotto, per favore."
+      },
+      {
+        "turn": 4,
+        "speaker": "Chad",
+        "raw": "\"Vorrei... il primo! E... il secondo! E il contorno!\" 😄",
+        "spoken": "\"Vorrei... il primo! E... il secondo! E il contorno!\" 😄"
+      },
+      {
+        "turn": 4,
+        "speaker": "Lorenzo",
+        "raw": "Ah, vorrebbe il risotto come primo e la cotoletta come secondo — con il contorno! Perfetta scelta.\n\nRosso o bianco?\n\n[ENGLISH: Ah, you would like the risotto as a first course and the cotoletta as a second — with the side dish! Perfect choice. Red or white?]\n\n[HINT: Rosso, per favore.]",
+        "spoken": "Ah, vorrebbe il risotto come primo e la cotoletta come secondo — con il contorno! Perfetta scelta.\n\nRosso o bianco?",
+        "hint": "Rosso, per favore."
+      },
+      {
+        "turn": 5,
+        "speaker": "Chad",
+        "raw": "\"Una bottiglia di... il vino della casa! Rosso, per favore!\" 😊",
+        "spoken": "\"Una bottiglia di... il vino della casa! Rosso, per favore!\" 😊"
+      },
+      {
+        "turn": 5,
+        "speaker": "Lorenzo",
+        "raw": "Perfetto, una bottiglia di vino rosso della casa — subito!\n\n[ENGLISH: Perfect, a bottle of house red wine — right away!]\n\n[HINT: Grazie mille!]",
+        "spoken": "Perfetto, una bottiglia di vino rosso della casa — subito!",
+        "hint": "Grazie mille!"
+      },
+      {
+        "turn": 6,
+        "speaker": "Chad",
+        "raw": "\"Era squisito!\" \n\n*then catches himself and laughs, realizing he said that too early*\n\n\"Il menù... no no...\" 😂",
+        "spoken": "\"Era squisito!\" \n\n*then catches himself and laughs, realizing he said that too early*\n\n\"Il menù... no no...\" 😂"
+      },
+      {
+        "turn": 6,
+        "speaker": "Lorenzo",
+        "raw": "Ah, è tutto bene? Il risotto, la cotoletta — tutto di suo gradimento?\n\n[ENGLISH: Ah, is everything good? The risotto, the cotoletta — everything to your liking?]\n\n[HINT: Sì, era squisito!]",
+        "spoken": "Ah, è tutto bene? Il risotto, la cotoletta — tutto di suo gradimento?",
+        "hint": "Sì, era squisito!"
+      },
+      {
+        "turn": 7,
+        "speaker": "Chad",
+        "raw": "\"Era squisito!\" 😄👍",
+        "spoken": "\"Era squisito!\" 😄👍"
+      },
+      {
+        "turn": 7,
+        "speaker": "Lorenzo",
+        "raw": "Sono felice! Desidera il dolce? Stasera abbiamo una panna cotta con frutti di bosco — delicatissima.\n\n[ENGLISH: I'm glad! Would you like dessert? This evening we have a panna cotta with berries — absolutely delicate.]\n\n[HINT: Sì, vorrei il dolce, per favore.]",
+        "spoken": "Sono felice! Desidera il dolce? Stasera abbiamo una panna cotta con frutti di bosco — delicatissima.",
+        "hint": "Sì, vorrei il dolce, per favore."
+      },
+      {
+        "turn": 8,
+        "speaker": "Chad",
+        "raw": "\"Vorrei... il dolce! Per me!\" 😊",
+        "spoken": "\"Vorrei... il dolce! Per me!\" 😊"
+      },
+      {
+        "turn": 8,
+        "speaker": "Lorenzo",
+        "raw": "Perfetto, subito!\n\n[ENGLISH: Perfect, right away!]\n\n[HINT: Il conto, per favore.]",
+        "spoken": "Perfetto, subito!",
+        "hint": "Il conto, per favore."
+      },
+      {
+        "turn": 9,
+        "speaker": "Chad",
+        "raw": "😊👍\n\n\"Era squisito!\" 😄",
+        "spoken": "😊👍\n\n\"Era squisito!\" 😄"
+      },
+      {
+        "turn": 9,
+        "speaker": "Lorenzo",
+        "raw": "Grazie mille! È stato un piacere.\n\n[ENGLISH: Thank you very much! It has been a pleasure.]\n\n[HINT: Il conto, per favore.]",
+        "spoken": "Grazie mille! È stato un piacere.",
+        "hint": "Il conto, per favore."
+      },
+      {
+        "turn": 10,
+        "speaker": "Chad",
+        "raw": "\"Il conto, per favore!\" 😊",
+        "spoken": "\"Il conto, per favore!\" 😊"
+      },
+      {
+        "turn": 10,
+        "speaker": "Lorenzo",
+        "raw": "Eccolo! È compreso il servizio — nessun problema.\n\n[ENGLISH: Here it is! Service is included — no problem.]\n\n[HINT: È compreso il servizio?]",
+        "spoken": "Eccolo! È compreso il servizio — nessun problema.",
+        "hint": "È compreso il servizio?"
+      },
+      {
+        "turn": 11,
+        "speaker": "Chad",
+        "raw": "\"È compreso il servizio?\" 😊\n\n*then sees the waiter nodding and gives a thumbs up*\n\n\"Era squisito!\" 😄",
+        "spoken": "\"È compreso il servizio?\" 😊\n\n*then sees the waiter nodding and gives a thumbs up*\n\n\"Era squisito!\" 😄"
+      },
+      {
+        "turn": 11,
+        "speaker": "Lorenzo",
+        "raw": "Grazie, grazie — lei è molto gentile! Buonasera e benvenuti a Milano!\n\n[ENGLISH: Thank you, thank you — you are very kind! Good evening and welcome to Milan!]\n\n[HINT: Dove andiamo adesso... Navigli?]",
+        "spoken": "Grazie, grazie — lei è molto gentile! Buonasera e benvenuti a Milano!",
+        "hint": "Dove andiamo adesso... Navigli?"
+      },
+      {
+        "turn": 12,
+        "speaker": "Chad",
+        "raw": "\"Era squisito!\" 😁 \n\n*waves enthusiastically on the way out* 😄",
+        "spoken": "\"Era squisito!\" 😁 \n\n*waves enthusiastically on the way out* 😄"
+      },
+      {
+        "turn": 12,
+        "speaker": "Lorenzo",
+        "raw": "Grazie! Dove andate adesso?\n\n[ENGLISH: Thank you! Where are you going now?]\n\n[HINT: Andiamo ai Navigli!]",
+        "spoken": "Grazie! Dove andate adesso?",
+        "hint": "Andiamo ai Navigli!"
+      },
+      {
+        "turn": 13,
+        "speaker": "Chad",
+        "raw": "\"Il Duomo!\" 😄👍",
+        "spoken": "\"Il Duomo!\" 😄👍"
+      },
+      {
+        "turn": 13,
+        "speaker": "Lorenzo",
+        "raw": "Il Duomo di notte è magico — le luci sulla facciata...\n\n[ENGLISH: The Duomo at night is magical — the lights on the façade...]\n\n[DEBRIEF]\n{\n  \"learned\": [\"ho una prenotazione — I have a reservation\", \"cosa consiglia — what do you recommend\", \"vorrei — I would like\", \"il primo — first course\", \"il secondo — main course\", \"il contorno — side dish\", \"il dolce — dessert\", \"rosso — red\", \"una bottiglia di — a bottle of\", \"il vino della casa — house wine\", \"era squisito — it was exquisite\", \"il conto per favore — the bill please\", \"è compreso il servizio — is service included\"],\n  \"retry\": [\"per me — for me\", \"per noi — for us\", \"è tutto bene — is everything good\"],\n  \"lorenzo_says\": \"Chad took real risks tonight — jumping in with enthusiasm and genuine Italian phrases — and that enthusiasm is exactly what makes language learning stick; next time, try 'per noi' instead of 'per me' since Charlie is right there with you.\",\n  \"transitionTo\": \"duomo\"\n}\n[/DEBRIEF]",
+        "spoken": "Il Duomo di notte è magico — le luci sulla facciata...",
+        "hint": null
+      }
+    ],
+    "debrief": {
+      "learned": [
+        "ho una prenotazione — I have a reservation",
+        "cosa consiglia — what do you recommend",
+        "vorrei — I would like",
+        "il primo — first course",
+        "il secondo — main course",
+        "il contorno — side dish",
+        "il dolce — dessert",
+        "rosso — red",
+        "una bottiglia di — a bottle of",
+        "il vino della casa — house wine",
+        "era squisito — it was exquisite",
+        "il conto per favore — the bill please",
+        "è compreso il servizio — is service included"
+      ],
+      "retry": [
+        "per me — for me",
+        "per noi — for us",
+        "è tutto bene — is everything good"
+      ],
+      "lorenzo_says": "Chad took real risks tonight — jumping in with enthusiasm and genuine Italian phrases — and that enthusiasm is exactly what makes language learning stick; next time, try 'per noi' instead of 'per me' since Charlie is right there with you.",
+      "transitionTo": "duomo"
+    }
+  },
+  "improvisingRun": {
+    "completed": true,
+    "turnCount": 11,
+    "stalled": false,
+    "phrasesUsed": [
+      "Ho una prenotazione",
+      "Il primo",
+      "Il secondo",
+      "Il dolce",
+      "Cosa consiglia?",
+      "Vorrei...",
+      "Per me",
+      "Una bottiglia di...",
+      "Il vino della casa",
+      "Il conto, per favore",
+      "Era squisito",
+      "È compreso il servizio?",
+      "Rosso, per favore"
+    ],
+    "phrasesUnused": [
+      "Il menù",
+      "Il contorno",
+      "Bianco, per favore"
+    ],
+    "phraseUtilization": "13/16",
+    "sufficiencyGaps": [],
+    "characterViolations": [],
+    "transcript": [
+      {
+        "turn": 0,
+        "speaker": "Lorenzo",
+        "raw": "Buonasera! Benvenuti alla nostra trattoria.\n\n[ENGLISH: Good evening! Welcome to our trattoria.]\n\n[HINT: Ho una prenotazione.]",
+        "spoken": "Buonasera! Benvenuti alla nostra trattoria.",
+        "hint": "Ho una prenotazione."
+      },
+      {
+        "turn": 1,
+        "speaker": "Chad",
+        "raw": "Buonasera! Ho una prenotazione... per Chad. Chad Johnson. *taps name on phone screen* Per... due persone?",
+        "spoken": "Buonasera! Ho una prenotazione... per Chad. Chad Johnson. *taps name on phone screen* Per... due persone?"
+      },
+      {
+        "turn": 1,
+        "speaker": "Lorenzo",
+        "raw": "Ah, sì, Johnson — eccoli! Prego, seguitemi.\n\n*leads them to a table by the window*\n\nEcco il vostro tavolo. Questo è il menù — e stasera abbiamo due piatti speciali: il risotto allo zafferano e il branzino al forno.\n\n[ENGLISH: Ah yes, Johnson — here you are! Right this way. Here is your table. This is the menu — and tonight we have two specials: saffron risotto and oven-roasted sea bass.]\n\n[HINT: Cosa consiglia?]",
+        "spoken": "Ah, sì, Johnson — eccoli! Prego, seguitemi.\n\n*leads them to a table by the window*\n\nEcco il vostro tavolo. Questo è il menù — e stasera abbiamo due piatti speciali: il risotto allo zafferano e il branzino al forno.",
+        "hint": "Cosa consiglia?"
+      },
+      {
+        "turn": 2,
+        "speaker": "Chad",
+        "raw": "Oh, grazie! Bellissimo tavolo! *opens menu enthusiastically*\n\nHmm... cosa consiglia? Il risotto o il... bran-ZEE-no? *points at menu*",
+        "spoken": "Oh, grazie! Bellissimo tavolo! *opens menu enthusiastically*\n\nHmm... cosa consiglia? Il risotto o il... bran-ZEE-no? *points at menu*"
+      },
+      {
+        "turn": 2,
+        "speaker": "Lorenzo",
+        "raw": "Ah, ottima domanda! Per il primo, consiglio il risotto alla Milanese — è il piatto della città, fatto con lo zafferano e il midollo di bue.\n\nE per il secondo, la cotoletta alla Milanese è magnifica — con un contorno di verdure di stagione.\n\n[ENGLISH: Ah, an excellent question! For the first course, I recommend the risotto alla Milanese — it's the city's signature dish, made with saffron and bone marrow. And for the main course, the cotoletta alla Milanese is magnificent — with a side of seasonal vegetables.]\n\n[HINT: Vorrei il risotto.]",
+        "spoken": "Ah, ottima domanda! Per il primo, consiglio il risotto alla Milanese — è il piatto della città, fatto con lo zafferano e il midollo di bue.\n\nE per il secondo, la cotoletta alla Milanese è magnifica — con un contorno di verdure di stagione.",
+        "hint": "Vorrei il risotto."
+      },
+      {
+        "turn": 3,
+        "speaker": "Chad",
+        "raw": "Oh, perfetto! Vorrei... il risotto per il primo, e la co-to-LET-ta per il secondo! *gives thumbs up*\n\nE... una bottiglia di... il vino della casa? Rosso, per favore!",
+        "spoken": "Oh, perfetto! Vorrei... il risotto per il primo, e la co-to-LET-ta per il secondo! *gives thumbs up*\n\nE... una bottiglia di... il vino della casa? Rosso, per favore!"
+      },
+      {
+        "turn": 3,
+        "speaker": "Lorenzo",
+        "raw": "Perfetto! Dunque, risotto alla Milanese e cotoletta per due — e una bottiglia di vino rosso della casa.\n\nTorno subito.\n\n[ENGLISH: Perfect! So, risotto alla Milanese and cotoletta for two — and a bottle of the house red wine. I'll be right back.]\n\n[HINT: Grazie mille!]",
+        "spoken": "Perfetto! Dunque, risotto alla Milanese e cotoletta per due — e una bottiglia di vino rosso della casa.\n\nTorno subito.",
+        "hint": "Grazie mille!"
+      },
+      {
+        "turn": 4,
+        "speaker": "Chad",
+        "raw": "Grazie mille! *turns to wife and whispers* Babe, I think I'm getting pretty good at this!\n\n*looks around the restaurant admiringly*\n\nBellissimo... molto bellissimo!",
+        "spoken": "Grazie mille! *turns to wife and whispers* Babe, I think I'm getting pretty good at this!\n\n*looks around the restaurant admiringly*\n\nBellissimo... molto bellissimo!"
+      },
+      {
+        "turn": 4,
+        "speaker": "Lorenzo",
+        "raw": "*returns with wine and food*\n\nEcco il vino rosso e... il risotto alla Milanese e la cotoletta. Buon appetito!\n\nÈ tutto bene?\n\n[ENGLISH: Here is the red wine and... the risotto alla Milanese and the cotoletta. Enjoy your meal! Is everything good?]\n\n[HINT: Sì, è tutto bene!]",
+        "spoken": "*returns with wine and food*\n\nEcco il vino rosso e... il risotto alla Milanese e la cotoletta. Buon appetito!\n\nÈ tutto bene?",
+        "hint": "Sì, è tutto bene!"
+      },
+      {
+        "turn": 5,
+        "speaker": "Chad",
+        "raw": "Oh mio dio! *eyes light up*\n\nSì, sì, tutto bene! Era... *takes a bite* ...era squisito! Molto squisito! \n\n*chef's kiss* Bellissimo!",
+        "spoken": "Oh mio dio! *eyes light up*\n\nSì, sì, tutto bene! Era... *takes a bite* ...era squisito! Molto squisito! \n\n*chef's kiss* Bellissimo!"
+      },
+      {
+        "turn": 5,
+        "speaker": "Lorenzo",
+        "raw": "Sono molto contento! La cucina sarà felice di sentirlo.\n\n[ENGLISH: I'm very glad! The kitchen will be happy to hear it.]\n\n[HINT: Il dolce — avete qualcosa?]",
+        "spoken": "Sono molto contento! La cucina sarà felice di sentirlo.",
+        "hint": "Il dolce — avete qualcosa?"
+      },
+      {
+        "turn": 6,
+        "speaker": "Chad",
+        "raw": "Grazie! Il cuoco è... molto bravo! *gives thumbs up toward kitchen*\n\nE... vorrei il dolce, per favore? Cosa consiglia?",
+        "spoken": "Grazie! Il cuoco è... molto bravo! *gives thumbs up toward kitchen*\n\nE... vorrei il dolce, per favore? Cosa consiglia?"
+      },
+      {
+        "turn": 6,
+        "speaker": "Lorenzo",
+        "raw": "Stasera consiglio il tiramisù della casa — fatto dalla nostra nonna, con il mascarpone e il caffè espresso.\n\n[ENGLISH: Tonight I recommend the house tiramisù — made by our grandmother, with mascarpone and espresso coffee.]\n\n[HINT: Sì, vorrei il tiramisù!]",
+        "spoken": "Stasera consiglio il tiramisù della casa — fatto dalla nostra nonna, con il mascarpone e il caffè espresso.",
+        "hint": "Sì, vorrei il tiramisù!"
+      },
+      {
+        "turn": 7,
+        "speaker": "Chad",
+        "raw": "Oh, tiramisù! Sì, sì! *very excited*\n\nVorrei il tiramisù, per me e... mia moglie. Due tiramisù, per favore!",
+        "spoken": "Oh, tiramisù! Sì, sì! *very excited*\n\nVorrei il tiramisù, per me e... mia moglie. Due tiramisù, per favore!"
+      },
+      {
+        "turn": 7,
+        "speaker": "Lorenzo",
+        "raw": "Perfetto, due tiramisù — arrivo subito!\n\n[ENGLISH: Perfect, two tiramisù — I'll be right there!]\n\n[HINT: Il conto, per favore.]",
+        "spoken": "Perfetto, due tiramisù — arrivo subito!",
+        "hint": "Il conto, per favore."
+      },
+      {
+        "turn": 8,
+        "speaker": "Chad",
+        "raw": "Grazie! *leans back contentedly*\n\nBabe, this is the best dinner in all of... tutta Italia! *laughs at own joke*",
+        "spoken": "Grazie! *leans back contentedly*\n\nBabe, this is the best dinner in all of... tutta Italia! *laughs at own joke*"
+      },
+      {
+        "turn": 8,
+        "speaker": "Lorenzo",
+        "raw": "*returns after dessert*\n\nAllora, posso portare qualcos'altro?\n\n[ENGLISH: So, can I bring you anything else?]\n\n[HINT: Il conto, per favore.]",
+        "spoken": "*returns after dessert*\n\nAllora, posso portare qualcos'altro?",
+        "hint": "Il conto, per favore."
+      },
+      {
+        "turn": 9,
+        "speaker": "Chad",
+        "raw": "Hmm... il conto, per favore! *smiles*\n\nE... è compreso il servizio?",
+        "spoken": "Hmm... il conto, per favore! *smiles*\n\nE... è compreso il servizio?"
+      },
+      {
+        "turn": 9,
+        "speaker": "Lorenzo",
+        "raw": "Sì, il servizio è compreso. Ecco il conto.\n\n[ENGLISH: Yes, service is included. Here is the bill.]\n\n[HINT: Grazie mille, era squisito!]",
+        "spoken": "Sì, il servizio è compreso. Ecco il conto.",
+        "hint": "Grazie mille, era squisito!"
+      },
+      {
+        "turn": 10,
+        "speaker": "Chad",
+        "raw": "Grazie mille! *looks at bill*\n\nTutto era... squisito! La cotoletta, il risotto, il tiramisù... bellissimo! *starts getting out wallet*\n\nMolto grazie! Er... grazie! Molto bene!",
+        "spoken": "Grazie mille! *looks at bill*\n\nTutto era... squisito! La cotoletta, il risotto, il tiramisù... bellissimo! *starts getting out wallet*\n\nMolto grazie! Er... grazie! Molto bene!"
+      },
+      {
+        "turn": 10,
+        "speaker": "Lorenzo",
+        "raw": "Grazie a voi — è stato un piacere! Arrivederci e buona serata!\n\nDove andate adesso?\n\n[ENGLISH: Thank you — it was a pleasure! Goodbye and have a lovely evening! Where are you going now?]\n\n[HINT: Andiamo ai Navigli!]",
+        "spoken": "Grazie a voi — è stato un piacere! Arrivederci e buona serata!\n\nDove andate adesso?",
+        "hint": "Andiamo ai Navigli!"
+      },
+      {
+        "turn": 11,
+        "speaker": "Chad",
+        "raw": "Oh! Adesso... andiamo al... Duomo? *gestures vaguely* \n\nPer una passeggiata! *mimes walking with fingers* Buonasera!",
+        "spoken": "Oh! Adesso... andiamo al... Duomo? *gestures vaguely* \n\nPer una passeggiata! *mimes walking with fingers* Buonasera!"
+      },
+      {
+        "turn": 11,
+        "speaker": "Lorenzo",
+        "raw": "Il Duomo di notte è magico — le luci sulla facciata...\n\n[ENGLISH: The Duomo at night is magical — the lights on the facade...]\n\n[DEBRIEF]\n{\n  \"learned\": [\"ho una prenotazione — I have a reservation\", \"cosa consiglia — what do you recommend\", \"vorrei — I would like\", \"il primo — first course\", \"il secondo — main course\", \"il dolce — dessert\", \"il conto per favore — the bill please\", \"è compreso il servizio — is service included\", \"era squisito — it was exquisite\", \"una bottiglia di — a bottle of\"],\n  \"retry\": [\"per me e mia moglie — for me and my wife (good instinct, well done)\", \"il contorno — side dish (never came up naturally)\", \"possiamo pagare separati — can we pay separately (didn't need it, but worth knowing)\"],\n  \"lorenzo_says\": \"Chad threw himself into this with real enthusiasm — the food vocabulary landed beautifully, and 'era squisito' at exactly the right moment was a lovely touch; next time, try letting the Italian breathe a little more without the English filler.\",\n  \"transitionTo\": \"duomo\"\n}\n[/DEBRIEF]",
+        "spoken": "Il Duomo di notte è magico — le luci sulla facciata...",
+        "hint": null
+      }
+    ],
+    "debrief": {
+      "learned": [
+        "ho una prenotazione — I have a reservation",
+        "cosa consiglia — what do you recommend",
+        "vorrei — I would like",
+        "il primo — first course",
+        "il secondo — main course",
+        "il dolce — dessert",
+        "il conto per favore — the bill please",
+        "è compreso il servizio — is service included",
+        "era squisito — it was exquisite",
+        "una bottiglia di — a bottle of"
+      ],
+      "retry": [
+        "per me e mia moglie — for me and my wife (good instinct, well done)",
+        "il contorno — side dish (never came up naturally)",
+        "possiamo pagare separati — can we pay separately (didn't need it, but worth knowing)"
+      ],
+      "lorenzo_says": "Chad threw himself into this with real enthusiasm — the food vocabulary landed beautifully, and 'era squisito' at exactly the right moment was a lovely touch; next time, try letting the Italian breathe a little more without the English filler.",
+      "transitionTo": "duomo"
+    },
+    "derailmentMoments": [
+      {
+        "turn": 4,
+        "chadSaid": "Grazie mille! *turns to wife and whispers* Babe, I think I'm getting pretty good at this!\n\n*looks around the restaurant admiringly*\n\nBellissimo... molto bellissimo!",
+        "characterResponse": "*returns with wine and food*\n\nEcco il vino rosso e... il risotto alla Milanese e la cotoletta. Buon ",
+        "handled": true
+      },
+      {
+        "turn": 8,
+        "chadSaid": "Grazie! *leans back contentedly*\n\nBabe, this is the best dinner in all of... tutta Italia! *laughs at own joke*",
+        "characterResponse": "*returns after dessert*\n\nAllora, posso portare qualcos'altro?",
+        "handled": true
+      },
+      {
+        "turn": 10,
+        "chadSaid": "Grazie mille! *looks at bill*\n\nTutto era... squisito! La cotoletta, il risotto, il tiramisù... bellissimo! *starts getting out wallet*\n\nMolto grazie! Er... grazie! Molto bene!",
+        "characterResponse": "Grazie a voi — è stato un piacere! Arrivederci e buona serata!\n\nDove andate adesso?",
+        "handled": true
+      },
+      {
+        "turn": 11,
+        "chadSaid": "Oh! Adesso... andiamo al... Duomo? *gestures vaguely* \n\nPer una passeggiata! *mimes walking with fingers* Buonasera!",
+        "characterResponse": "Il Duomo di notte è magico — le luci sulla facciata...",
+        "handled": true
+      }
+    ]
+  },
+  "summary": {
+    "completable": true,
+    "phraseUtilization": "15/16",
+    "missingPhrases": [],
+    "unusedPhrases": [
+      "Bianco, per favore"
+    ],
+    "derailmentHandling": "good",
+    "overallGrade": "A",
+    "fixesNeeded": []
+  }
+}

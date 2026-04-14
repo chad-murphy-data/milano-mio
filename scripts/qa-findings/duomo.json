@@ -1,0 +1,641 @@
+{
+  "location": "duomo",
+  "characterName": "Francesca",
+  "obedientRun": {
+    "completed": true,
+    "turnCount": 19,
+    "stalled": false,
+    "phrasesUsed": [
+      "Il Duomo",
+      "La Galleria",
+      "Quanto è vecchio?",
+      "Posso entrare?",
+      "Il biglietto",
+      "Le spalle coperte",
+      "È bellissimo",
+      "Dove si trova?",
+      "Mi scusi",
+      "Non grazie",
+      "Quanto tempo ci vuole?",
+      "Non mi interessa",
+      "Andiamo ai Navigli"
+    ],
+    "phrasesUnused": [],
+    "phraseUtilization": "13/13",
+    "sufficiencyGaps": [],
+    "characterViolations": [],
+    "transcript": [
+      {
+        "turn": 0,
+        "speaker": "Francesca",
+        "raw": "Buongiorno! Posso aiutarvi?\n\n[ENGLISH: Good morning! Can I help you?]\n\n[HINT: Buongiorno! Sì, per favore.]",
+        "spoken": "Buongiorno! Posso aiutarvi?",
+        "hint": "Buongiorno! Sì, per favore."
+      },
+      {
+        "turn": 1,
+        "speaker": "Chad",
+        "raw": "\"Mi scusi! ...Il Duomo? Dove si trova?\"",
+        "spoken": "\"Mi scusi! ...Il Duomo? Dove si trova?\""
+      },
+      {
+        "turn": 1,
+        "speaker": "Francesca",
+        "raw": "Eccolo! È proprio qui davanti a voi!\n\n[ENGLISH: There it is! It's right here in front of you!]\n\n[HINT: È bellissimo! Posso entrare?]",
+        "spoken": "Eccolo! È proprio qui davanti a voi!",
+        "hint": "È bellissimo! Posso entrare?"
+      },
+      {
+        "turn": 2,
+        "speaker": "Chad",
+        "raw": "\"È bellissimo!\"",
+        "spoken": "\"È bellissimo!\""
+      },
+      {
+        "turn": 2,
+        "speaker": "Francesca",
+        "raw": "Sì, è magnifico! Cosa volete vedere — il Duomo, la Galleria, o qualcos'altro?\n\n[ENGLISH: Yes, it's magnificent! What would you like to see — the Duomo, the Galleria, or something else?]\n\n[HINT: Il Duomo, per favore.]",
+        "spoken": "Sì, è magnifico! Cosa volete vedere — il Duomo, la Galleria, o qualcos'altro?",
+        "hint": "Il Duomo, per favore."
+      },
+      {
+        "turn": 3,
+        "speaker": "Chad",
+        "raw": "\"Il Duomo! Posso entrare?\"",
+        "spoken": "\"Il Duomo! Posso entrare?\""
+      },
+      {
+        "turn": 3,
+        "speaker": "Francesca",
+        "raw": "Sì, potete entrare! Ma prima — quanto è vecchio, secondo voi?\n\nLa costruzione è iniziata nel 1386 — più di seicento anni fa!\n\n[ENGLISH: Yes, you can go inside! But first — how old do you think it is? Construction began in 1386 — more than six hundred years ago!]\n\n[HINT: Incredibile! Quanto tempo ci vuole?]",
+        "spoken": "Sì, potete entrare! Ma prima — quanto è vecchio, secondo voi?\n\nLa costruzione è iniziata nel 1386 — più di seicento anni fa!",
+        "hint": "Incredibile! Quanto tempo ci vuole?"
+      },
+      {
+        "turn": 4,
+        "speaker": "Chad",
+        "raw": "\"Quanto è vecchio?\" \n\n...È bellissimo!",
+        "spoken": "\"Quanto è vecchio?\" \n\n...È bellissimo!"
+      },
+      {
+        "turn": 4,
+        "speaker": "Francesca",
+        "raw": "Sì, bellissimo! La costruzione è durata quasi sei secoli — è stata finita solo nell'Ottocento!\n\n[ENGLISH: Yes, beautiful! The construction lasted almost six centuries — it was only finished in the 1800s!]\n\n[HINT: Posso entrare? Il biglietto?]",
+        "spoken": "Sì, bellissimo! La costruzione è durata quasi sei secoli — è stata finita solo nell'Ottocento!",
+        "hint": "Posso entrare? Il biglietto?"
+      },
+      {
+        "turn": 5,
+        "speaker": "Chad",
+        "raw": "\"È bellissimo! Il biglietto?\"",
+        "spoken": "\"È bellissimo! Il biglietto?\""
+      },
+      {
+        "turn": 5,
+        "speaker": "Francesca",
+        "raw": "Sì, serve il biglietto per entrare. E attenzione — le spalle coperte! È obbligatorio.\n\n[ENGLISH: Yes, you need a ticket to go inside. And be careful — shoulders must be covered! It's required.]\n\n[HINT: Le spalle coperte — capito!]",
+        "spoken": "Sì, serve il biglietto per entrare. E attenzione — le spalle coperte! È obbligatorio.",
+        "hint": "Le spalle coperte — capito!"
+      },
+      {
+        "turn": 6,
+        "speaker": "Chad",
+        "raw": "\"Le spalle coperte!\" *nods enthusiastically* \"Il biglietto... posso entrare?\"",
+        "spoken": "\"Le spalle coperte!\" *nods enthusiastically* \"Il biglietto... posso entrare?\""
+      },
+      {
+        "turn": 6,
+        "speaker": "Francesca",
+        "raw": "Sì, certo! Il biglietto si compra all'entrata.\n\n[ENGLISH: Yes, of course! The ticket is bought at the entrance.]\n\n[HINT: Grazie mille!]",
+        "spoken": "Sì, certo! Il biglietto si compra all'entrata.",
+        "hint": "Grazie mille!"
+      },
+      {
+        "turn": 7,
+        "speaker": "Chad",
+        "raw": "\"È bellissimo! Non grazie... il biglietto!\" \n\n*laughs and waves hands* \"Mi scusi — posso entrare?\"",
+        "spoken": "\"È bellissimo! Non grazie... il biglietto!\" \n\n*laughs and waves hands* \"Mi scusi — posso entrare?\""
+      },
+      {
+        "turn": 7,
+        "speaker": "Francesca",
+        "raw": "Sì, sì, potete entrare! —\n\n*Alberto interrupts*\n\n**Alberto:** \"Foto con i piccioni! Solo cinque euro! Bellissima foto!\"\n\n[ENGLISH: Yes, yes, you can go inside! — / \"Photo with the pigeons! Only five euros! Beautiful photo!\"]\n\n[HINT: Non mi interessa, grazie.]",
+        "spoken": "Sì, sì, potete entrare! —\n\n*Alberto interrupts*\n\n**Alberto:** \"Foto con i piccioni! Solo cinque euro! Bellissima foto!\"",
+        "hint": "Non mi interessa, grazie."
+      },
+      {
+        "turn": 8,
+        "speaker": "Chad",
+        "raw": "\"Non mi interessa! Non grazie!\"",
+        "spoken": "\"Non mi interessa! Non grazie!\""
+      },
+      {
+        "turn": 8,
+        "speaker": "Francesca",
+        "raw": "Bene! Allora, dove eravamo... ah sì, il biglietto si compra all'entrata della cattedrale.\n\n[ENGLISH: Good! So, where were we... ah yes, the ticket is bought at the entrance of the cathedral.]\n\n[HINT: E la Galleria? Dove si trova?]",
+        "spoken": "Bene! Allora, dove eravamo... ah sì, il biglietto si compra all'entrata della cattedrale.",
+        "hint": "E la Galleria? Dove si trova?"
+      },
+      {
+        "turn": 9,
+        "speaker": "Chad",
+        "raw": "\"Il biglietto! Quanto tempo ci vuole?\"",
+        "spoken": "\"Il biglietto! Quanto tempo ci vuole?\""
+      },
+      {
+        "turn": 9,
+        "speaker": "Francesca",
+        "raw": "Per visitare tutto — il Duomo e il tetto — ci vogliono circa due ore.\n\n[ENGLISH: To visit everything — the cathedral and the roof — it takes about two hours.]\n\n[HINT: E la Galleria? Dove si trova?]",
+        "spoken": "Per visitare tutto — il Duomo e il tetto — ci vogliono circa due ore.",
+        "hint": "E la Galleria? Dove si trova?"
+      },
+      {
+        "turn": 10,
+        "speaker": "Chad",
+        "raw": "\"Quanto tempo ci vuole?\" \n\n*holds up two fingers and nods* \"È bellissimo!\"",
+        "spoken": "\"Quanto tempo ci vuole?\" \n\n*holds up two fingers and nods* \"È bellissimo!\""
+      },
+      {
+        "turn": 10,
+        "speaker": "Francesca",
+        "raw": "Sì, due ore — perfetto! Avete anche domande sulla Galleria?\n\n[ENGLISH: Yes, two hours — perfect! Do you also have questions about the Galleria?]\n\n[HINT: Sì! Dove si trova la Galleria?]",
+        "spoken": "Sì, due ore — perfetto! Avete anche domande sulla Galleria?",
+        "hint": "Sì! Dove si trova la Galleria?"
+      },
+      {
+        "turn": 11,
+        "speaker": "Chad",
+        "raw": "\"La Galleria! Dove si trova?\"",
+        "spoken": "\"La Galleria! Dove si trova?\""
+      },
+      {
+        "turn": 11,
+        "speaker": "Francesca",
+        "raw": "È facilissimo — la Galleria Vittorio Emanuele è proprio accanto al Duomo, a destra!\n\n[ENGLISH: It's very easy — the Galleria Vittorio Emanuele is right next to the Duomo, on the right!]\n\n[HINT: È bellissimo! Cosa c'è nella Galleria?]",
+        "spoken": "È facilissimo — la Galleria Vittorio Emanuele è proprio accanto al Duomo, a destra!",
+        "hint": "È bellissimo! Cosa c'è nella Galleria?"
+      },
+      {
+        "turn": 12,
+        "speaker": "Chad",
+        "raw": "\"È bellissimo! Quanto è vecchio?\"",
+        "spoken": "\"È bellissimo! Quanto è vecchio?\""
+      },
+      {
+        "turn": 12,
+        "speaker": "Francesca",
+        "raw": "Anche la Galleria è dell'Ottocento — è stata aperta nel 1877!\n\nE dentro, c'è un mosaico speciale — molto famoso!\n\n[ENGLISH: The Galleria is also from the 1800s — it was opened in 1877! And inside, there is a special mosaic — very famous!]\n\n[HINT: Il mosaico? Cos'è?]",
+        "spoken": "Anche la Galleria è dell'Ottocento — è stata aperta nel 1877!\n\nE dentro, c'è un mosaico speciale — molto famoso!",
+        "hint": "Il mosaico? Cos'è?"
+      },
+      {
+        "turn": 13,
+        "speaker": "Chad",
+        "raw": "\"È bellissimo! Posso entrare?\"",
+        "spoken": "\"È bellissimo! Posso entrare?\""
+      },
+      {
+        "turn": 13,
+        "speaker": "Francesca",
+        "raw": "Sì, la Galleria è aperta a tutti — è gratuita! E c'è un mosaico sul pavimento con un toro — si gira sul tallone per buona fortuna. Porta fortuna!\n\n[ENGLISH: Yes, the Galleria is open to everyone — it's free! And there's a mosaic on the floor with a bull — you spin on your heel for good luck. It brings good luck!]\n\n[HINT: Porta fortuna! Dove andiamo adesso?]",
+        "spoken": "Sì, la Galleria è aperta a tutti — è gratuita! E c'è un mosaico sul pavimento con un toro — si gira sul tallone per buona fortuna. Porta fortuna!",
+        "hint": "Porta fortuna! Dove andiamo adesso?"
+      },
+      {
+        "turn": 14,
+        "speaker": "Chad",
+        "raw": "\"È bellissimo! Andiamo ai Navigli!\"",
+        "spoken": "\"È bellissimo! Andiamo ai Navigli!\""
+      },
+      {
+        "turn": 14,
+        "speaker": "Francesca",
+        "raw": "Aspetta — prima il Duomo, poi la Galleria, e poi i Navigli! Ma prima, avete bisogno di indicazioni per qualcosa?\n\n[ENGLISH: Wait — first the Duomo, then the Galleria, and then the Navigli! But first, do you need directions for anything?]\n\n[HINT: Sì! Come si arriva ai Navigli?]",
+        "spoken": "Aspetta — prima il Duomo, poi la Galleria, e poi i Navigli! Ma prima, avete bisogno di indicazioni per qualcosa?",
+        "hint": "Sì! Come si arriva ai Navigli?"
+      },
+      {
+        "turn": 15,
+        "speaker": "Chad",
+        "raw": "\"Mi scusi — Dove si trova? La Galleria?\"",
+        "spoken": "\"Mi scusi — Dove si trova? La Galleria?\""
+      },
+      {
+        "turn": 15,
+        "speaker": "Francesca",
+        "raw": "È proprio lì — a destra del Duomo! Non potete sbagliarvi!\n\n[ENGLISH: It's right there — to the right of the Duomo! You can't miss it!]\n\n[HINT: Grazie mille! Andiamo ai Navigli!]",
+        "spoken": "È proprio lì — a destra del Duomo! Non potete sbagliarvi!",
+        "hint": "Grazie mille! Andiamo ai Navigli!"
+      },
+      {
+        "turn": 16,
+        "speaker": "Chad",
+        "raw": "\"È bellissimo! Non grazie!\" \n\n*laughs and points at the Galleria* \"Andiamo!\"",
+        "spoken": "\"È bellissimo! Non grazie!\" \n\n*laughs and points at the Galleria* \"Andiamo!\""
+      },
+      {
+        "turn": 16,
+        "speaker": "Francesca",
+        "raw": "Perfetto! Buona visita! E poi... dove andate adesso — il Duomo prima, o i Navigli?\n\n[ENGLISH: Perfect! Enjoy your visit! And then... where are you going now — the Duomo first, or the Navigli?]\n\n[HINT: Andiamo ai Navigli!]",
+        "spoken": "Perfetto! Buona visita! E poi... dove andate adesso — il Duomo prima, o i Navigli?",
+        "hint": "Andiamo ai Navigli!"
+      },
+      {
+        "turn": 17,
+        "speaker": "Chad",
+        "raw": "\"Il Duomo! Posso entrare?\"",
+        "spoken": "\"Il Duomo! Posso entrare?\""
+      },
+      {
+        "turn": 17,
+        "speaker": "Francesca",
+        "raw": "Sì, certo! Buona visita al Duomo — e ricordate, le spalle coperte!\n\n[ENGLISH: Yes, of course! Enjoy your visit to the Duomo — and remember, shoulders covered!]\n\n[HINT: Grazie mille! Arrivederci!]",
+        "spoken": "Sì, certo! Buona visita al Duomo — e ricordate, le spalle coperte!",
+        "hint": "Grazie mille! Arrivederci!"
+      },
+      {
+        "turn": 18,
+        "speaker": "Chad",
+        "raw": "\"Le spalle coperte! È bellissimo! Mi scusi!\"\n\n*gives a big thumbs up and heads toward the entrance*",
+        "spoken": "\"Le spalle coperte! È bellissimo! Mi scusi!\"\n\n*gives a big thumbs up and heads toward the entrance*"
+      },
+      {
+        "turn": 18,
+        "speaker": "Francesca",
+        "raw": "Prego! Buona giornata! Dove andate adesso, dopo il Duomo?\n\n[ENGLISH: You're welcome! Have a great day! Where are you going after the Duomo?]\n\n[HINT: Andiamo ai Navigli!]",
+        "spoken": "Prego! Buona giornata! Dove andate adesso, dopo il Duomo?",
+        "hint": "Andiamo ai Navigli!"
+      },
+      {
+        "turn": 19,
+        "speaker": "Chad",
+        "raw": "\"Andiamo ai Navigli!\"",
+        "spoken": "\"Andiamo ai Navigli!\""
+      },
+      {
+        "turn": 19,
+        "speaker": "Francesca",
+        "raw": "I Navigli — Leonardo li ha progettati, sa?\n\n[ENGLISH: The Navigli — Leonardo designed them, you know?]\n\n[DEBRIEF]\n{\n  \"learned\": [\n    \"mi scusi — excuse me\",\n    \"non mi interessa — I'm not interested\",\n    \"le spalle coperte — shoulders covered\",\n    \"il biglietto — the ticket\",\n    \"dove si trova — where is it located\",\n    \"quanto tempo ci vuole — how long does it take\",\n    \"è bellissimo — it's beautiful\",\n    \"porta fortuna — it brings good luck\"\n  ],\n  \"retry\": [\n    \"il mosaico — the mosaic\",\n    \"la guglia — the spire\",\n    \"è vietato — it's forbidden\",\n    \"il tetto — the roof\"\n  ],\n  \"francesca_says\": \"Chad was enthusiastic and warm — a real joy to help — and he used key phrases like 'mi scusi,' 'dove si trova,' and 'non mi interessa' very naturally, though he sometimes reached for familiar phrases like 'è bellissimo' when he wasn't sure what to say next.\",\n  \"transitionTo\": \"navigli\"\n}\n[/DEBRIEF]",
+        "spoken": "I Navigli — Leonardo li ha progettati, sa?",
+        "hint": null
+      }
+    ],
+    "debrief": {
+      "learned": [
+        "mi scusi — excuse me",
+        "non mi interessa — I'm not interested",
+        "le spalle coperte — shoulders covered",
+        "il biglietto — the ticket",
+        "dove si trova — where is it located",
+        "quanto tempo ci vuole — how long does it take",
+        "è bellissimo — it's beautiful",
+        "porta fortuna — it brings good luck"
+      ],
+      "retry": [
+        "il mosaico — the mosaic",
+        "la guglia — the spire",
+        "è vietato — it's forbidden",
+        "il tetto — the roof"
+      ],
+      "francesca_says": "Chad was enthusiastic and warm — a real joy to help — and he used key phrases like 'mi scusi,' 'dove si trova,' and 'non mi interessa' very naturally, though he sometimes reached for familiar phrases like 'è bellissimo' when he wasn't sure what to say next.",
+      "transitionTo": "navigli"
+    }
+  },
+  "improvisingRun": {
+    "completed": false,
+    "turnCount": 20,
+    "stalled": true,
+    "phrasesUsed": [
+      "Il Duomo",
+      "La Galleria",
+      "Quanto è vecchio?",
+      "Posso entrare?",
+      "Il biglietto",
+      "Le spalle coperte",
+      "È bellissimo",
+      "Dove si trova?",
+      "Mi scusi",
+      "Non grazie",
+      "Quanto tempo ci vuole?",
+      "Non mi interessa",
+      "Andiamo ai Navigli"
+    ],
+    "phrasesUnused": [],
+    "phraseUtilization": "13/13",
+    "sufficiencyGaps": [],
+    "characterViolations": [],
+    "transcript": [
+      {
+        "turn": 0,
+        "speaker": "Francesca",
+        "raw": "Buongiorno! Posso aiutarvi?\n\n[ENGLISH: Good morning! Can I help you?]\n\n[HINT: Buongiorno! Sì, per favore.]",
+        "spoken": "Buongiorno! Posso aiutarvi?",
+        "hint": "Buongiorno! Sì, per favore."
+      },
+      {
+        "turn": 1,
+        "speaker": "Chad",
+        "raw": "Buongiorno! Uh... mi scusi... *points enthusiastically* Il Duomo — dove si trova? Per favore!",
+        "spoken": "Buongiorno! Uh... mi scusi... *points enthusiastically* Il Duomo — dove si trova? Per favore!"
+      },
+      {
+        "turn": 1,
+        "speaker": "Francesca",
+        "raw": "Il Duomo è proprio qui davanti a voi!\n\n[ENGLISH: The Duomo is right here in front of you!]\n\n[HINT: Il Duomo, quanto è vecchio?]",
+        "spoken": "Il Duomo è proprio qui davanti a voi!",
+        "hint": "Il Duomo, quanto è vecchio?"
+      },
+      {
+        "turn": 2,
+        "speaker": "Chad",
+        "raw": "Oh! È bellissimo!! Wow. Uh... Posso entrare? Il biglietto... quanto... uh... quanto è il biglietto?",
+        "spoken": "Oh! È bellissimo!! Wow. Uh... Posso entrare? Il biglietto... quanto... uh... quanto è il biglietto?"
+      },
+      {
+        "turn": 2,
+        "speaker": "Francesca",
+        "raw": "Sì, potete entrare! Il biglietto costa circa cinque euro per la cattedrale.\n\n[ENGLISH: Yes, you can go inside! The ticket costs about five euros for the cathedral.]\n\n[HINT: Quanto è vecchio il Duomo?]",
+        "spoken": "Sì, potete entrare! Il biglietto costa circa cinque euro per la cattedrale.",
+        "hint": "Quanto è vecchio il Duomo?"
+      },
+      {
+        "turn": 3,
+        "speaker": "Chad",
+        "raw": "Cinque euro! Okay, okay! Uh... le spalle coperte — yes? *mimes covering shoulders* Mia moglie ha... uh... le spalle coperte. È okay?",
+        "spoken": "Cinque euro! Okay, okay! Uh... le spalle coperte — yes? *mimes covering shoulders* Mia moglie ha... uh... le spalle coperte. È okay?"
+      },
+      {
+        "turn": 3,
+        "speaker": "Francesca",
+        "raw": "Sì, perfetto! Le spalle e le ginocchia devono essere coperte per entrare.\n\n[ENGLISH: Yes, perfect! Shoulders and knees must be covered to enter.]\n\n[HINT: Quanto è vecchio il Duomo?]",
+        "spoken": "Sì, perfetto! Le spalle e le ginocchia devono essere coperte per entrare.",
+        "hint": "Quanto è vecchio il Duomo?"
+      },
+      {
+        "turn": 4,
+        "speaker": "Chad",
+        "raw": "Le ginocchia! Oh no... *looks down at shorts nervously* Uh... mia moglie ha le ginocchia coperte, ma io... uh... *gestures at own shorts* Non buono?",
+        "spoken": "Le ginocchia! Oh no... *looks down at shorts nervously* Uh... mia moglie ha le ginocchia coperte, ma io... uh... *gestures at own shorts* Non buono?"
+      },
+      {
+        "turn": 4,
+        "speaker": "Francesca",
+        "raw": "Non si preoccupi! Fuori dalla cattedrale vendono una sciarpa — potete coprire le ginocchia così.\n\n[ENGLISH: Don't worry! Outside the cathedral they sell a scarf — you can cover your knees that way.]\n\n[HINT: Ah, capisco! Grazie mille!]",
+        "spoken": "Non si preoccupi! Fuori dalla cattedrale vendono una sciarpa — potete coprire le ginocchia così.",
+        "hint": "Ah, capisco! Grazie mille!"
+      },
+      {
+        "turn": 5,
+        "speaker": "Chad",
+        "raw": "Oh! Una sciarpa! Perfecto — uh, perfetto! Quanto è... uh... quanto costa la sciarpa? *mimes wrapping something around knees*",
+        "spoken": "Oh! Una sciarpa! Perfecto — uh, perfetto! Quanto è... uh... quanto costa la sciarpa? *mimes wrapping something around knees*"
+      },
+      {
+        "turn": 5,
+        "speaker": "Francesca",
+        "raw": "Non lo so esattamente, ma di solito costa pochi euro!\n\n[ENGLISH: I don't know exactly, but it usually costs just a few euros!]\n\n[HINT: Quanto è vecchio il Duomo?]",
+        "spoken": "Non lo so esattamente, ma di solito costa pochi euro!",
+        "hint": "Quanto è vecchio il Duomo?"
+      },
+      {
+        "turn": 6,
+        "speaker": "Chad",
+        "raw": "Okay, okay! Pochi euro, no problema! And uh... *checks watch* ...quanto tempo ci vuole? Per... tutto... il Duomo?",
+        "spoken": "Okay, okay! Pochi euro, no problema! And uh... *checks watch* ...quanto tempo ci vuole? Per... tutto... il Duomo?"
+      },
+      {
+        "turn": 6,
+        "speaker": "Francesca",
+        "raw": "Per visitare bene il Duomo, ci vogliono circa due ore.\n\n[ENGLISH: To visit the Duomo properly, it takes about two hours.]\n\n[HINT: Quanto è vecchio il Duomo?]",
+        "spoken": "Per visitare bene il Duomo, ci vogliono circa due ore.",
+        "hint": "Quanto è vecchio il Duomo?"
+      },
+      {
+        "turn": 7,
+        "speaker": "Chad",
+        "raw": "Due ore! Okay perfetto. And then uh... *gestures grandly* Andiamo ai Navigli! *to imaginary wife* Honey, due ore, then Navigli! \n\nÈ bellissimo il Duomo, sì?",
+        "spoken": "Due ore! Okay perfetto. And then uh... *gestures grandly* Andiamo ai Navigli! *to imaginary wife* Honey, due ore, then Navigli! \n\nÈ bellissimo il Duomo, sì?"
+      },
+      {
+        "turn": 7,
+        "speaker": "Francesca",
+        "raw": "Sì, è meraviglioso! Ma prima — sapete quanto è vecchio il Duomo?\n\n[ENGLISH: Yes, it's wonderful! But first — do you know how old the Duomo is?]\n\n[HINT: No, quanto è vecchio?]",
+        "spoken": "Sì, è meraviglioso! Ma prima — sapete quanto è vecchio il Duomo?",
+        "hint": "No, quanto è vecchio?"
+      },
+      {
+        "turn": 8,
+        "speaker": "Chad",
+        "raw": "Oh! Uh... *finger guns* Quanto è vecchio?? Sì sì, io... uh... non so! Molto... molto vecchio? *laughs* Mille anni? Due mille anni?",
+        "spoken": "Oh! Uh... *finger guns* Quanto è vecchio?? Sì sì, io... uh... non so! Molto... molto vecchio? *laughs* Mille anni? Due mille anni?"
+      },
+      {
+        "turn": 8,
+        "speaker": "Francesca",
+        "raw": "Quasi! La costruzione è iniziata nel 1386 — quasi settecento anni fa!\n\n[ENGLISH: Almost! Construction began in 1386 — almost seven hundred years ago!]\n\n[HINT: È bellissimo! Posso salire sul tetto?]",
+        "spoken": "Quasi! La costruzione è iniziata nel 1386 — quasi settecento anni fa!",
+        "hint": "È bellissimo! Posso salire sul tetto?"
+      },
+      {
+        "turn": 9,
+        "speaker": "Chad",
+        "raw": "Settecento anni!! Whoa!! È bellissimo AND molto molto vecchio! *pretends to be mind-blown* \n\nMia moglie non... uh... non crede! Settecento! Wow!",
+        "spoken": "Settecento anni!! Whoa!! È bellissimo AND molto molto vecchio! *pretends to be mind-blown* \n\nMia moglie non... uh... non crede! Settecento! Wow!"
+      },
+      {
+        "turn": 9,
+        "speaker": "Francesca",
+        "raw": "Sì, e la cosa incredibile è che ci sono voluti quasi sei secoli per finirlo!\n\n[ENGLISH: Yes, and the incredible thing is that it took almost six centuries to finish it!]\n\n[HINT: Posso salire sul tetto — il tetto?]",
+        "spoken": "Sì, e la cosa incredibile è che ci sono voluti quasi sei secoli per finirlo!",
+        "hint": "Posso salire sul tetto — il tetto?"
+      },
+      {
+        "turn": 10,
+        "speaker": "Chad",
+        "raw": "Sei secoli?! Six centuries?! *shakes head in disbelief* \n\nIn America uh... noi abbiamo... uh... non sei secoli! *laughs* America è molto... uh... giovane! È incredibile!!",
+        "spoken": "Sei secoli?! Six centuries?! *shakes head in disbelief* \n\nIn America uh... noi abbiamo... uh... non sei secoli! *laughs* America è molto... uh... giovane! È incredibile!!"
+      },
+      {
+        "turn": 10,
+        "speaker": "Francesca",
+        "raw": "Capisco! L'America è giovane — il Duomo è più vecchio degli Stati Uniti di quattrocento anni!\n\n[ENGLISH: I understand! America is young — the Duomo is four hundred years older than the United States!]\n\n[HINT: Posso salire sul tetto?]",
+        "spoken": "Capisco! L'America è giovane — il Duomo è più vecchio degli Stati Uniti di quattrocento anni!",
+        "hint": "Posso salire sul tetto?"
+      },
+      {
+        "turn": 11,
+        "speaker": "Chad",
+        "raw": "Quattrocento anni più vecchio!! *slaps knee* Oh mio Dio! \n\nUh... *pulls out phone* Mi scusi, posso... una foto? Il Duomo è bellissimo, mia moglie non... uh... non crede senza foto! *laughs*",
+        "spoken": "Quattrocento anni più vecchio!! *slaps knee* Oh mio Dio! \n\nUh... *pulls out phone* Mi scusi, posso... una foto? Il Duomo è bellissimo, mia moglie non... uh... non crede senza foto! *laughs*"
+      },
+      {
+        "turn": 11,
+        "speaker": "Francesca",
+        "raw": "Certo, fate pure le foto! Ma ricordate — il biglietto si compra lì, all'ingresso.\n\n[ENGLISH: Of course, go ahead and take photos! But remember — the ticket is bought there, at the entrance.]\n\n[HINT: Grazie! E la Galleria — dove si trova?]",
+        "spoken": "Certo, fate pure le foto! Ma ricordate — il biglietto si compra lì, all'ingresso.",
+        "hint": "Grazie! E la Galleria — dove si trova?"
+      },
+      {
+        "turn": 12,
+        "speaker": "Chad",
+        "raw": "Ah sì sì! Il biglietto — all'ingresso! *points toward entrance* Okay! \n\nGrazie mille! You are very uh... molto gentile! Andiamo! *waves enthusiastically* Ciao ciao!",
+        "spoken": "Ah sì sì! Il biglietto — all'ingresso! *points toward entrance* Okay! \n\nGrazie mille! You are very uh... molto gentile! Andiamo! *waves enthusiastically* Ciao ciao!"
+      },
+      {
+        "turn": 12,
+        "speaker": "Francesca",
+        "raw": "Aspettate un momento — c'è ancora qualcosa di importante da sapere!\n\n[ENGLISH: Wait a moment — there's still something important to know!]\n\n[HINT: Ah sì? Cosa?]",
+        "spoken": "Aspettate un momento — c'è ancora qualcosa di importante da sapere!",
+        "hint": "Ah sì? Cosa?"
+      },
+      {
+        "turn": 13,
+        "speaker": "Chad",
+        "raw": "Oh! Mi scusi! *stops and turns back* Sì? Cosa? Uh... importante... okay, io... ascolto! *makes exaggerated listening face*",
+        "spoken": "Oh! Mi scusi! *stops and turns back* Sì? Cosa? Uh... importante... okay, io... ascolto! *makes exaggerated listening face*"
+      },
+      {
+        "turn": 13,
+        "speaker": "Francesca",
+        "raw": "Alberto: \"Foto con i piccioni! Solo cinque euro! Beautiful photo, signore!\"\n\n[ENGLISH: Alberto: \"Photo with the pigeons! Only five euros! Beautiful photo, sir!\"]\n\n[HINT: No grazie. Non mi interessa.]",
+        "spoken": "Alberto: \"Foto con i piccioni! Solo cinque euro! Beautiful photo, signore!\"",
+        "hint": "No grazie. Non mi interessa."
+      },
+      {
+        "turn": 14,
+        "speaker": "Chad",
+        "raw": "Oh uh... *waves hand politely* Non grazie! Non mi interessa! \n\n*whispers loudly* Mia moglie says no piccioni! *laughs nervously and backs away*",
+        "spoken": "Oh uh... *waves hand politely* Non grazie! Non mi interessa! \n\n*whispers loudly* Mia moglie says no piccioni! *laughs nervously and backs away*"
+      },
+      {
+        "turn": 14,
+        "speaker": "Francesca",
+        "raw": "Bene! Allora, dove eravamo... ah sì — avete visto la Galleria Vittorio Emanuele?\n\n[ENGLISH: Good! So, where were we... ah yes — have you seen the Galleria Vittorio Emanuele?]\n\n[HINT: No! Dove si trova la Galleria?]",
+        "spoken": "Bene! Allora, dove eravamo... ah sì — avete visto la Galleria Vittorio Emanuele?",
+        "hint": "No! Dove si trova la Galleria?"
+      },
+      {
+        "turn": 15,
+        "speaker": "Chad",
+        "raw": "La Galleria! Sì sì! *excited* Dove si trova La Galleria? È vicino... uh... vicino al Duomo?",
+        "spoken": "La Galleria! Sì sì! *excited* Dove si trova La Galleria? È vicino... uh... vicino al Duomo?"
+      },
+      {
+        "turn": 15,
+        "speaker": "Francesca",
+        "raw": "Sì, è proprio accanto al Duomo — a due passi da qui!\n\n[ENGLISH: Yes, it's right next to the Duomo — just a stone's throw from here!]\n\n[HINT: Ah, bellissimo! Cosa c'è nella Galleria?]",
+        "spoken": "Sì, è proprio accanto al Duomo — a due passi da qui!",
+        "hint": "Ah, bellissimo! Cosa c'è nella Galleria?"
+      },
+      {
+        "turn": 16,
+        "speaker": "Chad",
+        "raw": "Oh perfetto! Due passi! *to imaginary wife* Honey, La Galleria is right here, due passi! \n\nUh... Posso entrare La Galleria? Il biglietto... è necessario?",
+        "spoken": "Oh perfetto! Due passi! *to imaginary wife* Honey, La Galleria is right here, due passi! \n\nUh... Posso entrare La Galleria? Il biglietto... è necessario?"
+      },
+      {
+        "turn": 16,
+        "speaker": "Francesca",
+        "raw": "No, non serve il biglietto — la Galleria è aperta a tutti, è gratuita!\n\n[ENGLISH: No, you don't need a ticket — the Galleria is open to everyone, it's free!]\n\n[HINT: Ah, che bello! Cosa c'è dentro?]",
+        "spoken": "No, non serve il biglietto — la Galleria è aperta a tutti, è gratuita!",
+        "hint": "Ah, che bello! Cosa c'è dentro?"
+      },
+      {
+        "turn": 17,
+        "speaker": "Chad",
+        "raw": "Gratuita?! FREE?! *big smile* Oh questo è bellissimo! \n\nUh... quanto è vecchia La Galleria? *proud of self for remembering the phrase* Come il Duomo... molto vecchia?",
+        "spoken": "Gratuita?! FREE?! *big smile* Oh questo è bellissimo! \n\nUh... quanto è vecchia La Galleria? *proud of self for remembering the phrase* Come il Duomo... molto vecchia?"
+      },
+      {
+        "turn": 17,
+        "speaker": "Francesca",
+        "raw": "Sì, brava domanda! La Galleria è stata costruita nell'Ottocento — circa centocinquanta anni fa.\n\n[ENGLISH: Yes, good question! The Galleria was built in the nineteenth century — about a hundred and fifty years ago.]\n\n[HINT: E cosa c'è dentro la Galleria?]",
+        "spoken": "Sì, brava domanda! La Galleria è stata costruita nell'Ottocento — circa centocinquanta anni fa.",
+        "hint": "E cosa c'è dentro la Galleria?"
+      },
+      {
+        "turn": 18,
+        "speaker": "Chad",
+        "raw": "Centocinquanta anni! *nods knowingly* Molto vecchia... ma uh... non SETTECENTO anni! *laughs and holds up hands* Il Duomo wins! È bellissimo... uh... tutti e due! Both! \n\nAndiamo La Galleria dopo il Duomo, sì honey?",
+        "spoken": "Centocinquanta anni! *nods knowingly* Molto vecchia... ma uh... non SETTECENTO anni! *laughs and holds up hands* Il Duomo wins! È bellissimo... uh... tutti e due! Both! \n\nAndiamo La Galleria dopo il Duomo, sì honey?"
+      },
+      {
+        "turn": 18,
+        "speaker": "Francesca",
+        "raw": "Ottima idea! E dentro la Galleria c'è un mosaico speciale — porta fortuna!\n\n[ENGLISH: Great idea! And inside the Galleria there's a special mosaic — it brings good luck!]\n\n[HINT: Un mosaico? Cosa devo fare?]",
+        "spoken": "Ottima idea! E dentro la Galleria c'è un mosaico speciale — porta fortuna!",
+        "hint": "Un mosaico? Cosa devo fare?"
+      },
+      {
+        "turn": 19,
+        "speaker": "Chad",
+        "raw": "Porta fortuna?! Good luck?! *very excited* OH! Dove si trova il mosaico?! Uh... cosa devo... uh... fare? *mimes spinning around* Girare? Spin?",
+        "spoken": "Porta fortuna?! Good luck?! *very excited* OH! Dove si trova il mosaico?! Uh... cosa devo... uh... fare? *mimes spinning around* Girare? Spin?"
+      },
+      {
+        "turn": 19,
+        "speaker": "Francesca",
+        "raw": "Esatto! Si gira il tacco destro sul mosaico del toro — tre volte, per la buona fortuna!\n\n[ENGLISH: Exactly! You spin your right heel on the bull mosaic — three times, for good luck!]\n\n[HINT: Il toro! Capisco! Grazie mille!]",
+        "spoken": "Esatto! Si gira il tacco destro sul mosaico del toro — tre volte, per la buona fortuna!",
+        "hint": "Il toro! Capisco! Grazie mille!"
+      },
+      {
+        "turn": 20,
+        "speaker": "Chad",
+        "raw": "Il toro! The bull! *pumps fist* Tre volte! Okay okay! \n\n*to imaginary wife* Honey, we gotta spin on the bull THREE times — tre volte — porta fortuna!! \n\n*mimes spinning heel* Così? Like this?! Sì?!",
+        "spoken": "Il toro! The bull! *pumps fist* Tre volte! Okay okay! \n\n*to imaginary wife* Honey, we gotta spin on the bull THREE times — tre volte — porta fortuna!! \n\n*mimes spinning heel* Così? Like this?! Sì?!"
+      },
+      {
+        "turn": 20,
+        "speaker": "Francesca",
+        "raw": "Sì, esattamente così! Buona fortuna!\n\n[ENGLISH: Yes, exactly like that! Good luck!]\n\n[HINT: Grazie mille! Dove andiamo adesso... i Navigli?]",
+        "spoken": "Sì, esattamente così! Buona fortuna!",
+        "hint": "Grazie mille! Dove andiamo adesso... i Navigli?"
+      }
+    ],
+    "debrief": null,
+    "derailmentMoments": [
+      {
+        "turn": 4,
+        "chadSaid": "Le ginocchia! Oh no... *looks down at shorts nervously* Uh... mia moglie ha le ginocchia coperte, ma io... uh... *gestures at own shorts* Non buono?",
+        "characterResponse": "Non si preoccupi! Fuori dalla cattedrale vendono una sciarpa — potete coprire le ginocchia così.",
+        "handled": true
+      },
+      {
+        "turn": 5,
+        "chadSaid": "Oh! Una sciarpa! Perfecto — uh, perfetto! Quanto è... uh... quanto costa la sciarpa? *mimes wrapping something around knees*",
+        "characterResponse": "Non lo so esattamente, ma di solito costa pochi euro!",
+        "handled": true
+      },
+      {
+        "turn": 10,
+        "chadSaid": "Sei secoli?! Six centuries?! *shakes head in disbelief* \n\nIn America uh... noi abbiamo... uh... non sei secoli! *laughs* America è molto... uh... giovane! È incredibile!!",
+        "characterResponse": "Capisco! L'America è giovane — il Duomo è più vecchio degli Stati Uniti di quattrocento anni!",
+        "handled": true
+      },
+      {
+        "turn": 19,
+        "chadSaid": "Porta fortuna?! Good luck?! *very excited* OH! Dove si trova il mosaico?! Uh... cosa devo... uh... fare? *mimes spinning around* Girare? Spin?",
+        "characterResponse": "Esatto! Si gira il tacco destro sul mosaico del toro — tre volte, per la buona fortuna!",
+        "handled": true
+      },
+      {
+        "turn": 20,
+        "chadSaid": "Il toro! The bull! *pumps fist* Tre volte! Okay okay! \n\n*to imaginary wife* Honey, we gotta spin on the bull THREE times — tre volte — porta fortuna!! \n\n*mimes spinning heel* Così? Like this?! Sì?!",
+        "characterResponse": "Sì, esattamente così! Buona fortuna!",
+        "handled": true
+      }
+    ]
+  },
+  "summary": {
+    "completable": true,
+    "phraseUtilization": "13/13",
+    "missingPhrases": [],
+    "unusedPhrases": [],
+    "derailmentHandling": "good",
+    "overallGrade": "B+",
+    "fixesNeeded": [
+      "Improvising Chad could not complete the conversation"
+    ]
+  }
+}

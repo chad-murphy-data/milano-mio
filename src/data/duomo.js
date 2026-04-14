@@ -24,7 +24,8 @@ export const keyPhrases = [
   { it: 'Mi scusi', en: 'excuse me', phon: 'mee SKOO-zee' },
   { it: 'Non grazie', en: 'no thank you', phon: 'non GRAT-see-ay' },
   { it: 'Quanto tempo ci vuole?', en: 'How long does it take?', phon: 'KWAN-toh TEM-po chee VWO-lay' },
-  { it: 'Non mi interessa', en: "I'm not interested", phon: 'non mee in-teh-RES-sa' }
+  { it: 'Non mi interessa', en: "I'm not interested", phon: 'non mee in-teh-RES-sa' },
+  { it: 'Andiamo ai Navigli', en: "We're going to the Navigli", phon: 'an-DYA-mo ai na-VEE-lyee' }
 ];
 
 export const coreVocab = [

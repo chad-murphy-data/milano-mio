@@ -1,0 +1,357 @@
+{
+  "location": "caffe",
+  "characterName": "Marco",
+  "obedientRun": {
+    "completed": true,
+    "turnCount": 9,
+    "stalled": false,
+    "phrasesUsed": [
+      "Buongiorno / Buonasera",
+      "Un caffè, per favore",
+      "Un cappuccino",
+      "Un cornetto",
+      "Mia moglie / mia ragazza",
+      "Quanto costa?",
+      "Ecco",
+      "Grazie / Prego"
+    ],
+    "phrasesUnused": [
+      "Cosa prendi?",
+      "Siamo in due"
+    ],
+    "phraseUtilization": "8/10",
+    "sufficiencyGaps": [],
+    "characterViolations": [],
+    "transcript": [
+      {
+        "turn": 0,
+        "speaker": "Marco",
+        "raw": "Buonasera!\n\n[ENGLISH: Good evening!]\n\n[HINT: Buonasera!]",
+        "spoken": "Buonasera!",
+        "hint": "Buonasera!"
+      },
+      {
+        "turn": 1,
+        "speaker": "Chad",
+        "raw": "Buonasera! ...Grazie! 😄",
+        "spoken": "Buonasera! ...Grazie! 😄"
+      },
+      {
+        "turn": 1,
+        "speaker": "Marco",
+        "raw": "Prego, prego! Cosa prendi?\n\n[ENGLISH: You're welcome! What are you having?]\n\n[HINT: Un caffè, per favore.]",
+        "spoken": "Prego, prego! Cosa prendi?",
+        "hint": "Un caffè, per favore."
+      },
+      {
+        "turn": 2,
+        "speaker": "Chad",
+        "raw": "Un cappuccino... no no, un caffè, per favore! Grazie! 😊",
+        "spoken": "Un cappuccino... no no, un caffè, per favore! Grazie! 😊"
+      },
+      {
+        "turn": 2,
+        "speaker": "Marco",
+        "raw": "Ah, un caffè! Perfetto. E per la tua signora?\n\n[ENGLISH: Ah, an espresso! Perfect. And for your wife?]\n\n[HINT: Un cappuccino, per favore.]",
+        "spoken": "Ah, un caffè! Perfetto. E per la tua signora?",
+        "hint": "Un cappuccino, per favore."
+      },
+      {
+        "turn": 3,
+        "speaker": "Chad",
+        "raw": "Mia moglie... un cappuccino! Grazie! 😄",
+        "spoken": "Mia moglie... un cappuccino! Grazie! 😄"
+      },
+      {
+        "turn": 3,
+        "speaker": "Marco",
+        "raw": "Di pomeriggio...? Va bene, arrivo subito!\n\n[ENGLISH: In the afternoon...? No problem, coming right up!]\n\n[HINT: Un cornetto anche?]",
+        "spoken": "Di pomeriggio...? Va bene, arrivo subito!",
+        "hint": "Un cornetto anche?"
+      },
+      {
+        "turn": 4,
+        "speaker": "Chad",
+        "raw": "Grazie! Ecco! 😊",
+        "spoken": "Grazie! Ecco! 😊"
+      },
+      {
+        "turn": 4,
+        "speaker": "Marco",
+        "raw": "Un cornetto anche? Sono appena sfornati!\n\n[ENGLISH: A cornetto too? They just came out of the oven!]\n\n[HINT: Un cornetto, per favore.]",
+        "spoken": "Un cornetto anche? Sono appena sfornati!",
+        "hint": "Un cornetto, per favore."
+      },
+      {
+        "turn": 5,
+        "speaker": "Chad",
+        "raw": "Un cornetto! Sì, grazie! 😄",
+        "spoken": "Un cornetto! Sì, grazie! 😄"
+      },
+      {
+        "turn": 5,
+        "speaker": "Marco",
+        "raw": "Perfetto! Allora — tre euro e cinquanta, per favore.\n\n[ENGLISH: Perfect! So — three euros fifty, please.]\n\n[HINT: Ecco.]",
+        "spoken": "Perfetto! Allora — tre euro e cinquanta, per favore.",
+        "hint": "Ecco."
+      },
+      {
+        "turn": 6,
+        "speaker": "Chad",
+        "raw": "Quanto costa? ...Ah, ecco! Grazie! 😄",
+        "spoken": "Quanto costa? ...Ah, ecco! Grazie! 😄"
+      },
+      {
+        "turn": 6,
+        "speaker": "Marco",
+        "raw": "Grazie a lei! Prego!\n\n[ENGLISH: Thank you! You're welcome!]\n\n[HINT: Grazie!]",
+        "spoken": "Grazie a lei! Prego!",
+        "hint": "Grazie!"
+      },
+      {
+        "turn": 7,
+        "speaker": "Chad",
+        "raw": "Grazie! Prego! 😊",
+        "spoken": "Grazie! Prego! 😊"
+      },
+      {
+        "turn": 7,
+        "speaker": "Marco",
+        "raw": "Ciao! Buona serata!\n\n[ENGLISH: Bye! Have a great evening!]\n\n[HINT: Grazie, arrivederci!]",
+        "spoken": "Ciao! Buona serata!",
+        "hint": "Grazie, arrivederci!"
+      },
+      {
+        "turn": 8,
+        "speaker": "Chad",
+        "raw": "Buonasera! Grazie! 😄",
+        "spoken": "Buonasera! Grazie! 😄"
+      },
+      {
+        "turn": 8,
+        "speaker": "Marco",
+        "raw": "Dove andate adesso?\n\n[ENGLISH: Where are you going now?]\n\n[HINT: Andiamo al Duomo!]",
+        "spoken": "Dove andate adesso?",
+        "hint": "Andiamo al Duomo!"
+      },
+      {
+        "turn": 9,
+        "speaker": "Chad",
+        "raw": "Il Duomo! 😄 Grazie!",
+        "spoken": "Il Duomo! 😄 Grazie!"
+      },
+      {
+        "turn": 9,
+        "speaker": "Marco",
+        "raw": "Ah, il Duomo! Arrivi presto — i turisti arrivano alle dieci.\n\n[ENGLISH: Ah, the Duomo! Get there early — the tourists arrive at ten.]\n\n[DEBRIEF]\n{\n  \"learned\": [\"buonasera — good evening\", \"un caffè — espresso\", \"per favore — please\", \"mia moglie — my wife\", \"un cornetto — croissant\", \"ecco — here you go\", \"grazie — thank you\"],\n  \"retry\": [\"cosa prendi — what are you having\", \"di pomeriggio — in the afternoon\", \"quanto costa — how much does it cost\"],\n  \"marco_says\": \"Chad did really well for a first time at the bar — he self-corrected his order, caught on to 'ecco' quickly, and even threw in 'mia moglie' like a natural. That cappuccino in the afternoon? We'll work on that next time.\",\n  \"transitionTo\": \"duomo\"\n}\n[/DEBRIEF]",
+        "spoken": "Ah, il Duomo! Arrivi presto — i turisti arrivano alle dieci.",
+        "hint": null
+      }
+    ],
+    "debrief": {
+      "learned": [
+        "buonasera — good evening",
+        "un caffè — espresso",
+        "per favore — please",
+        "mia moglie — my wife",
+        "un cornetto — croissant",
+        "ecco — here you go",
+        "grazie — thank you"
+      ],
+      "retry": [
+        "cosa prendi — what are you having",
+        "di pomeriggio — in the afternoon",
+        "quanto costa — how much does it cost"
+      ],
+      "marco_says": "Chad did really well for a first time at the bar — he self-corrected his order, caught on to 'ecco' quickly, and even threw in 'mia moglie' like a natural. That cappuccino in the afternoon? We'll work on that next time.",
+      "transitionTo": "duomo"
+    }
+  },
+  "improvisingRun": {
+    "completed": true,
+    "turnCount": 9,
+    "stalled": false,
+    "phrasesUsed": [
+      "Buongiorno / Buonasera",
+      "Un cappuccino",
+      "Siamo in due",
+      "Mia moglie / mia ragazza",
+      "Ecco",
+      "Grazie / Prego"
+    ],
+    "phrasesUnused": [
+      "Cosa prendi?",
+      "Un caffè, per favore",
+      "Un cornetto",
+      "Quanto costa?"
+    ],
+    "phraseUtilization": "6/10",
+    "sufficiencyGaps": [],
+    "characterViolations": [],
+    "transcript": [
+      {
+        "turn": 0,
+        "speaker": "Marco",
+        "raw": "Buonasera!\n\n[ENGLISH: Good evening!]\n\n[HINT: Buonasera!]",
+        "spoken": "Buonasera!",
+        "hint": "Buonasera!"
+      },
+      {
+        "turn": 1,
+        "speaker": "Chad",
+        "raw": "Buonasera! Um... siamo in due, io e mia moglie. Avete un... table? Tavolo? Per favore!",
+        "spoken": "Buonasera! Um... siamo in due, io e mia moglie. Avete un... table? Tavolo? Per favore!"
+      },
+      {
+        "turn": 1,
+        "speaker": "Marco",
+        "raw": "Ah, al banco, al banco — qui al bar si sta in piedi!\n\n[ENGLISH: At the counter, at the counter — here at the bar, you stand!]\n\n[HINT: Cosa prendi?]",
+        "spoken": "Ah, al banco, al banco — qui al bar si sta in piedi!",
+        "hint": "Cosa prendi?"
+      },
+      {
+        "turn": 2,
+        "speaker": "Chad",
+        "raw": "Oh! Okay, okay! In piedi, sì, sì! Um... un cappuccino, per favore, e... uno per mia moglie anche! Grazie!",
+        "spoken": "Oh! Okay, okay! In piedi, sì, sì! Um... un cappuccino, per favore, e... uno per mia moglie anche! Grazie!"
+      },
+      {
+        "turn": 2,
+        "speaker": "Marco",
+        "raw": "Due cappuccini... di pomeriggio?\n\n[ENGLISH: Two cappuccinos... in the afternoon?]\n\n[HINT: Sì, per favore!]",
+        "spoken": "Due cappuccini... di pomeriggio?",
+        "hint": "Sì, per favore!"
+      },
+      {
+        "turn": 3,
+        "speaker": "Chad",
+        "raw": "Oh no no no... um... *laughs* ...okay, due... caffè? Un caffè e un cappuccino? Mia moglie, she likes cappuccino, you know? È... normale in America!",
+        "spoken": "Oh no no no... um... *laughs* ...okay, due... caffè? Un caffè e un cappuccino? Mia moglie, she likes cappuccino, you know? È... normale in America!"
+      },
+      {
+        "turn": 3,
+        "speaker": "Marco",
+        "raw": "Ah, un caffè e un cappuccino — certo, certo! In America, va bene!\n\n[ENGLISH: Ah, one espresso and one cappuccino — of course, of course! In America, that's fine!]\n\n[HINT: Un cornetto, per favore!]",
+        "spoken": "Ah, un caffè e un cappuccino — certo, certo! In America, va bene!",
+        "hint": "Un cornetto, per favore!"
+      },
+      {
+        "turn": 4,
+        "speaker": "Chad",
+        "raw": "Sì, sì! In America, tutto è possibile! *laughs* Um... e due cornetti, per favore? Quanto costa... tutto?",
+        "spoken": "Sì, sì! In America, tutto è possibile! *laughs* Um... e due cornetti, per favore? Quanto costa... tutto?"
+      },
+      {
+        "turn": 4,
+        "speaker": "Marco",
+        "raw": "Un cornetto anche — perfetto, sono appena sfornati! Allora... quattro euro, per favore.\n\n[ENGLISH: A cornetto too — perfect, they're just out of the oven! So... four euros, please.]\n\n[HINT: Ecco!]",
+        "spoken": "Un cornetto anche — perfetto, sono appena sfornati! Allora... quattro euro, per favore.",
+        "hint": "Ecco!"
+      },
+      {
+        "turn": 5,
+        "speaker": "Chad",
+        "raw": "Oh, perfetto! \"Just baked\" - bellissimo! Um... ecco, ecco! *hands over money* Cinque euro? E il... change? Il resto?",
+        "spoken": "Oh, perfetto! \"Just baked\" - bellissimo! Um... ecco, ecco! *hands over money* Cinque euro? E il... change? Il resto?"
+      },
+      {
+        "turn": 5,
+        "speaker": "Marco",
+        "raw": "Ecco un euro — grazie mille!\n\n[ENGLISH: Here's one euro — thank you very much!]\n\n[HINT: Grazie!]",
+        "spoken": "Ecco un euro — grazie mille!",
+        "hint": "Grazie!"
+      },
+      {
+        "turn": 6,
+        "speaker": "Chad",
+        "raw": "Grazie, grazie! Molto... delizioso! *takes a bite of cornetto* Mmm! Bellissimo! You make these here? In the... cucina? Kitchen?",
+        "spoken": "Grazie, grazie! Molto... delizioso! *takes a bite of cornetto* Mmm! Bellissimo! You make these here? In the... cucina? Kitchen?"
+      },
+      {
+        "turn": 6,
+        "speaker": "Marco",
+        "raw": "Sì, ogni mattina! Contento che ti piace!\n\n[ENGLISH: Yes, every morning! Glad you like it!]\n\n[HINT: Ciao! Grazie mille!]",
+        "spoken": "Sì, ogni mattina! Contento che ti piace!",
+        "hint": "Ciao! Grazie mille!"
+      },
+      {
+        "turn": 7,
+        "speaker": "Chad",
+        "raw": "Oh, ogni mattina! Incredibile! Mia moglie, she is very... felice! *nudges wife* Vero? *laughs* Grazie mille, signore!",
+        "spoken": "Oh, ogni mattina! Incredibile! Mia moglie, she is very... felice! *nudges wife* Vero? *laughs* Grazie mille, signore!"
+      },
+      {
+        "turn": 7,
+        "speaker": "Marco",
+        "raw": "Prego, prego! Ciao! Buona serata!\n\n[ENGLISH: You're welcome, you're welcome! Bye! Have a great evening!]\n\n[HINT: Andiamo al Duomo!]",
+        "spoken": "Prego, prego! Ciao! Buona serata!",
+        "hint": "Andiamo al Duomo!"
+      },
+      {
+        "turn": 8,
+        "speaker": "Chad",
+        "raw": "Buona serata! Ciao, ciao! *waves* Molto grazie... I mean, GRAZIE! Arrivederci! *laughs and walks away*",
+        "spoken": "Buona serata! Ciao, ciao! *waves* Molto grazie... I mean, GRAZIE! Arrivederci! *laughs and walks away*"
+      },
+      {
+        "turn": 8,
+        "speaker": "Marco",
+        "raw": "Ah, aspetta — dove andate adesso?\n\n[ENGLISH: Ah, wait — where are you going now?]\n\n[HINT: Andiamo al Duomo!]",
+        "spoken": "Ah, aspetta — dove andate adesso?",
+        "hint": "Andiamo al Duomo!"
+      },
+      {
+        "turn": 9,
+        "speaker": "Chad",
+        "raw": "Oh! Um... andiamo a... il Duomo? The big church! Molto... grande e bellissimo! Mia moglie wants many, many photos! *mimes taking pictures* Turisti! *laughs*",
+        "spoken": "Oh! Um... andiamo a... il Duomo? The big church! Molto... grande e bellissimo! Mia moglie wants many, many photos! *mimes taking pictures* Turisti! *laughs*"
+      },
+      {
+        "turn": 9,
+        "speaker": "Marco",
+        "raw": "Ah, il Duomo! Arrivi presto domani — i turisti arrivano alle dieci!\n\n[ENGLISH: Ah, the Duomo! Get there early tomorrow — the tourists arrive at ten!]\n\n[DEBRIEF]\n{\n  \"learned\": [\"buonasera — good evening\", \"al banco — at the bar, standing\", \"un caffè — espresso\", \"un cornetto — croissant\", \"ecco — here you go\", \"grazie — thank you\", \"ogni mattina — every morning\", \"di pomeriggio — in the afternoon\"],\n  \"retry\": [\"quanto costa — how much does it cost\", \"siamo in due — there are two of us\", \"mia moglie — my wife\"],\n  \"marco_says\": \"Chad, you were genuinely fun — your instinct to use Italian first and laugh at yourself second is exactly right, and 'mia moglie' came out perfectly every time.\",\n  \"transitionTo\": \"duomo\"\n}\n[/DEBRIEF]",
+        "spoken": "Ah, il Duomo! Arrivi presto domani — i turisti arrivano alle dieci!",
+        "hint": null
+      }
+    ],
+    "debrief": {
+      "learned": [
+        "buonasera — good evening",
+        "al banco — at the bar, standing",
+        "un caffè — espresso",
+        "un cornetto — croissant",
+        "ecco — here you go",
+        "grazie — thank you",
+        "ogni mattina — every morning",
+        "di pomeriggio — in the afternoon"
+      ],
+      "retry": [
+        "quanto costa — how much does it cost",
+        "siamo in due — there are two of us",
+        "mia moglie — my wife"
+      ],
+      "marco_says": "Chad, you were genuinely fun — your instinct to use Italian first and laugh at yourself second is exactly right, and 'mia moglie' came out perfectly every time.",
+      "transitionTo": "duomo"
+    },
+    "derailmentMoments": [
+      {
+        "turn": 4,
+        "chadSaid": "Sì, sì! In America, tutto è possibile! *laughs* Um... e due cornetti, per favore? Quanto costa... tutto?",
+        "characterResponse": "Un cornetto anche — perfetto, sono appena sfornati! Allora... quattro euro, per favore.",
+        "handled": true
+      }
+    ]
+  },
+  "summary": {
+    "completable": true,
+    "phraseUtilization": "8/10",
+    "missingPhrases": [],
+    "unusedPhrases": [
+      "Cosa prendi?",
+      "Siamo in due"
+    ],
+    "derailmentHandling": "good",
+    "overallGrade": "A",
+    "fixesNeeded": []
+  }
+}
