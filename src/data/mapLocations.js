@@ -1,23 +1,28 @@
 // Map location coordinates — where each scenario's hotspot sits on
 // src/assets/scenes/world_map.png. Coordinates are PERCENTAGES so the
 // map scales cleanly with the canvas. The Vespa puppet centers on these
-// points.
+// points (its wheels land near the pin thanks to translate(-50%, -85%)
+// in .vespa-wrap CSS).
 //
-// If a hotspot ends up visually misaligned with the map's painted label,
-// just tweak x/y here — no other file needs to change.
+// These were hand-placed by scanning the painted labels on world_map.png.
+// If a hotspot ends up visually misaligned, tweak x/y here — no other
+// file needs to change.
 
-export const START_POSITION = { x: 50, y: 88 }; // bottom-center parking spot
+export const START_POSITION = { x: 50, y: 85 }; // bottom-center parking spot
 
 export const mapLocations = {
-  hotel:          { x: 28, y: 22, label: 'Hotel' },
-  caffe:          { x: 42, y: 48, label: 'Caffè' },
-  metro:          { x: 50, y: 36, label: 'Metro' },
-  duomo:          { x: 52, y: 55, label: 'Duomo' },
-  mercato:        { x: 30, y: 64, label: 'Mercato' },
-  trattoria:      { x: 66, y: 68, label: 'Trattoria' },
-  navigli:        { x: 42, y: 80, label: 'Navigli' },
-  viaDellaSpigas: { x: 64, y: 40, label: 'Via della Spiga' },
-  casaMilan:      { x: 18, y: 40, label: 'Casa Milan' },
-  bartolini:      { x: 22, y: 76, label: 'Bartolini' },
-  sanSiro:        { x: 10, y: 55, label: 'San Siro' },
+  // Upper row
+  casaMilan:      { x: 28, y: 25, label: 'Casa Milan' },     // "Casa Milan museum"
+  // Middle row
+  viaDellaSpigas: { x: 61, y: 47, label: 'Via della Spiga' }, // right of Duomo
+  metro:          { x: 30, y: 54, label: 'Metro' },           // "Metro Cadorna"
+  sanSiro:        { x: 9,  y: 60, label: 'San Siro' },        // stadium, far left
+  caffe:          { x: 62, y: 58, label: 'Caffè' },           // under umbrella
+  hotel:          { x: 77, y: 57, label: 'Hotel' },           // "Boutique hotel"
+  duomo:          { x: 48, y: 62, label: 'Duomo' },           // below cathedral
+  // Lower row
+  trattoria:      { x: 25, y: 73, label: 'Trattoria' },       // TRATTORIA awning
+  navigli:        { x: 46, y: 74, label: 'Navigli' },         // on the canal
+  bartolini:      { x: 62, y: 77, label: 'Bartolini' },       // MUDEC cube
+  mercato:        { x: 18, y: 88, label: 'Mercato' },         // lower-left market
 };

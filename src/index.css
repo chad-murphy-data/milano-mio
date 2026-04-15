@@ -917,17 +917,19 @@ p  { line-height: 1.55; color: var(--ink); }
 }
 
 /* Vespa wrap — drives smoothly from current spot to new spot via `left/top`
-   transition. Inner image bojangles on a keyframe while `.driving`. */
+   transition. Inner image bojangles on a keyframe while `.driving`.
+   Keep the transition duration in sync with DRIVE_DURATION_MS in
+   src/screens/MapScreen.jsx. */
 .vespa-wrap {
   position: absolute;
   transform: translate(-50%, -85%);
-  width: 16%;
-  max-width: 180px;
-  min-width: 90px;
+  width: 11%;
+  max-width: 120px;
+  min-width: 60px;
   pointer-events: none;
   z-index: 4;
-  transition: left 1.8s cubic-bezier(0.4, 0.1, 0.25, 1),
-              top  1.8s cubic-bezier(0.4, 0.1, 0.25, 1);
+  transition: left 3.6s cubic-bezier(0.4, 0.1, 0.25, 1),
+              top  3.6s cubic-bezier(0.4, 0.1, 0.25, 1);
   filter: drop-shadow(0 6px 10px rgba(0,0,0,0.3));
 }
 .vespa-puppet {
@@ -1012,5 +1014,5 @@ p  { line-height: 1.55; color: var(--ink); }
   .dog-row { grid-template-columns: 1fr; }
   .cl-row { grid-template-columns: 1fr; }
   .hotspot-label { display: none; }
-  .vespa-wrap { width: 22%; }
+  .vespa-wrap { width: 15%; }
 }

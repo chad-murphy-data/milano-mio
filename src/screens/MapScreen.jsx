@@ -11,7 +11,7 @@ const CL_CHARACTERS = [lucaData, giuliaData];
 // Duration the Vespa takes to bojangle from its current spot to the picked
 // location before we hand off to the briefing screen. Keep this in sync with
 // `.vespa-wrap` transition-duration in index.css.
-const DRIVE_DURATION_MS = 1800;
+const DRIVE_DURATION_MS = 3600;
 
 export default function MapScreen({
   companion,
