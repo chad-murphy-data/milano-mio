@@ -947,8 +947,9 @@ p  { line-height: 1.55; color: var(--ink); }
 
 /* Vespa wrap — drives smoothly from current spot to new spot via `left/top`
    transition. Inner image bojangles on a keyframe while `.driving`.
-   Keep the transition duration in sync with DRIVE_DURATION_MS in
-   src/screens/MapScreen.jsx. */
+   Keep the transition duration in sync with TRAVEL_MS in
+   src/screens/MapScreen.jsx (currently 3.1s — scooter arrives + settles
+   for 0.5s before the screen fades out to the briefing). */
 .vespa-wrap {
   position: absolute;
   transform: translate(-50%, -85%);
@@ -957,8 +958,8 @@ p  { line-height: 1.55; color: var(--ink); }
   min-width: 60px;
   pointer-events: none;
   z-index: 4;
-  transition: left 3.6s cubic-bezier(0.4, 0.1, 0.25, 1),
-              top  3.6s cubic-bezier(0.4, 0.1, 0.25, 1);
+  transition: left 3.1s cubic-bezier(0.4, 0.1, 0.25, 1),
+              top  3.1s cubic-bezier(0.4, 0.1, 0.25, 1);
   filter: drop-shadow(0 6px 10px rgba(0,0,0,0.3));
 }
 .vespa-puppet {
@@ -1029,6 +1030,22 @@ p  { line-height: 1.55; color: var(--ink); }
   flex-wrap: wrap;
 }
 .map-footer .link-btn:disabled { opacity: 0.5; cursor: default; }
+
+/* Full-screen crossfade — used on map → briefing handoff. App.jsx flips
+   `.active` on and off; MapScreen triggers it via `onBeforeStart`. */
+.fade-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 2000;
+}
+.fade-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
 
 @media (max-width: 820px) {
   .conversation-screen { grid-template-columns: 1fr; }

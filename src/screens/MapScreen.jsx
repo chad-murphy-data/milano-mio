@@ -8,10 +8,17 @@ import worldMap from '../assets/scenes/world_map.png';
 
 const CL_CHARACTERS = [lucaData, giuliaData];
 
-// Duration the Vespa takes to bojangle from its current spot to the picked
-// location before we hand off to the briefing screen. Keep this in sync with
-// `.vespa-wrap` transition-duration in index.css.
+// Drive timeline for a hotspot pick:
+//   t=0            Vespa starts driving, bojangle animation runs
+//   t=TRAVEL_MS    Vespa arrives, bojangle stops, settles into idle wobble
+//   t=FADE_START   Fade overlay starts covering the screen (crossfade lead-in)
+//   t=DRIVE_END    Briefing screen takes over behind the opaque overlay
+//
+// Keep the CSS `.vespa-wrap` transition-duration in sync with TRAVEL_MS.
 const DRIVE_DURATION_MS = 3600;
+const SETTLE_MS = 500;            // still at destination before handoff
+const FADE_LEAD_MS = 300;         // overlay fades in this much early
+const TRAVEL_MS = DRIVE_DURATION_MS - SETTLE_MS; // 3100 (matches CSS)
 
 export default function MapScreen({
   companion,
@@ -20,6 +27,7 @@ export default function MapScreen({
   onStartCL,
   onOpenVocab,
   onChangeCompanion,
+  onBeforeStart,
   store,
 }) {
   // Difficulty is set once for the whole map — it applies to whichever
@@ -35,9 +43,15 @@ export default function MapScreen({
   const [pos, setPos] = useState({ x: initial.x, y: initial.y });
   const [driving, setDriving] = useState(false);
   const [pending, setPending] = useState(null);
+  const settleTimerRef = useRef(null);
+  const fadeTimerRef = useRef(null);
   const driveTimerRef = useRef(null);
 
-  useEffect(() => () => clearTimeout(driveTimerRef.current), []);
+  useEffect(() => () => {
+    clearTimeout(settleTimerRef.current);
+    clearTimeout(fadeTimerRef.current);
+    clearTimeout(driveTimerRef.current);
+  }, []);
 
   const sessionsFor = (loc) =>
     (store?.sessions || []).filter((s) => s.location === loc);
@@ -54,11 +68,25 @@ export default function MapScreen({
     setDriving(true);
     setPos({ x: loc.x, y: loc.y });
 
+    // Vespa arrives + stops bouncing before the screen changes — gives
+    // the scooter a "parked" beat at the destination.
+    clearTimeout(settleTimerRef.current);
+    settleTimerRef.current = setTimeout(() => setDriving(false), TRAVEL_MS);
+
+    // Fade overlay starts fading in during the settle — the map gently
+    // dissolves into the briefing screen instead of cutting.
+    clearTimeout(fadeTimerRef.current);
+    fadeTimerRef.current = setTimeout(
+      () => onBeforeStart?.(),
+      DRIVE_DURATION_MS - FADE_LEAD_MS
+    );
+
+    // Hand off to briefing once the overlay is fully opaque.
     clearTimeout(driveTimerRef.current);
-    driveTimerRef.current = setTimeout(() => {
-      setDriving(false);
-      onStartStory(scenarioId, difficulty);
-    }, DRIVE_DURATION_MS);
+    driveTimerRef.current = setTimeout(
+      () => onStartStory(scenarioId, difficulty),
+      DRIVE_DURATION_MS
+    );
   };
 
   return (

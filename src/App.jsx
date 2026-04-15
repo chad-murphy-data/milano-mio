@@ -40,6 +40,10 @@ export default function App() {
   // map without re-picking; otherwise the user has to pick to proceed.
   const [route, setRoute] = useState({ screen: 'home', params: {} });
 
+  // Full-screen fade overlay used to crossfade the map into the briefing
+  // screen (so the handoff isn't an abrupt cut). MapScreen triggers it.
+  const [fading, setFading] = useState(false);
+
   const go = (screen, params = {}) => setRoute({ screen, params });
   // "Home" from anywhere in a session means back to the map — the dog
   // picker is only for first-visit or an explicit "cambia compagno" click.
@@ -71,6 +75,8 @@ export default function App() {
     // just drove it, not snap back to the previous pin.
     saveLastLocation(scenarioId);
     go('briefing', { scenarioId, difficulty, retryWords });
+    // Briefing has mounted behind the opaque overlay; fade it back out.
+    setTimeout(() => setFading(false), 50);
   };
 
   const handleAndiamo = () => {
@@ -200,6 +206,7 @@ export default function App() {
           onStartCL={handleStartCL}
           onOpenVocab={() => go('vocabDashboard')}
           onChangeCompanion={handleChangeCompanion}
+          onBeforeStart={() => setFading(true)}
           store={store}
         />
       )}
@@ -284,6 +291,11 @@ export default function App() {
       )}
 
       <ItalianTutor onAuthLost={handleAuthLost} />
+
+      <div
+        className={`fade-overlay ${fading ? 'active' : ''}`}
+        aria-hidden="true"
+      />
     </div>
   );
 }
