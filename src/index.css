@@ -1032,11 +1032,12 @@ p  { line-height: 1.55; color: var(--ink); }
 .map-footer .link-btn:disabled { opacity: 0.5; cursor: default; }
 
 /* Full-screen crossfade — used on map → briefing handoff. App.jsx flips
-   `.active` on and off; MapScreen triggers it via `onBeforeStart`. */
+   `.active` on and off; MapScreen triggers it via `onBeforeStart`.
+   Fades through black for a proper "scene change" feel. */
 .fade-overlay {
   position: fixed;
   inset: 0;
-  background: var(--bg);
+  background: #000;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease-in-out;
