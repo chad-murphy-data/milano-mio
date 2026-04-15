@@ -1,14 +1,14 @@
 {
   "canvas": {
-    "width": 1026,
-    "height": 1392
+    "width": 551,
+    "height": 725
   },
   "jawBbox": {
-    "left": 342,
-    "top": 382,
-    "right": 566,
-    "bottom": 463,
-    "width": 224,
-    "height": 81
+    "left": 183,
+    "top": 199,
+    "right": 298,
+    "bottom": 240,
+    "width": 115,
+    "height": 41
   }
 }
