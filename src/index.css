@@ -4,8 +4,11 @@
   --bg: #f7f3ee;
   --ink: #1b1714;
   --muted: #6b6258;
-  --accent: #a4412a;
-  --accent-soft: #efd9cf;
+  /* Buttons + interactive highlights use a watercolor navy that matches
+     the canal water on the world map. Replaced the previous terracotta so
+     buttons stand out harder against the warm paper palette. */
+  --accent: #2a5a8c;
+  --accent-soft: #d8e5f0;
   --green: #3f7d4a;
   --amber: #b5761f;
   --panel: #fffaf4;
@@ -819,6 +822,32 @@ p  { line-height: 1.55; color: var(--ink); }
   font-size: 14px;
   margin-top: 12px;
 }
+.picker-continue {
+  margin-top: 18px;
+  text-align: center;
+}
+.picker-continue .link-btn { font-size: 17px; }
+
+/* Currently-chosen dog gets a subtle navy ring + "Attuale" badge so the
+   user sees which one is saved without having to guess. */
+.dog-card { position: relative; }
+.dog-card.current {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-soft);
+}
+.dog-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: var(--accent);
+  color: white;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+}
 
 /* ---------------------------------------------------------------------------
    Map screen — hub
@@ -880,7 +909,7 @@ p  { line-height: 1.55; color: var(--ink); }
   height: 14px;
   border-radius: 999px;
   background: var(--accent);
-  box-shadow: 0 0 0 3px rgba(164, 65, 42, 0.25);
+  box-shadow: 0 0 0 3px rgba(42, 90, 140, 0.28);
   animation: hotspot-pulse 2.2s ease-in-out infinite;
 }
 .map-hotspot.visited .hotspot-dot {

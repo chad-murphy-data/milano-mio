@@ -1,6 +1,7 @@
-// HomeScreen — the dog picker. Only shown on first visit (or when the user
-// explicitly clicks "Cambia compagno" on the map). Picking a dog saves the
-// companion to localStorage and hands off to the map.
+// HomeScreen — the dog picker. Shown on every page load so the user can
+// easily swap companions, with a "Continua →" link to skip straight to the
+// map if a companion is already saved. The currently-selected dog gets a
+// subtle "Attuale" badge.
 
 import vespaKeeshond from '../assets/puppets/vespa_keeshond.png';
 import vespaPug from '../assets/puppets/vespa_pug.png';
@@ -20,33 +21,49 @@ const DOGS = [
   },
 ];
 
-export default function HomeScreen({ onPickCompanion }) {
+export default function HomeScreen({ onPickCompanion, existingCompanion, onContinue }) {
   return (
     <div className="screen home-screen home-picker">
       <header>
         <h1>Milano Mio</h1>
-        <p className="subtitle">Scegli il tuo compagno di viaggio.</p>
+        <p className="subtitle">
+          {existingCompanion
+            ? 'Cambia compagno o continua il tuo viaggio.'
+            : 'Scegli il tuo compagno di viaggio.'}
+        </p>
       </header>
 
       <div className="dog-row">
-        {DOGS.map((d) => (
-          <button
-            key={d.id}
-            className="dog-card"
-            onClick={() => onPickCompanion(d.id)}
-          >
-            <div className="dog-img-wrap">
-              <img src={d.src} alt={d.name} className="dog-img" draggable={false} />
-            </div>
-            <h3>{d.name}</h3>
-            <p>{d.tagline}</p>
-          </button>
-        ))}
+        {DOGS.map((d) => {
+          const isCurrent = existingCompanion === d.id;
+          return (
+            <button
+              key={d.id}
+              className={`dog-card ${isCurrent ? 'current' : ''}`}
+              onClick={() => onPickCompanion(d.id)}
+            >
+              {isCurrent && <span className="dog-badge">Attuale</span>}
+              <div className="dog-img-wrap">
+                <img src={d.src} alt={d.name} className="dog-img" draggable={false} />
+              </div>
+              <h3>{d.name}</h3>
+              <p>{d.tagline}</p>
+            </button>
+          );
+        })}
       </div>
 
-      <p className="picker-footnote">
-        Puoi cambiare compagno in qualsiasi momento dalla mappa.
-      </p>
+      {onContinue ? (
+        <div className="picker-continue">
+          <button className="link-btn" onClick={onContinue}>
+            Continua alla mappa →
+          </button>
+        </div>
+      ) : (
+        <p className="picker-footnote">
+          Puoi cambiare compagno in qualsiasi momento dalla mappa.
+        </p>
+      )}
     </div>
   );
 }

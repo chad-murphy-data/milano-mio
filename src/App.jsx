@@ -35,12 +35,10 @@ export default function App() {
   const [authed, setAuthed] = useState(() => Boolean(getSavedPassword()));
   const [companion, setCompanion] = useState(() => loadCompanion());
 
-  // If a companion is already chosen, go straight to the map. Otherwise
-  // start on the dog-picker home screen.
-  const [route, setRoute] = useState(() => ({
-    screen: loadCompanion() ? 'map' : 'home',
-    params: {}
-  }));
+  // Always land on the dog picker on page load. If a companion is already
+  // saved, the picker offers a "Continua →" link to skip straight to the
+  // map without re-picking; otherwise the user has to pick to proceed.
+  const [route, setRoute] = useState({ screen: 'home', params: {} });
 
   const go = (screen, params = {}) => setRoute({ screen, params });
   // "Home" from anywhere in a session means back to the map — the dog
@@ -187,7 +185,11 @@ export default function App() {
   return (
     <div className="app">
       {screen === 'home' && (
-        <HomeScreen onPickCompanion={handlePickCompanion} />
+        <HomeScreen
+          onPickCompanion={handlePickCompanion}
+          existingCompanion={companion}
+          onContinue={companion ? () => go('map') : null}
+        />
       )}
 
       {screen === 'map' && (
