@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import LoginScreen from './screens/LoginScreen.jsx';
 import HomeScreen from './screens/HomeScreen.jsx';
+import MapScreen from './screens/MapScreen.jsx';
 import BriefingScreen from './screens/BriefingScreen.jsx';
 import ConversationScreen from './screens/ConversationScreen.jsx';
 import DebriefScreen from './screens/DebriefScreen.jsx';
@@ -11,7 +12,16 @@ import ItalianTutor from './components/ItalianTutor.jsx';
 import { getScenario } from './data/scenarios.js';
 import * as lucaData from './data/conversazioneLibera/luca.js';
 import * as giuliaData from './data/conversazioneLibera/giulia.js';
-import { loadStore, saveSession, loadCharacter, saveCharacter } from './hooks/useLocalStorage.js';
+import {
+  loadStore,
+  saveSession,
+  loadCharacter,
+  saveCharacter,
+  loadCompanion,
+  saveCompanion,
+  loadLastLocation,
+  saveLastLocation,
+} from './hooks/useLocalStorage.js';
 import { getRetryWordsForLocation, getDueWords } from './utils/vocabularyEngine.js';
 import { pickTopic, updateCharacterData } from './utils/characterMemory.js';
 import { getSavedPassword } from './utils/claudeApi.js';
@@ -23,10 +33,33 @@ const CL_CHARACTERS = {
 
 export default function App() {
   const [authed, setAuthed] = useState(() => Boolean(getSavedPassword()));
-  const [route, setRoute] = useState({ screen: 'home', params: {} });
+  const [companion, setCompanion] = useState(() => loadCompanion());
+
+  // If a companion is already chosen, go straight to the map. Otherwise
+  // start on the dog-picker home screen.
+  const [route, setRoute] = useState(() => ({
+    screen: loadCompanion() ? 'map' : 'home',
+    params: {}
+  }));
 
   const go = (screen, params = {}) => setRoute({ screen, params });
-  const goHome = () => go('home');
+  // "Home" from anywhere in a session means back to the map — the dog
+  // picker is only for first-visit or an explicit "cambia compagno" click.
+  const goMap = () => go('map');
+
+  // ---------------------------------------------------------------------------
+  // Companion
+  // ---------------------------------------------------------------------------
+
+  const handlePickCompanion = (dogId) => {
+    saveCompanion(dogId);
+    setCompanion(dogId);
+    go('map');
+  };
+
+  const handleChangeCompanion = () => {
+    go('home');
+  };
 
   // ---------------------------------------------------------------------------
   // Story mode handlers
@@ -35,6 +68,10 @@ export default function App() {
   const handleStartStory = (scenarioId, difficulty) => {
     const store = loadStore();
     const retryWords = getRetryWordsForLocation(store.vocabulary, scenarioId);
+    // Park the Vespa here even before the conversation — if the user bails at
+    // the briefing screen and comes back, the scooter should be where they
+    // just drove it, not snap back to the previous pin.
+    saveLastLocation(scenarioId);
     go('briefing', { scenarioId, difficulty, retryWords });
   };
 
@@ -60,6 +97,7 @@ export default function App() {
       transcript
     };
     saveSession(session);
+    saveLastLocation(scenarioId);
     go('debrief', { scenarioId, debrief: { ...debrief, character_says: characterSays }, transcript });
   };
 
@@ -101,7 +139,6 @@ export default function App() {
     }
 
     // Save session
-    const charModule = CL_CHARACTERS[characterId];
     const characterSays =
       debrief?.[`${characterId}_says`] || debrief?.character_says || '';
 
@@ -132,7 +169,7 @@ export default function App() {
 
   const handleAuthLost = () => {
     setAuthed(false);
-    go('home');
+    goMap();
   };
 
   if (!authed) {
@@ -150,10 +187,17 @@ export default function App() {
   return (
     <div className="app">
       {screen === 'home' && (
-        <HomeScreen
+        <HomeScreen onPickCompanion={handlePickCompanion} />
+      )}
+
+      {screen === 'map' && (
+        <MapScreen
+          companion={companion}
+          lastLocation={loadLastLocation()}
           onStartStory={handleStartStory}
           onStartCL={handleStartCL}
           onOpenVocab={() => go('vocabDashboard')}
+          onChangeCompanion={handleChangeCompanion}
           store={store}
         />
       )}
@@ -164,7 +208,7 @@ export default function App() {
           difficulty={params.difficulty}
           retryWords={params.retryWords}
           onContinue={handleAndiamo}
-          onBack={goHome}
+          onBack={goMap}
         />
       )}
 
@@ -183,14 +227,14 @@ export default function App() {
           debrief={params.debrief}
           scenario={scenario}
           vocabulary={store.vocabulary}
-          onHome={goHome}
+          onHome={goMap}
         />
       )}
 
       {screen === 'vocabDashboard' && (
         <VocabularyDashboard
           vocabulary={store.vocabulary}
-          onBack={goHome}
+          onBack={goMap}
         />
       )}
 
@@ -199,7 +243,7 @@ export default function App() {
           character={CL_CHARACTERS[params.characterId]?.character}
           characterData={loadCharacter(params.characterId)}
           onStart={handleCLAndiamo}
-          onBack={goHome}
+          onBack={goMap}
         />
       )}
 
@@ -233,7 +277,7 @@ export default function App() {
           character={CL_CHARACTERS[params.characterId]?.character}
           lifelineUsed={params.lifelineUsed}
           topic={params.topic}
-          onHome={goHome}
+          onHome={goMap}
         />
       )}
 

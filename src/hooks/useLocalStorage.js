@@ -115,3 +115,31 @@ export function saveCharacter(name, data) {
   store.characters[name] = data;
   window.localStorage.setItem(STORE_KEY, JSON.stringify(store));
 }
+
+// ---------------------------------------------------------------------------
+// Companion (keeshond / pug) + last visited location
+// These drive the map screen — the Vespa puppet is the chosen companion,
+// and it starts each session parked at the last location the user visited.
+// ---------------------------------------------------------------------------
+
+export function loadCompanion() {
+  const store = loadStore();
+  return store.companion || null;
+}
+
+export function saveCompanion(companion) {
+  const store = loadStore();
+  store.companion = companion;
+  window.localStorage.setItem(STORE_KEY, JSON.stringify(store));
+}
+
+export function loadLastLocation() {
+  const store = loadStore();
+  return store.lastLocation || null;
+}
+
+export function saveLastLocation(locationId) {
+  const store = loadStore();
+  store.lastLocation = locationId;
+  window.localStorage.setItem(STORE_KEY, JSON.stringify(store));
+}
