@@ -49,6 +49,18 @@ export default function App() {
   // picker is only for first-visit or an explicit "cambia compagno" click.
   const goMap = () => go('map');
 
+  // Fade the screen to black, run `action`, then fade back in. Used for
+  // briefing → conversation handoffs so the transition feels continuous
+  // with the earlier map → briefing crossfade. 350ms slightly > the CSS
+  // transition (0.3s) so the overlay is fully opaque before we swap.
+  const fadeThen = (action) => {
+    setFading(true);
+    setTimeout(() => {
+      action();
+      setTimeout(() => setFading(false), 50);
+    }, 350);
+  };
+
   // ---------------------------------------------------------------------------
   // Companion
   // ---------------------------------------------------------------------------
@@ -80,7 +92,7 @@ export default function App() {
   };
 
   const handleAndiamo = () => {
-    go('conversation', route.params);
+    fadeThen(() => go('conversation', route.params));
   };
 
   const handleStoryEnd = ({ debrief, transcript }) => {
@@ -122,14 +134,14 @@ export default function App() {
     const topic = pickTopic(characterData.coveredTopics || [], charModule.topicBank);
     const systemPrompt = charModule.buildSystemPrompt(difficulty, retryWords, characterData, topic);
 
-    go('clConversation', {
+    fadeThen(() => go('clConversation', {
       characterId,
       difficulty,
       topic,
       systemPrompt,
       characterData,
       charModule
-    });
+    }));
   };
 
   const handleCLEnd = ({ debrief, transcript, characterMemory, lifelineUsed }) => {
