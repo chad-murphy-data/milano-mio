@@ -21,7 +21,7 @@ const DOGS = [
   },
 ];
 
-export default function HomeScreen({ onPickCompanion, existingCompanion, onContinue }) {
+export default function HomeScreen({ onPickCompanion, existingCompanion, onContinue, onChangeUser }) {
   return (
     <div className="screen home-screen home-picker">
       <header>
@@ -63,6 +63,14 @@ export default function HomeScreen({ onPickCompanion, existingCompanion, onConti
         <p className="picker-footnote">
           Puoi cambiare compagno in qualsiasi momento dalla mappa.
         </p>
+      )}
+
+      {onChangeUser && (
+        <div className="picker-continue">
+          <button className="link-btn subtle-link" onClick={onChangeUser}>
+            ← Cambia utente
+          </button>
+        </div>
       )}
     </div>
   );

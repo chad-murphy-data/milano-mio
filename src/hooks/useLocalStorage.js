@@ -25,13 +25,102 @@ export default function useLocalStorage(key, initialValue) {
 }
 
 // ---------------------------------------------------------------------------
-// App store — sessions, vocabulary, character memory
+// User selection — Chad / Charlie / Guest
+// Each named user gets their own scoped store (`milano-mio-store:<user>`) so
+// their sessions, vocabulary, and companion don't bleed into each other.
+// Guest uses an in-memory store that is never persisted — nothing survives a
+// reload or a switch away from Guest.
 // ---------------------------------------------------------------------------
 
-const STORE_KEY = 'milano-mio-store';
+const USER_KEY = 'milano-mio-current-user';
+const LEGACY_STORE_KEY = 'milano-mio-store';
+
+export const USERS = {
+  CHAD: 'chad',
+  CHARLIE: 'charlie',
+  GUEST: 'guest',
+};
+
+function storeKeyFor(user) {
+  return `milano-mio-store:${user}`;
+}
+
+// Ephemeral store for Guest mode. Reset every time Guest is (re)selected so
+// switching to Guest always starts fresh, the way a private window would.
+let guestStore = defaultStore();
+
+export function loadCurrentUser() {
+  try {
+    return window.localStorage.getItem(USER_KEY) || null;
+  } catch {
+    return null;
+  }
+}
+
+export function saveCurrentUser(user) {
+  try {
+    window.localStorage.setItem(USER_KEY, user);
+  } catch {}
+  if (user === USERS.GUEST) {
+    guestStore = defaultStore();
+  } else if (user) {
+    ensureUserStore(user);
+  }
+}
+
+export function isGuest() {
+  return loadCurrentUser() === USERS.GUEST;
+}
+
+// First time Chad is picked we adopt the pre-multi-user `milano-mio-store`
+// so his existing progress carries over. Charlie always starts fresh. The
+// legacy key is left in place as a backup — never written to again.
+function ensureUserStore(user) {
+  try {
+    const key = storeKeyFor(user);
+    if (window.localStorage.getItem(key)) return;
+    if (user === USERS.CHAD) {
+      const legacy = window.localStorage.getItem(LEGACY_STORE_KEY);
+      if (legacy) {
+        window.localStorage.setItem(key, legacy);
+        return;
+      }
+    }
+    window.localStorage.setItem(key, JSON.stringify(defaultStore()));
+  } catch {}
+}
+
+// ---------------------------------------------------------------------------
+// App store — sessions, vocabulary, character memory (scoped to current user)
+// ---------------------------------------------------------------------------
 
 function defaultStore() {
   return { schemaVersion: 2, sessions: [], vocabulary: {}, characters: {} };
+}
+
+function readUserStore() {
+  const user = loadCurrentUser();
+  if (user === USERS.GUEST) return guestStore;
+  if (!user) return defaultStore();
+  try {
+    const raw = window.localStorage.getItem(storeKeyFor(user));
+    if (!raw) return defaultStore();
+    return JSON.parse(raw);
+  } catch {
+    return defaultStore();
+  }
+}
+
+function writeUserStore(store) {
+  const user = loadCurrentUser();
+  if (user === USERS.GUEST) {
+    guestStore = store;
+    return;
+  }
+  if (!user) return;
+  try {
+    window.localStorage.setItem(storeKeyFor(user), JSON.stringify(store));
+  } catch {}
 }
 
 /**
@@ -67,19 +156,12 @@ function migrateStore(store) {
   store.vocabulary = newVocab;
   store.characters = store.characters || {};
   store.schemaVersion = 2;
-  window.localStorage.setItem(STORE_KEY, JSON.stringify(store));
+  writeUserStore(store);
   return store;
 }
 
 export function loadStore() {
-  try {
-    const raw = window.localStorage.getItem(STORE_KEY);
-    if (!raw) return defaultStore();
-    const store = JSON.parse(raw);
-    return migrateStore(store);
-  } catch {
-    return defaultStore();
-  }
+  return migrateStore(readUserStore());
 }
 
 export function saveSession(session) {
@@ -91,7 +173,7 @@ export function saveSession(session) {
     session.retry || [],
     session.location
   );
-  window.localStorage.setItem(STORE_KEY, JSON.stringify(store));
+  writeUserStore(store);
   return store;
 }
 
@@ -113,7 +195,7 @@ export function saveCharacter(name, data) {
   const store = loadStore();
   store.characters = store.characters || {};
   store.characters[name] = data;
-  window.localStorage.setItem(STORE_KEY, JSON.stringify(store));
+  writeUserStore(store);
 }
 
 // ---------------------------------------------------------------------------
@@ -130,7 +212,7 @@ export function loadCompanion() {
 export function saveCompanion(companion) {
   const store = loadStore();
   store.companion = companion;
-  window.localStorage.setItem(STORE_KEY, JSON.stringify(store));
+  writeUserStore(store);
 }
 
 export function loadLastLocation() {
@@ -141,5 +223,5 @@ export function loadLastLocation() {
 export function saveLastLocation(locationId) {
   const store = loadStore();
   store.lastLocation = locationId;
-  window.localStorage.setItem(STORE_KEY, JSON.stringify(store));
+  writeUserStore(store);
 }

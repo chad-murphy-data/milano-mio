@@ -20,13 +20,23 @@ const SETTLE_MS = 500;            // still at destination before handoff
 const FADE_LEAD_MS = 300;         // overlay fades in this much early
 const TRAVEL_MS = DRIVE_DURATION_MS - SETTLE_MS; // 3100 (matches CSS)
 
+const USER_LABELS = {
+  chad: 'Chad',
+  charlie: 'Charlie',
+  // English on purpose — matches the UserScreen card so non-Italian speakers
+  // can find their way in and out of guest mode.
+  guest: 'Guest',
+};
+
 export default function MapScreen({
   companion,
+  currentUser,
   lastLocation,
   onStartStory,
   onStartCL,
   onOpenVocab,
   onChangeCompanion,
+  onChangeUser,
   onBeforeStart,
   store,
 }) {
@@ -93,7 +103,14 @@ export default function MapScreen({
     <div className="screen map-screen">
       <header className="map-header">
         <h1>Milano Mio</h1>
-        <p className="subtitle">Dove andiamo oggi?</p>
+        <p className="subtitle">
+          {currentUser
+            ? `Ciao, ${USER_LABELS[currentUser] || currentUser}. Dove andiamo oggi?`
+            : 'Dove andiamo oggi?'}
+        </p>
+        {currentUser === 'guest' && (
+          <p className="guest-note">Modalità Guest — niente viene salvato.</p>
+        )}
       </header>
 
       <div className="map-difficulty" role="radiogroup" aria-label="Difficoltà">
@@ -180,6 +197,11 @@ export default function MapScreen({
         <button className="link-btn" onClick={onChangeCompanion} disabled={driving}>
           Cambia compagno →
         </button>
+        {onChangeUser && (
+          <button className="link-btn" onClick={onChangeUser} disabled={driving}>
+            Cambia utente →
+          </button>
+        )}
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import LoginScreen from './screens/LoginScreen.jsx';
+import UserScreen from './screens/UserScreen.jsx';
 import HomeScreen from './screens/HomeScreen.jsx';
 import MapScreen from './screens/MapScreen.jsx';
 import BriefingScreen from './screens/BriefingScreen.jsx';
@@ -21,6 +22,8 @@ import {
   saveCompanion,
   loadLastLocation,
   saveLastLocation,
+  loadCurrentUser,
+  saveCurrentUser,
 } from './hooks/useLocalStorage.js';
 import { getRetryWordsForLocation, getDueWords } from './utils/vocabularyEngine.js';
 import { pickTopic, updateCharacterData } from './utils/characterMemory.js';
@@ -33,12 +36,16 @@ const CL_CHARACTERS = {
 
 export default function App() {
   const [authed, setAuthed] = useState(() => Boolean(getSavedPassword()));
+  const [currentUser, setCurrentUser] = useState(() => loadCurrentUser());
   const [companion, setCompanion] = useState(() => loadCompanion());
 
-  // Always land on the dog picker on page load. If a companion is already
-  // saved, the picker offers a "Continua →" link to skip straight to the
-  // map without re-picking; otherwise the user has to pick to proceed.
-  const [route, setRoute] = useState({ screen: 'home', params: {} });
+  // Routing: if no user has been picked yet, show the user picker first.
+  // Otherwise always land on the dog picker on page load — it offers a
+  // "Continua →" link to skip straight to the map if a companion is saved.
+  const [route, setRoute] = useState({
+    screen: currentUser ? 'home' : 'userPicker',
+    params: {},
+  });
 
   // Full-screen fade overlay used to crossfade the map into the briefing
   // screen (so the handoff isn't an abrupt cut). MapScreen triggers it.
@@ -59,6 +66,24 @@ export default function App() {
       action();
       setTimeout(() => setFading(false), 50);
     }, 350);
+  };
+
+  // ---------------------------------------------------------------------------
+  // User (Chad / Charlie / Guest)
+  // ---------------------------------------------------------------------------
+
+  const handlePickUser = (userId) => {
+    saveCurrentUser(userId);
+    setCurrentUser(userId);
+    // Companion is stored in the user-scoped store, so switching users
+    // means re-reading the new user's companion (or null, if they haven't
+    // picked one yet — the dog picker will force a selection in that case).
+    setCompanion(loadCompanion());
+    go('home');
+  };
+
+  const handleChangeUser = () => {
+    go('userPicker');
   };
 
   // ---------------------------------------------------------------------------
@@ -202,22 +227,33 @@ export default function App() {
 
   return (
     <div className="app">
+      {screen === 'userPicker' && (
+        <UserScreen
+          currentUser={currentUser}
+          onPickUser={handlePickUser}
+          onCancel={currentUser ? () => go(companion ? 'map' : 'home') : null}
+        />
+      )}
+
       {screen === 'home' && (
         <HomeScreen
           onPickCompanion={handlePickCompanion}
           existingCompanion={companion}
           onContinue={companion ? () => go('map') : null}
+          onChangeUser={handleChangeUser}
         />
       )}
 
       {screen === 'map' && (
         <MapScreen
           companion={companion}
+          currentUser={currentUser}
           lastLocation={loadLastLocation()}
           onStartStory={handleStartStory}
           onStartCL={handleStartCL}
           onOpenVocab={() => go('vocabDashboard')}
           onChangeCompanion={handleChangeCompanion}
+          onChangeUser={handleChangeUser}
           onBeforeStart={() => setFading(true)}
           store={store}
         />
