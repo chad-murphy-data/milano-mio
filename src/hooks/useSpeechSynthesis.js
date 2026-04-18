@@ -1,54 +1,226 @@
+// Italian character TTS.
+//
+// Calls /api/tts (OpenAI TTS-1-HD behind a Netlify proxy) with the voice
+// assigned to the current character and plays the returned mp3 via an
+// Audio element. Falls back to the browser's SpeechSynthesis API if the
+// network call fails or if no voice is mapped for the character.
+//
+// The hook keeps an in-memory LRU cache (cap 40) so repeat lines — the
+// deterministic intro stage direction, short acks like "Sì" / "Grazie" —
+// don't re-bill or re-fetch. Cache resets on reload; use IndexedDB later
+// if you want persistence.
+
 import { useEffect, useRef, useState, useCallback } from 'react';
+import { getVoiceFor } from '../data/characterVoices.js';
+import { getSavedPassword } from '../utils/claudeApi.js';
 
-// Wraps browser SpeechSynthesis for Italian TTS (Marco's voice).
-export default function useSpeechSynthesis({ lang = 'it-IT' } = {}) {
-  const [voices, setVoices] = useState([]);
+const CACHE_CAP = 40;
+
+// Shared across hook instances within a page — two different screens
+// calling the hook with the same (voice, text) pair benefit from the
+// same cache.
+const audioCache = new Map(); // key -> blobUrl
+
+function cacheKey(voice, styleHint, text) {
+  const normalized = text.trim().toLowerCase().replace(/\s+/g, ' ');
+  return `${voice}|${styleHint || ''}|${normalized}`;
+}
+
+function cacheGet(key) {
+  if (!audioCache.has(key)) return null;
+  // Move to end (LRU touch)
+  const url = audioCache.get(key);
+  audioCache.delete(key);
+  audioCache.set(key, url);
+  return url;
+}
+
+function cacheSet(key, url) {
+  audioCache.set(key, url);
+  while (audioCache.size > CACHE_CAP) {
+    const oldest = audioCache.keys().next().value;
+    const oldestUrl = audioCache.get(oldest);
+    audioCache.delete(oldest);
+    try { URL.revokeObjectURL(oldestUrl); } catch {}
+  }
+}
+
+// Strip narrative / stage-direction markup so TTS only pronounces the
+// actual Italian dialogue. Claude is instructed not to emit these, but
+// it occasionally slips — we defend in depth:
+//   [bracketed]  — stage directions, stray tags
+//   *asterisks*  — action narration like *pulls shot*
+//   (parens)     — inline English glosses
+//   ~tildes~     — legacy marker from earlier prompts
+function cleanForTTS(text) {
+  return text
+    .replace(/\[[^\]]*\]/g, '')
+    .replace(/\*[^*]*\*/g, '')
+    .replace(/\([^)]*\)/g, '')
+    .replace(/~[^~]*~/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+// Prime the audio layer on the first user gesture anywhere on the page.
+// Browsers block new Audio().play() until there's an active gesture; the
+// briefing → conversation handoff takes ~2s (Claude call + TTS fetch)
+// which can push the original Andiamo click out of the "recent gesture"
+// window. Playing a silent blip during any earlier click banks the
+// permission so the first TTS clip isn't blocked.
+let audioLayerPrimed = false;
+function primeAudioLayer() {
+  if (audioLayerPrimed) return;
+  audioLayerPrimed = true;
+  try {
+    const silent = new Audio(
+      'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA='
+    );
+    silent.volume = 0;
+    silent.play().catch(() => {});
+  } catch {}
+}
+if (typeof window !== 'undefined') {
+  const onGesture = () => {
+    primeAudioLayer();
+    window.removeEventListener('pointerdown', onGesture);
+    window.removeEventListener('keydown', onGesture);
+  };
+  window.addEventListener('pointerdown', onGesture);
+  window.addEventListener('keydown', onGesture);
+}
+
+export default function useSpeechSynthesis({ characterName, lang = 'it-IT' } = {}) {
   const [speaking, setSpeaking] = useState(false);
-  const currentUtterance = useRef(null);
+  const audioRef = useRef(null);
+  const abortRef = useRef(null);
+  const fallbackActive = useRef(false);
 
+  // Web Speech voices for fallback path.
+  const [voices, setVoices] = useState([]);
   useEffect(() => {
     if (typeof window === 'undefined' || !window.speechSynthesis) return;
     const load = () => setVoices(window.speechSynthesis.getVoices());
     load();
     window.speechSynthesis.onvoiceschanged = load;
-    return () => {
-      window.speechSynthesis.onvoiceschanged = null;
-    };
+    return () => { window.speechSynthesis.onvoiceschanged = null; };
   }, []);
 
-  const pickVoice = useCallback(() => {
+  const pickFallbackVoice = useCallback(() => {
     if (!voices.length) return null;
     const italian = voices.filter((v) => v.lang && v.lang.toLowerCase().startsWith('it'));
-    // Prefer a male-ish voice if we can detect one by name, else first italian.
-    const malePreferred = italian.find((v) => /luca|giorgio|diego|marco|male/i.test(v.name));
-    return malePreferred || italian[0] || null;
+    return italian[0] || null;
   }, [voices]);
 
-  const speak = useCallback(
-    (text, { rate = 1 } = {}) => {
-      if (!text || typeof window === 'undefined' || !window.speechSynthesis) return;
-      // Strip parenthetical English glosses and ~stage directions~ so TTS sounds Italian-only.
-      const italianOnly = text.replace(/\([^)]*\)/g, '').replace(/~[^~]*~/g, '').trim();
-      const utterance = new SpeechSynthesisUtterance(italianOnly);
-      const voice = pickVoice();
-      if (voice) utterance.voice = voice;
-      utterance.lang = lang;
-      utterance.rate = rate;
-      utterance.onstart = () => setSpeaking(true);
-      utterance.onend = () => setSpeaking(false);
-      utterance.onerror = () => setSpeaking(false);
-      currentUtterance.current = utterance;
-      window.speechSynthesis.cancel();
-      window.speechSynthesis.speak(utterance);
-    },
-    [lang, pickVoice]
-  );
-
   const cancel = useCallback(() => {
-    if (typeof window === 'undefined' || !window.speechSynthesis) return;
-    window.speechSynthesis.cancel();
+    if (audioRef.current) {
+      try { audioRef.current.pause(); } catch {}
+      audioRef.current = null;
+    }
+    if (abortRef.current) {
+      try { abortRef.current.abort(); } catch {}
+      abortRef.current = null;
+    }
+    if (fallbackActive.current && typeof window !== 'undefined' && window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+    fallbackActive.current = false;
     setSpeaking(false);
   }, []);
 
-  return { voices, speaking, speak, cancel };
+  const speakFallback = useCallback((text, rate) => {
+    if (typeof window === 'undefined' || !window.speechSynthesis) return;
+    const utterance = new SpeechSynthesisUtterance(text);
+    const voice = pickFallbackVoice();
+    if (voice) utterance.voice = voice;
+    utterance.lang = lang;
+    utterance.rate = rate;
+    utterance.onstart = () => setSpeaking(true);
+    utterance.onend = () => { fallbackActive.current = false; setSpeaking(false); };
+    utterance.onerror = () => { fallbackActive.current = false; setSpeaking(false); };
+    fallbackActive.current = true;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+  }, [lang, pickFallbackVoice]);
+
+  const speak = useCallback(async (rawText, { rate = 1 } = {}) => {
+    if (!rawText) return;
+    const text = cleanForTTS(rawText);
+    if (!text) return;
+
+    cancel();
+
+    const voiceCast = getVoiceFor(characterName);
+    if (!voiceCast) {
+      // No voice mapped — fall straight to browser TTS.
+      speakFallback(text, rate);
+      return;
+    }
+    const { voice, styleHint } = voiceCast;
+
+    const key = cacheKey(voice, styleHint, text);
+    const hit = cacheGet(key);
+    if (hit) {
+      playUrl(hit);
+      return;
+    }
+
+    // Fresh synth — fetch audio bytes, cache, play.
+    const controller = new AbortController();
+    abortRef.current = controller;
+    try {
+      const res = await fetch('/api/tts', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'x-app-password': getSavedPassword()
+        },
+        body: JSON.stringify({ text, voice, styleHint }),
+        signal: controller.signal
+      });
+      if (!res.ok) throw new Error(`TTS ${res.status}`);
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      cacheSet(key, url);
+      if (controller.signal.aborted) return;
+      playUrl(url);
+    } catch (err) {
+      if (err?.name === 'AbortError') return;
+      // Network / upstream failure — degrade to browser TTS so the app
+      // keeps talking even if TTS endpoint is down.
+      console.warn('[TTS] fetch failed, falling back to browser voice:', err);
+      speakFallback(text, rate);
+    } finally {
+      if (abortRef.current === controller) abortRef.current = null;
+    }
+
+    function playUrl(url) {
+      const audio = new Audio(url);
+      audioRef.current = audio;
+      audio.onplay = () => setSpeaking(true);
+      audio.onended = () => {
+        if (audioRef.current === audio) audioRef.current = null;
+        setSpeaking(false);
+      };
+      audio.onerror = (e) => {
+        console.warn('[TTS] audio element error:', e);
+        if (audioRef.current === audio) audioRef.current = null;
+        setSpeaking(false);
+      };
+      audio.play().catch((err) => {
+        // Autoplay blocked — most likely cause is the user gesture is
+        // too stale by the time we're ready to play.
+        console.warn('[TTS] audio.play() blocked, falling back:', err);
+        if (audioRef.current === audio) audioRef.current = null;
+        setSpeaking(false);
+        speakFallback(text, rate);
+      });
+    }
+  }, [characterName, cancel, speakFallback]);
+
+  // Stop audio on unmount so navigating away from the conversation
+  // immediately silences the character.
+  useEffect(() => () => cancel(), [cancel]);
+
+  return { speaking, speak, cancel };
 }

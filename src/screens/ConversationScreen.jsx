@@ -41,7 +41,7 @@ export default function ConversationScreen({
   const whisperHints = scenario.whisperHints || [];
 
   const { supported, listening, interim, start, stop } = useSpeechRecognition();
-  const { speak, cancel: cancelSpeech, speaking } = useSpeechSynthesis();
+  const { speak, cancel: cancelSpeech, speaking } = useSpeechSynthesis({ characterName });
   const [fallbackTalking, setFallbackTalking] = useState(false);
 
   // Kick off conversation — character speaks first.

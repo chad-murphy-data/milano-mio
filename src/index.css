@@ -38,6 +38,161 @@ p  { line-height: 1.55; color: var(--ink); }
 
 .subtitle { color: var(--muted); font-style: italic; margin: 0 0 32px; }
 
+/* Title — fills the browser window with the hero image at its natural
+   aspect. `.title-inner` sizes itself to the image (via max-width/height
+   on the <img>) so overlays can position as a percentage of the image,
+   not the viewport. Any leftover viewport space shows the cream page
+   color, framing the torn-paper edges. */
+.title-screen {
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  transition: opacity 1.1s ease;
+}
+.title-screen.leaving { opacity: 0; }
+
+.title-inner {
+  position: relative;
+  line-height: 0;
+  font-size: 0;
+}
+.title-backdrop {
+  display: block;
+  max-width: 100vw;
+  max-height: 100vh;
+  width: auto;
+  height: auto;
+}
+/* Opaque sky overlay — Gemini painted clouds directly into the backdrop
+   and they collide with the drifting cloud layer on top. High opacity
+   + soft gradient replace the painted sky with a clean pastel wash, so
+   only our drifting clouds remain visible. Fades to transparent where
+   the rooftops start so the transition feels painted, not boxy. */
+/* Static cloud patches on either side of the sky, framing (not crowding)
+   the logo. Each div shows the same cloud PNG, but cropped to one side
+   via background-position. Containers leave the center clear so the
+   wordmark sits on open sky. */
+.title-clouds {
+  position: absolute;
+  top: 8%;
+  width: 30%;
+  height: 22%;
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  pointer-events: none;
+  opacity: 0.9;
+}
+.title-clouds-left {
+  left: 5%;
+  background-position: left center;
+}
+.title-clouds-right {
+  right: 5%;
+  background-position: right center;
+}
+
+/* Title content floats over the sky. Pointer-events off on the container
+   so clouds drift visibly through the negative space between letters
+   without eating clicks; re-enabled on the button. Positioned as a
+   percentage of the image so it tracks the sky regardless of viewport. */
+.title-overlay {
+  position: absolute;
+  top: 7%;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  pointer-events: none;
+  z-index: 10;
+  line-height: 1;
+}
+.title-overlay > * { pointer-events: auto; }
+.title-brand {
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-weight: 700;
+  font-size: clamp(44px, 10vw, 128px);
+  margin: 0;
+  letter-spacing: -0.5px;
+  color: var(--ink);
+  line-height: 1.02;
+  text-shadow: 0 2px 3px rgba(247, 243, 238, 0.55);
+}
+.title-subtitle {
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-style: italic;
+  font-weight: 400;
+  margin: 0;
+  color: var(--muted);
+  font-size: clamp(15px, 2.2vw, 26px);
+  letter-spacing: 0.01em;
+}
+/* Deliberately small — the hero image IS the screen; the button is a
+   quiet handoff, not a billboard. */
+/* Entra sits at the bottom center of the hero so the logo up top and the
+   call-to-action down below frame the Duomo rather than stacking over it. */
+.title-button-wrap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 7%;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 10;
+}
+.title-button-wrap > * { pointer-events: auto; }
+.title-enter {
+  width: auto;
+  max-width: 180px;
+  padding: 10px 26px;
+  font-size: 16px;
+  font-family: 'Playfair Display', 'Georgia', serif;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 14px rgba(27, 23, 20, 0.28);
+}
+
+/* Logo PNG — used in place of the CSS wordmark when the file exists.
+   Width is a fraction of viewport so it scales cleanly from phone to
+   desktop. The chroma-keyed transparency means it drops cleanly on top
+   of the pastel sky. */
+.title-logo {
+  display: block;
+  width: clamp(260px, 42vw, 720px);
+  height: auto;
+  max-height: 30vh;
+  object-fit: contain;
+  pointer-events: auto;
+}
+/* Soft cream halo behind the logo so clouds read as drifting *past* the
+   wordmark rather than through it. Radial gradient fades to transparent
+   at the edges so there are no hard boundaries — feels like light through
+   clouds, not a sticker. */
+.title-logo-halo {
+  position: relative;
+  padding: 2.5vh 4vw;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(247, 243, 238, 0.85) 0%,
+    rgba(247, 243, 238, 0.55) 45%,
+    rgba(247, 243, 238, 0.15) 75%,
+    rgba(247, 243, 238, 0) 95%
+  );
+  pointer-events: auto;
+}
+
 /* Login */
 .login-screen { max-width: 440px; }
 .login-card {

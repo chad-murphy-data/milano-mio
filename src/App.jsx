@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import LoginScreen from './screens/LoginScreen.jsx';
+import TitleScreen from './screens/TitleScreen.jsx';
 import UserScreen from './screens/UserScreen.jsx';
 import HomeScreen from './screens/HomeScreen.jsx';
 import MapScreen from './screens/MapScreen.jsx';
@@ -10,6 +11,7 @@ import VocabularyDashboard from './screens/VocabularyDashboard.jsx';
 import CLEntryScreen from './screens/ConversazioneLibera/EntryScreen.jsx';
 import CLDebriefScreen from './screens/ConversazioneLibera/DebriefScreen.jsx';
 import ItalianTutor from './components/ItalianTutor.jsx';
+import useAudioManager from './hooks/useAudioManager.js';
 import { getScenario } from './data/scenarios.js';
 import * as lucaData from './data/conversazioneLibera/luca.js';
 import * as giuliaData from './data/conversazioneLibera/giulia.js';
@@ -34,10 +36,18 @@ const CL_CHARACTERS = {
   giulia: giuliaData
 };
 
+const TITLE_SEEN_KEY = 'milano-mio-title-seen';
+
 export default function App() {
   const [authed, setAuthed] = useState(() => Boolean(getSavedPassword()));
   const [currentUser, setCurrentUser] = useState(() => loadCurrentUser());
   const [companion, setCompanion] = useState(() => loadCompanion());
+  // Title shown once per tab-session: reloading inside a session skips it,
+  // but a fresh tab (or closing + reopening) surfaces it again so the
+  // opening still feels like a deliberate moment.
+  const [titleSeen, setTitleSeen] = useState(() => {
+    try { return sessionStorage.getItem(TITLE_SEEN_KEY) === '1'; } catch { return false; }
+  });
 
   // Routing: if no user has been picked yet, show the user picker first.
   // Otherwise always land on the dog picker on page load — it offers a
@@ -50,6 +60,15 @@ export default function App() {
   // Full-screen fade overlay used to crossfade the map into the briefing
   // screen (so the handoff isn't an abrupt cut). MapScreen triggers it.
   const [fading, setFading] = useState(false);
+
+  // Music follows the route — title song on the picker screens, map bed
+  // on the map, scenario ambience during briefings, silence during the
+  // conversation itself. Config lives in src/audio/scenes.js.
+  //
+  // Enabled from the start so the first click on TitleScreen can unlock
+  // audio playback; the scene map handles silence for routes that don't
+  // have a music cue (e.g. conversation, vocabDashboard).
+  useAudioManager(route.screen, { enabled: true });
 
   const go = (screen, params = {}) => setRoute({ screen, params });
   // "Home" from anywhere in a session means back to the map — the dog
@@ -212,6 +231,15 @@ export default function App() {
     setAuthed(false);
     goMap();
   };
+
+  const handleTitleEnter = () => {
+    try { sessionStorage.setItem(TITLE_SEEN_KEY, '1'); } catch {}
+    setTitleSeen(true);
+  };
+
+  if (!titleSeen) {
+    return <TitleScreen onEnter={handleTitleEnter} />;
+  }
 
   if (!authed) {
     return <LoginScreen onUnlock={() => setAuthed(true)} />;
