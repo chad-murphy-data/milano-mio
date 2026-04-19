@@ -17,6 +17,7 @@ export const mapLocations = {
   viaDellaSpigas: { x: 61, y: 47, label: 'Via della Spiga' }, // right of Duomo
   metro:          { x: 30, y: 54, label: 'Metro' },           // "Metro Cadorna"
   sanSiro:        { x: 9,  y: 60, label: 'San Siro' },        // stadium, far left
+  sanSiroEntry:   { x: 16, y: 66, label: 'Biglietteria' },    // ticket booth just SE of stadium
   caffe:          { x: 62, y: 58, label: 'Caffè' },           // under umbrella
   hotel:          { x: 77, y: 57, label: 'Hotel' },           // "Boutique hotel"
   duomo:          { x: 48, y: 62, label: 'Duomo' },           // below cathedral

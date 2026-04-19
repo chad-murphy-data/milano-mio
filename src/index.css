@@ -38,6 +38,98 @@ p  { line-height: 1.55; color: var(--ink); }
 
 .subtitle { color: var(--muted); font-style: italic; margin: 0 0 32px; }
 
+/* Live conversation screen — realtime voice scenarios (San Siro nonna
+   at the moment). Intentionally simpler than the Claude+TTS conversation
+   screen: no puppet animation, no whisper hints, just backdrop + a
+   transcript that fills in as Gemini sends back input/output transcriptions. */
+.live-conversation-screen {
+  max-width: 780px;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.live-stage {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--panel);
+}
+.live-backdrop {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.live-status-chip {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(27, 23, 20, 0.75);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #888;
+}
+.live-dot.on {
+  background: var(--green);
+  animation: live-dot-pulse 1.5s ease-out infinite;
+}
+@keyframes live-dot-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(63, 125, 74, 0.6); }
+  70%  { box-shadow: 0 0 0 12px rgba(63, 125, 74, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(63, 125, 74, 0); }
+}
+.live-transcript {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  min-height: 120px;
+}
+.transcript-turn .transcript-who {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 2px;
+}
+.transcript-turn.user .transcript-text { color: var(--accent); }
+.transcript-turn.character .transcript-text { color: var(--ink); }
+.transcript-hint {
+  color: var(--muted);
+  font-style: italic;
+  font-size: 14px;
+}
+.live-controls {
+  display: flex;
+  justify-content: center;
+}
+.mic-toggle {
+  background: var(--green);
+  color: white;
+  border: none;
+  padding: 12px 28px;
+  font-size: 16px;
+  font-family: inherit;
+  border-radius: 999px;
+  cursor: pointer;
+}
+.mic-toggle.off { background: var(--amber); }
+.mic-toggle:disabled { opacity: 0.4; cursor: not-allowed; }
+
 /* Title — fills the browser window with the hero image at its natural
    aspect. `.title-inner` sizes itself to the image (via max-width/height
    on the <img>) so overlays can position as a percentage of the image,

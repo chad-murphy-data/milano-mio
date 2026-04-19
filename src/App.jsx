@@ -6,6 +6,7 @@ import HomeScreen from './screens/HomeScreen.jsx';
 import MapScreen from './screens/MapScreen.jsx';
 import BriefingScreen from './screens/BriefingScreen.jsx';
 import ConversationScreen from './screens/ConversationScreen.jsx';
+import LiveConversationScreen from './screens/LiveConversationScreen.jsx';
 import DebriefScreen from './screens/DebriefScreen.jsx';
 import VocabularyDashboard from './screens/VocabularyDashboard.jsx';
 import CLEntryScreen from './screens/ConversazioneLibera/EntryScreen.jsx';
@@ -297,11 +298,19 @@ export default function App() {
         />
       )}
 
-      {screen === 'conversation' && scenario && (
+      {screen === 'conversation' && scenario && scenario.mode !== 'live' && (
         <ConversationScreen
           scenario={scenario}
           difficulty={params.difficulty}
           retryWords={params.retryWords}
+          onEnd={handleStoryEnd}
+          onAuthLost={handleAuthLost}
+        />
+      )}
+
+      {screen === 'conversation' && scenario && scenario.mode === 'live' && (
+        <LiveConversationScreen
+          scenario={scenario}
           onEnd={handleStoryEnd}
           onAuthLost={handleAuthLost}
         />

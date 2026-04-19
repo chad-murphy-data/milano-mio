@@ -12,6 +12,7 @@ import * as viaDellaSpigas from './viaDellaSpigas.js';
 import * as bartolini from './bartolini.js';
 import * as casaMilan from './casaMilan.js';
 import * as sanSiro from './sanSiro.js';
+import * as sanSiroEntry from './sanSiroEntry.js';
 
 function register(mod, characterName, characterSaysKey, stageDirection) {
   return {
@@ -49,14 +50,16 @@ export const scenarios = {
   bartolini: register(bartolini, 'Alessandro', 'alessandro_says',
     '[Chad arrives at the entrance of Enrico Bartolini al MUDEC for their tasting menu reservation.]'),
   sanSiro: register(sanSiro, 'Vendor / Giuseppe', 'giuseppe_says',
-    '[Chad arrives outside San Siro stadium on match day. The crowd is buzzing.]')
+    '[Chad arrives outside San Siro stadium on match day. The crowd is buzzing.]'),
+  sanSiroEntry: register(sanSiroEntry, 'Nonna', 'nonna_says',
+    '[Chad arrives at the San Siro biglietteria booth, ticket in hand.]')
 };
 
 // Display order on the home screen.
 export const storyOrder = [
   'hotel', 'caffe', 'metro', 'duomo', 'mercato',
   'trattoria', 'navigli', 'viaDellaSpigas', 'casaMilan',
-  'bartolini', 'sanSiro'
+  'bartolini', 'sanSiroEntry', 'sanSiro'
 ];
 
 export function getScenario(id) {

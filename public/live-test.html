@@ -111,16 +111,22 @@
         <input id="pw" type="password" autocomplete="current-password" />
       </div>
 
+      <div style="margin-bottom: 16px;">
+        <label for="silence">Silence threshold (how long before the nonna decides you're done) — <span id="silenceVal">400</span> ms</label>
+        <input id="silence" type="range" min="200" max="900" step="50" value="400" style="width: 100%;" />
+        <p class="hint" style="margin: 4px 0 0;">Shorter = snappier on short phrases like "Ecco!". Longer = more forgiving when you pause mid-sentence. Change before Connect.</p>
+      </div>
+
       <div>
         <button id="connect">Connect</button>
         <button id="disconnect" class="secondary" disabled>Disconnect</button>
       </div>
 
       <div style="margin-top: 16px;">
-        <button id="talk" disabled>Hold to talk</button>
+        <button id="talk" disabled>🎙 Mic open — tap to mute</button>
       </div>
 
-      <p class="hint">Press and hold "Hold to talk" while speaking. Release to let the nonna reply.</p>
+      <p class="hint">Once connected, just speak naturally — the nonna's side uses Gemini's voice-activity detection to know when you've stopped. No push-to-talk needed.</p>
     </div>
 
     <h3>Activity log</h3>
@@ -135,6 +141,8 @@
 
 Il tuo compito: controllare il biglietto del tifoso, fare un commento breve sulla loro maglia o sulla partita, augurargli buona partita. In totale, al massimo 3 tuoi scambi; dopo il terzo, salutalo con "Buona partita, forza Milan!" e chiudi la conversazione.
 
+L'utente è un principiante di italiano. Quando rispondi, invitalo a usare frasi COMPLETE quando possibile (per esempio "Ecco il biglietto, grazie" invece di solo "Ecco"). Se ti dice una sola parola, rispondi comunque e gli dai un piccolo suggerimento naturale per una frase più completa la prossima volta.
+
 Non descrivere azioni né scrivere regie (niente "*controllo il biglietto*"). Solo dialogo parlato.`;
 
     const MODEL = 'gemini-3.1-flash-live-preview';
@@ -148,12 +156,20 @@ Non descrivere azioni né scrivere regie (niente "*controllo il biglietto*"). So
 
     pwInput.value = localStorage.getItem(PW_KEY) || '';
 
+    const silenceInput = document.getElementById('silence');
+    const silenceVal = document.getElementById('silenceVal');
+    silenceInput.addEventListener('input', () => { silenceVal.textContent = silenceInput.value; });
+
     let session = null;
     let audioContext = null;
     let micStream = null;
     let micSource = null;
     let scriptNode = null;
-    let talking = false;
+    // Mic is open by default once the session starts — streaming audio
+    // continuously lets Gemini's built-in VAD decide turn boundaries
+    // (natural pauses), which is far more conversational than gating
+    // on a push-to-talk button. The "talk" button now just mutes.
+    let micOn = true;
     let nextPlayTime = 0;
 
     function log(msg) {
@@ -232,17 +248,31 @@ Non descrivere azioni né scrivere regie (niente "*controllo il biglietto*"). So
         }
         if (msg.serverContent) {
           const sc = msg.serverContent;
-          const parts = sc.modelTurn?.parts || [];
-          let gotAudio = 0;
-          for (const p of parts) {
-            if (p.inlineData?.data && p.inlineData.mimeType?.startsWith('audio/')) {
-              playAudioChunk(p.inlineData.data);
-              gotAudio++;
-              audioChunkCount++;
+          // Dump the shape so we can see exactly what the server is sending.
+          const scKeys = Object.keys(sc).join(',');
+          log(`  serverContent keys: ${scKeys}`);
+          if (sc.modelTurn) {
+            const parts = sc.modelTurn.parts || [];
+            log(`  modelTurn.parts: ${parts.length} part(s)`);
+            let gotAudio = 0;
+            for (const p of parts) {
+              const pKeys = Object.keys(p).join(',');
+              log(`    part keys: ${pKeys}`);
+              if (p.inlineData?.data) {
+                log(`      inlineData mimeType: ${p.inlineData.mimeType}, size: ${p.inlineData.data.length} b64 chars`);
+                if (p.inlineData.mimeType?.startsWith('audio/')) {
+                  playAudioChunk(p.inlineData.data);
+                  gotAudio++;
+                  audioChunkCount++;
+                }
+              }
+              if (p.text) log(`🗣️ ${p.text}`);
             }
-            if (p.text) log(`🗣️ ${p.text}`);
+            if (gotAudio > 0) log(`🎵 +${gotAudio} audio chunk(s)  [total: ${audioChunkCount}]`);
           }
-          if (gotAudio > 0) log(`🎵 +${gotAudio} audio chunk(s)  [total: ${audioChunkCount}]`);
+          if (sc.inputTranscription) log(`📝 you said: ${sc.inputTranscription.text || JSON.stringify(sc.inputTranscription)}`);
+          if (sc.outputTranscription) log(`📝 nonna said: ${sc.outputTranscription.text || JSON.stringify(sc.outputTranscription)}`);
+          if (sc.generationComplete) log('— generation complete');
           if (sc.turnComplete) log('— turn complete');
           if (sc.interrupted) log('(interrupted)');
           return;
@@ -286,7 +316,7 @@ Non descrivere azioni né scrivere regie (niente "*controllo il biglietto*"). So
       micSource = audioContext.createMediaStreamSource(micStream);
       scriptNode = audioContext.createScriptProcessor(4096, 1, 1);
       scriptNode.onaudioprocess = (e) => {
-        if (!talking || !session) return;
+        if (!micOn || !session) return;
         const input = e.inputBuffer.getChannelData(0);
         const down = downsampleTo16k(input, audioContext.sampleRate);
         const pcm = floatToPcm16(down);
@@ -330,6 +360,9 @@ Non descrivere azioni né scrivere regie (niente "*controllo il biglietto*"). So
           httpOptions: { apiVersion: 'v1alpha' }
         });
 
+        const silenceMs = Number(silenceInput.value) || 400;
+        log(`Using silence threshold: ${silenceMs}ms`);
+
         session = await ai.live.connect({
           model: MODEL,
           config: {
@@ -338,6 +371,13 @@ Non descrivere azioni né scrivere regie (niente "*controllo il biglietto*"). So
             speechConfig: {
               voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Aoede' } },
               languageCode: 'it-IT'
+            },
+            realtimeInputConfig: {
+              automaticActivityDetection: {
+                // Default turn-end wait is ~500ms. Tuning this here so we
+                // can feel how snappy vs patient the nonna is.
+                silenceDurationMs: silenceMs
+              }
             }
           },
           callbacks: {
@@ -377,8 +417,8 @@ Non descrivere azioni né scrivere regie (niente "*controllo il biglietto*"). So
 
         if (micOk) {
           talkBtn.disabled = false;
-          setStatus('Ready — hold Talk and say "Ciao!" to begin', 'ready');
-          log('▶ Hold Talk and say something in Italian to start.');
+          setStatus('Live — just speak', 'ready');
+          log('▶ Mic is open. Say "Ciao!" or "Buonasera!" — nonna will respond when you pause.');
         } else {
           setStatus('Session up, mic not granted', 'error');
         }
@@ -394,35 +434,25 @@ Non descrivere azioni né scrivere regie (niente "*controllo il biglietto*"). So
       resetAll();
     });
 
-    function setTalking(on) {
-      talking = on;
-      talkBtn.classList.toggle('pressed', on);
-      if (!session) return;
-      try {
-        if (on) {
-          log('▶ speaking');
-          session.sendRealtimeInput({ activityStart: {} });
-        } else {
-          log('⏹ stopped');
-          session.sendRealtimeInput({ activityEnd: {} });
-        }
-      } catch (err) {
-        log(`activity send err: ${err.message}`);
-      }
+    function setMic(on) {
+      micOn = on;
+      talkBtn.classList.toggle('pressed', !on);
+      talkBtn.textContent = on ? '🎙 Mic open — tap to mute' : '🔇 Muted — tap to unmute';
+      log(on ? '🎙 mic on' : '🔇 mic muted');
     }
 
-    talkBtn.addEventListener('pointerdown', (e) => { e.preventDefault(); setTalking(true); });
-    talkBtn.addEventListener('pointerup', (e) => { e.preventDefault(); setTalking(false); });
-    talkBtn.addEventListener('pointercancel', () => { if (talking) setTalking(false); });
-    talkBtn.addEventListener('pointerleave', () => { if (talking) setTalking(false); });
+    talkBtn.addEventListener('click', () => {
+      setMic(!micOn);
+    });
 
     function resetAll() {
       try { stopMic(); } catch {}
       if (audioContext) { try { audioContext.close(); } catch {} audioContext = null; }
       if (session) { try { session.close(); } catch {} session = null; }
       nextPlayTime = 0;
-      talking = false;
+      micOn = true;
       talkBtn.classList.remove('pressed');
+      talkBtn.textContent = '🎙 Mic open — tap to mute';
       talkBtn.disabled = true;
       disconnectBtn.disabled = true;
       connectBtn.disabled = false;
