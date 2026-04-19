@@ -144,14 +144,18 @@ export default function useSpeechSynthesis({ characterName, lang = 'it-IT' } = {
       window.speechSynthesis.cancel();
     }
     fallbackActive.current = false;
-    // Also drop any queued items — the whole utterance is cancelled.
-    queueRef.current.forEach((item) => {
-      if (item?.abortController) {
-        try { item.abortController.abort(); } catch {}
-      }
-    });
     queueRef.current = [];
     pendingFetchesRef.current = 0;
+    // Drop the in-flight playback queue state. Previous version only
+    // cleared a vestigial `queueRef` and never reset the queue that the
+    // ordered playback actually uses (readyItemsRef / playingRef /
+    // seq counters) — which meant a barge-in could leave playingRef
+    // stuck true and starve the next turn's audio, or leave orphaned
+    // items that played out of sequence.
+    readyItemsRef.current.clear();
+    playingRef.current = false;
+    seqRef.current = 0;
+    nextPlaySeqRef.current = 0;
     setSpeaking(false);
   }, []);
 

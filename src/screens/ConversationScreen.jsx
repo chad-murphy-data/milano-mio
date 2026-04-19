@@ -80,8 +80,15 @@ export default function ConversationScreen({
     let pendingSentence = '';  // buffer of characters awaiting a sentence end
     let tagReached = false;    // once we see a `[`, everything after is tags
     const lineIdxRef = { current: null };
+    // Flipped to true if the safety-net timer filled the line with the
+    // full parsed response (e.g. TTS took longer than 1.5s to start).
+    // In that case, any sentence `onStart` that fires afterwards must
+    // skip its append, otherwise we'd glue each sentence onto the end of
+    // the already-complete text — producing the visible duplication we saw.
+    const safetyEngagedRef = { current: false };
 
     const showSentence = (sentenceText) => {
+      if (safetyEngagedRef.current) return;
       const clean = cleanFragmentForDisplay(sentenceText);
       if (!clean) return;
       if (lineIdxRef.current == null) {
@@ -162,11 +169,14 @@ export default function ConversationScreen({
 
     // Safety: if TTS never managed to call onStart (network down, no
     // Italian fallback voice, etc.), surface the line as text so the
-    // user isn't left staring at a silent puppet.
+    // user isn't left staring at a silent puppet. Mark safetyEngagedRef
+    // so any late-arriving sentence onStart skips its append — otherwise
+    // it'd glue a second copy of each sentence onto the end.
     if (lineIdxRef.current == null && parsed.spoken) {
       setTimeout(() => {
         if (turnSeqRef.current !== mySeq) return;
         if (lineIdxRef.current != null) return;
+        safetyEngagedRef.current = true;
         setLines((prev) => {
           lineIdxRef.current = prev.length;
           return [...prev, { role: 'character', text: cleanFragmentForDisplay(parsed.spoken), english: parsed.english || null }];
