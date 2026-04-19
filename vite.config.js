@@ -45,7 +45,7 @@ function anthropicProxy(env) {
             return json({ ok: true }, 200);
           }
 
-          const { system, messages, model, max_tokens } = parsed;
+          const { system, messages, model, max_tokens, stream } = parsed;
 
           const upstream = await fetch('https://api.anthropic.com/v1/messages', {
             method: 'POST',
@@ -58,9 +58,29 @@ function anthropicProxy(env) {
               model: model || 'claude-sonnet-4-6',
               max_tokens: max_tokens || 500,
               system,
-              messages
+              messages,
+              ...(stream ? { stream: true } : {})
             })
           });
+
+          // When streaming, forward Anthropic's SSE body directly. The
+          // reader/writer dance is needed because Node's http ServerResponse
+          // wants Buffer chunks, and fetch gives us a WHATWG ReadableStream.
+          if (stream) {
+            res.statusCode = upstream.status;
+            res.setHeader('Content-Type', 'text/event-stream');
+            res.setHeader('Cache-Control', 'no-cache');
+            res.setHeader('Connection', 'keep-alive');
+            const reader = upstream.body.getReader();
+            while (true) {
+              const { value, done } = await reader.read();
+              if (done) break;
+              res.write(Buffer.from(value));
+            }
+            res.end();
+            return;
+          }
+
           const text = await upstream.text();
           res.statusCode = upstream.status;
           res.setHeader('Content-Type', 'application/json');

@@ -95,6 +95,12 @@ export default function useSpeechSynthesis({ characterName, lang = 'it-IT' } = {
   const audioRef = useRef(null);
   const abortRef = useRef(null);
   const fallbackActive = useRef(false);
+  // Queue of blob URLs waiting to play in order. Populated by queueSpeak;
+  // drained by playNext(). A short pendingFetches counter keeps "speaking"
+  // true while the next sentence is still synthesizing, so the caller
+  // doesn't briefly think the turn ended mid-stream.
+  const queueRef = useRef([]);
+  const pendingFetchesRef = useRef(0);
 
   // Web Speech voices for fallback path.
   const [voices, setVoices] = useState([]);
@@ -125,6 +131,14 @@ export default function useSpeechSynthesis({ characterName, lang = 'it-IT' } = {
       window.speechSynthesis.cancel();
     }
     fallbackActive.current = false;
+    // Also drop any queued items — the whole utterance is cancelled.
+    queueRef.current.forEach((item) => {
+      if (item?.abortController) {
+        try { item.abortController.abort(); } catch {}
+      }
+    });
+    queueRef.current = [];
+    pendingFetchesRef.current = 0;
     setSpeaking(false);
   }, []);
 
@@ -218,9 +232,121 @@ export default function useSpeechSynthesis({ characterName, lang = 'it-IT' } = {
     }
   }, [characterName, cancel, speakFallback]);
 
+  // Serialized FIFO playback. Each queueSpeak call fires its TTS fetch
+  // in parallel (so synthesis overlaps), but playback is ordered by the
+  // call sequence — later sentences wait for earlier ones to finish,
+  // even if a later fetch completes first. This preserves the natural
+  // flow of "first sentence plays, second sentence starts, ..." while
+  // still minimizing dead air between sentences.
+  const seqRef = useRef(0);
+  const nextPlaySeqRef = useRef(0);
+  const readyItemsRef = useRef(new Map()); // seq -> { url, onStart, onEnd, text, rate }
+  const playingRef = useRef(false);
+
+  const tryPlayNext = useCallback(() => {
+    if (playingRef.current) return;
+    const next = readyItemsRef.current.get(nextPlaySeqRef.current);
+    if (!next) return;
+    readyItemsRef.current.delete(nextPlaySeqRef.current);
+    nextPlaySeqRef.current += 1;
+
+    playingRef.current = true;
+    const audio = new Audio(next.url);
+    audioRef.current = audio;
+    audio.onplay = () => {
+      setSpeaking(true);
+      try { next.onStart?.(); } catch {}
+    };
+    audio.onended = () => {
+      if (audioRef.current === audio) audioRef.current = null;
+      playingRef.current = false;
+      try { next.onEnd?.(); } catch {}
+      if (readyItemsRef.current.size === 0 && pendingFetchesRef.current === 0) {
+        setSpeaking(false);
+      }
+      tryPlayNext();
+    };
+    audio.onerror = () => {
+      if (audioRef.current === audio) audioRef.current = null;
+      playingRef.current = false;
+      tryPlayNext();
+    };
+    audio.play().catch((err) => {
+      console.warn('[TTS] queued audio.play() blocked:', err);
+      playingRef.current = false;
+      if (audioRef.current === audio) audioRef.current = null;
+      // Speech fallback keeps audio coming even if autoplay blocks us.
+      if (next.text) speakFallback(next.text, next.rate);
+      tryPlayNext();
+    });
+  }, [speakFallback]);
+
+  const queueSpeak = useCallback(async (rawText, { onStart, onEnd, rate = 1 } = {}) => {
+    if (!rawText) return;
+    const text = cleanForTTS(rawText);
+    if (!text) return;
+
+    const mySeq = seqRef.current++;
+    const voiceCast = getVoiceFor(characterName);
+    if (!voiceCast) {
+      // No mapped voice — fire onStart immediately and speak via Web Speech.
+      try { onStart?.(); } catch {}
+      speakFallback(text, rate);
+      try { onEnd?.(); } catch {}
+      return;
+    }
+    const { voice, styleHint } = voiceCast;
+    const key = cacheKey(voice, styleHint, text);
+    const cached = cacheGet(key);
+
+    if (cached) {
+      readyItemsRef.current.set(mySeq, { url: cached, onStart, onEnd, text, rate });
+      tryPlayNext();
+      return;
+    }
+
+    pendingFetchesRef.current += 1;
+    const abortController = new AbortController();
+    try {
+      const res = await fetch('/api/tts', {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          'x-app-password': getSavedPassword()
+        },
+        body: JSON.stringify({ text, voice, styleHint }),
+        signal: abortController.signal
+      });
+      if (!res.ok) throw new Error(`TTS ${res.status}`);
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      cacheSet(key, url);
+      readyItemsRef.current.set(mySeq, { url, onStart, onEnd, text, rate });
+      tryPlayNext();
+    } catch (err) {
+      if (err?.name === 'AbortError') return;
+      console.warn('[TTS] queued fetch failed, falling back:', err);
+      // Insert a "synthetic" ready item that uses the browser fallback when
+      // its turn comes — this keeps the ordering contract intact.
+      readyItemsRef.current.set(mySeq, {
+        url: null,
+        text,
+        rate,
+        onStart: () => {
+          try { onStart?.(); } catch {}
+          speakFallback(text, rate);
+        },
+        onEnd
+      });
+      tryPlayNext();
+    } finally {
+      pendingFetchesRef.current -= 1;
+    }
+  }, [characterName, speakFallback, tryPlayNext]);
+
   // Stop audio on unmount so navigating away from the conversation
   // immediately silences the character.
   useEffect(() => () => cancel(), [cancel]);
 
-  return { speaking, speak, cancel };
+  return { speaking, speak, queueSpeak, cancel };
 }

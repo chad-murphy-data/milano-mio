@@ -37,7 +37,7 @@ export default async (req) => {
     return json({ ok: true }, 200);
   }
 
-  const { system, messages, model, max_tokens } = payload || {};
+  const { system, messages, model, max_tokens, stream } = payload || {};
 
   try {
     const upstream = await fetch('https://api.anthropic.com/v1/messages', {
@@ -51,9 +51,25 @@ export default async (req) => {
         model: model || 'claude-sonnet-4-6',
         max_tokens: max_tokens || 500,
         system,
-        messages
+        messages,
+        ...(stream ? { stream: true } : {})
       })
     });
+
+    // When streaming, pipe Anthropic's SSE body straight through. The
+    // client parses the event stream incrementally so the first tokens
+    // reach the TTS pipeline before Claude has finished generating.
+    if (stream) {
+      return new Response(upstream.body, {
+        status: upstream.status,
+        headers: {
+          'content-type': 'text/event-stream',
+          'cache-control': 'no-cache',
+          connection: 'keep-alive'
+        }
+      });
+    }
+
     const text = await upstream.text();
     return new Response(text, {
       status: upstream.status,

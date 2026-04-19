@@ -99,3 +99,87 @@ export async function sendMessage(systemPrompt, messages, difficulty = 'normale'
 
 // Backward-compatible alias used by ConversationScreen.
 export const sendToMarco = sendMessage;
+
+// Prepended to every in-character system prompt. Stops the model from
+// pretending its real-life character has physical constraints (pulling a
+// shot, cooking, walking to get something) and silently waiting — which
+// would strand the user in a turn-taking simulator with no way forward.
+const AI_META_RULE = `AI CONVERSATION RULE — OVERRIDES ALL SCENARIO INSTRUCTIONS TO THE CONTRARY:
+Your turn always consists of Italian dialogue that advances the scene. You are a turn-taking AI running a language-learning simulator, not an actual barista, concierge, merchant, or host. There are no real pauses, no drinks actually being made, no rooms actually being unlocked, no packages actually being wrapped. If your character would naturally wait or pause in real life, skip over that pause and deliver the line that follows it in the very next turn. Never tell the user to wait, to hold on, to give you a moment — they cannot advance without your reply, so asking them to wait strands the conversation.
+
+---
+
+`;
+
+/**
+ * Streaming variant. Yields text chunks as Anthropic's SSE stream arrives,
+ * letting callers pipeline TTS (and progressive UI display) against a
+ * response that Claude is still generating. Ends by returning the full
+ * accumulated text so callers can still do post-stream parsing (debrief
+ * block, hint tag, english tag, etc.).
+ */
+export async function* sendMessageStream(systemPrompt, messages, difficulty = 'normale') {
+  const model = MODELS[difficulty] || MODELS.normale;
+  const pw = getSavedPassword();
+  const res = await fetch('/api/marco', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+      'x-app-password': pw
+    },
+    body: JSON.stringify({
+      model,
+      max_tokens: 500,
+      system: AI_META_RULE + systemPrompt,
+      messages: messages.map((m) => ({ role: m.role, content: m.content })),
+      stream: true
+    })
+  });
+
+  if (res.status === 401) {
+    clearPassword();
+    throw new AuthError('Wrong password.');
+  }
+  if (!res.ok) {
+    const txt = await res.text().catch(() => '');
+    throw new Error(`Connection failed (${res.status}). ${txt}`);
+  }
+
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = '';
+  let full = '';
+
+  while (true) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+
+    // SSE events are separated by blank lines; within an event, data lines
+    // are prefixed with `data: `. Anthropic sends JSON payloads per event.
+    const events = buffer.split('\n\n');
+    buffer = events.pop() || '';
+    for (const ev of events) {
+      for (const line of ev.split('\n')) {
+        if (!line.startsWith('data: ')) continue;
+        const data = line.slice(6);
+        if (!data || data === '[DONE]') continue;
+        try {
+          const parsed = JSON.parse(data);
+          if (
+            parsed.type === 'content_block_delta' &&
+            parsed.delta?.type === 'text_delta' &&
+            parsed.delta.text
+          ) {
+            full += parsed.delta.text;
+            yield parsed.delta.text;
+          }
+        } catch {
+          // Skip malformed event — Anthropic occasionally sends keep-alives.
+        }
+      }
+    }
+  }
+
+  return full;
+}

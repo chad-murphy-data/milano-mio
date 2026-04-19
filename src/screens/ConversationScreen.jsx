@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { sendMessage, AuthError } from '../utils/claudeApi.js';
+import { useEffect, useRef, useState, useCallback } from 'react';
+import { sendMessageStream, AuthError } from '../utils/claudeApi.js';
 import { parseResponse } from '../utils/debriefParser.js';
 import useSpeechRecognition from '../hooks/useSpeechRecognition.js';
 import useSpeechSynthesis from '../hooks/useSpeechSynthesis.js';
@@ -8,6 +8,19 @@ import MicButton from '../components/MicButton.jsx';
 import Transcript from '../components/Transcript.jsx';
 import WhisperPrompt from '../components/WhisperPrompt.jsx';
 import PuppetStage from '../components/PuppetStage.jsx';
+
+// Match a complete sentence terminated by one or more of . ! ? (plus trailing
+// whitespace or end-of-string). Used to pull finished sentences out of the
+// streaming Claude response so we can fire TTS for each as it completes,
+// instead of waiting for the whole reply.
+const SENTENCE_RE = /^(.+?[.!?]+)(\s+|$)/s;
+
+function cleanFragmentForDisplay(text) {
+  // The on-screen character line strips Claude's control blocks just like the
+  // TTS input does, so text that flashes into the transcript never contains
+  // `[HINT: ...]` or `[ENGLISH: ...]`.
+  return text.replace(/\[[^\]]*\]/g, '').replace(/\s+/g, ' ').trim();
+}
 
 export default function ConversationScreen({
   scenario,
@@ -41,33 +54,163 @@ export default function ConversationScreen({
   const whisperHints = scenario.whisperHints || [];
 
   const { supported, listening, interim, start, stop } = useSpeechRecognition();
-  const { speak, cancel: cancelSpeech, speaking } = useSpeechSynthesis({ characterName });
+  const { queueSpeak, cancel: cancelSpeech, speaking } = useSpeechSynthesis({ characterName });
   const [fallbackTalking, setFallbackTalking] = useState(false);
 
-  // Kick off conversation — character speaks first.
+  // Monotonically increasing counter so a new turn can invalidate any
+  // still-running stream/TTS work from the previous one. Incremented on
+  // every mic toggle, typed submit, and end-click — anywhere the user
+  // would barge in on the character.
+  const turnSeqRef = useRef(0);
+
+  // Stream a Claude response and fire TTS per sentence as soon as each
+  // sentence closes (on `.`, `!`, `?`). The UI does not add a character
+  // line until the first audio clip actually starts — so the puppet isn't
+  // "talking" to silence while we're still waiting for TTS to return.
+  //
+  // Returns the parsed response (spoken/debrief/hint/english/memory) so the
+  // caller can persist results and transition out of the turn.
+  const runStreamedTurn = useCallback(async (messagesForClaude, { onCancelled } = {}) => {
+    const mySeq = ++turnSeqRef.current;
+    const isCancelled = () => turnSeqRef.current !== mySeq || Boolean(onCancelled?.());
+    const stream = sendMessageStream(systemPrompt.current, messagesForClaude, difficulty);
+
+    let fullText = '';
+    let speakablePos = 0;      // how far into fullText we've pulled for TTS
+    let pendingSentence = '';  // buffer of characters awaiting a sentence end
+    let tagReached = false;    // once we see a `[`, everything after is tags
+    const lineIdxRef = { current: null };
+
+    const showSentence = (sentenceText) => {
+      const clean = cleanFragmentForDisplay(sentenceText);
+      if (!clean) return;
+      if (lineIdxRef.current == null) {
+        // First audible sentence — create the character line now, at the
+        // moment the puppet actually has something to say.
+        setLines((prev) => {
+          lineIdxRef.current = prev.length;
+          return [...prev, { role: 'character', text: clean, english: null }];
+        });
+      } else {
+        // Append to the existing line as subsequent sentences land.
+        setLines((prev) => {
+          const next = [...prev];
+          const idx = lineIdxRef.current;
+          if (idx != null && next[idx]) {
+            const prior = next[idx].text || '';
+            next[idx] = {
+              ...next[idx],
+              text: prior ? `${prior} ${clean}` : clean
+            };
+          }
+          return next;
+        });
+      }
+    };
+
+    const enqueueSentence = (sentenceText) => {
+      if (!sentenceText.trim()) return;
+      if (isCancelled()) return;
+      queueSpeak(sentenceText, {
+        onStart: () => {
+          if (isCancelled()) return;
+          showSentence(sentenceText);
+        }
+      });
+    };
+
+    try {
+      for await (const token of stream) {
+        if (isCancelled()) return null;
+        fullText += token;
+        if (tagReached) continue;
+
+        // Speakable region is everything up to the first `[` (tags live
+        // after dialogue). Anything past that boundary belongs to
+        // [HINT: ...], [ENGLISH: ...], or [DEBRIEF].
+        const tagIdx = fullText.indexOf('[');
+        const speakableEnd = tagIdx === -1 ? fullText.length : tagIdx;
+        if (speakableEnd > speakablePos) {
+          pendingSentence += fullText.slice(speakablePos, speakableEnd);
+          speakablePos = speakableEnd;
+        }
+
+        let match;
+        while ((match = pendingSentence.match(SENTENCE_RE))) {
+          enqueueSentence(match[1]);
+          pendingSentence = pendingSentence.slice(match[0].length);
+        }
+
+        if (tagIdx !== -1) {
+          // Flush any trailing partial sentence right before the tag block.
+          const tail = pendingSentence.trim();
+          if (tail) enqueueSentence(tail);
+          pendingSentence = '';
+          tagReached = true;
+        }
+      }
+    } catch (e) {
+      throw e;
+    }
+
+    // End of stream — flush anything we held back waiting for a boundary.
+    if (!tagReached && pendingSentence.trim()) {
+      enqueueSentence(pendingSentence);
+    }
+
+    const parsed = parseResponse(fullText);
+
+    // Safety: if TTS never managed to call onStart (network down, no
+    // Italian fallback voice, etc.), surface the line as text so the
+    // user isn't left staring at a silent puppet.
+    if (lineIdxRef.current == null && parsed.spoken) {
+      setTimeout(() => {
+        if (turnSeqRef.current !== mySeq) return;
+        if (lineIdxRef.current != null) return;
+        setLines((prev) => {
+          lineIdxRef.current = prev.length;
+          return [...prev, { role: 'character', text: cleanFragmentForDisplay(parsed.spoken), english: parsed.english || null }];
+        });
+      }, 1500);
+    }
+
+    return { fullText, parsed };
+  }, [difficulty, queueSpeak]);
+
+  // Kick off conversation — character speaks first. Streams Claude's
+  // response and fires TTS per sentence so the first audible word lands
+  // while Claude is still generating the rest.
   useEffect(() => {
     let cancelled = false;
     (async () => {
       setLoading(true);
       try {
         const stageDirection = scenario.stageDirection || '[The conversation begins.]';
-        const text = await sendMessage(
-          systemPrompt.current,
+        const result = await runStreamedTurn(
           [{ role: 'user', content: stageDirection }],
-          difficulty
+          { onCancelled: () => cancelled }
         );
-        if (cancelled) return;
-        const { spoken, hint, english } = parseResponse(text);
+        if (cancelled || !result) return;
+        const { fullText, parsed } = result;
+        const { hint, english } = parsed;
         setMessages([
           { role: 'user', content: stageDirection },
-          { role: 'assistant', content: text }
+          { role: 'assistant', content: fullText }
         ]);
-        setLines([{ role: 'character', text: spoken, english: english || null }]);
+        // If the character line was created by streaming, attach the english
+        // gloss now that the full response has parsed.
+        setLines((prev) => {
+          const next = [...prev];
+          const last = next[next.length - 1];
+          if (last?.role === 'character') {
+            next[next.length - 1] = { ...last, english: english || null };
+          }
+          return next;
+        });
         if (hint) {
           lastHint.current = `Try: "${hint}"`;
           setWhisperHint(`Try: "${hint}"`);
         }
-        speak(spoken);
       } catch (e) {
         if (e instanceof AuthError) {
           onAuthLost?.();
@@ -119,13 +262,22 @@ export default function ConversationScreen({
     };
   }, [loading, listening, lines, difficulty, isCL]);
 
+  // Barge-in: invalidate any in-flight streaming turn AND stop current
+  // audio. Both pieces are needed — cancelSpeech clears the playback
+  // queue, but without bumping the turn counter, a still-streaming
+  // Claude response would keep enqueueing fresh sentences on top.
+  const bargeIn = useCallback(() => {
+    turnSeqRef.current++;
+    cancelSpeech();
+  }, [cancelSpeech]);
+
   const handleMicToggle = async () => {
     if (loading) return;
     if (listening) {
       stop();
     } else {
       setWhisperHint(null);
-      cancelSpeech();
+      bargeIn();
       micPromise.current = start();
       const transcript = await micPromise.current;
       if (transcript && transcript.trim()) {
@@ -139,7 +291,7 @@ export default function ConversationScreen({
     const text = typedInput.trim();
     if (!text || loading) return;
     setTypedInput('');
-    cancelSpeech();
+    bargeIn();
     await submitUserText(text);
   };
 
@@ -151,8 +303,10 @@ export default function ConversationScreen({
     setLoading(true);
     setError(null);
     try {
-      const text = await sendMessage(systemPrompt.current, nextMessages, difficulty);
-      let { spoken, debrief, characterMemory, hint, english } = parseResponse(text);
+      const result = await runStreamedTurn(nextMessages);
+      if (!result) return;
+      const { fullText, parsed } = result;
+      let { spoken, debrief, characterMemory, hint, english } = parsed;
       // If the user asked to end but the character didn't cooperate by emitting
       // a debrief, fabricate one so we exit after their farewell line plays.
       if (endingRef.current && !debrief) {
@@ -163,14 +317,19 @@ export default function ConversationScreen({
           transitionTo: null
         };
       }
-      setMessages([...nextMessages, { role: 'assistant', content: text }]);
+      setMessages([...nextMessages, { role: 'assistant', content: fullText }]);
       if (hint) {
         lastHint.current = `Try: "${hint}"`;
       }
-      if (spoken) {
-        setLines((prev) => [...prev, { role: 'character', text: spoken, english: english || null }]);
-        speak(spoken);
-      }
+      // Attach the English gloss to the character line the stream created.
+      setLines((prev) => {
+        const next = [...prev];
+        const last = next[next.length - 1];
+        if (last?.role === 'character') {
+          next[next.length - 1] = { ...last, english: english || null };
+        }
+        return next;
+      });
       if (debrief) {
         setTimeout(() => {
           const marked = collectMarkedWords();
@@ -218,7 +377,7 @@ export default function ConversationScreen({
   };
 
   const hardExit = () => {
-    cancelSpeech();
+    bargeIn();
     const marked = collectMarkedWords();
     onEnd({
       debrief: {
