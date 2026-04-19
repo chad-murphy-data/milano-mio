@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gemini Live Spike — Milano Mio</title>
+  <style>
+    :root {
+      --bg: #f7f3ee;
+      --ink: #1b1714;
+      --muted: #6b6258;
+      --accent: #2a5a8c;
+      --accent-soft: #d8e5f0;
+      --panel: #fffaf4;
+      --border: #d9cfc3;
+      --good: #3f7d4a;
+      --bad: #b5761f;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: Georgia, 'Cambria', serif;
+      background: var(--bg);
+      color: var(--ink);
+      margin: 0;
+      padding: 32px 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 640px; margin: 0 auto; }
+    h1 { margin-top: 0; }
+    .subtitle { color: var(--muted); font-style: italic; }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    label { display: block; font-size: 13px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+    input[type="password"] {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 16px;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: white;
+    }
+    button {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      font-size: 16px;
+      font-family: inherit;
+      font-weight: 500;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-right: 8px;
+      margin-bottom: 8px;
+    }
+    button:disabled { opacity: 0.4; cursor: not-allowed; }
+    button.secondary { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+    button#talk {
+      background: var(--good);
+      font-size: 20px;
+      padding: 20px 32px;
+      width: 100%;
+      user-select: none;
+      touch-action: manipulation;
+    }
+    button#talk.pressed { background: var(--bad); }
+    .status {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .status.ready { background: #d4ecd6; color: var(--good); }
+    .status.error { background: #f5d6b5; color: var(--bad); }
+    #log {
+      background: #1b1714;
+      color: #c8d4dd;
+      padding: 16px;
+      border-radius: 8px;
+      font-family: ui-monospace, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.5;
+      max-height: 400px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .hint { color: var(--muted); font-size: 14px; margin-top: 12px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Gemini Live — Spike</h1>
+    <p class="subtitle">Realtime voice test. Hold the button, speak Italian; the ticket-taker nonna replies.</p>
+
+    <div class="panel">
+      <div style="margin-bottom: 12px;">
+        <span id="status" class="status">Idle</span>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <label for="pw">App password</label>
+        <input id="pw" type="password" autocomplete="current-password" />
+      </div>
+
+      <div>
+        <button id="connect">Connect</button>
+        <button id="disconnect" class="secondary" disabled>Disconnect</button>
+      </div>
+
+      <div style="margin-top: 16px;">
+        <button id="talk" disabled>Hold to talk</button>
+      </div>
+
+      <p class="hint">Press and hold "Hold to talk" while speaking. Release to let the nonna reply.</p>
+    </div>
+
+    <h3>Activity log</h3>
+    <div id="log"></div>
+  </div>
+
+  <script type="module">
+    import { GoogleGenAI, Modality } from 'https://esm.sh/@google/genai@latest';
+
+    const PW_KEY = 'milano-mio-pw';
+    const SYSTEM_INSTRUCTION = `Sei una nonna italiana, biglietteria fuori dallo stadio San Siro a Milano, giorno di partita. Parla SOLO italiano. Voce calda ma sbrigativa, affettuosa. Risposte molto brevi — una frase, massimo due.
+
+Il tuo compito: controllare il biglietto del tifoso, fare un commento breve sulla loro maglia o sulla partita, augurargli buona partita. In totale, al massimo 3 tuoi scambi; dopo il terzo, salutalo con "Buona partita, forza Milan!" e chiudi la conversazione.
+
+Non descrivere azioni né scrivere regie (niente "*controllo il biglietto*"). Solo dialogo parlato.`;
+
+    const MODEL = 'gemini-3.1-flash-live-preview';
+
+    const statusEl = document.getElementById('status');
+    const logEl = document.getElementById('log');
+    const pwInput = document.getElementById('pw');
+    const connectBtn = document.getElementById('connect');
+    const disconnectBtn = document.getElementById('disconnect');
+    const talkBtn = document.getElementById('talk');
+
+    pwInput.value = localStorage.getItem(PW_KEY) || '';
+
+    let session = null;
+    let audioContext = null;
+    let micStream = null;
+    let micSource = null;
+    let scriptNode = null;
+    let talking = false;
+    let nextPlayTime = 0;
+
+    function log(msg) {
+      const t = new Date().toLocaleTimeString('en-US', { hour12: false });
+      logEl.textContent += `[${t}] ${msg}\n`;
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    function setStatus(text, cls = '') {
+      statusEl.textContent = text;
+      statusEl.className = `status ${cls}`.trim();
+    }
+
+    function bytesToBase64(bytes) {
+      let binary = '';
+      const chunk = 0x8000;
+      for (let i = 0; i < bytes.length; i += chunk) {
+        binary += String.fromCharCode.apply(null, bytes.subarray(i, Math.min(i + chunk, bytes.length)));
+      }
+      return btoa(binary);
+    }
+    function base64ToBytes(b64) {
+      const bin = atob(b64);
+      const out = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+      return out;
+    }
+
+    function floatToPcm16(floats) {
+      const pcm = new Int16Array(floats.length);
+      for (let i = 0; i < floats.length; i++) {
+        const s = Math.max(-1, Math.min(1, floats[i]));
+        pcm[i] = s < 0 ? s * 0x8000 : s * 0x7fff;
+      }
+      return pcm;
+    }
+
+    function downsampleTo16k(input, srcRate) {
+      if (srcRate === 16000) return input;
+      const ratio = srcRate / 16000;
+      const outLen = Math.floor(input.length / ratio);
+      const out = new Float32Array(outLen);
+      for (let i = 0; i < outLen; i++) {
+        const startIdx = i * ratio;
+        const endIdx = Math.min(input.length, Math.ceil((i + 1) * ratio));
+        let sum = 0, count = 0;
+        for (let j = Math.floor(startIdx); j < endIdx; j++) {
+          sum += input[j]; count++;
+        }
+        out[i] = count > 0 ? sum / count : 0;
+      }
+      return out;
+    }
+
+    async function getToken(pw) {
+      const res = await fetch('/api/live-token', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json', 'x-app-password': pw }
+      });
+      const text = await res.text();
+      if (!res.ok) throw new Error(`Token fetch ${res.status}: ${text}`);
+      const data = JSON.parse(text);
+      if (!data.token) throw new Error('Token missing from response');
+      return data.token;
+    }
+
+    let audioChunkCount = 0;
+    function handleServerMessage(msg) {
+      try {
+        // Debug: always log the top-level keys so we can see what the SDK delivers
+        const keys = msg ? Object.keys(msg).join(',') : '(null)';
+        log(`↓ msg keys: ${keys}`);
+        if (msg.setupComplete !== undefined) {
+          log('✓ Setup complete');
+          return;
+        }
+        if (msg.serverContent) {
+          const sc = msg.serverContent;
+          const parts = sc.modelTurn?.parts || [];
+          let gotAudio = 0;
+          for (const p of parts) {
+            if (p.inlineData?.data && p.inlineData.mimeType?.startsWith('audio/')) {
+              playAudioChunk(p.inlineData.data);
+              gotAudio++;
+              audioChunkCount++;
+            }
+            if (p.text) log(`🗣️ ${p.text}`);
+          }
+          if (gotAudio > 0) log(`🎵 +${gotAudio} audio chunk(s)  [total: ${audioChunkCount}]`);
+          if (sc.turnComplete) log('— turn complete');
+          if (sc.interrupted) log('(interrupted)');
+          return;
+        }
+        if (msg.goAway) {
+          log(`⚠ goAway in ${msg.goAway.timeLeft || '?'}`);
+          return;
+        }
+        log(`Server: ${JSON.stringify(msg).slice(0, 300)}`);
+      } catch (e) {
+        log(`handleMessage error: ${e.message}`);
+      }
+    }
+
+    function playAudioChunk(base64) {
+      if (!audioContext) return;
+      try {
+        const bytes = base64ToBytes(base64);
+        const pcm16 = new Int16Array(bytes.buffer, bytes.byteOffset, bytes.byteLength / 2);
+        const float32 = new Float32Array(pcm16.length);
+        for (let i = 0; i < pcm16.length; i++) float32[i] = pcm16[i] / 0x8000;
+        const audioBuffer = audioContext.createBuffer(1, float32.length, 24000);
+        audioBuffer.getChannelData(0).set(float32);
+        const src = audioContext.createBufferSource();
+        src.buffer = audioBuffer;
+        src.connect(audioContext.destination);
+        const start = Math.max(audioContext.currentTime, nextPlayTime);
+        src.start(start);
+        nextPlayTime = start + audioBuffer.duration;
+      } catch (e) {
+        log(`Playback error: ${e.message}`);
+      }
+    }
+
+    async function startMic() {
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioContext.state === 'suspended') await audioContext.resume();
+      micStream = await navigator.mediaDevices.getUserMedia({
+        audio: { channelCount: 1, noiseSuppression: true, echoCancellation: true }
+      });
+      micSource = audioContext.createMediaStreamSource(micStream);
+      scriptNode = audioContext.createScriptProcessor(4096, 1, 1);
+      scriptNode.onaudioprocess = (e) => {
+        if (!talking || !session) return;
+        const input = e.inputBuffer.getChannelData(0);
+        const down = downsampleTo16k(input, audioContext.sampleRate);
+        const pcm = floatToPcm16(down);
+        const base64 = bytesToBase64(new Uint8Array(pcm.buffer, pcm.byteOffset, pcm.byteLength));
+        try {
+          session.sendRealtimeInput({
+            audio: { data: base64, mimeType: 'audio/pcm;rate=16000' }
+          });
+        } catch (err) {
+          log(`send error: ${err.message}`);
+        }
+      };
+      micSource.connect(scriptNode);
+      const sink = audioContext.createGain();
+      sink.gain.value = 0;
+      scriptNode.connect(sink);
+      sink.connect(audioContext.destination);
+    }
+
+    function stopMic() {
+      if (scriptNode) { try { scriptNode.disconnect(); } catch {} scriptNode = null; }
+      if (micSource) { try { micSource.disconnect(); } catch {} micSource = null; }
+      if (micStream) { try { micStream.getTracks().forEach((t) => t.stop()); } catch {} micStream = null; }
+    }
+
+    connectBtn.addEventListener('click', async () => {
+      const pw = pwInput.value.trim();
+      if (!pw) { log('Enter password first'); return; }
+      localStorage.setItem(PW_KEY, pw);
+      connectBtn.disabled = true;
+      setStatus('Requesting token...');
+
+      try {
+        const token = await getToken(pw);
+        log('Token acquired');
+        setStatus('Connecting to Live...');
+
+        // SDK handles the auth quirks (v1alpha, key param, etc.)
+        const ai = new GoogleGenAI({
+          apiKey: token,
+          httpOptions: { apiVersion: 'v1alpha' }
+        });
+
+        session = await ai.live.connect({
+          model: MODEL,
+          config: {
+            responseModalities: [Modality.AUDIO],
+            systemInstruction: SYSTEM_INSTRUCTION,
+            speechConfig: {
+              voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Aoede' } },
+              languageCode: 'it-IT'
+            }
+          },
+          callbacks: {
+            onopen: () => log('✓ Live session opened'),
+            onmessage: handleServerMessage,
+            onerror: (err) => {
+              log(`Live error: ${err?.message || JSON.stringify(err).slice(0, 200)}`);
+              setStatus('Error', 'error');
+            },
+            onclose: (e) => {
+              log(`Live closed — code ${e?.code}, reason "${e?.reason || '(none)'}"`);
+              setStatus('Disconnected');
+              resetAll();
+            }
+          }
+        });
+
+        // Session is open before mic — that way if mic permission is
+        // denied, the session stays available and we can still verify
+        // the server side (it'll just have nothing to listen to).
+        disconnectBtn.disabled = false;
+
+        let micOk = true;
+        try {
+          await startMic();
+          log('Mic started');
+        } catch (micErr) {
+          micOk = false;
+          log(`⚠ Mic access denied: ${micErr?.message || micErr}.`);
+          log('  Grant microphone permission in your browser, then click Disconnect + Connect again.');
+        }
+
+        // Note: with responseModalities: [AUDIO], the server won't respond
+        // to a text-only client turn — it waits for user audio input.
+        // So the nonna is silent until you hold the Talk button and speak.
+        // Start with "Ciao!" or "Buongiorno!" to open the conversation.
+
+        if (micOk) {
+          talkBtn.disabled = false;
+          setStatus('Ready — hold Talk and say "Ciao!" to begin', 'ready');
+          log('▶ Hold Talk and say something in Italian to start.');
+        } else {
+          setStatus('Session up, mic not granted', 'error');
+        }
+      } catch (e) {
+        log(`Connect failed: ${e?.message || JSON.stringify(e).slice(0, 200)}`);
+        setStatus('Error', 'error');
+        connectBtn.disabled = false;
+      }
+    });
+
+    disconnectBtn.addEventListener('click', () => {
+      if (session) { try { session.close(); } catch {} }
+      resetAll();
+    });
+
+    function setTalking(on) {
+      talking = on;
+      talkBtn.classList.toggle('pressed', on);
+      if (!session) return;
+      try {
+        if (on) {
+          log('▶ speaking');
+          session.sendRealtimeInput({ activityStart: {} });
+        } else {
+          log('⏹ stopped');
+          session.sendRealtimeInput({ activityEnd: {} });
+        }
+      } catch (err) {
+        log(`activity send err: ${err.message}`);
+      }
+    }
+
+    talkBtn.addEventListener('pointerdown', (e) => { e.preventDefault(); setTalking(true); });
+    talkBtn.addEventListener('pointerup', (e) => { e.preventDefault(); setTalking(false); });
+    talkBtn.addEventListener('pointercancel', () => { if (talking) setTalking(false); });
+    talkBtn.addEventListener('pointerleave', () => { if (talking) setTalking(false); });
+
+    function resetAll() {
+      try { stopMic(); } catch {}
+      if (audioContext) { try { audioContext.close(); } catch {} audioContext = null; }
+      if (session) { try { session.close(); } catch {} session = null; }
+      nextPlayTime = 0;
+      talking = false;
+      talkBtn.classList.remove('pressed');
+      talkBtn.disabled = true;
+      disconnectBtn.disabled = true;
+      connectBtn.disabled = false;
+    }
+
+    log('Live spike page ready. Enter password and press Connect.');
+    log('(Using @google/genai SDK via esm.sh — first load fetches ~200KB)');
+  </script>
+</body>
+</html>

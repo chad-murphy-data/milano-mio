@@ -13,3 +13,8 @@
   from = "/api/tts"
   to = "/.netlify/functions/tts"
   status = 200
+
+[[redirects]]
+  from = "/api/live-token"
+  to = "/.netlify/functions/live-token"
+  status = 200

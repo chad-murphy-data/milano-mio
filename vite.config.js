@@ -220,10 +220,65 @@ function ttsProxy(env) {
   };
 }
 
+// Dev-only middleware: mints a short-lived Gemini Live ephemeral token
+// so the browser can open a WSS directly without seeing GEMINI_API_KEY.
+function liveTokenProxy(env) {
+  return {
+    name: 'live-token-proxy',
+    configureServer(server) {
+      server.middlewares.use('/api/live-token', async (req, res) => {
+        const json = (obj, status = 200) => {
+          res.statusCode = status;
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify(obj));
+        };
+
+        if (req.method !== 'POST') {
+          res.statusCode = 405;
+          res.end('Method Not Allowed');
+          return;
+        }
+
+        const apiKey = env.GEMINI_API_KEY;
+        const appPassword = env.APP_PASSWORD;
+        if (!apiKey) return json({ error: 'Missing GEMINI_API_KEY in .env' }, 500);
+        if (!appPassword) return json({ error: 'Missing APP_PASSWORD in .env' }, 500);
+
+        const provided = req.headers['x-app-password'] || '';
+        if (!safeEqual(String(provided), appPassword)) {
+          return json({ error: 'Unauthorized' }, 401);
+        }
+
+        const expireTime = new Date(Date.now() + 30 * 60 * 1000).toISOString();
+        const newSessionExpireTime = new Date(Date.now() + 2 * 60 * 1000).toISOString();
+
+        try {
+          const upstream = await fetch(
+            `https://generativelanguage.googleapis.com/v1alpha/auth_tokens?key=${encodeURIComponent(apiKey)}`,
+            {
+              method: 'POST',
+              headers: { 'content-type': 'application/json' },
+              body: JSON.stringify({ uses: 1, expireTime, newSessionExpireTime })
+            }
+          );
+          if (!upstream.ok) {
+            const errText = await upstream.text();
+            return json({ error: errText || 'auth_tokens upstream error' }, upstream.status);
+          }
+          const data = await upstream.json();
+          json({ token: data.name || data.token || '' }, 200);
+        } catch (err) {
+          json({ error: err?.message || 'proxy error' }, 500);
+        }
+      });
+    }
+  };
+}
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   return {
-    plugins: [react(), anthropicProxy(env), ttsProxy(env)],
+    plugins: [react(), anthropicProxy(env), ttsProxy(env), liveTokenProxy(env)],
     server: { port: 5173 }
   };
 });
