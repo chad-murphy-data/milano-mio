@@ -62,29 +62,42 @@ function cleanForTTS(text) {
     .trim();
 }
 
-// Prime the audio layer on the first user gesture anywhere on the page.
-// Browsers block new Audio().play() until there's an active gesture; the
+// Prime the audio layer on each user gesture until we confirm a successful
+// play(). Browsers block new Audio().play() without an active gesture; the
 // briefing → conversation handoff takes ~2s (Claude call + TTS fetch)
 // which can push the original Andiamo click out of the "recent gesture"
 // window. Playing a silent blip during any earlier click banks the
 // permission so the first TTS clip isn't blocked.
+//
+// Previous version set the "primed" flag before the Audio.play() promise
+// resolved — if that first attempt rejected, we'd still remove the
+// listener and silently leave the audio layer locked, so the user's
+// first TTS call would get punted to the Web Speech fallback (the
+// "robotic woman" voice). Now we only set primed on a verified success,
+// and re-try on every subsequent gesture until we succeed.
 let audioLayerPrimed = false;
 function primeAudioLayer() {
   if (audioLayerPrimed) return;
-  audioLayerPrimed = true;
   try {
     const silent = new Audio(
       'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA='
     );
     silent.volume = 0;
-    silent.play().catch(() => {});
+    const p = silent.play();
+    if (p && typeof p.then === 'function') {
+      p.then(() => {
+        audioLayerPrimed = true;
+      }).catch(() => {
+        // Leave primed=false so the next gesture tries again.
+      });
+    } else {
+      audioLayerPrimed = true;
+    }
   } catch {}
 }
 if (typeof window !== 'undefined') {
   const onGesture = () => {
     primeAudioLayer();
-    window.removeEventListener('pointerdown', onGesture);
-    window.removeEventListener('keydown', onGesture);
   };
   window.addEventListener('pointerdown', onGesture);
   window.addEventListener('keydown', onGesture);
@@ -249,6 +262,18 @@ export default function useSpeechSynthesis({ characterName, lang = 'it-IT' } = {
     if (!next) return;
     readyItemsRef.current.delete(nextPlaySeqRef.current);
     nextPlaySeqRef.current += 1;
+
+    // Synthetic fallback item — the fetch failed, so we skip the audio
+    // element entirely and route straight to browser speech. Still fires
+    // onStart so the UI surfaces the character line and the puppet
+    // animates in sync with the fallback voice.
+    if (!next.url) {
+      try { next.onStart?.(); } catch {}
+      if (next.text) speakFallback(next.text, next.rate);
+      try { next.onEnd?.(); } catch {}
+      tryPlayNext();
+      return;
+    }
 
     playingRef.current = true;
     const audio = new Audio(next.url);

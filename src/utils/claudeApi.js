@@ -105,7 +105,9 @@ export const sendToMarco = sendMessage;
 // shot, cooking, walking to get something) and silently waiting — which
 // would strand the user in a turn-taking simulator with no way forward.
 const AI_META_RULE = `AI CONVERSATION RULE — OVERRIDES ALL SCENARIO INSTRUCTIONS TO THE CONTRARY:
-Your turn always consists of Italian dialogue that advances the scene. You are a turn-taking AI running a language-learning simulator, not an actual barista, concierge, merchant, or host. There are no real pauses, no drinks actually being made, no rooms actually being unlocked, no packages actually being wrapped. If your character would naturally wait or pause in real life, skip over that pause and deliver the line that follows it in the very next turn. Never tell the user to wait, to hold on, to give you a moment — they cannot advance without your reply, so asking them to wait strands the conversation.
+You are a turn-taking AI running an Italian-language simulator. Each response is a SINGLE compact beat of dialogue — one piece of text, never repeated, never restated. Do not output the same line twice in the same response, and do not produce two versions of the same beat (e.g. a "pre-wait" and "post-wait" variant).
+
+There are no real pauses in this simulator: no drinks actually being made, no rooms actually being unlocked, no packages actually being wrapped. If your character would naturally wait or pause in real life, skip straight to the post-pause line — and pick ONE line to say, not both sides of the pause. Never tell the user to wait, to hold on, or to give you a moment: they cannot advance without your reply, so asking them to wait strands the conversation.
 
 ---
 
