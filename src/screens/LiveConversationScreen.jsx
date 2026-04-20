@@ -440,7 +440,7 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
               </button>
             </div>
 
-            <div className="live-stage">
+            <div className={`live-stage live-stage-${scenario.id}`}>
               {assets.backdrop && (
                 <img
                   src={assets.backdrop}

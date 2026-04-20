@@ -357,18 +357,18 @@ export default function useGeminiLive({
     setMicOn((prev) => !prev);
   }, []);
 
-  // Send a typed message into the Live session. Mirrors what the test page
-  // used to kick off the opening greeting, but exposed for the conversation
-  // screen's typed-input form.
+  // Send a typed message into the Live session. Per the Gemini Live SDK
+  // docs (ai.google.dev/gemini-api/docs/live-api/get-started-sdk), text
+  // input must use `sendRealtimeInput({ text })` — not `sendClientContent`.
+  // The latter appends to history but doesn't reliably trigger an audio
+  // response in an audio-output session, so typed messages were sent but
+  // the model never replied (verified broken for both Aldo and Marco).
   const sendText = useCallback((text) => {
     if (!text?.trim()) return;
     const s = sessionRef.current;
     if (!s) return;
     try {
-      s.sendClientContent({
-        turns: [{ role: 'user', parts: [{ text: text.trim() }] }],
-        turnComplete: true
-      });
+      s.sendRealtimeInput({ text: text.trim() });
       // Reflect the typed text immediately in the transcript, since
       // audio-input transcription won't fire for it.
       setLines((prev) => [...prev, { role: 'user', text: text.trim() }]);

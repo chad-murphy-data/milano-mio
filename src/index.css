@@ -116,9 +116,26 @@ p  { line-height: 1.55; color: var(--ink); }
    gets on narrow viewports. */
 .live-puppet-caffeLive {
   right: 6%;
-  bottom: -8%;
-  height: 130%;
+  bottom: 0;
+  height: 105%;
   width: auto;
+}
+
+/* The caffè backdrop is panoramic (3:1) and far shorter than San Siro's
+   portrait-ish backdrop. Force the stage to a less extreme aspect so
+   Marco has room to stand without overflowing the top, and switch the
+   backdrop to object-fit cover so it fills the taller stage (cropping
+   the far edges of the bar — most of the action is centered anyway). */
+.live-stage-caffeLive {
+  aspect-ratio: 5 / 3;
+}
+.live-stage-caffeLive .live-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 .live-dot {
   width: 8px;
