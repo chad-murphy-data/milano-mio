@@ -11,6 +11,8 @@ import * as mercatoLive from './mercatoLive.js';
 import * as trattoriaLive from './trattoriaLive.js';
 import * as navigliLive from './navigliLive.js';
 import * as casaMilanLive from './casaMilanLive.js';
+import * as sanSiroVendorLive from './sanSiroVendorLive.js';
+import * as sanSiroMatchLive from './sanSiroMatchLive.js';
 import * as duomo from './duomo.js';
 import * as metro from './metro.js';
 import * as mercato from './mercato.js';
@@ -75,6 +77,10 @@ export const scenarios = {
     '[Chad arrives at the entrance of Enrico Bartolini al MUDEC for their tasting menu reservation.]'),
   sanSiro: register(sanSiro, 'Vendor / Giuseppe', 'giuseppe_says',
     '[Chad arrives outside San Siro stadium on match day. The crowd is buzzing.]'),
+  sanSiroVendorLive: register(sanSiroVendorLive, 'Vendor', 'vendor_says',
+    '[Chad approaches a scarf-and-program vendor outside San Siro on match day, half an hour before kickoff.]'),
+  sanSiroMatchLive: register(sanSiroMatchLive, 'Giuseppe', 'giuseppe_says',
+    '[Chad has just sat down in the San Siro stands. Giuseppe drops into the seat next to him as the match begins.]'),
   sanSiroEntry: register(sanSiroEntry, 'Nonno Aldo', 'aldo_says',
     '[Chad arrives at the San Siro biglietteria booth, ticket in hand.]')
 };
@@ -83,7 +89,7 @@ export const scenarios = {
 export const storyOrder = [
   'hotel', 'hotelLive', 'caffe', 'caffeLive', 'metro', 'metroLive', 'duomo', 'duomoLive', 'mercato', 'mercatoLive',
   'trattoria', 'trattoriaLive', 'navigli', 'navigliLive', 'viaDellaSpigas', 'casaMilan', 'casaMilanLive',
-  'bartolini', 'sanSiroEntry', 'sanSiro'
+  'bartolini', 'sanSiroEntry', 'sanSiro', 'sanSiroVendorLive', 'sanSiroMatchLive'
 ];
 
 export function getScenario(id) {

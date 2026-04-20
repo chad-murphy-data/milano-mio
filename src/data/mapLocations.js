@@ -20,6 +20,8 @@ export const mapLocations = {
   metroLive:      { x: 34, y: 50, label: 'Metro (Live)' },    // temporary 2nd pin during Live rollout
   sanSiro:        { x: 9,  y: 60, label: 'San Siro' },        // stadium, far left
   sanSiroEntry:   { x: 16, y: 66, label: 'Biglietteria' },    // ticket booth just SE of stadium
+  sanSiroVendorLive: { x: 5,  y: 65, label: 'Sciarpe (Live)' }, // vendor stall just outside the stadium
+  sanSiroMatchLive:  { x: 11, y: 55, label: 'Partita (Live)' }, // inside the stadium, slightly upper
   caffe:          { x: 62, y: 58, label: 'Caffè' },           // under umbrella
   caffeLive:      { x: 67, y: 54, label: 'Caffè (Live)' },    // temporary 2nd pin during Live rollout
   hotel:          { x: 77, y: 57, label: 'Hotel' },           // "Boutique hotel"
