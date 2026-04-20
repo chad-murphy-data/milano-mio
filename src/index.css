@@ -38,17 +38,12 @@ p  { line-height: 1.55; color: var(--ink); }
 
 .subtitle { color: var(--muted); font-style: italic; margin: 0 0 32px; }
 
-/* Live conversation screen — realtime voice scenarios (San Siro nonna
-   at the moment). Intentionally simpler than the Claude+TTS conversation
-   screen: no puppet animation, no whisper hints, just backdrop + a
-   transcript that fills in as Gemini sends back input/output transcriptions. */
-.live-conversation-screen {
-  max-width: 780px;
-  padding: 24px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
+/* Live conversation screen — realtime voice scenarios. Inherits the
+   two-column layout (conversation-main + briefing-panel) from
+   .conversation-screen so the sidebar, transcript, input row, and end
+   button all render consistently with Claude scenarios. Only the
+   pieces below are Live-specific: backdrop stage, puppet overlay,
+   status chip, mic toggle. */
 .live-stage {
   position: relative;
   border-radius: 12px;
@@ -77,12 +72,13 @@ p  { line-height: 1.55; color: var(--ink); }
 /* Puppet. The source JPG packs both poses side-by-side (closed + open);
    background-size 200%/auto + background-position 0 0 shows only the
    left (closed-mouth) pose. When we add lip-sync we'll flip to 100% 0
-   on the "speaking" state. */
+   on the "speaking" state. Positioned over the INGRESSO kiosk on the
+   left side of the backdrop. */
 .live-puppet {
   position: absolute;
-  right: 6%;
+  left: 3%;
   bottom: -4%;
-  width: 28%;
+  width: 32%;
   aspect-ratio: 1 / 1.1;
   background-size: 200% auto;
   background-position: 0 50%;
@@ -108,34 +104,6 @@ p  { line-height: 1.55; color: var(--ink); }
   0%   { box-shadow: 0 0 0 0 rgba(63, 125, 74, 0.6); }
   70%  { box-shadow: 0 0 0 12px rgba(63, 125, 74, 0); }
   100% { box-shadow: 0 0 0 0 rgba(63, 125, 74, 0); }
-}
-.live-transcript {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding: 16px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  min-height: 120px;
-}
-.transcript-turn .transcript-who {
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--muted);
-  margin-bottom: 2px;
-}
-.transcript-turn.user .transcript-text { color: var(--accent); }
-.transcript-turn.character .transcript-text { color: var(--ink); }
-.transcript-hint {
-  color: var(--muted);
-  font-style: italic;
-  font-size: 14px;
-}
-.live-controls {
-  display: flex;
-  justify-content: center;
 }
 .mic-toggle {
   background: var(--green);

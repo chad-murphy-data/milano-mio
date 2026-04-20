@@ -311,6 +311,7 @@ export default function App() {
       {screen === 'conversation' && scenario && scenario.mode === 'live' && (
         <LiveConversationScreen
           scenario={scenario}
+          difficulty={params.difficulty}
           onEnd={handleStoryEnd}
           onAuthLost={handleAuthLost}
         />

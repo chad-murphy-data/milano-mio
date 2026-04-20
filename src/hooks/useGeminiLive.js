@@ -89,12 +89,18 @@ export default function useGeminiLive({
   voiceName = 'Aoede',
   silenceMs = 300,
   model = 'gemini-3.1-flash-live-preview',
+  characterName = 'Character',
   onTurnComplete,
   onClosed
 } = {}) {
   const [status, setStatus] = useState('idle'); // 'idle' | 'connecting' | 'connected' | 'closed' | 'error'
-  const [userTranscript, setUserTranscript] = useState('');
-  const [nonnaTranscript, setNonnaTranscript] = useState('');
+  // lines are committed turn-by-turn so the existing Transcript component
+  // can render them as discrete speech bubbles. pendingUser/pendingCharacter
+  // hold the mid-turn streamed text so the UI can show what the speaker
+  // is saying before turnComplete fires and we finalize.
+  const [lines, setLines] = useState([]);
+  const [pendingUser, setPendingUser] = useState('');
+  const [pendingCharacter, setPendingCharacter] = useState('');
   const [turnCount, setTurnCount] = useState(0);
   const [micOn, setMicOn] = useState(true);
   const [error, setError] = useState(null);
@@ -107,6 +113,8 @@ export default function useGeminiLive({
   const micOnRef = useRef(true);
   const turnCompleteCbRef = useRef(onTurnComplete);
   const closedCbRef = useRef(onClosed);
+  const userBufferRef = useRef('');
+  const charBufferRef = useRef('');
 
   // Keep the latest callback refs without invalidating the connect closure.
   useEffect(() => { turnCompleteCbRef.current = onTurnComplete; }, [onTurnComplete]);
@@ -148,16 +156,34 @@ export default function useGeminiLive({
         }
       }
       if (sc.inputTranscription?.text) {
-        setUserTranscript((prev) => (prev + sc.inputTranscription.text).trim());
+        userBufferRef.current = (userBufferRef.current + sc.inputTranscription.text);
+        setPendingUser(userBufferRef.current.trim());
       }
       if (sc.outputTranscription?.text) {
-        setNonnaTranscript((prev) => (prev + sc.outputTranscription.text).trim());
+        charBufferRef.current = (charBufferRef.current + sc.outputTranscription.text);
+        setPendingCharacter(charBufferRef.current.trim());
       }
       if (sc.turnComplete) {
-        setTurnCount((prev) => {
-          const next = prev + 1;
-          try { turnCompleteCbRef.current?.(next); } catch {}
+        // Finalize the current turn: push user + character lines into the
+        // transcript array and clear the in-progress buffers. Empty buffers
+        // (e.g. if the character responded to text input, user buffer is
+        // empty) don't produce a line.
+        const userText = userBufferRef.current.trim();
+        const charText = charBufferRef.current.trim();
+        userBufferRef.current = '';
+        charBufferRef.current = '';
+        setPendingUser('');
+        setPendingCharacter('');
+        setLines((prev) => {
+          const next = [...prev];
+          if (userText) next.push({ role: 'user', text: userText });
+          if (charText) next.push({ role: 'character', text: charText, english: null });
           return next;
+        });
+        setTurnCount((prev) => {
+          const nextCount = prev + 1;
+          try { turnCompleteCbRef.current?.(nextCount); } catch {}
+          return nextCount;
         });
       }
     }
@@ -303,13 +329,35 @@ export default function useGeminiLive({
     setMicOn((prev) => !prev);
   }, []);
 
+  // Send a typed message into the Live session. Mirrors what the test page
+  // used to kick off the opening greeting, but exposed for the conversation
+  // screen's typed-input form.
+  const sendText = useCallback((text) => {
+    if (!text?.trim()) return;
+    const s = sessionRef.current;
+    if (!s) return;
+    try {
+      s.sendClientContent({
+        turns: [{ role: 'user', parts: [{ text: text.trim() }] }],
+        turnComplete: true
+      });
+      // Reflect the typed text immediately in the transcript, since
+      // audio-input transcription won't fire for it.
+      setLines((prev) => [...prev, { role: 'user', text: text.trim() }]);
+    } catch (err) {
+      console.warn('[Live] sendText failed:', err);
+    }
+  }, []);
+
   return {
     status,
-    userTranscript,
-    nonnaTranscript,
+    lines,
+    pendingUser,
+    pendingCharacter,
     turnCount,
     micOn,
     toggleMic,
+    sendText,
     disconnect,
     error
   };
