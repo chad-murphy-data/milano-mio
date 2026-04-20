@@ -168,6 +168,13 @@ p  { line-height: 1.55; color: var(--ink); }
   bottom: 0;
   height: 110%;
 }
+/* Rosa stands behind her stall, slightly right of center so the
+   produce display stays visible. */
+.live-puppet-mercatoLive {
+  right: 12%;
+  bottom: 0;
+  height: 105%;
+}
 
 /* The caffè and hotel backdrops are both panoramic (~3:1) — far
    shorter than San Siro's portrait-ish backdrop. Force the stage to
@@ -178,13 +185,15 @@ p  { line-height: 1.55; color: var(--ink); }
 .live-stage-caffeLive,
 .live-stage-hotelLive,
 .live-stage-metroLive,
-.live-stage-duomoLive {
+.live-stage-duomoLive,
+.live-stage-mercatoLive {
   aspect-ratio: 5 / 3;
 }
 .live-stage-caffeLive .live-backdrop,
 .live-stage-hotelLive .live-backdrop,
 .live-stage-metroLive .live-backdrop,
-.live-stage-duomoLive .live-backdrop {
+.live-stage-duomoLive .live-backdrop,
+.live-stage-mercatoLive .live-backdrop {
   position: absolute;
   inset: 0;
   width: 100%;
