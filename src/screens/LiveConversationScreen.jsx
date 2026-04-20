@@ -76,6 +76,56 @@ async function translateItalianToEnglish(italian) {
   }
 }
 
+// Generate a structured debrief from the transcript of a Live session.
+// Live doesn't emit tag blocks like `[DEBRIEF]{...}[/DEBRIEF]` the way
+// Claude scenarios do, so we hand the finished transcript to Claude and
+// ask it to pick learned phrases, retry phrases, and a short character-
+// voice assessment — matching the shape the existing DebriefScreen
+// already knows how to render.
+async function generateLiveDebrief(lines, scenario) {
+  if (!lines.length) return null;
+  const transcript = lines
+    .map((l) => {
+      const who = l.role === 'user' ? 'User' : scenario.characterName || 'Character';
+      return `${who}: ${l.text}`;
+    })
+    .join('\n');
+
+  const characterKey = scenario.characterSaysKey || 'character_says';
+  const characterName = scenario.characterName || 'the character';
+
+  const system = `You are reviewing a short realtime voice conversation between an Italian-language learner and ${characterName} in this scenario: "${scenario.title}".
+
+Output EXACTLY this JSON shape (no other text, no code fences):
+{
+  "learned": ["italian phrase — english gloss", "..."],
+  "retry": ["italian phrase — english gloss", "..."],
+  "${characterKey}": "One warm honest sentence in English, in ${characterName}'s voice, 15 words or fewer."
+}
+
+Rules:
+- "learned": 2–5 Italian phrases the learner actually said correctly and naturally.
+- "retry": 1–3 phrases worth practising — either ones they fumbled, or key phrases they skipped. If everything went smoothly, list fewer.
+- Character voice: warm, in-character, honest. Don't be saccharine; don't grade.
+- If the transcript is nearly empty (user barely spoke), "learned" can be empty; "retry" should be 1–2 useful phrases anyway.
+- Output ONLY the JSON, no commentary before or after.`;
+
+  try {
+    const reply = await sendMessage(
+      system,
+      [{ role: 'user', content: transcript }],
+      'normale'
+    );
+    const match = reply.match(/\{[\s\S]*\}/);
+    if (!match) throw new Error('No JSON in debrief reply');
+    return JSON.parse(match[0]);
+  } catch (e) {
+    if (e instanceof AuthError) throw e;
+    console.warn('[Live] debrief generation failed:', e);
+    return null;
+  }
+}
+
 export default function LiveConversationScreen({ scenario, difficulty = 'facile', onEnd, onAuthLost }) {
   const live = scenario.live || {};
   const systemInstruction =
@@ -88,6 +138,12 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
   const [typedInput, setTypedInput] = useState('');
   const [wordMarks, setWordMarks] = useState({});
   const [enrichedLines, setEnrichedLines] = useState([]);
+  // Flips on/off every ~160 ms while the hook's `speaking` is true, so
+  // we can alternate Aldo's closed and open mouth poses from the same
+  // side-by-side source JPG. Instant snap (no CSS transition) keeps the
+  // puppet-y feel.
+  const [mouthOpen, setMouthOpen] = useState(false);
+  const [generatingDebrief, setGeneratingDebrief] = useState(false);
 
   useEffect(() => {
     if (cachedPuppetUrl) return;
@@ -101,6 +157,19 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
     return () => { cancelled = true; };
   }, []);
 
+  // Mouth flap. While the hook says Aldo is speaking, toggle the mouth
+  // open/closed every ~160 ms. Clear to closed when speech stops so he
+  // doesn't freeze mid-syllable.
+  useEffect(() => {
+    if (!speaking) {
+      setMouthOpen(false);
+      return;
+    }
+    setMouthOpen(true);
+    const id = setInterval(() => setMouthOpen((m) => !m), 160);
+    return () => clearInterval(id);
+  }, [speaking]);
+
   const {
     status,
     lines,
@@ -108,6 +177,7 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
     pendingCharacter,
     turnCount,
     micOn,
+    speaking,
     toggleMic,
     sendText,
     disconnect,
@@ -229,21 +299,54 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
 
   useEffect(() => {
     if (!hasEnded) return;
-    const marked = collectMarkedWords();
-    const t = setTimeout(() => {
+    let cancelled = false;
+    setGeneratingDebrief(true);
+    // Short delay lets any final audio chunk play out before we leave
+    // the screen, then we fetch a structured debrief from Claude and
+    // hand off to the DebriefScreen the same way the Claude scenarios do.
+    const t = setTimeout(async () => {
+      const marked = collectMarkedWords();
+      const claudeDebrief = await generateLiveDebrief(enrichedLines, scenario).catch((err) => {
+        if (err instanceof AuthError) onAuthLost?.();
+        return null;
+      });
+      if (cancelled) return;
+
+      const characterKey = scenario.characterSaysKey || 'character_says';
+      const fallbackVoice = `${scenario.characterName || 'Nonno Aldo'}: buona partita!`;
+
+      // Merge user's tapped known/unknown marks into Claude's suggestions
+      // so the learner's own feedback is always represented.
+      const mergedLearned = [
+        ...((claudeDebrief?.learned) || []),
+        ...marked.known.filter(
+          (w) => !((claudeDebrief?.learned) || []).some((l) => l.toLowerCase().includes(w))
+        )
+      ];
+      const mergedRetry = [
+        ...((claudeDebrief?.retry) || []),
+        ...marked.unknown.filter(
+          (w) => !((claudeDebrief?.retry) || []).some((r) => r.toLowerCase().includes(w))
+        )
+      ];
+
+      setGeneratingDebrief(false);
       onEnd?.({
         debrief: {
-          learned: marked.known,
-          retry: marked.unknown,
-          [scenario.characterSaysKey || 'character_says']:
-            'Buona partita! (realtime voice session)',
+          learned: mergedLearned,
+          retry: mergedRetry,
+          [characterKey]: claudeDebrief?.[characterKey] || fallbackVoice,
           transitionTo: null
         },
         transcript: enrichedLines
       });
     }, 1200);
-    return () => clearTimeout(t);
-  }, [hasEnded, onEnd, scenario.characterSaysKey, enrichedLines, collectMarkedWords]);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(t);
+    };
+  }, [hasEnded, onEnd, onAuthLost, scenario, enrichedLines, collectMarkedWords]);
 
   const statusLabel = {
     idle: 'Starting…',
@@ -273,7 +376,7 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
               />
               {puppetUrl && (
                 <div
-                  className={`live-puppet ${status === 'connected' ? 'active' : ''}`}
+                  className={`live-puppet ${status === 'connected' ? 'active' : ''} ${mouthOpen ? 'mouth-open' : ''}`}
                   style={{ backgroundImage: `url(${puppetUrl})` }}
                   aria-label={scenario.characterName || 'Character'}
                   role="img"
@@ -286,6 +389,11 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
             </div>
 
             {error && <div className="warning">{error}</div>}
+            {generatingDebrief && (
+              <div className="live-generating-debrief">
+                Aldo segna i tuoi progressi... (generating debrief)
+              </div>
+            )}
 
             {displayLines.length === 0 && status === 'connected' && (
               <div className="live-empty-hint">

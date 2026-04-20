@@ -104,6 +104,10 @@ export default function useGeminiLive({
   const [turnCount, setTurnCount] = useState(0);
   const [micOn, setMicOn] = useState(true);
   const [error, setError] = useState(null);
+  // `speaking` flips true while any queued AudioBufferSourceNode is still
+  // active (counted via activeChunksRef). Drives Aldo's lip-sync in the
+  // screen — we flap the puppet's mouth while speaking is true.
+  const [speaking, setSpeaking] = useState(false);
 
   const sessionRef = useRef(null);
   const audioContextRef = useRef(null);
@@ -115,6 +119,10 @@ export default function useGeminiLive({
   const closedCbRef = useRef(onClosed);
   const userBufferRef = useRef('');
   const charBufferRef = useRef('');
+  // How many AudioBufferSourceNodes are currently scheduled/playing.
+  // Incremented each time we queue a chunk; decremented in the node's
+  // `onended`. `speaking` mirrors whether this is > 0.
+  const activeChunksRef = useRef(0);
 
   // Keep the latest callback refs without invalidating the connect closure.
   useEffect(() => { turnCompleteCbRef.current = onTurnComplete; }, [onTurnComplete]);
@@ -137,6 +145,16 @@ export default function useGeminiLive({
       const start = Math.max(ctx.currentTime, nextPlayTimeRef.current);
       src.start(start);
       nextPlayTimeRef.current = start + audioBuffer.duration;
+
+      // Track active chunks so the UI knows when the character is
+      // actually producing sound (for lip-sync etc.). The first chunk
+      // flips `speaking` true; the last chunk's onended flips it false.
+      activeChunksRef.current += 1;
+      if (activeChunksRef.current === 1) setSpeaking(true);
+      src.onended = () => {
+        activeChunksRef.current = Math.max(0, activeChunksRef.current - 1);
+        if (activeChunksRef.current === 0) setSpeaking(false);
+      };
     } catch (e) {
       console.warn('[Live] playback error:', e);
     }
@@ -362,6 +380,7 @@ export default function useGeminiLive({
     pendingCharacter,
     turnCount,
     micOn,
+    speaking,
     toggleMic,
     sendText,
     disconnect,
