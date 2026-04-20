@@ -63,6 +63,10 @@ export const keyPhrases = [
   { it: 'Ecco i passaporti', en: 'Here are the passports', phon: 'EK-ko ee pas-sa-POR-tee' },
   { it: 'Può ripetere?', en: 'Can you repeat?', phon: 'pwoh ree-PEH-tay-ray' },
   { it: 'Buon soggiorno!', en: 'Enjoy your stay!', phon: 'bwon soj-JOR-no' },
+  { it: 'Qual è la password?', en: "What's the WiFi password?", phon: 'kwa-LEH la PASS-word' },
+  { it: 'È la prima volta', en: "It's the first time", phon: 'eh la PREE-ma VOL-ta' },
+  { it: 'Per piacere', en: 'For pleasure', phon: 'pair pya-CHAY-ray' },
+  { it: 'Per lavoro', en: 'For work', phon: 'pair la-VO-ro' },
   { it: 'Andiamo al Duomo', en: 'We\'re going to the Duomo', phon: 'an-DYA-mo al DWO-mo' },
   { it: 'Andiamo ai Navigli', en: 'We\'re going to the Navigli', phon: 'an-DYA-mo ai na-VEE-lyee' }
 ];
@@ -80,6 +84,11 @@ export const coreVocab = [
   'la colazione — breakfast',
   'a che ora — at what time',
   'il WiFi — WiFi',
+  'la password — the password',
+  'qual è — what is',
+  'la prima volta — the first time',
+  'per piacere / per lavoro — for pleasure / for work',
+  'sì, è la prima volta — yes, it\'s the first time',
   'ecco i passaporti — here are the passports',
   'può ripetere — can you repeat',
   'non ho capito — I didn\'t understand',
@@ -106,6 +115,8 @@ export const whisperHints = [
   { trigger: 'name', hint: 'Try: "Il mio nome è Chad."' },
   { trigger: 'passport', hint: 'Try: "Ecco i passaporti."' },
   { trigger: 'question', hint: 'Try: "A che ora è la colazione?"' },
+  { trigger: 'wifi', hint: 'Try: "Grazie, qual è la password?"' },
+  { trigger: 'smallTalk', hint: 'Try: "Sì, è la prima volta. Per piacere."' },
   { trigger: 'farewell', hint: 'Try: "Grazie, buonasera!"' }
 ];
 
