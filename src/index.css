@@ -154,6 +154,13 @@ p  { line-height: 1.55; color: var(--ink); }
   bottom: 0;
   height: 110%;
 }
+/* Davide stands to the right of the ticket machine (which is on the
+   left of the metro backdrop) — keeps the metro map + tunnel visible. */
+.live-puppet-metroLive {
+  right: 10%;
+  bottom: 0;
+  height: 110%;
+}
 
 /* The caffè and hotel backdrops are both panoramic (~3:1) — far
    shorter than San Siro's portrait-ish backdrop. Force the stage to
@@ -162,11 +169,13 @@ p  { line-height: 1.55; color: var(--ink); }
    so it fills the taller stage (cropping the far edges — most of
    the action is centered anyway). */
 .live-stage-caffeLive,
-.live-stage-hotelLive {
+.live-stage-hotelLive,
+.live-stage-metroLive {
   aspect-ratio: 5 / 3;
 }
 .live-stage-caffeLive .live-backdrop,
-.live-stage-hotelLive .live-backdrop {
+.live-stage-hotelLive .live-backdrop,
+.live-stage-metroLive .live-backdrop {
   position: absolute;
   inset: 0;
   width: 100%;
