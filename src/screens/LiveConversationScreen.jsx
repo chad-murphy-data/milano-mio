@@ -457,11 +457,18 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
                 />
               )}
               {assets.puppetKind === 'pair' && assets.pairClosed && assets.pairOpen && (
-                <img
-                  src={mouthOpen ? assets.pairOpen : assets.pairClosed}
-                  alt={characterName}
-                  className={`live-puppet live-puppet-pair live-puppet-${scenario.id} ${status === 'connected' ? 'active' : ''}`}
-                />
+                <div
+                  className={`live-puppet live-puppet-pair live-puppet-${scenario.id} ${status === 'connected' ? 'active' : ''} ${mouthOpen ? 'mouth-open' : ''}`}
+                  aria-label={characterName}
+                  role="img"
+                >
+                  {/* Both poses stacked + always loaded; CSS opacity
+                      toggles which one is visible. Avoids the swap-flicker
+                      a single <img src=...> would have when the src changes
+                      every ~160ms during the lip flap. */}
+                  <img src={assets.pairClosed} alt="" className="puppet-pose puppet-pose-closed" />
+                  <img src={assets.pairOpen} alt="" className="puppet-pose puppet-pose-open" />
+                </div>
               )}
               <div className="live-status-chip">
                 <span className={`live-dot ${status === 'connected' ? 'on' : ''}`} />

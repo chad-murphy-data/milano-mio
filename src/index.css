@@ -95,11 +95,27 @@ p  { line-height: 1.55; color: var(--ink); }
 .live-puppet[style*="background-image"].mouth-open {
   background-position: 100% 50%;
 }
-/* PNG-pair variant: just an <img> swap between closed/open. */
+/* PNG-pair variant: a container <div> holds both pose <img>s stacked,
+   and CSS toggles which one is visible via the .mouth-open class. Both
+   images are always in the DOM (and therefore the browser cache) so
+   the flap doesn't flicker as it would with a single <img src=...>
+   that re-fetches on every swap. */
 .live-puppet-pair {
-  height: auto;
   display: block;
 }
+.live-puppet-pair .puppet-pose {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  display: block;
+  pointer-events: none;
+}
+.live-puppet-pair .puppet-pose-open { opacity: 0; }
+.live-puppet-pair.mouth-open .puppet-pose-closed { opacity: 0; }
+.live-puppet-pair.mouth-open .puppet-pose-open { opacity: 1; }
 
 /* Per-scenario sizing + placement. Aldo stands at the INGRESSO kiosk
    on the left; Marco stands behind the bar counter on the right. */
@@ -114,11 +130,16 @@ p  { line-height: 1.55; color: var(--ink); }
    Marco taller than the entire stage. Anchor by `height` instead so
    he scales to the stage's vertical extent regardless of how short it
    gets on narrow viewports. */
+/* The pair-puppet container needs an explicit aspect-ratio so its width
+   derives from its height (children are absolutely positioned, so they
+   can't size the container themselves). 1:1.88 matches Marco's PNG
+   natural dimensions; object-fit: contain on the children handles any
+   slight per-pose variance without reflowing the container. */
 .live-puppet-caffeLive {
   right: 6%;
   bottom: 0;
   height: 105%;
-  width: auto;
+  aspect-ratio: 1 / 1.88;
 }
 
 /* The caffè backdrop is panoramic (3:1) and far shorter than San Siro's
