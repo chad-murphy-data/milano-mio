@@ -14,6 +14,7 @@ import useGeminiLive from '../hooks/useGeminiLive.js';
 import { sendMessage, AuthError } from '../utils/claudeApi.js';
 import BriefingPanel from '../components/BriefingPanel.jsx';
 import Transcript from '../components/Transcript.jsx';
+import WhisperPrompt from '../components/WhisperPrompt.jsx';
 
 // ── Asset lookups ────────────────────────────────────────────────
 // Vite globs so we don't hand-import per scenario. Backdrops follow
@@ -451,6 +452,17 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
     live.openingHint ||
     `Inizia con "Buongiorno!" o "Buonasera!" — ${characterName} ascolta mentre parli e risponde quando fai una pausa.`;
 
+  // Static whisper hints — Live can't emit AI-driven [HINT: ...] tags
+  // the way Claude does, so we walk the scenario's whisperHints array
+  // by turn count. turnCount is incremented per completed user/character
+  // exchange, so by the time the user is composing turn N, the relevant
+  // hint is at index N. Clamp to the last hint once the array runs out
+  // (e.g. on a maxTurns=10 scenario with 8 hints).
+  const whisperHintsList = scenario.whisperHints || [];
+  const currentWhisperHint = whisperHintsList.length > 0
+    ? whisperHintsList[Math.min(turnCount, whisperHintsList.length - 1)]?.hint || null
+    : null;
+
   return (
     <div className={`screen conversation-screen live-conversation-screen ${panelOpen ? 'panel-open' : ''}`}>
       <div className="conversation-main">
@@ -539,6 +551,15 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
                 wordMarks={wordMarks}
                 onWordTap={handleWordTap}
               />
+            )}
+
+            {/* Static whisper hint — advances by turn count along the
+                scenario's whisperHints array. Live can't emit AI-driven
+                [HINT: ...] tags the way Claude does, so we cycle the
+                statics as a rough scaffolding instead. Clamped to the
+                last hint once the user runs past the array length. */}
+            {status === 'connected' && currentWhisperHint && (
+              <WhisperPrompt hint={currentWhisperHint} />
             )}
 
             <div className="input-row">
