@@ -13,6 +13,7 @@ export const START_POSITION = { x: 50, y: 85 }; // bottom-center parking spot
 export const mapLocations = {
   // Upper row
   casaMilan:      { x: 28, y: 25, label: 'Casa Milan' },     // "Casa Milan museum"
+  casaMilanLive:  { x: 33, y: 21, label: 'Casa Milan (Live)' }, // temporary 2nd pin during Live rollout
   // Middle row
   viaDellaSpigas: { x: 61, y: 47, label: 'Via della Spiga' }, // right of Duomo
   metro:          { x: 30, y: 54, label: 'Metro' },           // "Metro Cadorna"

@@ -10,6 +10,7 @@ import * as duomoLive from './duomoLive.js';
 import * as mercatoLive from './mercatoLive.js';
 import * as trattoriaLive from './trattoriaLive.js';
 import * as navigliLive from './navigliLive.js';
+import * as casaMilanLive from './casaMilanLive.js';
 import * as duomo from './duomo.js';
 import * as metro from './metro.js';
 import * as mercato from './mercato.js';
@@ -68,6 +69,8 @@ export const scenarios = {
     '[Chad enters an elegant boutique on Via della Spiga.]'),
   casaMilan: register(casaMilan, 'Paolo', 'paolo_says',
     '[Chad enters the Casa Milan museum and merch shop.]'),
+  casaMilanLive: register(casaMilanLive, 'Paolo', 'paolo_says',
+    '[Chad enters Casa Milan. Paolo is arranging jerseys near the entrance and lights up at a fellow fan.]'),
   bartolini: register(bartolini, 'Alessandro', 'alessandro_says',
     '[Chad arrives at the entrance of Enrico Bartolini al MUDEC for their tasting menu reservation.]'),
   sanSiro: register(sanSiro, 'Vendor / Giuseppe', 'giuseppe_says',
@@ -79,7 +82,7 @@ export const scenarios = {
 // Display order on the home screen.
 export const storyOrder = [
   'hotel', 'hotelLive', 'caffe', 'caffeLive', 'metro', 'metroLive', 'duomo', 'duomoLive', 'mercato', 'mercatoLive',
-  'trattoria', 'trattoriaLive', 'navigli', 'navigliLive', 'viaDellaSpigas', 'casaMilan',
+  'trattoria', 'trattoriaLive', 'navigli', 'navigliLive', 'viaDellaSpigas', 'casaMilan', 'casaMilanLive',
   'bartolini', 'sanSiroEntry', 'sanSiro'
 ];
 
