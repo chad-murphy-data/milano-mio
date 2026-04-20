@@ -246,16 +246,22 @@ export default function useGeminiLive({
     if (!enabled) return;
     let cancelled = false;
     (async () => {
+      console.log('[Live] connecting…');
       setStatus('connecting');
       setError(null);
-      setUserTranscript('');
-      setNonnaTranscript('');
+      userBufferRef.current = '';
+      charBufferRef.current = '';
+      setPendingUser('');
+      setPendingCharacter('');
+      setLines([]);
       setTurnCount(0);
       try {
         const { GoogleGenAI, Modality } = await loadGenAI();
         if (cancelled) return;
+        console.log('[Live] SDK loaded');
         const token = await fetchToken();
         if (cancelled) return;
+        console.log('[Live] token acquired');
 
         const ai = new GoogleGenAI({
           apiKey: token,

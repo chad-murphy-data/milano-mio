@@ -287,12 +287,19 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
 
             {error && <div className="warning">{error}</div>}
 
-            <Transcript
-              lines={displayLines}
-              characterName={scenario.characterName || 'Character'}
-              wordMarks={wordMarks}
-              onWordTap={handleWordTap}
-            />
+            {displayLines.length === 0 && status === 'connected' && (
+              <div className="live-empty-hint">
+                Dì "Buonasera!" o "Ecco il biglietto" — Aldo ascolta mentre parli e risponde quando fai una pausa.
+              </div>
+            )}
+            {displayLines.length > 0 && (
+              <Transcript
+                lines={displayLines}
+                characterName={scenario.characterName || 'Character'}
+                wordMarks={wordMarks}
+                onWordTap={handleWordTap}
+              />
+            )}
 
             <div className="input-row">
               <button
