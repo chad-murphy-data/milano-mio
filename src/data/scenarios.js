@@ -4,6 +4,7 @@
 import * as caffe from './caffe.js';
 import * as caffeLive from './caffeLive.js';
 import * as hotel from './hotel.js';
+import * as hotelLive from './hotelLive.js';
 import * as duomo from './duomo.js';
 import * as metro from './metro.js';
 import * as mercato from './mercato.js';
@@ -32,6 +33,8 @@ function register(mod, characterName, characterSaysKey, stageDirection) {
 export const scenarios = {
   hotel: register(hotel, 'Giulia', 'giulia_says',
     '[Chad arrives at the hotel reception desk with luggage.]'),
+  hotelLive: register(hotelLive, 'Giulia', 'giulia_says',
+    '[Chad arrives at the hotel reception desk with luggage. Giulia is finishing a phone call.]'),
   caffe: register(caffe, 'Marco', 'marco_says',
     '[Chad walks up to the bar.]'),
   caffeLive: register(caffeLive, 'Marco', 'marco_says',
@@ -60,7 +63,7 @@ export const scenarios = {
 
 // Display order on the home screen.
 export const storyOrder = [
-  'hotel', 'caffe', 'caffeLive', 'metro', 'duomo', 'mercato',
+  'hotel', 'hotelLive', 'caffe', 'caffeLive', 'metro', 'duomo', 'mercato',
   'trattoria', 'navigli', 'viaDellaSpigas', 'casaMilan',
   'bartolini', 'sanSiroEntry', 'sanSiro'
 ];

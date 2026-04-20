@@ -141,22 +141,32 @@ p  { line-height: 1.55; color: var(--ink); }
    he scales to the stage's vertical extent regardless of how short it
    gets on narrow viewports. */
 /* head/jaw container's aspect-ratio is set inline from the meta JSON
-   (per character), so this rule only handles placement + size. */
+   (per character), so these rules only handle placement + size. */
 .live-puppet-caffeLive {
   right: 6%;
   bottom: 0;
   height: 105%;
 }
+/* Giulia stands behind the reception desk on the left-ish side so the
+   key rack + paintings stay visible on the right. */
+.live-puppet-hotelLive {
+  left: 8%;
+  bottom: 0;
+  height: 110%;
+}
 
-/* The caffè backdrop is panoramic (3:1) and far shorter than San Siro's
-   portrait-ish backdrop. Force the stage to a less extreme aspect so
-   Marco has room to stand without overflowing the top, and switch the
-   backdrop to object-fit cover so it fills the taller stage (cropping
-   the far edges of the bar — most of the action is centered anyway). */
-.live-stage-caffeLive {
+/* The caffè and hotel backdrops are both panoramic (~3:1) — far
+   shorter than San Siro's portrait-ish backdrop. Force the stage to
+   a less extreme aspect so the puppet has room to stand without
+   overflowing the top, and switch the backdrop to object-fit cover
+   so it fills the taller stage (cropping the far edges — most of
+   the action is centered anyway). */
+.live-stage-caffeLive,
+.live-stage-hotelLive {
   aspect-ratio: 5 / 3;
 }
-.live-stage-caffeLive .live-backdrop {
+.live-stage-caffeLive .live-backdrop,
+.live-stage-hotelLive .live-backdrop {
   position: absolute;
   inset: 0;
   width: 100%;

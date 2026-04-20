@@ -21,6 +21,7 @@ export const mapLocations = {
   caffe:          { x: 62, y: 58, label: 'Caffè' },           // under umbrella
   caffeLive:      { x: 67, y: 54, label: 'Caffè (Live)' },    // temporary 2nd pin during Live rollout
   hotel:          { x: 77, y: 57, label: 'Hotel' },           // "Boutique hotel"
+  hotelLive:      { x: 82, y: 53, label: 'Hotel (Live)' },    // temporary 2nd pin during Live rollout
   duomo:          { x: 48, y: 62, label: 'Duomo' },           // below cathedral
   // Lower row
   trattoria:      { x: 25, y: 73, label: 'Trattoria' },       // TRATTORIA awning
