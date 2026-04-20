@@ -102,7 +102,11 @@ export default function useGeminiLive({
   const [pendingUser, setPendingUser] = useState('');
   const [pendingCharacter, setPendingCharacter] = useState('');
   const [turnCount, setTurnCount] = useState(0);
-  const [micOn, setMicOn] = useState(true);
+  // Mic starts muted — user explicitly toggles it on when they're ready
+  // to speak. Prevents audio from streaming the moment the session opens,
+  // which surprised users the first time around (they were still reading
+  // the briefing panel while Aldo was already listening).
+  const [micOn, setMicOn] = useState(false);
   const [error, setError] = useState(null);
   // `speaking` flips true while any queued AudioBufferSourceNode is still
   // active (counted via activeChunksRef). Drives Aldo's lip-sync in the
@@ -114,7 +118,7 @@ export default function useGeminiLive({
   const micStreamRef = useRef(null);
   const scriptNodeRef = useRef(null);
   const nextPlayTimeRef = useRef(0);
-  const micOnRef = useRef(true);
+  const micOnRef = useRef(false);
   const turnCompleteCbRef = useRef(onTurnComplete);
   const closedCbRef = useRef(onClosed);
   const userBufferRef = useRef('');

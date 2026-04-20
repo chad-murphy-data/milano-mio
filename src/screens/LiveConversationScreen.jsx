@@ -156,19 +156,11 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
       .catch(() => { /* puppet just won't render */ });
     return () => { cancelled = true; };
   }, []);
-
-  // Mouth flap. While the hook says Aldo is speaking, toggle the mouth
-  // open/closed every ~160 ms. Clear to closed when speech stops so he
-  // doesn't freeze mid-syllable.
-  useEffect(() => {
-    if (!speaking) {
-      setMouthOpen(false);
-      return;
-    }
-    setMouthOpen(true);
-    const id = setInterval(() => setMouthOpen((m) => !m), 160);
-    return () => clearInterval(id);
-  }, [speaking]);
+  // NOTE: mouth-flap effect now lives AFTER the useGeminiLive destructure
+  // below. Previously it was right here, but it references `speaking`
+  // which the hook returns — reading it before the hook call threw a
+  // temporal-dead-zone ReferenceError at render time and blanked the
+  // screen after Andiamo.
 
   const {
     status,
@@ -200,6 +192,19 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
     },
     onClosed: () => setHasEnded(true)
   });
+
+  // Mouth flap. While the hook says Aldo is speaking, toggle the mouth
+  // open/closed every ~160 ms. Clear to closed when speech stops so he
+  // doesn't freeze mid-syllable.
+  useEffect(() => {
+    if (!speaking) {
+      setMouthOpen(false);
+      return;
+    }
+    setMouthOpen(true);
+    const id = setInterval(() => setMouthOpen((m) => !m), 160);
+    return () => clearInterval(id);
+  }, [speaking]);
 
   // Mirror `lines` into a local state so we can mutate english glosses as
   // translations resolve without bouncing back through the hook.
