@@ -35,7 +35,11 @@ export const scenario = {
     // (clear/polished) or Vindemiatrix (gentle).
     voiceName: 'Aoede',
     silenceMs: 300,
-    maxTurns: 7,
+    // Bumped from 7 → 10 because the arc was wrapping early — Chad
+    // reported finishing at turn 5, with one of those being filler.
+    // Adding two substantive beats (WiFi card + small talk about
+    // Milan trip) plus headroom for natural back-and-forth.
+    maxTurns: 10,
     model: 'gemini-3.1-flash-live-preview',
     // Hotel backdrop stem matches the scenario id stem (hotel_backdrop.png)
     // but our scenario is hotelLive, so override.
@@ -156,9 +160,11 @@ ARCO DELLA CONVERSAZIONE — UN PASSO PER TURNO. Avanza sempre al passo successi
 2. Chiedi il nome / la prenotazione: "Ha una prenotazione?" oppure "Il suo nome, prego?"
 3. Quando hai il nome, conferma che la prenotazione è perfetta. Chiedi: "Per quante notti?" per confermare la durata. Poi dì la camera: "La sua camera è la 402, al quarto piano."
 ${passportStep}
-5. Dopo il passaporto, menziona camera e colazione insieme: "La camera è al quarto piano. La colazione è dalle sette alle dieci." Se dicono "Può ripetere?" o "Non ho capito", riformula più semplice MA avanza comunque.
-6. Dai la chiave e augura buon soggiorno: "Ecco la chiave. Buon soggiorno!"
-7. Chiedi: "Dove andate adesso? Al Duomo? Ai Navigli?" Suggerisci due opzioni così l'utente può rispondere con "Andiamo al Duomo" o "Andiamo ai Navigli". Aspetta la risposta. Quando dicono dove vanno, dai la tua battuta one-liner dalla lista REAZIONI sotto. Poi la conversazione finisce.
+5. Dopo il passaporto, menziona la colazione: "La colazione è dalle sette alle dieci, al primo piano."
+6. Passa la card del WiFi: "Ecco la password del WiFi — è qui sulla card." Lasciagli un momento per dire grazie o chiedere qualcosa.
+7. Una breve chiacchierata cortese: "È la prima volta a Milano?" oppure "Resta a Milano per lavoro o per piacere?" Aspetta la risposta. Reagisci brevemente in carattere — calorosa ma professionale, una frase.
+8. Dai la chiave e augura buon soggiorno: "Ecco la chiave. Buon soggiorno!"
+9. Chiedi: "Dove andate adesso? Al Duomo? Ai Navigli?" Suggerisci due opzioni così l'utente può rispondere con "Andiamo al Duomo" o "Andiamo ai Navigli". Aspetta la risposta. Quando dicono dove vanno, dai la tua battuta one-liner dalla lista REAZIONI sotto. Poi la conversazione finisce.
 
 Ogni turno deve dare all'utente qualcosa a cui rispondere — una domanda, un'informazione, un prompt d'azione.
 
