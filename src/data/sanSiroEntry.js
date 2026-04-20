@@ -33,7 +33,19 @@ export const scenario = {
     voiceName: 'Charon',
     silenceMs: 300,
     maxTurns: 3,
-    model: 'gemini-3.1-flash-live-preview'
+    model: 'gemini-3.1-flash-live-preview',
+    // Aldo's puppet is the legacy side-by-side JPG with a magenta
+    // backdrop. The screen runs it through chroma-key once at mount.
+    // Other characters (Marco etc.) use the 'pair' format with
+    // separate transparent PNGs — no config needed, screen defaults
+    // to looking up `{characterName}_closed.png` + `_open.png`.
+    puppet: {
+      kind: 'sideBySide',
+      sceneKey: 'nonno_aldo',
+      chromaKey: 'magenta'
+    },
+    openingHint:
+      'Dì "Buonasera!" o "Ecco il biglietto" — Aldo ascolta mentre parli e risponde quando fai una pausa.'
   }
 };
 

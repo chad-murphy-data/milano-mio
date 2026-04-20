@@ -2,6 +2,7 @@
 // Screens receive a scenario object as a prop; they never import data files directly.
 
 import * as caffe from './caffe.js';
+import * as caffeLive from './caffeLive.js';
 import * as hotel from './hotel.js';
 import * as duomo from './duomo.js';
 import * as metro from './metro.js';
@@ -33,6 +34,8 @@ export const scenarios = {
     '[Chad arrives at the hotel reception desk with luggage.]'),
   caffe: register(caffe, 'Marco', 'marco_says',
     '[Chad walks up to the bar.]'),
+  caffeLive: register(caffeLive, 'Marco', 'marco_says',
+    '[Chad walks up to the bar. Marco is pulling shots.]'),
   metro: register(metro, 'Davide', 'davide_says',
     '[Chad is standing at a ticket machine in Cadorna metro station, looking at the map.]'),
   duomo: register(duomo, 'Francesca', 'francesca_says',
@@ -57,7 +60,7 @@ export const scenarios = {
 
 // Display order on the home screen.
 export const storyOrder = [
-  'hotel', 'caffe', 'metro', 'duomo', 'mercato',
+  'hotel', 'caffe', 'caffeLive', 'metro', 'duomo', 'mercato',
   'trattoria', 'navigli', 'viaDellaSpigas', 'casaMilan',
   'bartolini', 'sanSiroEntry', 'sanSiro'
 ];

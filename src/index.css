@@ -69,20 +69,12 @@ p  { line-height: 1.55; color: var(--ink); }
   align-items: center;
   gap: 8px;
 }
-/* Puppet. The source JPG packs both poses side-by-side (closed + open);
-   background-size 200%/auto + background-position 0 0 shows only the
-   left (closed-mouth) pose. When we add lip-sync we'll flip to 100% 0
-   on the "speaking" state. Positioned over the INGRESSO kiosk on the
-   left side of the backdrop. */
+/* Puppet — generic defaults shared by both formats (side-by-side JPG
+   like Aldo and PNG-pair like Marco). Per-character size + position
+   come from the .live-puppet-{scenarioId} rules below so we can place
+   each character correctly against their own backdrop. */
 .live-puppet {
   position: absolute;
-  left: 3%;
-  bottom: -4%;
-  width: 32%;
-  aspect-ratio: 1 / 1.1;
-  background-size: 200% auto;
-  background-position: 0 50%;
-  background-repeat: no-repeat;
   pointer-events: none;
   filter: drop-shadow(0 6px 16px rgba(27, 23, 20, 0.35));
   transition: transform 0.3s ease;
@@ -90,11 +82,43 @@ p  { line-height: 1.55; color: var(--ink); }
 .live-puppet.active {
   transform: translateY(-4px);
 }
-/* Open-mouth pose lives in the right half of the two-pose source jpg.
-   Snap between positions — no transition — so the flap reads as
-   classic-puppet rather than smooth animation. */
-.live-puppet.mouth-open {
+/* Side-by-side JPG variant: the source packs closed + open poses
+   horizontally. background-size 200%/auto + position 0 50% shows the
+   left (closed) pose; flipping to 100% 50% snaps to the right (open)
+   pose. No transition on background-position — keeps the puppet-y
+   feel. */
+.live-puppet[style*="background-image"] {
+  background-size: 200% auto;
+  background-position: 0 50%;
+  background-repeat: no-repeat;
+}
+.live-puppet[style*="background-image"].mouth-open {
   background-position: 100% 50%;
+}
+/* PNG-pair variant: just an <img> swap between closed/open. */
+.live-puppet-pair {
+  height: auto;
+  display: block;
+}
+
+/* Per-scenario sizing + placement. Aldo stands at the INGRESSO kiosk
+   on the left; Marco stands behind the bar counter on the right. */
+.live-puppet-sanSiroEntry {
+  left: 3%;
+  bottom: -4%;
+  width: 32%;
+  aspect-ratio: 1 / 1.1;
+}
+/* Marco's puppet PNG is portrait-tall (~1:1.88), and the caffè backdrop
+   is panoramic (~3:1). Anchoring by `width` like Aldo does would make
+   Marco taller than the entire stage. Anchor by `height` instead so
+   he scales to the stage's vertical extent regardless of how short it
+   gets on narrow viewports. */
+.live-puppet-caffeLive {
+  right: 6%;
+  bottom: -8%;
+  height: 130%;
+  width: auto;
 }
 .live-dot {
   width: 8px;

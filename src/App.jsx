@@ -312,6 +312,7 @@ export default function App() {
         <LiveConversationScreen
           scenario={scenario}
           difficulty={params.difficulty}
+          retryWords={params.retryWords}
           onEnd={handleStoryEnd}
           onAuthLost={handleAuthLost}
         />

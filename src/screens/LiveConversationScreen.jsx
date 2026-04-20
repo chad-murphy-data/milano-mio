@@ -9,18 +9,42 @@
 // free, so we translate the Italian transcript on demand and cache the
 // result on the line.
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import useGeminiLive from '../hooks/useGeminiLive.js';
 import { sendMessage, AuthError } from '../utils/claudeApi.js';
 import BriefingPanel from '../components/BriefingPanel.jsx';
 import Transcript from '../components/Transcript.jsx';
-import sanSiroBackdrop from '../assets/scenes/sanSiroEntry_backdrop.png';
-import nonnoAldoPuppet from '../assets/scenes/nonno_aldo.jpg';
 
-// Chroma-key the puppet's magenta background once per mount and cache
-// the blob URL across component instances.
-let cachedPuppetUrl = null;
+// ── Asset lookups ────────────────────────────────────────────────
+// Vite globs so we don't hand-import per scenario. Backdrops follow
+// the same `*_backdrop.png` convention PuppetStage uses; puppet pairs
+// follow `*_closed.png` / `*_open.png` (already used by every character
+// in src/assets/puppets). The single `scenes/*.jpg` glob covers the
+// legacy side-by-side puppet sheet (Aldo's nonno_aldo.jpg).
+const rawBackdrops = import.meta.glob('../assets/scenes/*_backdrop.png', { eager: true });
+const rawPuppetsClosed = import.meta.glob('../assets/puppets/*_closed.png', { eager: true });
+const rawPuppetsOpen = import.meta.glob('../assets/puppets/*_open.png', { eager: true });
+const rawSceneJpgs = import.meta.glob('../assets/scenes/*.jpg', { eager: true });
+
+function buildLookup(glob, suffix) {
+  const map = {};
+  for (const [path, mod] of Object.entries(glob)) {
+    const file = path.split('/').pop();
+    const key = file.replace(suffix, '');
+    map[key] = mod.default;
+  }
+  return map;
+}
+const backdrops = buildLookup(rawBackdrops, '_backdrop.png');
+const puppetsClosed = buildLookup(rawPuppetsClosed, '_closed.png');
+const puppetsOpen = buildLookup(rawPuppetsOpen, '_open.png');
+const sceneJpgs = buildLookup(rawSceneJpgs, '.jpg');
+
+// Chroma-key the puppet's magenta background once per source URL and
+// cache the resulting blob URL across component instances.
+const chromaCache = new Map();
 function chromaKeyMagenta(srcUrl) {
+  if (chromaCache.has(srcUrl)) return Promise.resolve(chromaCache.get(srcUrl));
   return new Promise((resolve, reject) => {
     const img = new Image();
     img.onload = () => {
@@ -44,7 +68,9 @@ function chromaKeyMagenta(srcUrl) {
       ctx.putImageData(data, 0, 0);
       canvas.toBlob((blob) => {
         if (!blob) return reject(new Error('toBlob failed'));
-        resolve(URL.createObjectURL(blob));
+        const url = URL.createObjectURL(blob);
+        chromaCache.set(srcUrl, url);
+        resolve(url);
       }, 'image/png');
     };
     img.onerror = reject;
@@ -126,41 +152,77 @@ Rules:
   }
 }
 
-export default function LiveConversationScreen({ scenario, difficulty = 'facile', onEnd, onAuthLost }) {
+// Resolve all assets the screen needs from the scenario. Two puppet
+// formats are supported:
+//   - 'pair': separate `*_closed.png` + `*_open.png` (Marco, Giulia, etc.).
+//             Defaults: characterKey = scenario.characterName lowercased.
+//   - 'sideBySide': single JPG with both poses laid out left|right, plus
+//                   optional chroma-key (Aldo's nonno_aldo.jpg).
+function resolveAssets(scenario) {
+  const live = scenario.live || {};
+  const backdropKey = live.backdropKey || scenario.id;
+  const backdrop = backdrops[backdropKey] || null;
+
+  const puppetCfg = live.puppet || { kind: 'pair' };
+  if (puppetCfg.kind === 'sideBySide') {
+    const sceneKey = puppetCfg.sceneKey;
+    return {
+      backdrop,
+      puppetKind: 'sideBySide',
+      sideBySideSrc: sceneJpgs[sceneKey] || null,
+      chromaKey: puppetCfg.chromaKey || null
+    };
+  }
+  // 'pair' — default
+  const characterKey =
+    puppetCfg.characterKey ||
+    (scenario.characterName || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+  return {
+    backdrop,
+    puppetKind: 'pair',
+    pairClosed: puppetsClosed[characterKey] || null,
+    pairOpen: puppetsOpen[characterKey] || null
+  };
+}
+
+export default function LiveConversationScreen({ scenario, difficulty = 'facile', retryWords = [], onEnd, onAuthLost }) {
   const live = scenario.live || {};
   const systemInstruction =
-    scenario.buildSystemPrompt?.() || scenario.systemInstruction || '';
+    scenario.buildSystemPrompt?.(difficulty, retryWords) || scenario.systemInstruction || '';
+
+  const assets = useMemo(() => resolveAssets(scenario), [scenario]);
 
   const [sessionEnabled, setSessionEnabled] = useState(true);
   const [hasEnded, setHasEnded] = useState(false);
   const [panelOpen, setPanelOpen] = useState(true);
-  const [puppetUrl, setPuppetUrl] = useState(cachedPuppetUrl);
+  // For sideBySide puppets we run the source JPG through chroma-key
+  // before showing it. For pair puppets there's nothing to process —
+  // we use the imported PNGs directly.
+  const [puppetUrl, setPuppetUrl] = useState(
+    assets.puppetKind === 'sideBySide' && assets.sideBySideSrc && !assets.chromaKey
+      ? assets.sideBySideSrc
+      : null
+  );
   const [typedInput, setTypedInput] = useState('');
   const [wordMarks, setWordMarks] = useState({});
   const [enrichedLines, setEnrichedLines] = useState([]);
   // Flips on/off every ~160 ms while the hook's `speaking` is true, so
-  // we can alternate Aldo's closed and open mouth poses from the same
-  // side-by-side source JPG. Instant snap (no CSS transition) keeps the
-  // puppet-y feel.
+  // we can alternate the puppet's closed and open mouth poses. Instant
+  // snap (no CSS transition) keeps the puppet-y feel.
   const [mouthOpen, setMouthOpen] = useState(false);
   const [generatingDebrief, setGeneratingDebrief] = useState(false);
 
+  // Side-by-side puppets need a one-time chroma-key pass to drop their
+  // magenta backdrop. Pair puppets are already PNGs with transparent
+  // backgrounds, so this effect is a no-op for them.
   useEffect(() => {
-    if (cachedPuppetUrl) return;
+    if (assets.puppetKind !== 'sideBySide' || !assets.sideBySideSrc || !assets.chromaKey) return;
     let cancelled = false;
-    chromaKeyMagenta(nonnoAldoPuppet)
-      .then((url) => {
-        cachedPuppetUrl = url;
-        if (!cancelled) setPuppetUrl(url);
-      })
+    chromaKeyMagenta(assets.sideBySideSrc)
+      .then((url) => { if (!cancelled) setPuppetUrl(url); })
       .catch(() => { /* puppet just won't render */ });
     return () => { cancelled = true; };
-  }, []);
-  // NOTE: mouth-flap effect now lives AFTER the useGeminiLive destructure
-  // below. Previously it was right here, but it references `speaking`
-  // which the hook returns — reading it before the hook call threw a
-  // temporal-dead-zone ReferenceError at render time and blanked the
-  // screen after Andiamo.
+  }, [assets]);
 
   const {
     status,
@@ -193,9 +255,9 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
     onClosed: () => setHasEnded(true)
   });
 
-  // Mouth flap. While the hook says Aldo is speaking, toggle the mouth
-  // open/closed every ~160 ms. Clear to closed when speech stops so he
-  // doesn't freeze mid-syllable.
+  // Mouth flap. While the hook says the character is speaking, toggle
+  // the mouth open/closed every ~160 ms. Clear to closed when speech
+  // stops so they don't freeze mid-syllable.
   useEffect(() => {
     if (!speaking) {
       setMouthOpen(false);
@@ -318,7 +380,7 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
       if (cancelled) return;
 
       const characterKey = scenario.characterSaysKey || 'character_says';
-      const fallbackVoice = `${scenario.characterName || 'Nonno Aldo'}: buona partita!`;
+      const fallbackVoice = `${scenario.characterName || 'Character'}: alla prossima!`;
 
       // Merge user's tapped known/unknown marks into Claude's suggestions
       // so the learner's own feedback is always represented.
@@ -353,6 +415,7 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
     };
   }, [hasEnded, onEnd, onAuthLost, scenario, enrichedLines, collectMarkedWords]);
 
+  const characterName = scenario.characterName || 'Character';
   const statusLabel = {
     idle: 'Starting…',
     connecting: 'Connecting…',
@@ -360,6 +423,10 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
     closed: 'Conversation ended',
     error: 'Error'
   }[status] || status;
+
+  const openingHint =
+    live.openingHint ||
+    `Inizia con "Buongiorno!" o "Buonasera!" — ${characterName} ascolta mentre parli e risponde quando fai una pausa.`;
 
   return (
     <div className={`screen conversation-screen live-conversation-screen ${panelOpen ? 'panel-open' : ''}`}>
@@ -374,17 +441,26 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
             </div>
 
             <div className="live-stage">
-              <img
-                src={sanSiroBackdrop}
-                alt="San Siro biglietteria"
-                className="live-backdrop"
-              />
-              {puppetUrl && (
+              {assets.backdrop && (
+                <img
+                  src={assets.backdrop}
+                  alt={scenario.title}
+                  className="live-backdrop"
+                />
+              )}
+              {assets.puppetKind === 'sideBySide' && puppetUrl && (
                 <div
-                  className={`live-puppet ${status === 'connected' ? 'active' : ''} ${mouthOpen ? 'mouth-open' : ''}`}
+                  className={`live-puppet live-puppet-${scenario.id} ${status === 'connected' ? 'active' : ''} ${mouthOpen ? 'mouth-open' : ''}`}
                   style={{ backgroundImage: `url(${puppetUrl})` }}
-                  aria-label={scenario.characterName || 'Character'}
+                  aria-label={characterName}
                   role="img"
+                />
+              )}
+              {assets.puppetKind === 'pair' && assets.pairClosed && assets.pairOpen && (
+                <img
+                  src={mouthOpen ? assets.pairOpen : assets.pairClosed}
+                  alt={characterName}
+                  className={`live-puppet live-puppet-pair live-puppet-${scenario.id} ${status === 'connected' ? 'active' : ''}`}
                 />
               )}
               <div className="live-status-chip">
@@ -396,19 +472,19 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
             {error && <div className="warning">{error}</div>}
             {generatingDebrief && (
               <div className="live-generating-debrief">
-                Aldo segna i tuoi progressi... (generating debrief)
+                {characterName} segna i tuoi progressi... (generating debrief)
               </div>
             )}
 
             {displayLines.length === 0 && status === 'connected' && (
               <div className="live-empty-hint">
-                Dì "Buonasera!" o "Ecco il biglietto" — Aldo ascolta mentre parli e risponde quando fai una pausa.
+                {openingHint}
               </div>
             )}
             {displayLines.length > 0 && (
               <Transcript
                 lines={displayLines}
-                characterName={scenario.characterName || 'Character'}
+                characterName={characterName}
                 wordMarks={wordMarks}
                 onWordTap={handleWordTap}
               />
