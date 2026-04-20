@@ -24,6 +24,7 @@ export const mapLocations = {
   hotel:          { x: 77, y: 57, label: 'Hotel' },           // "Boutique hotel"
   hotelLive:      { x: 82, y: 53, label: 'Hotel (Live)' },    // temporary 2nd pin during Live rollout
   duomo:          { x: 48, y: 62, label: 'Duomo' },           // below cathedral
+  duomoLive:      { x: 52, y: 58, label: 'Duomo (Live)' },    // temporary 2nd pin during Live rollout
   // Lower row
   trattoria:      { x: 25, y: 73, label: 'Trattoria' },       // TRATTORIA awning
   navigli:        { x: 46, y: 74, label: 'Navigli' },         // on the canal

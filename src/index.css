@@ -161,6 +161,13 @@ p  { line-height: 1.55; color: var(--ink); }
   bottom: 0;
   height: 110%;
 }
+/* Francesca stands at the info point on the right side of the piazza
+   so the Duomo facade stays visible on the left. */
+.live-puppet-duomoLive {
+  right: 8%;
+  bottom: 0;
+  height: 110%;
+}
 
 /* The caffè and hotel backdrops are both panoramic (~3:1) — far
    shorter than San Siro's portrait-ish backdrop. Force the stage to
@@ -170,12 +177,14 @@ p  { line-height: 1.55; color: var(--ink); }
    the action is centered anyway). */
 .live-stage-caffeLive,
 .live-stage-hotelLive,
-.live-stage-metroLive {
+.live-stage-metroLive,
+.live-stage-duomoLive {
   aspect-ratio: 5 / 3;
 }
 .live-stage-caffeLive .live-backdrop,
 .live-stage-hotelLive .live-backdrop,
-.live-stage-metroLive .live-backdrop {
+.live-stage-metroLive .live-backdrop,
+.live-stage-duomoLive .live-backdrop {
   position: absolute;
   inset: 0;
   width: 100%;
