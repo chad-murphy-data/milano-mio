@@ -29,6 +29,7 @@ export const mapLocations = {
   trattoria:      { x: 25, y: 73, label: 'Trattoria' },       // TRATTORIA awning
   trattoriaLive:  { x: 30, y: 69, label: 'Trattoria (Live)' },// temporary 2nd pin during Live rollout
   navigli:        { x: 46, y: 74, label: 'Navigli' },         // on the canal
+  navigliLive:    { x: 51, y: 70, label: 'Navigli (Live)' },  // temporary 2nd pin during Live rollout
   bartolini:      { x: 62, y: 77, label: 'Bartolini' },       // MUDEC cube
   mercato:        { x: 18, y: 88, label: 'Mercato' },         // lower-left market
   mercatoLive:    { x: 23, y: 84, label: 'Mercato (Live)' },  // temporary 2nd pin during Live rollout

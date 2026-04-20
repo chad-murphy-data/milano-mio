@@ -182,6 +182,12 @@ p  { line-height: 1.55; color: var(--ink); }
   bottom: 0;
   height: 110%;
 }
+/* Sofia behind the bar (visible center of the Navigli backdrop). */
+.live-puppet-navigliLive {
+  right: 35%;
+  bottom: -2%;
+  height: 105%;
+}
 
 /* The caffè and hotel backdrops are both panoramic (~3:1) — far
    shorter than San Siro's portrait-ish backdrop. Force the stage to
@@ -194,7 +200,8 @@ p  { line-height: 1.55; color: var(--ink); }
 .live-stage-metroLive,
 .live-stage-duomoLive,
 .live-stage-mercatoLive,
-.live-stage-trattoriaLive {
+.live-stage-trattoriaLive,
+.live-stage-navigliLive {
   aspect-ratio: 5 / 3;
 }
 .live-stage-caffeLive .live-backdrop,
@@ -202,7 +209,8 @@ p  { line-height: 1.55; color: var(--ink); }
 .live-stage-metroLive .live-backdrop,
 .live-stage-duomoLive .live-backdrop,
 .live-stage-mercatoLive .live-backdrop,
-.live-stage-trattoriaLive .live-backdrop {
+.live-stage-trattoriaLive .live-backdrop,
+.live-stage-navigliLive .live-backdrop {
   position: absolute;
   inset: 0;
   width: 100%;
