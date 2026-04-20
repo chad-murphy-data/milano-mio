@@ -74,6 +74,26 @@ p  { line-height: 1.55; color: var(--ink); }
   align-items: center;
   gap: 8px;
 }
+/* Puppet. The source JPG packs both poses side-by-side (closed + open);
+   background-size 200%/auto + background-position 0 0 shows only the
+   left (closed-mouth) pose. When we add lip-sync we'll flip to 100% 0
+   on the "speaking" state. */
+.live-puppet {
+  position: absolute;
+  right: 6%;
+  bottom: -4%;
+  width: 28%;
+  aspect-ratio: 1 / 1.1;
+  background-size: 200% auto;
+  background-position: 0 50%;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 16px rgba(27, 23, 20, 0.35));
+  transition: transform 0.3s ease;
+}
+.live-puppet.active {
+  transform: translateY(-4px);
+}
 .live-dot {
   width: 8px;
   height: 8px;

@@ -9,7 +9,45 @@
 
 import { useEffect, useState } from 'react';
 import useGeminiLive from '../hooks/useGeminiLive.js';
-import sanSiroBackdrop from '../assets/scenes/sanSiro_exterior_backdrop.png';
+import sanSiroBackdrop from '../assets/scenes/sanSiroEntry_backdrop.png';
+import nonnoAldoPuppet from '../assets/scenes/nonno_aldo.jpg';
+
+// Chroma-key the puppet's magenta background once per mount and cache
+// the blob URL. Same pattern as TitleScreen — could be lifted into a
+// shared utility once we have three+ uses of it, but inlined here so
+// the Live scenario is self-contained.
+let cachedPuppetUrl = null;
+function chromaKeyMagenta(srcUrl) {
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      const data = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const px = data.data;
+      for (let i = 0; i < px.length; i += 4) {
+        const r = px[i], g = px[i + 1], b = px[i + 2];
+        const magentaScore = (r + b) / 2 - g;
+        if (magentaScore > 55 && r > 160 && b > 160) {
+          px[i + 3] = 0;
+        } else if (magentaScore > 40 && r > 150 && b > 150) {
+          const fade = (magentaScore - 40) / 15;
+          px[i + 3] = Math.round(px[i + 3] * (1 - Math.min(1, fade)));
+        }
+      }
+      ctx.putImageData(data, 0, 0);
+      canvas.toBlob((blob) => {
+        if (!blob) return reject(new Error('toBlob failed'));
+        resolve(URL.createObjectURL(blob));
+      }, 'image/png');
+    };
+    img.onerror = reject;
+    img.src = srcUrl;
+  });
+}
 
 // System prompts live on scenario modules. The screen reads the prompt
 // string and live-specific config (voice, silence, maxTurns) off the
@@ -21,6 +59,19 @@ export default function LiveConversationScreen({ scenario, onEnd, onAuthLost }) 
 
   const [sessionEnabled, setSessionEnabled] = useState(true);
   const [hasEnded, setHasEnded] = useState(false);
+  const [puppetUrl, setPuppetUrl] = useState(cachedPuppetUrl);
+
+  useEffect(() => {
+    if (cachedPuppetUrl) return;
+    let cancelled = false;
+    chromaKeyMagenta(nonnoAldoPuppet)
+      .then((url) => {
+        cachedPuppetUrl = url;
+        if (!cancelled) setPuppetUrl(url);
+      })
+      .catch(() => { /* silent fall-back: puppet just won't render */ });
+    return () => { cancelled = true; };
+  }, []);
 
   const {
     status,
@@ -70,7 +121,7 @@ export default function LiveConversationScreen({ scenario, onEnd, onAuthLost }) 
         debrief: {
           learned: [],
           retry: [],
-          [scenario.characterSaysKey || 'nonna_says']:
+          [scenario.characterSaysKey || 'character_says']:
             'Buona partita! (realtime voice session)',
           transitionTo: null
         },
@@ -106,6 +157,14 @@ export default function LiveConversationScreen({ scenario, onEnd, onAuthLost }) 
           alt="San Siro biglietteria"
           className="live-backdrop"
         />
+        {puppetUrl && (
+          <div
+            className={`live-puppet ${status === 'connected' ? 'active' : ''}`}
+            style={{ backgroundImage: `url(${puppetUrl})` }}
+            aria-label={scenario.characterName || 'Character'}
+            role="img"
+          />
+        )}
         <div className="live-status-chip">
           <span className={`live-dot ${status === 'connected' ? 'on' : ''}`} />
           {statusLabel}
@@ -121,7 +180,7 @@ export default function LiveConversationScreen({ scenario, onEnd, onAuthLost }) 
       <div className="live-transcript">
         {nonnaTranscript && (
           <div className="transcript-turn character">
-            <div className="transcript-who">Nonna</div>
+            <div className="transcript-who">{scenario.characterName || 'Character'}</div>
             <div className="transcript-text">{nonnaTranscript}</div>
           </div>
         )}
@@ -133,7 +192,7 @@ export default function LiveConversationScreen({ scenario, onEnd, onAuthLost }) 
         )}
         {!nonnaTranscript && !userTranscript && status === 'connected' && (
           <div className="transcript-hint">
-            Say "Ciao!" or "Ecco il biglietto" — the nonna listens while you talk and replies when you pause.
+            Say "Buonasera!" or "Ecco il biglietto" — he listens while you talk and replies when you pause.
           </div>
         )}
       </div>

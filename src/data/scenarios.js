@@ -51,7 +51,7 @@ export const scenarios = {
     '[Chad arrives at the entrance of Enrico Bartolini al MUDEC for their tasting menu reservation.]'),
   sanSiro: register(sanSiro, 'Vendor / Giuseppe', 'giuseppe_says',
     '[Chad arrives outside San Siro stadium on match day. The crowd is buzzing.]'),
-  sanSiroEntry: register(sanSiroEntry, 'Nonna', 'nonna_says',
+  sanSiroEntry: register(sanSiroEntry, 'Nonno Aldo', 'aldo_says',
     '[Chad arrives at the San Siro biglietteria booth, ticket in hand.]')
 };
 
