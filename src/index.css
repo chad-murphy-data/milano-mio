@@ -95,15 +95,13 @@ p  { line-height: 1.55; color: var(--ink); }
 .live-puppet[style*="background-image"].mouth-open {
   background-position: 100% 50%;
 }
-/* PNG-pair variant: a container <div> holds both pose <img>s stacked,
-   and CSS toggles which one is visible via the .mouth-open class. Both
-   images are always in the DOM (and therefore the browser cache) so
-   the flap doesn't flicker as it would with a single <img src=...>
-   that re-fetches on every swap. */
-.live-puppet-pair {
-  display: block;
-}
-.live-puppet-pair .puppet-pose {
+/* head/jaw variant — same lip-sync mechanism as the Claude PuppetStage:
+   the head image shows the puppet with mouth OPEN, the jaw overlay sits
+   over the mouth at the bbox from `*_jaw_meta.json`, and .open drops +
+   tilts the jaw with a smooth eased transition. Reads as a real flap,
+   not a swap. Inline percentage left/top/width/height come from the
+   meta JSON. */
+.live-puppet-headJaw .live-puppet-head {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -111,11 +109,23 @@ p  { line-height: 1.55; color: var(--ink); }
   object-fit: contain;
   object-position: center bottom;
   display: block;
+  z-index: 1;
   pointer-events: none;
 }
-.live-puppet-pair .puppet-pose-open { opacity: 0; }
-.live-puppet-pair.mouth-open .puppet-pose-closed { opacity: 0; }
-.live-puppet-pair.mouth-open .puppet-pose-open { opacity: 1; }
+.live-puppet-jaw {
+  position: absolute;
+  transform-origin: center top;
+  transform: translateY(0) rotate(0deg);
+  transition: transform 110ms cubic-bezier(0.34, 1.1, 0.6, 1);
+  z-index: 2;
+  will-change: transform;
+  pointer-events: none;
+}
+/* translateY in % is relative to the jaw's own height, so 22% drops it
+   far enough to reveal the open mouth interior on every character. */
+.live-puppet-jaw.open {
+  transform: translateY(22%) rotate(-1.5deg);
+}
 
 /* Per-scenario sizing + placement. Aldo stands at the INGRESSO kiosk
    on the left; Marco stands behind the bar counter on the right. */
@@ -130,16 +140,12 @@ p  { line-height: 1.55; color: var(--ink); }
    Marco taller than the entire stage. Anchor by `height` instead so
    he scales to the stage's vertical extent regardless of how short it
    gets on narrow viewports. */
-/* The pair-puppet container needs an explicit aspect-ratio so its width
-   derives from its height (children are absolutely positioned, so they
-   can't size the container themselves). 1:1.88 matches Marco's PNG
-   natural dimensions; object-fit: contain on the children handles any
-   slight per-pose variance without reflowing the container. */
+/* head/jaw container's aspect-ratio is set inline from the meta JSON
+   (per character), so this rule only handles placement + size. */
 .live-puppet-caffeLive {
   right: 6%;
   bottom: 0;
   height: 105%;
-  aspect-ratio: 1 / 1.88;
 }
 
 /* The caffè backdrop is panoramic (3:1) and far shorter than San Siro's

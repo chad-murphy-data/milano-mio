@@ -9,7 +9,7 @@
 // free, so we translate the Italian transcript on demand and cache the
 // result on the line.
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import useGeminiLive from '../hooks/useGeminiLive.js';
 import { sendMessage, AuthError } from '../utils/claudeApi.js';
 import BriefingPanel from '../components/BriefingPanel.jsx';
@@ -17,13 +17,16 @@ import Transcript from '../components/Transcript.jsx';
 
 // ── Asset lookups ────────────────────────────────────────────────
 // Vite globs so we don't hand-import per scenario. Backdrops follow
-// the same `*_backdrop.png` convention PuppetStage uses; puppet pairs
-// follow `*_closed.png` / `*_open.png` (already used by every character
-// in src/assets/puppets). The single `scenes/*.jpg` glob covers the
-// legacy side-by-side puppet sheet (Aldo's nonno_aldo.jpg).
+// the same `*_backdrop.png` convention PuppetStage uses. Default
+// (head/jaw) puppets follow `*_head.png` + `*_jaw.png` + `*_jaw_meta.json`
+// — same format the Claude conversation screen's PuppetStage uses, so
+// every character in src/assets/puppets/ already has the assets. The
+// single `scenes/*.jpg` glob covers the legacy side-by-side puppet
+// sheet (Aldo's nonno_aldo.jpg).
 const rawBackdrops = import.meta.glob('../assets/scenes/*_backdrop.png', { eager: true });
-const rawPuppetsClosed = import.meta.glob('../assets/puppets/*_closed.png', { eager: true });
-const rawPuppetsOpen = import.meta.glob('../assets/puppets/*_open.png', { eager: true });
+const rawHeads = import.meta.glob('../assets/puppets/*_head.png', { eager: true });
+const rawJaws = import.meta.glob('../assets/puppets/*_jaw.png', { eager: true });
+const rawJawMetas = import.meta.glob('../assets/puppets/*_jaw_meta.json', { eager: true });
 const rawSceneJpgs = import.meta.glob('../assets/scenes/*.jpg', { eager: true });
 
 function buildLookup(glob, suffix) {
@@ -36,8 +39,9 @@ function buildLookup(glob, suffix) {
   return map;
 }
 const backdrops = buildLookup(rawBackdrops, '_backdrop.png');
-const puppetsClosed = buildLookup(rawPuppetsClosed, '_closed.png');
-const puppetsOpen = buildLookup(rawPuppetsOpen, '_open.png');
+const heads = buildLookup(rawHeads, '_head.png');
+const jaws = buildLookup(rawJaws, '_jaw.png');
+const jawMetas = buildLookup(rawJawMetas, '_jaw_meta.json');
 const sceneJpgs = buildLookup(rawSceneJpgs, '.jpg');
 
 // Chroma-key the puppet's magenta background once per source URL and
@@ -154,16 +158,19 @@ Rules:
 
 // Resolve all assets the screen needs from the scenario. Two puppet
 // formats are supported:
-//   - 'pair': separate `*_closed.png` + `*_open.png` (Marco, Giulia, etc.).
-//             Defaults: characterKey = scenario.characterName lowercased.
+//   - 'headJaw' (default): a `*_head.png` showing the puppet with mouth
+//      open + a `*_jaw.png` chin overlay positioned via `*_jaw_meta.json`
+//      bbox. Lip-sync drops the jaw with a smooth eased transform — the
+//      same format the Claude PuppetStage uses, so every character in
+//      src/assets/puppets/ already has the assets.
 //   - 'sideBySide': single JPG with both poses laid out left|right, plus
-//                   optional chroma-key (Aldo's nonno_aldo.jpg).
+//      optional chroma-key (Aldo's nonno_aldo.jpg).
 function resolveAssets(scenario) {
   const live = scenario.live || {};
   const backdropKey = live.backdropKey || scenario.id;
   const backdrop = backdrops[backdropKey] || null;
 
-  const puppetCfg = live.puppet || { kind: 'pair' };
+  const puppetCfg = live.puppet || { kind: 'headJaw' };
   if (puppetCfg.kind === 'sideBySide') {
     const sceneKey = puppetCfg.sceneKey;
     return {
@@ -173,15 +180,16 @@ function resolveAssets(scenario) {
       chromaKey: puppetCfg.chromaKey || null
     };
   }
-  // 'pair' — default
+  // 'headJaw' — default
   const characterKey =
     puppetCfg.characterKey ||
     (scenario.characterName || '').toLowerCase().replace(/[^a-z0-9]/g, '');
   return {
     backdrop,
-    puppetKind: 'pair',
-    pairClosed: puppetsClosed[characterKey] || null,
-    pairOpen: puppetsOpen[characterKey] || null
+    puppetKind: 'headJaw',
+    headSrc: heads[characterKey] || null,
+    jawSrc: jaws[characterKey] || null,
+    jawMeta: jawMetas[characterKey] || null
   };
 }
 
@@ -206,10 +214,13 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
   const [typedInput, setTypedInput] = useState('');
   const [wordMarks, setWordMarks] = useState({});
   const [enrichedLines, setEnrichedLines] = useState([]);
-  // Flips on/off every ~160 ms while the hook's `speaking` is true, so
-  // we can alternate the puppet's closed and open mouth poses. Instant
-  // snap (no CSS transition) keeps the puppet-y feel.
+  // Drives the lip-sync. For sideBySide puppets it's the closed/open
+  // background-position swap (snap, no transition). For headJaw puppets
+  // it's the .open class on the jaw overlay, which transforms with a
+  // smooth eased transition — randomized timing (matching PuppetStage)
+  // gives the flap a natural, non-mechanical feel.
   const [mouthOpen, setMouthOpen] = useState(false);
+  const mouthOpenRef = useRef(false);
   const [generatingDebrief, setGeneratingDebrief] = useState(false);
 
   // Side-by-side puppets need a one-time chroma-key pass to drop their
@@ -255,17 +266,29 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
     onClosed: () => setHasEnded(true)
   });
 
-  // Mouth flap. While the hook says the character is speaking, toggle
-  // the mouth open/closed every ~160 ms. Clear to closed when speech
-  // stops so they don't freeze mid-syllable.
+  // Mouth flap. While the hook says the character is speaking, alternate
+  // open/closed with randomized hold times — open ~120-280ms, closed
+  // ~80-180ms — for a natural, non-metronome feel. Matches the lip-sync
+  // PuppetStage uses in the Claude conversation screen. Clear to closed
+  // when speech stops so the puppet doesn't freeze mid-syllable.
   useEffect(() => {
     if (!speaking) {
       setMouthOpen(false);
-      return;
+      mouthOpenRef.current = false;
+      return undefined;
     }
-    setMouthOpen(true);
-    const id = setInterval(() => setMouthOpen((m) => !m), 160);
-    return () => clearInterval(id);
+    let timeout;
+    const flap = () => {
+      const next = !mouthOpenRef.current;
+      mouthOpenRef.current = next;
+      setMouthOpen(next);
+      const delay = next
+        ? 120 + Math.random() * 160
+        : 80 + Math.random() * 100;
+      timeout = setTimeout(flap, delay);
+    };
+    timeout = setTimeout(flap, 50);
+    return () => clearTimeout(timeout);
   }, [speaking]);
 
   // Mirror `lines` into a local state so we can mutate english glosses as
@@ -456,18 +479,39 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
                   role="img"
                 />
               )}
-              {assets.puppetKind === 'pair' && assets.pairClosed && assets.pairOpen && (
+              {assets.puppetKind === 'headJaw' && assets.headSrc && assets.jawSrc && assets.jawMeta && (
                 <div
-                  className={`live-puppet live-puppet-pair live-puppet-${scenario.id} ${status === 'connected' ? 'active' : ''} ${mouthOpen ? 'mouth-open' : ''}`}
+                  className={`live-puppet live-puppet-headJaw live-puppet-${scenario.id} ${status === 'connected' ? 'active' : ''}`}
                   aria-label={characterName}
                   role="img"
+                  // Container aspect-ratio comes from the meta canvas so
+                  // the bbox %s below align with the head image regardless
+                  // of which character is rendering. Per-scenario CSS
+                  // only needs to set placement (right/bottom) + size
+                  // (height).
+                  style={{
+                    aspectRatio: `${assets.jawMeta.canvas.width} / ${assets.jawMeta.canvas.height}`
+                  }}
                 >
-                  {/* Both poses stacked + always loaded; CSS opacity
-                      toggles which one is visible. Avoids the swap-flicker
-                      a single <img src=...> would have when the src changes
-                      every ~160ms during the lip flap. */}
-                  <img src={assets.pairClosed} alt="" className="puppet-pose puppet-pose-closed" />
-                  <img src={assets.pairOpen} alt="" className="puppet-pose puppet-pose-open" />
+                  {/* The head image shows the puppet with mouth OPEN; the
+                      jaw image overlays the open-mouth area at the bbox
+                      from `*_jaw_meta.json`. Default state covers the
+                      mouth (puppet looks closed); .open class drops + tilts
+                      the jaw to reveal the teeth behind. Smooth transform
+                      transition reads as a real lip flap, not a swap. */}
+                  <img src={assets.headSrc} alt="" className="live-puppet-head" />
+                  <img
+                    src={assets.jawSrc}
+                    alt=""
+                    aria-hidden="true"
+                    className={`live-puppet-jaw ${mouthOpen ? 'open' : ''}`}
+                    style={{
+                      left: `${(assets.jawMeta.jawBbox.left / assets.jawMeta.canvas.width) * 100}%`,
+                      top: `${(assets.jawMeta.jawBbox.top / assets.jawMeta.canvas.height) * 100}%`,
+                      width: `${(assets.jawMeta.jawBbox.width / assets.jawMeta.canvas.width) * 100}%`,
+                      height: `${(assets.jawMeta.jawBbox.height / assets.jawMeta.canvas.height) * 100}%`
+                    }}
+                  />
                 </div>
               )}
               <div className="live-status-chip">
