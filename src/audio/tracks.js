@@ -12,11 +12,15 @@
 
 import titleUrl from '../assets/audio/title.mp3';
 import mapLoopUrl from '../assets/audio/map_loop.mp3';
+import magnificoRagazzoUrl from '../assets/audio/magnifico_ragazzo.mp3';
 
 export const TRACKS = {
   title: titleUrl,        // Hero theme — title card + picker screens
   mapLoop: mapLoopUrl,    // City-stroll loop under the world map
   scenarioAmbient: null,  // Generic café/street bed for briefings
   cafeBed: null,          // Bar ambience for Conversazione Libera
-  debriefBed: null,       // Soft resolution loop after a conversation
+  // Magnifico Ragazzo — celebratory recap song after a conversation.
+  // Plays during both the story-mode debrief and the Conversazione
+  // Libera debrief (same `debriefBed` slot in scenes.js).
+  debriefBed: magnificoRagazzoUrl,
 };
