@@ -16,6 +16,7 @@ export const mapLocations = {
   casaMilanLive:  { x: 33, y: 21, label: 'Casa Milan (Live)' }, // temporary 2nd pin during Live rollout
   // Middle row
   viaDellaSpigas: { x: 61, y: 47, label: 'Via della Spiga' }, // right of Duomo
+  viaDellaSpigasLive: { x: 66, y: 43, label: 'Via della Spiga (Live)' }, // temporary 2nd pin during Live rollout
   metro:          { x: 30, y: 54, label: 'Metro' },           // "Metro Cadorna"
   metroLive:      { x: 34, y: 50, label: 'Metro (Live)' },    // temporary 2nd pin during Live rollout
   sanSiro:        { x: 9,  y: 60, label: 'San Siro' },        // stadium, far left

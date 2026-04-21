@@ -223,6 +223,13 @@ p  { line-height: 1.55; color: var(--ink); }
   bottom: 0;
   height: 110%;
 }
+/* Valentina near the entrance display — slightly left so the mirror +
+   hangers + clothes rack stay visible to the right (the "shop" feel). */
+.live-puppet-viaDellaSpigasLive {
+  left: 6%;
+  bottom: 0;
+  height: 110%;
+}
 
 /* The caffè and hotel backdrops are both panoramic (~3:1) — far
    shorter than San Siro's portrait-ish backdrop. Force the stage to
@@ -241,7 +248,8 @@ p  { line-height: 1.55; color: var(--ink); }
 .live-stage-sanSiroVendorLive,
 .live-stage-sanSiroMatchLive,
 .live-stage-bartoliniLive,
-.live-stage-bartoliniSommelierLive {
+.live-stage-bartoliniSommelierLive,
+.live-stage-viaDellaSpigasLive {
   aspect-ratio: 5 / 3;
 }
 .live-stage-caffeLive .live-backdrop,
@@ -255,7 +263,8 @@ p  { line-height: 1.55; color: var(--ink); }
 .live-stage-sanSiroVendorLive .live-backdrop,
 .live-stage-sanSiroMatchLive .live-backdrop,
 .live-stage-bartoliniLive .live-backdrop,
-.live-stage-bartoliniSommelierLive .live-backdrop {
+.live-stage-bartoliniSommelierLive .live-backdrop,
+.live-stage-viaDellaSpigasLive .live-backdrop {
   position: absolute;
   inset: 0;
   width: 100%;
