@@ -209,6 +209,20 @@ p  { line-height: 1.55; color: var(--ink); }
   bottom: 0;
   height: 110%;
 }
+/* Alessandro at the maître's podium — left side so the dining tables
+   stay visible to the right. */
+.live-puppet-bartoliniLive {
+  left: 6%;
+  bottom: 0;
+  height: 110%;
+}
+/* Elena (sommelier) tableside — slightly right so the dining setup
+   stays visible to the left and she's "at the table". */
+.live-puppet-bartoliniSommelierLive {
+  right: 8%;
+  bottom: 0;
+  height: 110%;
+}
 
 /* The caffè and hotel backdrops are both panoramic (~3:1) — far
    shorter than San Siro's portrait-ish backdrop. Force the stage to
@@ -225,7 +239,9 @@ p  { line-height: 1.55; color: var(--ink); }
 .live-stage-navigliLive,
 .live-stage-casaMilanLive,
 .live-stage-sanSiroVendorLive,
-.live-stage-sanSiroMatchLive {
+.live-stage-sanSiroMatchLive,
+.live-stage-bartoliniLive,
+.live-stage-bartoliniSommelierLive {
   aspect-ratio: 5 / 3;
 }
 .live-stage-caffeLive .live-backdrop,
@@ -237,13 +253,95 @@ p  { line-height: 1.55; color: var(--ink); }
 .live-stage-navigliLive .live-backdrop,
 .live-stage-casaMilanLive .live-backdrop,
 .live-stage-sanSiroVendorLive .live-backdrop,
-.live-stage-sanSiroMatchLive .live-backdrop {
+.live-stage-sanSiroMatchLive .live-backdrop,
+.live-stage-bartoliniLive .live-backdrop,
+.live-stage-bartoliniSommelierLive .live-backdrop {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
+}
+
+/* IntermezzoScreen — between two chained Live phases (e.g. bartoliniLive
+   handing off to bartoliniSommelierLive). A simple centered card with
+   the incoming character + a brief narration + Continua button. */
+.intermezzo-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 24px;
+  background: var(--bg);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.intermezzo-screen.revealed {
+  opacity: 1;
+}
+.intermezzo-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 32px;
+  max-width: 720px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 12px 40px rgba(27, 23, 20, 0.18);
+}
+.intermezzo-puppet {
+  width: 180px;
+  height: auto;
+  flex-shrink: 0;
+  filter: drop-shadow(0 6px 12px rgba(27, 23, 20, 0.2));
+}
+.intermezzo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+}
+.intermezzo-character {
+  margin: 0;
+  font-size: 28px;
+  color: var(--ink);
+}
+.intermezzo-narration {
+  margin: 0;
+  font-style: italic;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.intermezzo-continue {
+  align-self: flex-start;
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-family: inherit;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+.intermezzo-continue:hover {
+  filter: brightness(1.05);
+}
+@media (max-width: 600px) {
+  .intermezzo-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 24px;
+  }
+  .intermezzo-text {
+    align-items: center;
+  }
+  .intermezzo-continue {
+    align-self: center;
+  }
 }
 .live-dot {
   width: 8px;

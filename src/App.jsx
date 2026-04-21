@@ -7,6 +7,7 @@ import MapScreen from './screens/MapScreen.jsx';
 import BriefingScreen from './screens/BriefingScreen.jsx';
 import ConversationScreen from './screens/ConversationScreen.jsx';
 import LiveConversationScreen from './screens/LiveConversationScreen.jsx';
+import IntermezzoScreen from './screens/IntermezzoScreen.jsx';
 import DebriefScreen from './screens/DebriefScreen.jsx';
 import VocabularyDashboard from './screens/VocabularyDashboard.jsx';
 import CLEntryScreen from './screens/ConversazioneLibera/EntryScreen.jsx';
@@ -140,26 +141,90 @@ export default function App() {
     fadeThen(() => go('conversation', route.params));
   };
 
-  const handleStoryEnd = ({ debrief, transcript }) => {
-    const { scenarioId, difficulty } = route.params;
-    const scenario = getScenario(scenarioId);
+  // Multi-scenario chain support — for scenarios that auto-hand off to a
+  // sister scenario mid-evening (e.g. bartoliniLive → bartoliniSommelierLive
+  // when Elena the sommelier arrives). Each phase generates its own debrief
+  // against its own transcript; we accumulate learned/retry across phases
+  // and use the LAST phase's character_says + the chain root scenarioId for
+  // the saved session.
+  const mergeChainPhase = (accumulator, scenario, debrief, transcript) => {
     const characterSays =
       debrief?.[scenario?.characterSaysKey] || debrief?.marco_says || '';
+    return {
+      chainRootId: accumulator?.chainRootId || scenario.id,
+      learned: [...(accumulator?.learned || []), ...(debrief?.learned || [])],
+      retry: [...(accumulator?.retry || []), ...(debrief?.retry || [])],
+      // Show the last (closing) character's voice in the final debrief.
+      lastCharacterSays: characterSays,
+      lastCharacterSaysKey: scenario?.characterSaysKey,
+      transcript: [...(accumulator?.transcript || []), ...transcript]
+    };
+  };
 
+  const handleStoryEnd = ({ debrief, transcript }) => {
+    const { scenarioId, difficulty, chainAccumulator } = route.params;
+    const scenario = getScenario(scenarioId);
+    const merged = mergeChainPhase(chainAccumulator, scenario, debrief, transcript);
+
+    // If this phase chains to another, hand off to the intermezzo instead
+    // of running the debrief. The accumulator carries learned/retry forward
+    // so the final debrief covers the whole evening.
+    const chainTo = scenario?.live?.chainTo;
+    if (chainTo) {
+      const nextScenario = getScenario(chainTo);
+      go('intermezzo', {
+        toScenarioId: chainTo,
+        toScenario: nextScenario,
+        intermezzoText: scenario.live.intermezzoText || '',
+        difficulty,
+        retryWords: route.params.retryWords,
+        chainAccumulator: merged
+      });
+      return;
+    }
+
+    // Final phase — build the session against the accumulated chain (or just
+    // this single scenario if no chain was used).
+    const finalLocation = merged.chainRootId;
+    const finalScenario = getScenario(finalLocation);
     const session = {
       id: crypto.randomUUID?.() || String(Date.now()),
       date: new Date().toISOString(),
-      location: scenarioId,
+      location: finalLocation,
       difficulty,
-      learned: debrief?.learned || [],
-      retry: debrief?.retry || [],
-      character_says: characterSays,
+      learned: merged.learned,
+      retry: merged.retry,
+      character_says: merged.lastCharacterSays,
       transitionTo: debrief?.transitionTo || null,
-      transcript
+      transcript: merged.transcript
     };
     saveSession(session);
-    saveLastLocation(scenarioId);
-    go('debrief', { scenarioId, debrief: { ...debrief, character_says: characterSays }, transcript });
+    saveLastLocation(finalLocation);
+
+    // Build a debrief shape DebriefScreen expects — the closing character's
+    // voice key gets the final character_says, plus a generic key for fallback.
+    const finalDebrief = {
+      ...debrief,
+      learned: merged.learned,
+      retry: merged.retry,
+      character_says: merged.lastCharacterSays,
+      [merged.lastCharacterSaysKey]: merged.lastCharacterSays
+    };
+    go('debrief', {
+      scenarioId: finalLocation,
+      debrief: finalDebrief,
+      transcript: merged.transcript
+    });
+  };
+
+  const handleIntermezzoContinue = () => {
+    const { toScenarioId, difficulty, retryWords, chainAccumulator } = route.params;
+    fadeThen(() => go('conversation', {
+      scenarioId: toScenarioId,
+      difficulty,
+      retryWords,
+      chainAccumulator
+    }));
   };
 
   // ---------------------------------------------------------------------------
@@ -315,6 +380,14 @@ export default function App() {
           retryWords={params.retryWords}
           onEnd={handleStoryEnd}
           onAuthLost={handleAuthLost}
+        />
+      )}
+
+      {screen === 'intermezzo' && params.toScenario && (
+        <IntermezzoScreen
+          toScenario={params.toScenario}
+          intermezzoText={params.intermezzoText}
+          onContinue={handleIntermezzoContinue}
         />
       )}
 

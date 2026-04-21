@@ -34,6 +34,7 @@ export const mapLocations = {
   navigli:        { x: 46, y: 74, label: 'Navigli' },         // on the canal
   navigliLive:    { x: 51, y: 70, label: 'Navigli (Live)' },  // temporary 2nd pin during Live rollout
   bartolini:      { x: 62, y: 77, label: 'Bartolini' },       // MUDEC cube
+  bartoliniLive:  { x: 67, y: 73, label: 'Bartolini (Live)' },// temporary 2nd pin during Live rollout
   mercato:        { x: 18, y: 88, label: 'Mercato' },         // lower-left market
   mercatoLive:    { x: 23, y: 84, label: 'Mercato (Live)' },  // temporary 2nd pin during Live rollout
 };

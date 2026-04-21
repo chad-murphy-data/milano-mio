@@ -13,6 +13,8 @@ import * as navigliLive from './navigliLive.js';
 import * as casaMilanLive from './casaMilanLive.js';
 import * as sanSiroVendorLive from './sanSiroVendorLive.js';
 import * as sanSiroMatchLive from './sanSiroMatchLive.js';
+import * as bartoliniLive from './bartoliniLive.js';
+import * as bartoliniSommelierLive from './bartoliniSommelierLive.js';
 import * as duomo from './duomo.js';
 import * as metro from './metro.js';
 import * as mercato from './mercato.js';
@@ -75,6 +77,10 @@ export const scenarios = {
     '[Chad enters Casa Milan. Paolo is arranging jerseys near the entrance and lights up at a fellow fan.]'),
   bartolini: register(bartolini, 'Alessandro', 'alessandro_says',
     '[Chad arrives at the entrance of Enrico Bartolini al MUDEC for their tasting menu reservation.]'),
+  bartoliniLive: register(bartoliniLive, 'Alessandro', 'alessandro_says',
+    '[Chad arrives at Enrico Bartolini al MUDEC. Alessandro greets him at the podium with measured warmth.]'),
+  bartoliniSommelierLive: register(bartoliniSommelierLive, 'Elena', 'elena_says',
+    '[Elena, the sommelier, arrives at the table to begin the wine pairing.]'),
   sanSiro: register(sanSiro, 'Vendor / Giuseppe', 'giuseppe_says',
     '[Chad arrives outside San Siro stadium on match day. The crowd is buzzing.]'),
   sanSiroVendorLive: register(sanSiroVendorLive, 'Vendor', 'vendor_says',
@@ -89,7 +95,9 @@ export const scenarios = {
 export const storyOrder = [
   'hotel', 'hotelLive', 'caffe', 'caffeLive', 'metro', 'metroLive', 'duomo', 'duomoLive', 'mercato', 'mercatoLive',
   'trattoria', 'trattoriaLive', 'navigli', 'navigliLive', 'viaDellaSpigas', 'casaMilan', 'casaMilanLive',
-  'bartolini', 'sanSiroEntry', 'sanSiro', 'sanSiroVendorLive', 'sanSiroMatchLive'
+  'bartolini', 'bartoliniLive', 'sanSiroEntry', 'sanSiro', 'sanSiroVendorLive', 'sanSiroMatchLive'
+  // NOTE: bartoliniSommelierLive intentionally NOT in storyOrder — it's
+  // chain-only, reached via bartoliniLive's chainTo, not directly clickable.
 ];
 
 export function getScenario(id) {
