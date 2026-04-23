@@ -203,7 +203,11 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
 
   const [sessionEnabled, setSessionEnabled] = useState(true);
   const [hasEnded, setHasEnded] = useState(false);
-  const [panelOpen, setPanelOpen] = useState(true);
+  // Briefing drawer defaults CLOSED in the full-bleed layout — the user
+  // already saw the briefing on the previous screen and the drawer
+  // overlays the words sidebar when open. They can pop it back any time
+  // via the toggle pinned to the right edge.
+  const [panelOpen, setPanelOpen] = useState(false);
   // For sideBySide puppets we run the source JPG through chroma-key
   // before showing it. For pair puppets there's nothing to process —
   // we use the imported PNGs directly.
@@ -465,16 +469,15 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
 
   return (
     <div className={`screen conversation-screen live-conversation-screen ${panelOpen ? 'panel-open' : ''}`}>
+      {/* Stage — full-bleed backdrop + puppet + scene header overlay.
+          Wrapped in the legacy .conversation-main / .puppet-theater /
+          .theater-inner divs so any inherited Claude conversation CSS
+          still cascades; the scoped .live-conversation-screen rules
+          flatten them via `display: contents` so layout-wise they
+          don't add anything in this screen. */}
       <div className="conversation-main">
         <div className="puppet-theater">
           <div className="theater-inner">
-            <div className="scene-header">
-              <h2>{scenario.title}</h2>
-              <button className="end-btn" onClick={handleEndClick} disabled={hasEnded}>
-                Termina
-              </button>
-            </div>
-
             <div className={`live-stage live-stage-${scenario.id}`}>
               {assets.backdrop && (
                 <img
@@ -496,21 +499,10 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
                   className={`live-puppet live-puppet-headJaw live-puppet-${scenario.id} ${status === 'connected' ? 'active' : ''}`}
                   aria-label={characterName}
                   role="img"
-                  // Container aspect-ratio comes from the meta canvas so
-                  // the bbox %s below align with the head image regardless
-                  // of which character is rendering. Per-scenario CSS
-                  // only needs to set placement (right/bottom) + size
-                  // (height).
                   style={{
                     aspectRatio: `${assets.jawMeta.canvas.width} / ${assets.jawMeta.canvas.height}`
                   }}
                 >
-                  {/* The head image shows the puppet with mouth OPEN; the
-                      jaw image overlays the open-mouth area at the bbox
-                      from `*_jaw_meta.json`. Default state covers the
-                      mouth (puppet looks closed); .open class drops + tilts
-                      the jaw to reveal the teeth behind. Smooth transform
-                      transition reads as a real lip flap, not a swap. */}
                   <img src={assets.headSrc} alt="" className="live-puppet-head" />
                   <img
                     src={assets.jawSrc}
@@ -532,68 +524,87 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
               </div>
             </div>
 
-            {error && <div className="warning">{error}</div>}
-            {generatingDebrief && (
-              <div className="live-generating-debrief">
-                {characterName} segna i tuoi progressi... (generating debrief)
-              </div>
-            )}
-
-            {displayLines.length === 0 && status === 'connected' && (
-              <div className="live-empty-hint">
-                {openingHint}
-              </div>
-            )}
-            {displayLines.length > 0 && (
-              <Transcript
-                lines={displayLines}
-                characterName={characterName}
-                wordMarks={wordMarks}
-                onWordTap={handleWordTap}
-              />
-            )}
-
-            {/* Static whisper hint — advances by turn count along the
-                scenario's whisperHints array. Live can't emit AI-driven
-                [HINT: ...] tags the way Claude does, so we cycle the
-                statics as a rough scaffolding instead. Clamped to the
-                last hint once the user runs past the array length. */}
-            {status === 'connected' && currentWhisperHint && (
-              <WhisperPrompt hint={currentWhisperHint} />
-            )}
-
-            <div className="input-row">
-              <button
-                className={`mic-toggle ${micOn ? 'on' : 'off'}`}
-                onClick={toggleMic}
-                disabled={status !== 'connected'}
-              >
-                {micOn ? '🎙 Mic open' : '🔇 Muted'}
+            {/* Scene header is rendered AFTER the stage so it sits as an
+                overlay (positioned absolute via CSS) on top of the
+                backdrop. */}
+            <div className="scene-header">
+              <h2>{scenario.title}</h2>
+              <button className="end-btn" onClick={handleEndClick} disabled={hasEnded}>
+                Termina
               </button>
-              <span className="input-divider">oppure</span>
-              <form className="type-form" onSubmit={handleTypedSubmit}>
-                <input
-                  type="text"
-                  className="type-input"
-                  placeholder="Scrivi in italiano..."
-                  value={typedInput}
-                  onChange={(e) => setTypedInput(e.target.value)}
-                  disabled={status !== 'connected'}
-                />
-                <button
-                  type="submit"
-                  className="type-send"
-                  disabled={status !== 'connected' || !typedInput.trim()}
-                >
-                  Invia
-                </button>
-              </form>
             </div>
           </div>
         </div>
       </div>
 
+      {/* Words sidebar — translucent dark column pinned to the right.
+          Holds transient callouts (warning/empty hint/generating debrief),
+          the scrolling transcript, the whisper hint, and the input row. */}
+      <aside className="live-side">
+        {error && <div className="warning">{error}</div>}
+        {generatingDebrief && (
+          <div className="live-generating-debrief">
+            {characterName} segna i tuoi progressi... (generating debrief)
+          </div>
+        )}
+
+        {displayLines.length === 0 && status === 'connected' && (
+          <div className="live-empty-hint">
+            {openingHint}
+          </div>
+        )}
+        {displayLines.length > 0 && (
+          <Transcript
+            lines={displayLines}
+            characterName={characterName}
+            wordMarks={wordMarks}
+            onWordTap={handleWordTap}
+          />
+        )}
+
+        {/* Static whisper hint — advances by turn count along the
+            scenario's whisperHints array. Live can't emit AI-driven
+            [HINT: ...] tags the way Claude does, so we cycle the
+            statics as a rough scaffolding instead. Clamped to the
+            last hint once the user runs past the array length. */}
+        {status === 'connected' && currentWhisperHint && (
+          <WhisperPrompt hint={currentWhisperHint} />
+        )}
+
+        <div className="input-row">
+          <button
+            className={`mic-toggle ${micOn ? 'on' : 'off'}`}
+            onClick={toggleMic}
+            disabled={status !== 'connected'}
+          >
+            {micOn ? '🎙' : '🔇'}
+          </button>
+          <span className="input-divider">oppure</span>
+          <form className="type-form" onSubmit={handleTypedSubmit}>
+            <input
+              type="text"
+              className="type-input"
+              placeholder="Scrivi in italiano..."
+              value={typedInput}
+              onChange={(e) => setTypedInput(e.target.value)}
+              disabled={status !== 'connected'}
+            />
+            <button
+              type="submit"
+              className="type-send"
+              disabled={status !== 'connected' || !typedInput.trim()}
+            >
+              Invia
+            </button>
+          </form>
+        </div>
+      </aside>
+
+      {/* Briefing renders as a fixed-position drawer over the words
+          sidebar (via the `live` prop). Default closed; user toggles
+          via the button pinned to the drawer's left edge. */}
       <BriefingPanel
+        live
         open={panelOpen}
         onToggle={() => setPanelOpen((p) => !p)}
         scenario={scenario}
