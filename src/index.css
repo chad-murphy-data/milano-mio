@@ -262,10 +262,14 @@ p  { line-height: 1.55; color: var(--ink); }
   display: contents;
 }
 
-/* Stage fills the viewport */
+/* Stage fills the viewport to the LEFT of the words sidebar — narrowing
+   here (rather than letting the stage span 100vw with the sidebar
+   overlaying it) keeps right-anchored puppets visible instead of being
+   covered by the sidebar. Mobile media query below resets to 100vw
+   since the sidebar stacks underneath on small screens. */
 .live-conversation-screen .live-stage {
   position: relative;
-  width: 100vw;
+  width: calc(100vw - 360px);
   height: 100vh;
   border: none;
   border-radius: 0;
@@ -330,10 +334,13 @@ p  { line-height: 1.55; color: var(--ink); }
 }
 .live-conversation-screen .end-btn:hover { background: rgba(0, 0, 0, 0.5); }
 
-/* Status chip stays in its corner but ride above the scene-header z-index */
+/* Status chip floats in the stage's bottom-right corner. Top-right is
+   already occupied by the scene-header (title + Termina); putting it
+   bottom-right gives both elements room. */
 .live-conversation-screen .live-status-chip {
-  top: 14px;
-  right: 380px;
+  top: auto;
+  bottom: 14px;
+  right: 14px;
   z-index: 11;
 }
 
