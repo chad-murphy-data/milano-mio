@@ -471,7 +471,12 @@ p  { line-height: 1.55; color: var(--ink); }
   overflow: visible;
 }
 .briefing-panel.live-drawer.closed {
-  /* Slide off-screen but leave the toggle peeking (36px wide handle) */
+  /* Slide off-screen but leave the toggle peeking (36px wide handle).
+     Re-assert width here because the older `.briefing-panel.closed`
+     rule below shrinks the panel to 36px — same specificity, but
+     defined later in the file, so it would win and yank the drawer
+     entirely off-screen. */
+  width: 380px;
   right: -344px;
 }
 .briefing-panel.live-drawer .panel-toggle {
