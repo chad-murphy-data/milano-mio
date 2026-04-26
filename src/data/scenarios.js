@@ -1,9 +1,7 @@
 // Scenario registry — single lookup point for all story mode scenarios.
 // Screens receive a scenario object as a prop; they never import data files directly.
 
-import * as caffe from './caffe.js';
 import * as caffeLive from './caffeLive.js';
-import * as hotel from './hotel.js';
 import * as hotelLive from './hotelLive.js';
 import * as metroLive from './metroLive.js';
 import * as duomoLive from './duomoLive.js';
@@ -16,15 +14,6 @@ import * as sanSiroMatchLive from './sanSiroMatchLive.js';
 import * as bartoliniLive from './bartoliniLive.js';
 import * as bartoliniSommelierLive from './bartoliniSommelierLive.js';
 import * as viaDellaSpigasLive from './viaDellaSpigasLive.js';
-import * as duomo from './duomo.js';
-import * as metro from './metro.js';
-import * as mercato from './mercato.js';
-import * as trattoria from './trattoria.js';
-import * as navigli from './navigli.js';
-import * as viaDellaSpigas from './viaDellaSpigas.js';
-import * as bartolini from './bartolini.js';
-import * as casaMilan from './casaMilan.js';
-import * as sanSiro from './sanSiro.js';
 import * as sanSiroEntry from './sanSiroEntry.js';
 
 function register(mod, characterName, characterSaysKey, stageDirection) {
@@ -42,50 +31,28 @@ function register(mod, characterName, characterSaysKey, stageDirection) {
 }
 
 export const scenarios = {
-  hotel: register(hotel, 'Giulia', 'giulia_says',
-    '[Chad arrives at the hotel reception desk with luggage.]'),
   hotelLive: register(hotelLive, 'Giulia', 'giulia_says',
     '[Chad arrives at the hotel reception desk with luggage. Giulia is finishing a phone call.]'),
-  caffe: register(caffe, 'Marco', 'marco_says',
-    '[Chad walks up to the bar.]'),
   caffeLive: register(caffeLive, 'Marco', 'marco_says',
     '[Chad walks up to the bar. Marco is pulling shots.]'),
-  metro: register(metro, 'Davide', 'davide_says',
-    '[Chad is standing at a ticket machine in Cadorna metro station, looking at the map.]'),
   metroLive: register(metroLive, 'Davide', 'davide_says',
     '[Chad is standing at a ticket machine in Cadorna metro station. Davide notices and offers to help.]'),
-  duomo: register(duomo, 'Francesca', 'francesca_says',
-    '[Chad approaches the tourist information point in Piazza del Duomo.]'),
   duomoLive: register(duomoLive, 'Francesca', 'francesca_says',
     '[Chad approaches the tourist information point in Piazza del Duomo. Francesca welcomes him.]'),
-  mercato: register(mercato, 'Rosa', 'rosa_says',
-    '[Chad approaches a market stall piled high with fresh produce, cheese, and cured meats.]'),
   mercatoLive: register(mercatoLive, 'Rosa', 'rosa_says',
     '[Chad approaches Rosa\'s market stall on a weekday morning. Rosa beams.]'),
-  trattoria: register(trattoria, 'Lorenzo', 'lorenzo_says',
-    '[Chad arrives at the trattoria entrance for their dinner reservation.]'),
   trattoriaLive: register(trattoriaLive, 'Lorenzo', 'lorenzo_says',
     '[Chad arrives at the trattoria entrance for their dinner reservation. Lorenzo greets them at the door.]'),
-  navigli: register(navigli, 'Sofia', 'sofia_says',
-    '[Chad sits down at a canal-side table at a bar in the Navigli district, early evening.]'),
   navigliLive: register(navigliLive, 'Sofia', 'sofia_says',
     '[Chad sits down at a canal-side table at a bar in the Navigli district. Sofia approaches with a warm welcome.]'),
-  viaDellaSpigas: register(viaDellaSpigas, 'Valentina', 'valentina_says',
-    '[Chad enters an elegant boutique on Via della Spiga.]'),
   viaDellaSpigasLive: register(viaDellaSpigasLive, 'Valentina', 'valentina_says',
     '[Chad enters an elegant boutique on Via della Spiga. Valentina greets him from a display near the entrance.]'),
-  casaMilan: register(casaMilan, 'Paolo', 'paolo_says',
-    '[Chad enters the Casa Milan museum and merch shop.]'),
   casaMilanLive: register(casaMilanLive, 'Paolo', 'paolo_says',
     '[Chad enters Casa Milan. Paolo is arranging jerseys near the entrance and lights up at a fellow fan.]'),
-  bartolini: register(bartolini, 'Alessandro', 'alessandro_says',
-    '[Chad arrives at the entrance of Enrico Bartolini al MUDEC for their tasting menu reservation.]'),
   bartoliniLive: register(bartoliniLive, 'Alessandro', 'alessandro_says',
     '[Chad arrives at Enrico Bartolini al MUDEC. Alessandro greets him at the podium with measured warmth.]'),
   bartoliniSommelierLive: register(bartoliniSommelierLive, 'Elena', 'elena_says',
     '[Elena, the sommelier, arrives at the table to begin the wine pairing.]'),
-  sanSiro: register(sanSiro, 'Vendor / Giuseppe', 'giuseppe_says',
-    '[Chad arrives outside San Siro stadium on match day. The crowd is buzzing.]'),
   sanSiroVendorLive: register(sanSiroVendorLive, 'Vendor', 'vendor_says',
     '[Chad approaches a scarf-and-program vendor outside San Siro on match day, half an hour before kickoff.]'),
   sanSiroMatchLive: register(sanSiroMatchLive, 'Giuseppe', 'giuseppe_says',
@@ -96,10 +63,10 @@ export const scenarios = {
 
 // Display order on the home screen.
 export const storyOrder = [
-  'hotel', 'hotelLive', 'caffe', 'caffeLive', 'metro', 'metroLive', 'duomo', 'duomoLive', 'mercato', 'mercatoLive',
-  'trattoria', 'trattoriaLive', 'navigli', 'navigliLive',
-  'viaDellaSpigas', 'viaDellaSpigasLive', 'casaMilan', 'casaMilanLive',
-  'bartolini', 'bartoliniLive', 'sanSiroEntry', 'sanSiro', 'sanSiroVendorLive', 'sanSiroMatchLive'
+  'hotelLive', 'caffeLive', 'metroLive', 'duomoLive', 'mercatoLive',
+  'trattoriaLive', 'navigliLive',
+  'viaDellaSpigasLive', 'casaMilanLive',
+  'bartoliniLive', 'sanSiroEntry', 'sanSiroVendorLive', 'sanSiroMatchLive'
   // NOTE: bartoliniSommelierLive intentionally NOT in storyOrder — it's
   // chain-only, reached via bartoliniLive's chainTo, not directly clickable.
 ];

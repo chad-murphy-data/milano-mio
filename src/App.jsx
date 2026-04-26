@@ -363,17 +363,7 @@ export default function App() {
         />
       )}
 
-      {screen === 'conversation' && scenario && scenario.mode !== 'live' && (
-        <ConversationScreen
-          scenario={scenario}
-          difficulty={params.difficulty}
-          retryWords={params.retryWords}
-          onEnd={handleStoryEnd}
-          onAuthLost={handleAuthLost}
-        />
-      )}
-
-      {screen === 'conversation' && scenario && scenario.mode === 'live' && (
+      {screen === 'conversation' && scenario && (
         <LiveConversationScreen
           scenario={scenario}
           difficulty={params.difficulty}

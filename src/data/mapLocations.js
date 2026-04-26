@@ -12,30 +12,19 @@ export const START_POSITION = { x: 50, y: 85 }; // bottom-center parking spot
 
 export const mapLocations = {
   // Upper row
-  casaMilan:      { x: 28, y: 25, label: 'Casa Milan' },     // "Casa Milan museum"
-  casaMilanLive:  { x: 33, y: 21, label: 'Casa Milan (Live)' }, // temporary 2nd pin during Live rollout
+  casaMilanLive:      { x: 28, y: 25, label: 'Casa Milan' },     // "Casa Milan museum"
   // Middle row
-  viaDellaSpigas: { x: 61, y: 47, label: 'Via della Spiga' }, // right of Duomo
-  viaDellaSpigasLive: { x: 66, y: 43, label: 'Via della Spiga (Live)' }, // temporary 2nd pin during Live rollout
-  metro:          { x: 30, y: 54, label: 'Metro' },           // "Metro Cadorna"
-  metroLive:      { x: 34, y: 50, label: 'Metro (Live)' },    // temporary 2nd pin during Live rollout
-  sanSiro:        { x: 9,  y: 60, label: 'San Siro' },        // stadium, far left
-  sanSiroEntry:   { x: 16, y: 66, label: 'Biglietteria' },    // ticket booth just SE of stadium
-  sanSiroVendorLive: { x: 5,  y: 65, label: 'Sciarpe (Live)' }, // vendor stall just outside the stadium
-  sanSiroMatchLive:  { x: 11, y: 55, label: 'Partita (Live)' }, // inside the stadium, slightly upper
-  caffe:          { x: 62, y: 58, label: 'Caffè' },           // under umbrella
-  caffeLive:      { x: 67, y: 54, label: 'Caffè (Live)' },    // temporary 2nd pin during Live rollout
-  hotel:          { x: 77, y: 57, label: 'Hotel' },           // "Boutique hotel"
-  hotelLive:      { x: 82, y: 53, label: 'Hotel (Live)' },    // temporary 2nd pin during Live rollout
-  duomo:          { x: 48, y: 62, label: 'Duomo' },           // below cathedral
-  duomoLive:      { x: 52, y: 58, label: 'Duomo (Live)' },    // temporary 2nd pin during Live rollout
+  viaDellaSpigasLive: { x: 61, y: 47, label: 'Via della Spiga' }, // right of Duomo
+  metroLive:          { x: 30, y: 54, label: 'Metro' },           // "Metro Cadorna"
+  sanSiroEntry:       { x: 16, y: 66, label: 'Biglietteria' },    // ticket booth just SE of stadium
+  sanSiroVendorLive:  { x: 5,  y: 65, label: 'Sciarpe' },         // vendor stall just outside the stadium
+  sanSiroMatchLive:   { x: 11, y: 55, label: 'Partita' },         // inside the stadium, slightly upper
+  caffeLive:          { x: 62, y: 58, label: 'Caffè' },           // under umbrella
+  hotelLive:          { x: 77, y: 57, label: 'Hotel' },           // "Boutique hotel"
+  duomoLive:          { x: 48, y: 62, label: 'Duomo' },           // below cathedral
   // Lower row
-  trattoria:      { x: 25, y: 73, label: 'Trattoria' },       // TRATTORIA awning
-  trattoriaLive:  { x: 30, y: 69, label: 'Trattoria (Live)' },// temporary 2nd pin during Live rollout
-  navigli:        { x: 46, y: 74, label: 'Navigli' },         // on the canal
-  navigliLive:    { x: 51, y: 70, label: 'Navigli (Live)' },  // temporary 2nd pin during Live rollout
-  bartolini:      { x: 62, y: 77, label: 'Bartolini' },       // MUDEC cube
-  bartoliniLive:  { x: 67, y: 73, label: 'Bartolini (Live)' },// temporary 2nd pin during Live rollout
-  mercato:        { x: 18, y: 88, label: 'Mercato' },         // lower-left market
-  mercatoLive:    { x: 23, y: 84, label: 'Mercato (Live)' },  // temporary 2nd pin during Live rollout
+  trattoriaLive:      { x: 25, y: 73, label: 'Trattoria' },       // TRATTORIA awning
+  navigliLive:        { x: 46, y: 74, label: 'Navigli' },         // on the canal
+  bartoliniLive:      { x: 62, y: 77, label: 'Bartolini' },       // MUDEC cube
+  mercatoLive:        { x: 18, y: 88, label: 'Mercato' }          // lower-left market
 };
