@@ -466,18 +466,34 @@ p  { line-height: 1.55; color: var(--ink); }
   border-radius: 0;
   border: none;
   border-left: 1px solid var(--border);
-  transition: right 0.25s ease;
+  transition: right 0.25s ease, background 0.2s ease,
+              border-color 0.2s ease, box-shadow 0.2s ease;
   box-shadow: -8px 0 24px rgba(27, 23, 20, 0.18);
   overflow: visible;
 }
 .briefing-panel.live-drawer.closed {
-  /* Slide off-screen but leave the toggle peeking (36px wide handle).
-     Re-assert width here because the older `.briefing-panel.closed`
-     rule below shrinks the panel to 36px — same specificity, but
-     defined later in the file, so it would win and yank the drawer
-     entirely off-screen. */
+  /* Drawer slides off-screen but its bounding box still occupies a 36px
+     strip at the right edge so the toggle (positioned at left:-14 from
+     the drawer) lands inside the viewport. Width re-asserted here
+     because the older `.briefing-panel.closed` rule below shrinks the
+     panel to 36px — same specificity, but defined later in the file,
+     so it would win and yank the drawer entirely off-screen.
+
+     Hide the drawer's chrome (background, border, shadow) and fade out
+     the body so only the toggle button reads as visible. The 36px
+     bounding-box strip is still there, just transparent and empty. */
   width: 380px;
   right: -344px;
+  background: transparent;
+  border-left-color: transparent;
+  box-shadow: none;
+}
+.briefing-panel.live-drawer .panel-body {
+  transition: opacity 0.2s ease;
+}
+.briefing-panel.live-drawer.closed .panel-body {
+  opacity: 0;
+  pointer-events: none;
 }
 .briefing-panel.live-drawer .panel-toggle {
   position: absolute;
