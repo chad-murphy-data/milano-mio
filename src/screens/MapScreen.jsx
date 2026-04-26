@@ -3,8 +3,21 @@ import { scenarios, storyOrder } from '../data/scenarios.js';
 import * as lucaData from '../data/conversazioneLibera/luca.js';
 import * as giuliaData from '../data/conversazioneLibera/giulia.js';
 import { mapLocations, START_POSITION } from '../data/mapLocations.js';
+import { getActiveQueue, LESSON_THRESHOLD } from '../utils/vocabularyEngine.js';
 import VespaPuppet from '../components/VespaPuppet.jsx';
 import worldMap from '../assets/scenes/world_map.png';
+
+// Notebook badge that overlays Gabriella's hotspot when the active queue
+// crosses LESSON_THRESHOLD. Loaded via import.meta.glob so the build
+// doesn't fail if the asset hasn't been generated yet — until Chad runs
+// the puppet-processing script with gabriella_badge.png in puppets_raw,
+// the map falls back to a CSS-only amber halo.
+const badgeGlob = import.meta.glob('../assets/scenes/gabriella_badge.png', {
+  eager: true,
+  import: 'default'
+});
+const gabriellaBadge =
+  badgeGlob['../assets/scenes/gabriella_badge.png'] || null;
 
 const CL_CHARACTERS = [lucaData, giuliaData];
 
@@ -68,6 +81,12 @@ export default function MapScreen({
 
   const characterSessions = (charId) =>
     (store?.sessions || []).filter((s) => s.location === `cl_${charId}`);
+
+  // Active queue size for Gabriella's badge — recomputed each render so
+  // the halo lights up as soon as the player crosses the threshold (e.g.
+  // returning from a session that just pushed them over).
+  const activeQueueSize = getActiveQueue(store?.vocabulary || {}).length;
+  const gabriellaReady = activeQueueSize >= LESSON_THRESHOLD;
 
   const handlePick = (scenarioId) => {
     if (driving) return;
@@ -141,17 +160,34 @@ export default function MapScreen({
           if (!loc) return null;
           const visited = sessionsFor(id).length > 0;
           const isTarget = pending === id;
+          // Gabriella's pin gets the "ready" treatment (notebook badge
+          // if the asset is available, amber halo via CSS as fallback)
+          // when the player has crossed LESSON_THRESHOLD active words.
+          const isGabriellaReady = id === 'gabriellaApartment' && gabriellaReady;
           return (
             <button
               key={id}
               type="button"
-              className={`map-hotspot ${visited ? 'visited' : ''} ${isTarget ? 'target' : ''}`}
+              className={`map-hotspot ${visited ? 'visited' : ''} ${isTarget ? 'target' : ''} ${isGabriellaReady ? 'ready' : ''}`}
               style={{ left: `${loc.x}%`, top: `${loc.y}%` }}
               onClick={() => handlePick(id)}
               disabled={driving}
               title={scenarios[id]?.title}
+              aria-label={
+                isGabriellaReady
+                  ? `${loc.label} (${activeQueueSize} parole pronte)`
+                  : loc.label
+              }
             >
               <span className="hotspot-dot" />
+              {isGabriellaReady && gabriellaBadge && (
+                <img
+                  src={gabriellaBadge}
+                  alt=""
+                  aria-hidden="true"
+                  className="hotspot-badge"
+                />
+              )}
               <span className="hotspot-label">{loc.label}</span>
             </button>
           );

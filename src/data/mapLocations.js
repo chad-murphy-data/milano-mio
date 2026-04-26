@@ -26,5 +26,10 @@ export const mapLocations = {
   trattoriaLive:      { x: 25, y: 73, label: 'Trattoria' },       // TRATTORIA awning
   navigliLive:        { x: 46, y: 74, label: 'Navigli' },         // on the canal
   bartoliniLive:      { x: 62, y: 77, label: 'Bartolini' },       // MUDEC cube
-  mercatoLive:        { x: 18, y: 88, label: 'Mercato' }          // lower-left market
+  mercatoLive:        { x: 18, y: 88, label: 'Mercato' },         // lower-left market
+  // Gabriella lives on the painted balcony with the pigeons + flower boxes
+  // at the bottom-right corner of the map. Pinned to her window itself
+  // so the badge (notebook overlay when active queue ≥ 10) sits on the
+  // sill rather than floating in the alley.
+  gabriellaApartment: { x: 92, y: 75, label: 'Gabriella' }
 };

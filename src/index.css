@@ -1167,6 +1167,46 @@ p  { line-height: 1.55; color: var(--ink); }
 .panel-scene { color: var(--muted); font-style: italic; font-size: 13px; }
 .panel-difficulty { font-size: 12px; color: var(--muted); margin-top: 10px; }
 
+/* "Before you go — visit Gabriella" CTA on the debrief screen.
+   Appears when the user's active vocabulary queue has crossed
+   LESSON_THRESHOLD (10). Warm amber tones to match the map badge,
+   distinct from the standard "Torna domani" button. */
+.gabriella-cta {
+  background: var(--accent-soft);
+  border: 1px solid rgba(245, 180, 80, 0.4);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin: 24px 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.gabriella-cta h3 {
+  margin: 0;
+  font-size: 16px;
+  color: var(--amber);
+  text-transform: none;
+  letter-spacing: 0.01em;
+  display: inline-block;
+  padding: 0;
+  background: none;
+}
+.gabriella-cta p { margin: 0; font-size: 15px; line-height: 1.5; }
+.gabriella-cta strong { color: var(--amber); font-weight: 700; }
+.gabriella-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: 4px;
+}
+.gabriella-cta-row .primary-btn {
+  flex: 0 0 auto;
+  width: auto;
+  padding: 10px 22px;
+  font-size: 16px;
+}
+
 /* Debrief */
 .debrief-section { margin: 20px 0; }
 .debrief-section h3 {
@@ -1776,6 +1816,47 @@ p  { line-height: 1.55; color: var(--ink); }
 .map-hotspot.target .hotspot-dot {
   background: var(--amber);
   box-shadow: 0 0 0 4px rgba(181, 118, 31, 0.35);
+}
+/* Gabriella's pin lights up when the player has 10+ active words to
+   review. The dot itself gets a richer amber glow; if the painted
+   notebook badge asset exists it sits above the pin and fades in.
+   Without the asset, the halo alone reads as the indicator. */
+.map-hotspot.ready .hotspot-dot {
+  background: var(--amber);
+  box-shadow: 0 0 0 5px rgba(245, 200, 100, 0.45),
+              0 0 14px 4px rgba(245, 180, 80, 0.55);
+  animation: gabriella-glow 2.6s ease-in-out infinite;
+}
+.hotspot-badge {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 38px;
+  height: auto;
+  pointer-events: none;
+  filter: drop-shadow(0 2px 4px rgba(245, 180, 80, 0.45));
+  opacity: 0;
+  animation: gabriella-badge-fade-in 0.6s ease-out forwards,
+             gabriella-badge-bob 3.4s ease-in-out 0.6s infinite;
+}
+@keyframes gabriella-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 5px rgba(245, 200, 100, 0.45),
+                0 0 14px 4px rgba(245, 180, 80, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 7px rgba(245, 200, 100, 0.32),
+                0 0 22px 6px rgba(245, 180, 80, 0.6);
+  }
+}
+@keyframes gabriella-badge-fade-in {
+  from { opacity: 0; transform: translate(-50%, 4px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+@keyframes gabriella-badge-bob {
+  0%, 100% { transform: translate(-50%, 0); }
+  50%      { transform: translate(-50%, -3px); }
 }
 .hotspot-label {
   font-size: 11px;

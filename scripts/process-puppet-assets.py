@@ -50,6 +50,9 @@ PUPPET_CONFIGS = [
     # Non-location characters
     {"key": "elena",            "src": "elena_raw.png"},
     {"key": "luca_cl",          "src": "luca_cl_raw.png"},
+    # Gabriella — apartment-based tutor (separate from Elena the in-app
+    # chat tutor and Elena the Bartolini sommelier).
+    {"key": "gabriella",        "src": "gabriella_puppet.jpg"},
 ]
 
 BACKDROP_CONFIGS = [
@@ -65,6 +68,18 @@ BACKDROP_CONFIGS = [
     {"key": "bartolini",         "src": "mudec.png"},
     {"key": "sanSiro_exterior",  "src": "san siro outside.png"},
     {"key": "sanSiro_interior",  "src": "san siro stands.png"},
+    # Gabriella's apartment interior — the third "non-location" backdrop.
+    {"key": "gabriellaApartment", "src": "gabriella_apt.jpg"},
+]
+
+# Map-overlay sprites — small badges that overlay map hotspots. The
+# `chroma_white` flag triggers corner-anchored white→transparent flood
+# fill (for AI-generated images that came back as JPG with a baked-in
+# white background). Without it the source must already have alpha.
+MAP_OVERLAY_CONFIGS = [
+    # Notebook badge that overlays Gabriella's map pin once the player
+    # has LESSON_THRESHOLD active queue words.
+    {"key": "gabriella_badge", "src": "gabriella_badge_white.jpg", "chroma_white": True},
 ]
 
 # Manual jaw bbox overrides.  Auto-detection works for most puppets but
@@ -91,6 +106,43 @@ def remove_magenta(img: Image.Image) -> Image.Image:
             if (r - g) > 30 and (b - g) > 30 and (r + b) > 180:
                 pixels[x, y] = (0, 0, 0, 0)
     return img
+
+
+def remove_white_from_corners(img: Image.Image, threshold: int = 235) -> Image.Image:
+    """Make connected white background transparent by flood-filling from
+    each corner of the image. Preserves interior near-white pixels (e.g.
+    paper highlights inside a notebook drawing). Used for map-overlay
+    sprites that came in as JPG with a baked-in white background."""
+    img = img.convert("RGBA")
+    w, h = img.size
+
+    # Build a single-channel mask: 255 = "white-ish", 0 = colored content.
+    mask = Image.new('L', (w, h), 0)
+    src = img.load()
+    mp = mask.load()
+    for y in range(h):
+        for x in range(w):
+            r, g, b, _ = src[x, y]
+            if r >= threshold and g >= threshold and b >= threshold:
+                mp[x, y] = 255
+
+    # Flood-fill from each corner — anything connected to the corner via
+    # contiguous white-ish pixels becomes "background" (mark with 128).
+    # Interior near-white pixels (e.g. notebook paper highlights) aren't
+    # reachable from corners and stay 255 (preserved as opaque).
+    for corner in [(0, 0), (w - 1, 0), (0, h - 1), (w - 1, h - 1)]:
+        if mask.getpixel(corner) == 255:
+            ImageDraw.floodfill(mask, corner, 128, thresh=0)
+
+    out = img.copy()
+    out_px = out.load()
+    mp = mask.load()
+    for y in range(h):
+        for x in range(w):
+            if mp[x, y] == 128:
+                r, g, b, _ = out_px[x, y]
+                out_px[x, y] = (r, g, b, 0)
+    return out
 
 
 def crop_to_alpha(img: Image.Image, pad: int = PAD) -> Image.Image:
@@ -294,6 +346,33 @@ def process_backdrop(key: str, src_filename: str):
     print(f"  [{key}] {w}x{h} -> {BACKDROP_WIDTH}x{new_h}")
 
 
+def process_map_overlay(key: str, src_filename: str, chroma_white: bool = False, max_size: int = 400):
+    """Build a map-overlay sprite. Optionally chroma-keys a white
+    background (for JPG sources that don't carry alpha)."""
+    src = PUPPETS_RAW / src_filename
+    if not src.exists():
+        src = ROOT / src_filename
+    if not src.exists():
+        print(f"  WARNING: SKIP overlay {key}: {src_filename} not found")
+        return
+
+    img = Image.open(src).convert("RGBA")
+    if chroma_white:
+        img = remove_white_from_corners(img)
+        img = crop_to_alpha(img, pad=20)
+    w, h = img.size
+    if max(w, h) > max_size:
+        ratio = max_size / max(w, h)
+        new_w, new_h = round(w * ratio), round(h * ratio)
+        img = img.resize((new_w, new_h), Image.LANCZOS)
+    else:
+        new_w, new_h = w, h
+    OUT_SCENES.mkdir(parents=True, exist_ok=True)
+    out = OUT_SCENES / f"{key}.png"
+    img.save(out, "PNG")
+    print(f"  [{key}] {w}x{h} -> {new_w}x{new_h}{' (chroma-keyed)' if chroma_white else ''}")
+
+
 # ── Main ───────────────────────────────────────────────────────────
 
 if __name__ == "__main__":
@@ -313,6 +392,12 @@ if __name__ == "__main__":
     print("=" * 60)
     for cfg in BACKDROP_CONFIGS:
         process_backdrop(cfg["key"], cfg["src"])
+
+    print("\n" + "=" * 60)
+    print("PROCESSING MAP OVERLAYS")
+    print("=" * 60)
+    for cfg in MAP_OVERLAY_CONFIGS:
+        process_map_overlay(cfg["key"], cfg["src"], chroma_white=cfg.get("chroma_white", False))
 
     print("\n" + "=" * 60)
     print("DONE")

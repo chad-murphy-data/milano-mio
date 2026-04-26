@@ -15,6 +15,7 @@ import * as bartoliniLive from './bartoliniLive.js';
 import * as bartoliniSommelierLive from './bartoliniSommelierLive.js';
 import * as viaDellaSpigasLive from './viaDellaSpigasLive.js';
 import * as sanSiroEntry from './sanSiroEntry.js';
+import * as gabriellaApartment from './gabriellaApartment.js';
 
 function register(mod, characterName, characterSaysKey, stageDirection) {
   return {
@@ -58,7 +59,9 @@ export const scenarios = {
   sanSiroMatchLive: register(sanSiroMatchLive, 'Giuseppe', 'giuseppe_says',
     '[Chad has just sat down in the San Siro stands. Giuseppe drops into the seat next to him as the match begins.]'),
   sanSiroEntry: register(sanSiroEntry, 'Nonno Aldo', 'aldo_says',
-    '[Chad arrives at the San Siro biglietteria booth, ticket in hand.]')
+    '[Chad arrives at the San Siro biglietteria booth, ticket in hand.]'),
+  gabriellaApartment: register(gabriellaApartment, 'Gabriella', 'gabriella_says',
+    "[Chad arrives at Gabriella's apartment for an afternoon visit.]")
 };
 
 // Display order on the home screen.
@@ -66,7 +69,8 @@ export const storyOrder = [
   'hotelLive', 'caffeLive', 'metroLive', 'duomoLive', 'mercatoLive',
   'trattoriaLive', 'navigliLive',
   'viaDellaSpigasLive', 'casaMilanLive',
-  'bartoliniLive', 'sanSiroEntry', 'sanSiroVendorLive', 'sanSiroMatchLive'
+  'bartoliniLive', 'sanSiroEntry', 'sanSiroVendorLive', 'sanSiroMatchLive',
+  'gabriellaApartment'
   // NOTE: bartoliniSommelierLive intentionally NOT in storyOrder — it's
   // chain-only, reached via bartoliniLive's chainTo, not directly clickable.
 ];
