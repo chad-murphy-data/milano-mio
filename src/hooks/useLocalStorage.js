@@ -95,7 +95,13 @@ function ensureUserStore(user) {
 // ---------------------------------------------------------------------------
 
 function defaultStore() {
-  return { schemaVersion: 2, sessions: [], vocabulary: {}, characters: {} };
+  return {
+    schemaVersion: 3,
+    sessions: [],
+    vocabulary: {},
+    characters: {},
+    tutorQueries: []
+  };
 }
 
 function readUserStore() {
@@ -124,39 +130,70 @@ function writeUserStore(store) {
 }
 
 /**
- * Migrate Sprint 1 schema → Sprint 2.
- * Sprint 1 vocab entries: { seen, correct, nextReview }
- * Sprint 2 vocab entries: { state, seenCount, correctCount, lastSeen, nextReview, location }
+ * Schema migrations:
+ *   v1 vocab entries: { seen, correct, nextReview }
+ *   v2 vocab entries: { state, seenCount, correctCount, lastSeen, nextReview, location }
+ *   v3 vocab entries: + greenTapCount, sourceSentence, speaker, source,
+ *                       firstFlaggedAt   (for Gabriella's review queue)
+ *   v3 store: + tutorQueries[]
  */
 function migrateStore(store) {
-  if (store.schemaVersion >= 2) return store;
+  let mutated = false;
 
-  const now = new Date().toISOString();
-  const oldVocab = store.vocabulary || {};
-  const newVocab = {};
+  // v1 → v2
+  if (!store.schemaVersion || store.schemaVersion < 2) {
+    const now = new Date().toISOString();
+    const oldVocab = store.vocabulary || {};
+    const newVocab = {};
 
-  for (const [word, entry] of Object.entries(oldVocab)) {
-    const seen = entry.seen || 0;
-    const correct = entry.correct || 0;
-    let state = STATES.NEW;
-    if (seen > 0 && correct >= 3) state = STATES.STRONG;
-    else if (seen > 0 && correct >= 1) state = STATES.FAMILIAR;
-    else if (seen > 0) state = STATES.LEARNING;
+    for (const [word, entry] of Object.entries(oldVocab)) {
+      const seen = entry.seen || 0;
+      const correct = entry.correct || 0;
+      let state = STATES.NEW;
+      if (seen > 0 && correct >= 3) state = STATES.STRONG;
+      else if (seen > 0 && correct >= 1) state = STATES.FAMILIAR;
+      else if (seen > 0) state = STATES.LEARNING;
 
-    newVocab[word.toLowerCase()] = {
-      state,
-      seenCount: seen,
-      correctCount: correct,
-      lastSeen: null,
-      nextReview: entry.nextReview || now,
-      location: 'caffe' // all Sprint 1 words came from the caffè
-    };
+      newVocab[word.toLowerCase()] = {
+        state,
+        seenCount: seen,
+        correctCount: correct,
+        lastSeen: null,
+        nextReview: entry.nextReview || now,
+        location: 'caffe' // all Sprint 1 words came from the caffè
+      };
+    }
+
+    store.vocabulary = newVocab;
+    store.characters = store.characters || {};
+    store.schemaVersion = 2;
+    mutated = true;
   }
 
-  store.vocabulary = newVocab;
-  store.characters = store.characters || {};
-  store.schemaVersion = 2;
-  writeUserStore(store);
+  // v2 → v3 — add Gabriella-tracking fields with safe defaults. Existing
+  // entries get greenTapCount: 0 (so they're all "active" until the user
+  // green-taps them) and source: 'sessionLearn' since we can't recover
+  // the original capture context.
+  if (store.schemaVersion < 3) {
+    const oldVocab = store.vocabulary || {};
+    const newVocab = {};
+    for (const [word, entry] of Object.entries(oldVocab)) {
+      newVocab[word] = {
+        ...entry,
+        greenTapCount: entry.greenTapCount ?? 0,
+        sourceSentence: entry.sourceSentence ?? null,
+        speaker: entry.speaker ?? null,
+        source: entry.source ?? 'sessionLearn',
+        firstFlaggedAt: entry.firstFlaggedAt ?? null
+      };
+    }
+    store.vocabulary = newVocab;
+    store.tutorQueries = store.tutorQueries || [];
+    store.schemaVersion = 3;
+    mutated = true;
+  }
+
+  if (mutated) writeUserStore(store);
   return store;
 }
 
@@ -167,14 +204,48 @@ export function loadStore() {
 export function saveSession(session) {
   const store = loadStore();
   store.sessions.push(session);
+  // session.flaggedContext / session.greenTapContext carry the rich
+  // sentence + speaker context for words the user explicitly marked
+  // mid-conversation. processSessionResults uses them to fill in
+  // sourceSentence/speaker on first sighting and bump greenTapCount
+  // toward graduation.
   store.vocabulary = processSessionResults(
     store.vocabulary,
     session.learned || [],
     session.retry || [],
-    session.location
+    session.location,
+    {
+      flaggedContext: session.flaggedContext || [],
+      greenTapContext: session.greenTapContext || []
+    }
   );
   writeUserStore(store);
   return store;
+}
+
+// ---------------------------------------------------------------------------
+// Tutor (Professoressa Elena) query log
+// Words/phrases the player asked the in-app chatbox about feed Gabriella's
+// secondary "curious about" queue. We persist the raw query + a timestamp
+// here, then a lightweight extractor pulls Italian phrases out and adds
+// them to vocabulary via addTutorQueryWord on save.
+// ---------------------------------------------------------------------------
+
+export function saveTutorQuery(query, response = null) {
+  if (!query || !query.trim()) return;
+  const store = loadStore();
+  store.tutorQueries = store.tutorQueries || [];
+  store.tutorQueries.push({
+    query: query.trim(),
+    response: response || null,
+    timestamp: new Date().toISOString()
+  });
+  writeUserStore(store);
+}
+
+export function loadTutorQueries() {
+  const store = loadStore();
+  return store.tutorQueries || [];
 }
 
 // ---------------------------------------------------------------------------

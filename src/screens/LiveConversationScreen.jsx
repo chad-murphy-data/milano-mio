@@ -194,10 +194,14 @@ function resolveAssets(scenario) {
   };
 }
 
-export default function LiveConversationScreen({ scenario, difficulty = 'facile', retryWords = [], onEnd, onAuthLost }) {
+export default function LiveConversationScreen({ scenario, difficulty = 'facile', retryWords = [], gabriellaWords = null, onEnd, onAuthLost }) {
   const live = scenario.live || {};
+  // gabriellaWords is the active vocabulary queue passed in by App.jsx for
+  // the Gabriella scenario only. Other scenarios pass null and the third
+  // argument is ignored by their buildSystemPrompt implementations.
   const systemInstruction =
-    scenario.buildSystemPrompt?.(difficulty, retryWords) || scenario.systemInstruction || '';
+    scenario.buildSystemPrompt?.(difficulty, retryWords, gabriellaWords || []) ||
+    scenario.systemInstruction || '';
 
   const assets = useMemo(() => resolveAssets(scenario), [scenario]);
 
@@ -372,11 +376,16 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
     });
   }, [enrichedLines, onAuthLost]);
 
-  // Collect marked words when the session ends, hand off for the (eventual)
-  // vocab engine integration along with the final transcript.
+  // Collect marked words when the session ends. Returns BOTH simple word
+  // arrays (for the existing debrief flow) and rich context arrays
+  // (sentence + speaker) — the latter feeds Gabriella's review queue with
+  // first-sighting context per the v3 vocab schema.
   const collectMarkedWords = useCallback(() => {
     const known = [];
     const unknown = [];
+    const knownContext = [];
+    const unknownContext = [];
+    const speakerName = scenario.characterName || 'Character';
     for (const [key, mark] of Object.entries(wordMarks)) {
       const [lineIdx, wIdx] = key.split('-').map(Number);
       const line = enrichedLines[lineIdx];
@@ -386,11 +395,22 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
       if (!word) continue;
       const clean = word.replace(/[.,!?;:"""''()[\]]/g, '').toLowerCase();
       if (!clean) continue;
-      if (mark === 'known') known.push(clean);
-      else if (mark === 'unknown') unknown.push(clean);
+      const ctx = { word: clean, sourceSentence: line.text, speaker: speakerName };
+      if (mark === 'known') {
+        known.push(clean);
+        knownContext.push(ctx);
+      } else if (mark === 'unknown') {
+        unknown.push(clean);
+        unknownContext.push(ctx);
+      }
     }
-    return { known: [...new Set(known)], unknown: [...new Set(unknown)] };
-  }, [wordMarks, enrichedLines]);
+    return {
+      known: [...new Set(known)],
+      unknown: [...new Set(unknown)],
+      knownContext,
+      unknownContext
+    };
+  }, [wordMarks, enrichedLines, scenario.characterName]);
 
   useEffect(() => {
     if (!hasEnded) return;
@@ -433,6 +453,11 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
           [characterKey]: claudeDebrief?.[characterKey] || fallbackVoice,
           transitionTo: null
         },
+        // Rich flag-time context — saveSession stitches this into the
+        // vocabulary store so Gabriella's review prompts can quote the
+        // exact line + speaker the user got stuck on.
+        flaggedContext: marked.unknownContext,
+        greenTapContext: marked.knownContext,
         transcript: enrichedLines
       });
     }, 1200);

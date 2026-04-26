@@ -29,7 +29,7 @@ import {
   loadCurrentUser,
   saveCurrentUser,
 } from './hooks/useLocalStorage.js';
-import { getRetryWordsForLocation, getDueWords } from './utils/vocabularyEngine.js';
+import { getRetryWordsForLocation, getDueWords, getActiveQueue, LESSON_THRESHOLD } from './utils/vocabularyEngine.js';
 import { pickTopic, updateCharacterData } from './utils/characterMemory.js';
 import { getSavedPassword } from './utils/claudeApi.js';
 
@@ -128,11 +128,18 @@ export default function App() {
   const handleStartStory = (scenarioId, difficulty) => {
     const store = loadStore();
     const retryWords = getRetryWordsForLocation(store.vocabulary, scenarioId);
+    // Gabriella's session content is built from the player's full active
+    // vocabulary queue (not location-specific retry words). Compute it
+    // here and pass through; her scenario file branches between casual
+    // and review modes based on queue size.
+    const gabriellaWords = scenarioId === 'gabriellaApartment'
+      ? getActiveQueue(store.vocabulary)
+      : null;
     // Park the Vespa here even before the conversation — if the user bails at
     // the briefing screen and comes back, the scooter should be where they
     // just drove it, not snap back to the previous pin.
     saveLastLocation(scenarioId);
-    go('briefing', { scenarioId, difficulty, retryWords });
+    go('briefing', { scenarioId, difficulty, retryWords, gabriellaWords });
     // Briefing has mounted behind the opaque overlay; fade it back out.
     setTimeout(() => setFading(false), 50);
   };
@@ -147,13 +154,18 @@ export default function App() {
   // against its own transcript; we accumulate learned/retry across phases
   // and use the LAST phase's character_says + the chain root scenarioId for
   // the saved session.
-  const mergeChainPhase = (accumulator, scenario, debrief, transcript) => {
+  const mergeChainPhase = (accumulator, scenario, debrief, transcript, flaggedContext = [], greenTapContext = []) => {
     const characterSays =
       debrief?.[scenario?.characterSaysKey] || debrief?.marco_says || '';
     return {
       chainRootId: accumulator?.chainRootId || scenario.id,
       learned: [...(accumulator?.learned || []), ...(debrief?.learned || [])],
       retry: [...(accumulator?.retry || []), ...(debrief?.retry || [])],
+      // Carry rich flag-time context through chained phases so words
+      // flagged in (say) bartoliniLive still record their original
+      // sentence/speaker when the final debrief is saved.
+      flaggedContext: [...(accumulator?.flaggedContext || []), ...flaggedContext],
+      greenTapContext: [...(accumulator?.greenTapContext || []), ...greenTapContext],
       // Show the last (closing) character's voice in the final debrief.
       lastCharacterSays: characterSays,
       lastCharacterSaysKey: scenario?.characterSaysKey,
@@ -161,10 +173,10 @@ export default function App() {
     };
   };
 
-  const handleStoryEnd = ({ debrief, transcript }) => {
+  const handleStoryEnd = ({ debrief, transcript, flaggedContext = [], greenTapContext = [] }) => {
     const { scenarioId, difficulty, chainAccumulator } = route.params;
     const scenario = getScenario(scenarioId);
-    const merged = mergeChainPhase(chainAccumulator, scenario, debrief, transcript);
+    const merged = mergeChainPhase(chainAccumulator, scenario, debrief, transcript, flaggedContext, greenTapContext);
 
     // If this phase chains to another, hand off to the intermezzo instead
     // of running the debrief. The accumulator carries learned/retry forward
@@ -194,6 +206,11 @@ export default function App() {
       difficulty,
       learned: merged.learned,
       retry: merged.retry,
+      // Flag-time context (sentence + speaker per flagged word) — persists
+      // through saveSession into the v3 vocab schema, where Gabriella reads
+      // it when generating review prompts.
+      flaggedContext: merged.flaggedContext,
+      greenTapContext: merged.greenTapContext,
       character_says: merged.lastCharacterSays,
       transitionTo: debrief?.transitionTo || null,
       transcript: merged.transcript
@@ -212,6 +229,7 @@ export default function App() {
     };
     go('debrief', {
       scenarioId: finalLocation,
+      difficulty,
       debrief: finalDebrief,
       transcript: merged.transcript
     });
@@ -254,7 +272,7 @@ export default function App() {
     }));
   };
 
-  const handleCLEnd = ({ debrief, transcript, characterMemory, lifelineUsed }) => {
+  const handleCLEnd = ({ debrief, transcript, characterMemory, lifelineUsed, flaggedContext = [], greenTapContext = [] }) => {
     const { characterId, difficulty, topic } = route.params;
     const characterData = loadCharacter(characterId);
 
@@ -275,6 +293,8 @@ export default function App() {
       difficulty,
       learned: debrief?.learned || [],
       retry: debrief?.retry || [],
+      flaggedContext,
+      greenTapContext,
       character_says: characterSays,
       transcript
     };
@@ -368,6 +388,7 @@ export default function App() {
           scenario={scenario}
           difficulty={params.difficulty}
           retryWords={params.retryWords}
+          gabriellaWords={params.gabriellaWords}
           onEnd={handleStoryEnd}
           onAuthLost={handleAuthLost}
         />
@@ -386,6 +407,9 @@ export default function App() {
           debrief={params.debrief}
           scenario={scenario}
           vocabulary={store.vocabulary}
+          activeQueueSize={getActiveQueue(store.vocabulary).length}
+          lessonThreshold={LESSON_THRESHOLD}
+          onVisitGabriella={() => handleStartStory('gabriellaApartment', params.difficulty || 'normale')}
           onHome={goMap}
         />
       )}
@@ -419,8 +443,8 @@ export default function App() {
           }}
           difficulty={params.difficulty}
           retryWords={[]}
-          onEnd={({ debrief, transcript, characterMemory }) =>
-            handleCLEnd({ debrief, transcript, characterMemory, lifelineUsed: false })
+          onEnd={({ debrief, transcript, characterMemory, flaggedContext, greenTapContext }) =>
+            handleCLEnd({ debrief, transcript, characterMemory, flaggedContext, greenTapContext, lifelineUsed: false })
           }
           onAuthLost={handleAuthLost}
           isCL

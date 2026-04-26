@@ -353,6 +353,8 @@ export default function ConversationScreen({
           ];
           onEnd({
             debrief: { ...debrief, learned: mergedLearned, retry: mergedRetry },
+            flaggedContext: marked.unknownContext,
+            greenTapContext: marked.knownContext,
             transcript: [
               ...lines,
               { role: 'user', text: userText },
@@ -396,6 +398,8 @@ export default function ConversationScreen({
         [scenario.characterSaysKey || 'character_says']: 'Conversazione terminata.',
         transitionTo: null
       },
+      flaggedContext: marked.unknownContext,
+      greenTapContext: marked.knownContext,
       transcript: lines,
       characterMemory: null,
       lifelineUsed
@@ -414,8 +418,14 @@ export default function ConversationScreen({
   };
 
   const collectMarkedWords = () => {
+    // Returns simple word arrays (for the existing debrief flow) AND
+    // rich context arrays (sentence + speaker) used by Gabriella's
+    // review queue. See vocabularyEngine.processSessionResults.
     const known = [];
     const unknown = [];
+    const knownContext = [];
+    const unknownContext = [];
+    const speakerName = scenario.characterName || characterName || 'Character';
     for (const [key, mark] of Object.entries(wordMarks)) {
       const [lineIdx, wIdx] = key.split('-').map(Number);
       const line = lines[lineIdx];
@@ -425,10 +435,21 @@ export default function ConversationScreen({
       if (!word) continue;
       const clean = word.replace(/[.,!?;:"""''()[\]]/g, '').toLowerCase();
       if (!clean) continue;
-      if (mark === 'known') known.push(clean);
-      else if (mark === 'unknown') unknown.push(clean);
+      const ctx = { word: clean, sourceSentence: line.text, speaker: speakerName };
+      if (mark === 'known') {
+        known.push(clean);
+        knownContext.push(ctx);
+      } else if (mark === 'unknown') {
+        unknown.push(clean);
+        unknownContext.push(ctx);
+      }
     }
-    return { known: [...new Set(known)], unknown: [...new Set(unknown)] };
+    return {
+      known: [...new Set(known)],
+      unknown: [...new Set(unknown)],
+      knownContext,
+      unknownContext
+    };
   };
 
   const handleLifeline = () => {

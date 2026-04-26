@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { sendMessage, AuthError } from '../utils/claudeApi.js';
+import { saveTutorQuery } from '../hooks/useLocalStorage.js';
 
 const SYSTEM_PROMPT = `You are a friendly, encouraging Italian language tutor named Professoressa Elena.
 Your student is learning Italian through an immersive conversation app set in Milan.
@@ -42,6 +43,10 @@ export default function ItalianTutor({ onAuthLost }) {
     try {
       const reply = await sendMessage(SYSTEM_PROMPT, updated, 'normale');
       setMessages((prev) => [...prev, { role: 'assistant', content: reply }]);
+      // Persist the query so Gabriella can surface "things you asked
+      // Professoressa Elena about" in her review queue (secondary signal,
+      // weaker than an explicit in-conversation flag).
+      try { saveTutorQuery(text, reply); } catch {}
     } catch (err) {
       if (err instanceof AuthError) {
         onAuthLost?.();
