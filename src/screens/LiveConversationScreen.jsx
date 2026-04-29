@@ -157,6 +157,31 @@ Rules:
   }
 }
 
+// Italian farewell phrases that, when spoken by the character, signal
+// "this conversation is wrapping up". When a scenario opts in via
+// `live.endOnCharacterFarewell: true`, the screen watches for these in
+// the character's most recent turn (after a minimum-turn floor) and ends
+// the session early instead of forcing the user to fill the remaining
+// maxTurns. Marco was hitting his destination one-liner around turn 5-6
+// and then padding three turns of "Ciao!"/"Prego!" — this fixes that.
+//
+// Patterns are matched case-insensitively with word boundaries so they
+// don't false-trigger inside other words. Includes destination-specific
+// chiusure used by Marco's REAZIONI list ("buon riposo", "forza milan",
+// "buon proseguimento", etc.).
+const FAREWELL_RE = /\b(arrivederci|alla\s+prossima|a\s+presto|a\s+domani|buon\s+riposo|buon\s+proseguimento|buon\s+pomeriggio|buon\s+appetito|buon\s+viaggio|buona\s+giornata|buona\s+serata|buona\s+partita|buona\s+cena|buona\s+spesa|forza\s+milan|ci\s+vediamo)\b/i;
+// "Ciao" only counts as a goodbye if it's the LAST word of the turn —
+// otherwise it's a greeting ("Ciao, dimmi tutto"). Matches "ciao" or
+// "ciao ciao" at the very end, optionally followed by punctuation.
+const TRAILING_CIAO_RE = /\bciao(\s+ciao)?[\s!.?]*$/i;
+
+function isFarewellLine(text) {
+  if (!text) return false;
+  if (FAREWELL_RE.test(text)) return true;
+  if (TRAILING_CIAO_RE.test(text.trim())) return true;
+  return false;
+}
+
 // Resolve all assets the screen needs from the scenario. Two puppet
 // formats are supported:
 //   - 'headJaw' (default): a `*_head.png` showing the puppet with mouth
@@ -274,6 +299,29 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
     },
     onClosed: () => setHasEnded(true)
   });
+
+  // Early-exit on character farewell. Opt-in via `live.endOnCharacterFarewell`.
+  // When the character delivers a clear farewell (destination one-liner,
+  // "arrivederci", "buon proseguimento", trailing "ciao", etc.) AFTER a
+  // minimum turn floor, end the session and head straight to debrief
+  // instead of letting the conversation drag to maxTurns. The minTurn
+  // floor avoids false-triggering on opening greetings ("Ciao!" → match
+  // would fire on turn 1).
+  useEffect(() => {
+    if (!live.endOnCharacterFarewell) return;
+    if (hasEnded) return;
+    const minTurn = live.farewellMinTurn ?? 4;
+    if (turnCount < minTurn) return;
+    const lastChar = [...lines].reverse().find((l) => l.role === 'character');
+    if (!lastChar || !isFarewellLine(lastChar.text)) return;
+    // Same delay the maxTurns path uses — gives the final audio chunk
+    // time to play before the screen swaps out.
+    const t = setTimeout(() => {
+      setSessionEnabled(false);
+      setHasEnded(true);
+    }, 1500);
+    return () => clearTimeout(t);
+  }, [live.endOnCharacterFarewell, live.farewellMinTurn, turnCount, lines, hasEnded]);
 
   // Mouth flap. While the hook says the character is speaking, alternate
   // open/closed with randomized hold times — open ~120-280ms, closed
