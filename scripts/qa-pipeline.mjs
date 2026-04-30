@@ -30,18 +30,39 @@ if (!API_KEY) {
 // ---------------------------------------------------------------------------
 // Location registry (mirrors scenarios.js but for Node)
 // ---------------------------------------------------------------------------
+// Mirrors scenarios.js. Live-only: the Claude+TTS scenarios were dropped
+// in commit 8334099, so the old hotel.js/caffe.js entries no longer exist.
 const LOCATIONS = [
-  { id: 'hotel', file: 'hotel.js', charName: 'Giulia', stageDirection: '[Chad arrives at the hotel reception desk with luggage.]' },
-  { id: 'caffe', file: 'caffe.js', charName: 'Marco', stageDirection: '[Chad walks up to the bar.]' },
-  { id: 'metro', file: 'metro.js', charName: 'Davide', stageDirection: '[Chad is standing at a ticket machine in Cadorna metro station, looking at the map.]' },
-  { id: 'duomo', file: 'duomo.js', charName: 'Francesca', stageDirection: '[Chad approaches the tourist information point in Piazza del Duomo.]' },
-  { id: 'mercato', file: 'mercato.js', charName: 'Rosa', stageDirection: '[Chad approaches a market stall piled high with fresh produce, cheese, and cured meats.]' },
-  { id: 'trattoria', file: 'trattoria.js', charName: 'Lorenzo', stageDirection: '[Chad arrives at the trattoria entrance for their dinner reservation.]' },
-  { id: 'navigli', file: 'navigli.js', charName: 'Sofia', stageDirection: '[Chad sits down at a canal-side table at a bar in the Navigli district, early evening.]' },
-  { id: 'viaDellaSpigas', file: 'viaDellaSpigas.js', charName: 'Valentina', stageDirection: '[Chad enters an elegant boutique on Via della Spiga.]' },
-  { id: 'casaMilan', file: 'casaMilan.js', charName: 'Paolo', stageDirection: '[Chad enters the Casa Milan museum and merch shop.]' },
-  { id: 'bartolini', file: 'bartolini.js', charName: 'Alessandro', stageDirection: '[Chad arrives at the entrance of Enrico Bartolini al MUDEC for their tasting menu reservation.]' },
-  { id: 'sanSiro', file: 'sanSiro.js', charName: 'Vendor / Giuseppe', stageDirection: '[Chad arrives outside San Siro stadium on match day. The crowd is buzzing.]' },
+  { id: 'hotelLive', file: 'hotelLive.js', charName: 'Giulia',
+    stageDirection: '[Chad arrives at the hotel reception desk with luggage. Giulia is finishing a phone call.]' },
+  { id: 'caffeLive', file: 'caffeLive.js', charName: 'Marco',
+    stageDirection: '[Chad walks up to the bar. Marco is pulling shots.]' },
+  { id: 'metroLive', file: 'metroLive.js', charName: 'Davide',
+    stageDirection: '[Chad is standing at a ticket machine in Cadorna metro station. Davide notices and offers to help.]' },
+  { id: 'duomoLive', file: 'duomoLive.js', charName: 'Francesca',
+    stageDirection: '[Chad approaches the tourist information point in Piazza del Duomo. Francesca welcomes him.]' },
+  { id: 'mercatoLive', file: 'mercatoLive.js', charName: 'Rosa',
+    stageDirection: "[Chad approaches Rosa's market stall on a weekday morning. Rosa beams.]" },
+  { id: 'trattoriaLive', file: 'trattoriaLive.js', charName: 'Lorenzo',
+    stageDirection: '[Chad arrives at the trattoria entrance for their dinner reservation. Lorenzo greets them at the door.]' },
+  { id: 'navigliLive', file: 'navigliLive.js', charName: 'Sofia',
+    stageDirection: '[Chad sits down at a canal-side table at a bar in the Navigli district. Sofia approaches with a warm welcome.]' },
+  { id: 'viaDellaSpigasLive', file: 'viaDellaSpigasLive.js', charName: 'Valentina',
+    stageDirection: '[Chad enters an elegant boutique on Via della Spiga. Valentina greets him from a display near the entrance.]' },
+  { id: 'casaMilanLive', file: 'casaMilanLive.js', charName: 'Paolo',
+    stageDirection: '[Chad enters Casa Milan. Paolo is arranging jerseys near the entrance and lights up at a fellow fan.]' },
+  { id: 'bartoliniLive', file: 'bartoliniLive.js', charName: 'Alessandro',
+    stageDirection: '[Chad arrives at Enrico Bartolini al MUDEC. Alessandro greets him at the podium with measured warmth.]' },
+  { id: 'bartoliniSommelierLive', file: 'bartoliniSommelierLive.js', charName: 'Elena',
+    stageDirection: '[Elena, the sommelier, arrives at the table to begin the wine pairing.]' },
+  { id: 'sanSiroVendorLive', file: 'sanSiroVendorLive.js', charName: 'Vendor',
+    stageDirection: '[Chad approaches a scarf-and-program vendor outside San Siro on match day, half an hour before kickoff.]' },
+  { id: 'sanSiroMatchLive', file: 'sanSiroMatchLive.js', charName: 'Giuseppe',
+    stageDirection: '[Chad has just sat down in the San Siro stands. Giuseppe drops into the seat next to him as the match begins.]' },
+  { id: 'sanSiroEntry', file: 'sanSiroEntry.js', charName: 'Nonno Aldo',
+    stageDirection: '[Chad arrives at the San Siro biglietteria booth, ticket in hand.]' },
+  { id: 'gabriellaApartment', file: 'gabriellaApartment.js', charName: 'Gabriella',
+    stageDirection: "[Chad arrives at Gabriella's apartment for an afternoon visit.]" },
 ];
 
 // ---------------------------------------------------------------------------
@@ -133,15 +154,38 @@ async function callClaude(systemPrompt, messages, { model = 'claude-sonnet-4-6',
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 // ---------------------------------------------------------------------------
+// Live end-of-conversation detection
+// ---------------------------------------------------------------------------
+// Live scenarios don't emit [DEBRIEF] tags — they end either at maxTurns
+// or when the character delivers a clear farewell. Mirrors the same regex
+// LiveConversationScreen.jsx uses for endOnCharacterFarewell so QA
+// simulation matches runtime behavior.
+const FAREWELL_RE = /\b(arrivederci|alla\s+prossima|a\s+presto|a\s+domani|buon\s+riposo|buon\s+proseguimento|buon\s+pomeriggio|buon\s+appetito|buon\s+viaggio|buona\s+giornata|buona\s+serata|buona\s+partita|buona\s+cena|buona\s+spesa|forza\s+milan|ci\s+vediamo)\b/i;
+const TRAILING_CIAO_RE = /\bciao(\s+ciao)?[\s!.?]*$/i;
+
+function isFarewellLine(text) {
+  if (!text) return false;
+  if (FAREWELL_RE.test(text)) return true;
+  if (TRAILING_CIAO_RE.test(text.trim())) return true;
+  return false;
+}
+
+// ---------------------------------------------------------------------------
 // Dynamic location loader
 // ---------------------------------------------------------------------------
 async function loadLocation(loc) {
-  const mod = await import(`file://${resolve(DATA_DIR, loc.file).replace(/\\/g, '/')}`);
+  // Cache-bust on each load so re-test after an applied edit picks up
+  // the new module content. Without the query param Node memoizes the
+  // first import for the lifetime of the process.
+  const cacheBust = `?t=${Date.now()}`;
+  const mod = await import(`file://${resolve(DATA_DIR, loc.file).replace(/\\/g, '/')}${cacheBust}`);
   return {
     ...loc,
+    scenario: mod.scenario,                       // live.maxTurns / live.endOnCharacterFarewell live here
     keyPhrases: mod.keyPhrases,
     coreVocab: mod.coreVocab,
     extendedVocab: mod.extendedVocab || [],
+    whisperHints: mod.whisperHints || [],
     buildSystemPrompt: mod.buildSystemPrompt,
   };
 }
@@ -205,7 +249,15 @@ async function runConversation(location, chadType) {
   const transcript = [];
   let debrief = null;
   let turnCount = 0;
-  const MAX_TURNS = 20;
+  // Live scenarios cap at scenario.live.maxTurns. Add a small headroom
+  // so the runner doesn't stop one turn before the farewell would land.
+  // Falls back to 20 for the legacy [DEBRIEF]-driven path.
+  const MAX_TURNS = (location.scenario?.live?.maxTurns || 20) + 2;
+  // Live scenarios may opt in to early-exit on a clear character farewell
+  // (mirrors LiveConversationScreen.jsx). Default behavior: ON for any Live
+  // scenario, since QA wants the same end-detection the runtime uses.
+  const farewellEnabled = !!location.scenario?.live;
+  const farewellMinTurn = location.scenario?.live?.farewellMinTurn ?? 4;
 
   // Track repeated beats for stall detection
   const recentCharLines = [];
@@ -228,7 +280,8 @@ async function runConversation(location, chadType) {
   recentCharLines.push(first.spoken.slice(0, 80));
 
   // Step 2: Conversation loop
-  while (turnCount < MAX_TURNS && !debrief) {
+  let endedByFarewell = false;
+  while (turnCount < MAX_TURNS && !debrief && !endedByFarewell) {
     turnCount++;
 
     // Chad responds to what the character said
@@ -255,6 +308,14 @@ async function runConversation(location, chadType) {
       break;
     }
 
+    // Live end-detection: a clear farewell from the character ends the
+    // conversation gracefully. Skipped on early turns so an opening
+    // "Ciao!" or "Buongiorno!" doesn't false-trigger.
+    if (farewellEnabled && turnCount >= farewellMinTurn && isFarewellLine(parsed.spoken)) {
+      endedByFarewell = true;
+      break;
+    }
+
     // Stall detection: same beat 3+ times
     recentCharLines.push(parsed.spoken.slice(0, 80));
     if (recentCharLines.length >= 3) {
@@ -267,11 +328,15 @@ async function runConversation(location, chadType) {
   }
 
   return {
-    completed: !!debrief,
+    // For Claude-era scenarios "completed" meant a [DEBRIEF] block fired.
+    // For Live scenarios the natural end is a character farewell — count
+    // either as completion. Stalling is hitting MAX_TURNS without either.
+    completed: !!debrief || endedByFarewell,
     turnCount,
     transcript,
     debrief,
-    stalled: !debrief && turnCount >= MAX_TURNS
+    stalled: !debrief && !endedByFarewell && turnCount >= MAX_TURNS,
+    endedByFarewell
   };
 }
 
