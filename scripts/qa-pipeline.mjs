@@ -3,7 +3,7 @@
 // Milano Mio — Automated Location QA Pipeline
 // Usage: ANTHROPIC_API_KEY=sk-ant-... node scripts/qa-pipeline.mjs [--location=caffe] [--skip-fixes] [--verbose]
 
-import { readFileSync, writeFileSync, mkdirSync } from 'fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -16,8 +16,16 @@ mkdirSync(FINDINGS_DIR, { recursive: true });
 // ---------------------------------------------------------------------------
 // CLI args
 // ---------------------------------------------------------------------------
+// Subcommand syntax (preferred):
+//   node qa-pipeline.mjs <command> <id> [flags]
+// Legacy syntax (still works):
+//   node qa-pipeline.mjs [--location=<id>] [--skip-fixes] [--verbose]
 const args = process.argv.slice(2);
+const positional = args.filter(a => !a.startsWith('--'));
+const subcommand = positional[0];           // 'simulate' | 'analyze' | 'propose' | 'apply' | 'run' | 'all' | undefined
+const subcommandId = positional[1];         // scenario id for the per-location subcommands
 const flagLocation = args.find(a => a.startsWith('--location='))?.split('=')[1];
+const flagFrom = args.find(a => a.startsWith('--from='))?.split('=')[1]; // 'real:<path>' for analyze
 const skipFixes = args.includes('--skip-fixes');
 const verbose = args.includes('--verbose');
 
@@ -688,9 +696,181 @@ async function applyFixes(location, findings) {
 }
 
 // ---------------------------------------------------------------------------
+// Staged subcommands
+// ---------------------------------------------------------------------------
+// Each stage caches its output in scripts/qa-findings/ so later stages
+// can re-use prior work without re-paying for Claude calls.
+//   simulate  →  <id>.transcripts.json
+//   analyze   →  <id>.json (existing findings shape)
+//   propose   →  <id>.proposal.md
+//   apply     →  src/data/<file>  (writes!)
+
+function findLocation(id) {
+  const loc = LOCATIONS.find(l => l.id === id);
+  if (!loc) {
+    console.error(`Unknown scenario: ${id}`);
+    console.error(`Available: ${LOCATIONS.map(l => l.id).join(', ')}`);
+    process.exit(1);
+  }
+  return loc;
+}
+
+function transcriptsPath(id) { return resolve(FINDINGS_DIR, `${id}.transcripts.json`); }
+function findingsPath(id) { return resolve(FINDINGS_DIR, `${id}.json`); }
+
+async function cmdSimulate(id) {
+  const loc = findLocation(id);
+  const location = await loadLocation(loc);
+  console.log(`\nSimulating ${id} (${loc.charName})...`);
+
+  console.log('  --- Run A: Obedient Chad ---');
+  const obedient = await runConversation(location, 'obedient');
+  console.log(`  ${obedient.completed ? 'COMPLETED' : 'INCOMPLETE'} in ${obedient.turnCount} turns${obedient.endedByFarewell ? ' (farewell)' : ''}`);
+
+  console.log('  --- Run B: Improvising Chad ---');
+  const improvising = await runConversation(location, 'improvising');
+  console.log(`  ${improvising.completed ? 'COMPLETED' : 'INCOMPLETE'} in ${improvising.turnCount} turns${improvising.endedByFarewell ? ' (farewell)' : ''}`);
+
+  writeFileSync(transcriptsPath(id), JSON.stringify({ obedient, improvising }, null, 2));
+  console.log(`  Cached: ${transcriptsPath(id)}`);
+  return { obedient, improvising };
+}
+
+async function cmdAnalyze(id, { from } = {}) {
+  const loc = findLocation(id);
+  const location = await loadLocation(loc);
+
+  let obedient, improvising;
+
+  if (from?.startsWith('real:')) {
+    // Real-session ingestion: pull all sessions matching this scenario
+    // from a sessions JSON exported via the dev-mode export button.
+    const path = from.slice('real:'.length);
+    console.log(`\nAnalyzing ${id} from real sessions: ${path}`);
+    const data = JSON.parse(readFileSync(path, 'utf-8'));
+    const sessions = (data.sessions || []).filter(s =>
+      s.scenarioId === id || s.scenarioId === loc.file.replace('.js', '') || s.scenarioId === loc.id
+    );
+    if (!sessions.length) {
+      console.error(`No real sessions found for ${id} in ${path}`);
+      process.exit(1);
+    }
+    console.log(`  Found ${sessions.length} real session(s) — using most recent.`);
+    // Use the most recent session as the obedient run; reuse for improvising
+    // since real sessions don't differentiate.
+    const recent = sessions.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))[0];
+    const transcript = (recent.transcript || []).map((line, i) => ({
+      turn: Math.floor(i / 2),
+      speaker: line.role === 'user' ? 'Chad' : loc.charName,
+      raw: line.text,
+      spoken: line.text
+    }));
+    obedient = { completed: true, turnCount: Math.floor(transcript.length / 2), transcript, debrief: recent.debrief, stalled: false, endedByFarewell: false };
+    improvising = obedient;
+  } else {
+    // Synthetic: load cached transcripts or run a fresh simulation.
+    if (!existsSync(transcriptsPath(id))) {
+      console.log(`  No cached transcripts — simulating first.`);
+      ({ obedient, improvising } = await cmdSimulate(id));
+    } else {
+      console.log(`\nAnalyzing ${id} from cached transcripts.`);
+      const cached = JSON.parse(readFileSync(transcriptsPath(id), 'utf-8'));
+      obedient = cached.obedient;
+      improvising = cached.improvising;
+    }
+  }
+
+  const findings = produceFindings(location, obedient, improvising);
+  writeFileSync(findingsPath(id), JSON.stringify(findings, null, 2));
+  console.log(`  Grade: ${findings.summary.overallGrade} | Phrase utilization: ${findings.summary.phraseUtilization}`);
+  console.log(`  Issues: ${findings.summary.fixesNeeded.length}`);
+  console.log(`  Cached: ${findingsPath(id)}`);
+  return findings;
+}
+
+async function cmdPropose(id, { from } = {}) {
+  const loc = findLocation(id);
+  const location = await loadLocation(loc);
+  let findings;
+  if (existsSync(findingsPath(id)) && !from) {
+    console.log(`\nProposing edits for ${id} from cached findings.`);
+    findings = JSON.parse(readFileSync(findingsPath(id), 'utf-8'));
+  } else {
+    findings = await cmdAnalyze(id, { from });
+  }
+  console.log('  --- Programmer Agent (propose) ---');
+  return await proposeFixes(location, findings);
+}
+
+async function cmdApply(id, { from } = {}) {
+  const loc = findLocation(id);
+  const location = await loadLocation(loc);
+  let findings;
+  if (existsSync(findingsPath(id)) && !from) {
+    findings = JSON.parse(readFileSync(findingsPath(id), 'utf-8'));
+  } else {
+    findings = await cmdAnalyze(id, { from });
+  }
+  console.log('  --- Programmer Agent (apply) ---');
+  return await applyFixes(location, findings);
+}
+
+function printUsage() {
+  console.log(`
+Milano Mio QA Pipeline
+
+Usage:
+  node scripts/qa-pipeline.mjs <command> <scenarioId> [flags]
+
+Commands:
+  simulate <id>                 Run obedient + improvising sims, cache transcripts
+  analyze  <id> [--from=real:<path>]
+                                Analyze cached transcripts (or a real-session export);
+                                writes <id>.json findings
+  propose  <id>                 Default chat workflow. Generates a markdown proposal at
+                                scripts/qa-findings/<id>.proposal.md — NO source writes.
+  apply    <id>                 OPT-IN auto-edit. Writes the Programmer Agent's edits
+                                straight into src/data/<file>.
+  run      <id>                 Alias for propose.
+  all                           Legacy bulk mode — runs every scenario through the old
+                                analyze + apply + retest flow. Honors --skip-fixes.
+
+Flags:
+  --from=real:<path>            Use real Gemini Live transcripts (exported via the
+                                dev-mode QA Export button) instead of fresh sims
+  --location=<id>               (legacy) restrict bulk mode to one scenario
+  --skip-fixes                  (legacy) skip the apply phase in bulk mode
+  --verbose                     log every turn
+
+Available scenarios: ${LOCATIONS.map(l => l.id).join(', ')}
+`);
+}
+
+// ---------------------------------------------------------------------------
 // Main pipeline
 // ---------------------------------------------------------------------------
 async function main() {
+  // Subcommand dispatch (preferred). Anything unrecognized falls through
+  // to the legacy bulk flow below for back-compat.
+  if (subcommand && ['simulate', 'analyze', 'propose', 'apply', 'run'].includes(subcommand)) {
+    if (!subcommandId) {
+      console.error(`'${subcommand}' requires a scenario id.`);
+      printUsage();
+      process.exit(1);
+    }
+    if (subcommand === 'simulate') { await cmdSimulate(subcommandId); return; }
+    if (subcommand === 'analyze')  { await cmdAnalyze(subcommandId, { from: flagFrom }); return; }
+    if (subcommand === 'propose' || subcommand === 'run') { await cmdPropose(subcommandId, { from: flagFrom }); return; }
+    if (subcommand === 'apply')    { await cmdApply(subcommandId, { from: flagFrom }); return; }
+  }
+  if (subcommand === 'help' || args.includes('--help') || args.includes('-h')) {
+    printUsage();
+    return;
+  }
+
+  // Legacy bulk-flow path. `node qa-pipeline.mjs all` or no subcommand at
+  // all (with optional --location / --skip-fixes) runs every scenario
+  // through the old analyze + auto-apply + retest pipeline.
   const locationsToTest = flagLocation
     ? LOCATIONS.filter(l => l.id === flagLocation)
     : LOCATIONS;
