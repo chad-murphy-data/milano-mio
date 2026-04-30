@@ -494,7 +494,15 @@ function produceFindings(location, obedientResult, improvisingResult) {
 // ---------------------------------------------------------------------------
 // Programmer Agent — uses Claude to generate targeted fixes
 // ---------------------------------------------------------------------------
-async function runProgrammerAgent(location, findings) {
+// Two entry points share one Claude call:
+//   - proposeFixes  — writes scripts/qa-findings/<id>.proposal.md, leaves
+//                     src/data/* untouched. Default. Conversational
+//                     workflow: Claude (in chat) reads the proposal and
+//                     discusses with the user before any source change.
+//   - applyFixes    — writes the edits straight to src/data/<file>. Opt-in.
+//                     Preserves the original auto-edit behavior.
+// Both call requestEditsFromClaude under the hood.
+async function requestEditsFromClaude(location, findings) {
   const filePath = resolve(DATA_DIR, location.file);
   const fileContent = readFileSync(filePath, 'utf-8');
 
@@ -570,14 +578,99 @@ Produce targeted edits to fix the issues. Remember: output ONLY valid JSON.`;
     return { applied: false, explanation: 'Failed to parse programmer response' };
   }
 
-  if (!edits.edits || edits.edits.length === 0) {
-    return { applied: false, explanation: edits.explanation || 'No edits proposed' };
+  return {
+    edits: edits.edits || [],
+    explanation: edits.explanation || (edits.edits?.length ? '' : 'No edits proposed'),
+    fileContent,
+    filePath
+  };
+}
+
+// proposeFixes — markdown report only, no source-file writes. This is the
+// conversational interface: Claude (in chat) reads the proposal, summarizes
+// findings, and discusses with the user before anything touches src/data.
+async function proposeFixes(location, findings) {
+  const result = await requestEditsFromClaude(location, findings);
+
+  // Build a markdown proposal. Each edit gets its own section with a
+  // short rationale and the exact before/after snippet so the chat
+  // workflow can quote them back without re-reading the source.
+  const date = new Date().toISOString();
+  const lines = [];
+  lines.push(`# QA Proposal — ${location.id} (${location.charName})`);
+  lines.push('');
+  lines.push(`Generated: ${date}`);
+  lines.push('');
+  lines.push('## Summary');
+  lines.push(`- Grade: ${findings.summary.overallGrade}`);
+  lines.push(`- Phrase utilization: ${findings.summary.phraseUtilization}`);
+  lines.push(`- Obedient Chad: ${findings.obedientRun.completed ? 'completed' : 'incomplete'} in ${findings.obedientRun.turnCount} turns`);
+  lines.push(`- Improvising Chad: ${findings.improvisingRun.completed ? 'completed' : 'incomplete'} in ${findings.improvisingRun.turnCount} turns`);
+  lines.push('');
+
+  if (findings.obedientRun.phrasesUnused?.length) {
+    lines.push('## Sidebar phrases not used by Obedient Chad');
+    for (const p of findings.obedientRun.phrasesUnused) lines.push(`- ${p}`);
+    lines.push('');
   }
 
-  // Apply edits
-  let content = fileContent;
+  if (findings.summary.fixesNeeded?.length) {
+    lines.push('## Issues flagged');
+    for (const f of findings.summary.fixesNeeded) lines.push(`- ${f}`);
+    lines.push('');
+  }
+
+  lines.push(`## Programmer Agent rationale`);
+  lines.push('');
+  lines.push(result.explanation || '_(no rationale returned)_');
+  lines.push('');
+
+  if (!result.edits.length) {
+    lines.push('## Proposed edits');
+    lines.push('');
+    lines.push('_None — Programmer Agent did not propose any source-file changes._');
+  } else {
+    lines.push(`## Proposed edits (${result.edits.length})`);
+    lines.push('');
+    lines.push(`Apply with: \`node scripts/qa-pipeline.mjs apply ${location.id}\` — or, in chat, ask Claude to apply specific edits via the Edit tool after review.`);
+    lines.push('');
+    result.edits.forEach((edit, i) => {
+      const matches = result.fileContent.includes(edit.old);
+      lines.push(`### Edit ${i + 1}${matches ? '' : ' — ⚠️ target string not found'}`);
+      lines.push('');
+      lines.push('**Find:**');
+      lines.push('```');
+      lines.push(edit.old);
+      lines.push('```');
+      lines.push('');
+      lines.push('**Replace with:**');
+      lines.push('```');
+      lines.push(edit.new);
+      lines.push('```');
+      lines.push('');
+    });
+  }
+
+  const proposalPath = resolve(FINDINGS_DIR, `${location.id}.proposal.md`);
+  writeFileSync(proposalPath, lines.join('\n'), 'utf-8');
+  console.log(`  Wrote proposal: ${proposalPath}`);
+  console.log(`  ${result.edits.length} edit(s) proposed — no source files modified.`);
+
+  return { proposed: result.edits.length, explanation: result.explanation, proposalPath };
+}
+
+// applyFixes — opt-in: writes the edits straight to src/data/<file>.
+// Preserves the original auto-edit behavior for users who want it.
+async function applyFixes(location, findings) {
+  const result = await requestEditsFromClaude(location, findings);
+
+  if (!result.edits.length) {
+    return { applied: false, explanation: result.explanation, editCount: 0 };
+  }
+
+  let content = result.fileContent;
   let appliedCount = 0;
-  for (const edit of edits.edits) {
+  for (const edit of result.edits) {
     if (content.includes(edit.old)) {
       content = content.replace(edit.old, edit.new);
       appliedCount++;
@@ -587,11 +680,11 @@ Produce targeted edits to fix the issues. Remember: output ONLY valid JSON.`;
   }
 
   if (appliedCount > 0) {
-    writeFileSync(filePath, content, 'utf-8');
-    console.log(`  Applied ${appliedCount}/${edits.edits.length} edits`);
+    writeFileSync(result.filePath, content, 'utf-8');
+    console.log(`  Applied ${appliedCount}/${result.edits.length} edits to ${result.filePath}`);
   }
 
-  return { applied: appliedCount > 0, explanation: edits.explanation, editCount: appliedCount };
+  return { applied: appliedCount > 0, explanation: result.explanation, editCount: appliedCount };
 }
 
 // ---------------------------------------------------------------------------
@@ -672,7 +765,9 @@ async function main() {
     // Fix phase
     if (findings.summary.fixesNeeded.length > 0 && !skipFixes) {
       console.log(`\n  --- Programmer Agent ---`);
-      const fixResult = await runProgrammerAgent(location, findings);
+      // Legacy main() flow uses the old auto-write path. The new
+      // subcommand dispatcher (next commit) defaults to proposeFixes.
+      const fixResult = await applyFixes(location, findings);
       console.log(`  ${fixResult.explanation}`);
 
       if (fixResult.applied) {
