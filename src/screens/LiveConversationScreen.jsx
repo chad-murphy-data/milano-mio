@@ -493,6 +493,33 @@ export default function LiveConversationScreen({ scenario, difficulty = 'facile'
         )
       ];
 
+      // Capture the finished session for the QA pipeline. Stored
+      // per-scenario in localStorage with FIFO eviction at 20 entries.
+      // Picked up by scripts/qa-pipeline.mjs `analyze --from=real:<path>`
+      // after the user clicks the dev-mode QA Export button to dump
+      // them to a JSON file. Best-effort — wrapped in try/catch so a
+      // quota error never blocks the debrief.
+      try {
+        const key = `mm_qa_sessions:${scenario.id}`;
+        const existing = JSON.parse(localStorage.getItem(key) || '[]');
+        existing.push({
+          scenarioId: scenario.id,
+          timestamp: Date.now(),
+          transcript: enrichedLines.map((l) => ({ role: l.role, text: l.text })),
+          debrief: {
+            learned: mergedLearned,
+            retry: mergedRetry,
+            [characterKey]: claudeDebrief?.[characterKey] || fallbackVoice
+          },
+          markedKnown: marked.knownContext,
+          markedUnknown: marked.unknownContext
+        });
+        const trimmed = existing.slice(-20);
+        localStorage.setItem(key, JSON.stringify(trimmed));
+      } catch (e) {
+        console.warn('[QA] session capture failed:', e);
+      }
+
       setGeneratingDebrief(false);
       onEnd?.({
         debrief: {
