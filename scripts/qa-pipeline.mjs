@@ -3,7 +3,7 @@
 // Milano Mio — Automated Location QA Pipeline
 // Usage: ANTHROPIC_API_KEY=sk-ant-... node scripts/qa-pipeline.mjs [--location=caffe] [--skip-fixes] [--verbose]
 
-import { readFileSync, writeFileSync, mkdirSync } from 'fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -16,8 +16,16 @@ mkdirSync(FINDINGS_DIR, { recursive: true });
 // ---------------------------------------------------------------------------
 // CLI args
 // ---------------------------------------------------------------------------
+// Subcommand syntax (preferred):
+//   node qa-pipeline.mjs <command> <id> [flags]
+// Legacy syntax (still works):
+//   node qa-pipeline.mjs [--location=<id>] [--skip-fixes] [--verbose]
 const args = process.argv.slice(2);
+const positional = args.filter(a => !a.startsWith('--'));
+const subcommand = positional[0];           // 'simulate' | 'analyze' | 'propose' | 'apply' | 'run' | 'all' | undefined
+const subcommandId = positional[1];         // scenario id for the per-location subcommands
 const flagLocation = args.find(a => a.startsWith('--location='))?.split('=')[1];
+const flagFrom = args.find(a => a.startsWith('--from='))?.split('=')[1]; // 'real:<path>' for analyze
 const skipFixes = args.includes('--skip-fixes');
 const verbose = args.includes('--verbose');
 
@@ -30,18 +38,39 @@ if (!API_KEY) {
 // ---------------------------------------------------------------------------
 // Location registry (mirrors scenarios.js but for Node)
 // ---------------------------------------------------------------------------
+// Mirrors scenarios.js. Live-only: the Claude+TTS scenarios were dropped
+// in commit 8334099, so the old hotel.js/caffe.js entries no longer exist.
 const LOCATIONS = [
-  { id: 'hotel', file: 'hotel.js', charName: 'Giulia', stageDirection: '[Chad arrives at the hotel reception desk with luggage.]' },
-  { id: 'caffe', file: 'caffe.js', charName: 'Marco', stageDirection: '[Chad walks up to the bar.]' },
-  { id: 'metro', file: 'metro.js', charName: 'Davide', stageDirection: '[Chad is standing at a ticket machine in Cadorna metro station, looking at the map.]' },
-  { id: 'duomo', file: 'duomo.js', charName: 'Francesca', stageDirection: '[Chad approaches the tourist information point in Piazza del Duomo.]' },
-  { id: 'mercato', file: 'mercato.js', charName: 'Rosa', stageDirection: '[Chad approaches a market stall piled high with fresh produce, cheese, and cured meats.]' },
-  { id: 'trattoria', file: 'trattoria.js', charName: 'Lorenzo', stageDirection: '[Chad arrives at the trattoria entrance for their dinner reservation.]' },
-  { id: 'navigli', file: 'navigli.js', charName: 'Sofia', stageDirection: '[Chad sits down at a canal-side table at a bar in the Navigli district, early evening.]' },
-  { id: 'viaDellaSpigas', file: 'viaDellaSpigas.js', charName: 'Valentina', stageDirection: '[Chad enters an elegant boutique on Via della Spiga.]' },
-  { id: 'casaMilan', file: 'casaMilan.js', charName: 'Paolo', stageDirection: '[Chad enters the Casa Milan museum and merch shop.]' },
-  { id: 'bartolini', file: 'bartolini.js', charName: 'Alessandro', stageDirection: '[Chad arrives at the entrance of Enrico Bartolini al MUDEC for their tasting menu reservation.]' },
-  { id: 'sanSiro', file: 'sanSiro.js', charName: 'Vendor / Giuseppe', stageDirection: '[Chad arrives outside San Siro stadium on match day. The crowd is buzzing.]' },
+  { id: 'hotelLive', file: 'hotelLive.js', charName: 'Giulia',
+    stageDirection: '[Chad arrives at the hotel reception desk with luggage. Giulia is finishing a phone call.]' },
+  { id: 'caffeLive', file: 'caffeLive.js', charName: 'Marco',
+    stageDirection: '[Chad walks up to the bar. Marco is pulling shots.]' },
+  { id: 'metroLive', file: 'metroLive.js', charName: 'Davide',
+    stageDirection: '[Chad is standing at a ticket machine in Cadorna metro station. Davide notices and offers to help.]' },
+  { id: 'duomoLive', file: 'duomoLive.js', charName: 'Francesca',
+    stageDirection: '[Chad approaches the tourist information point in Piazza del Duomo. Francesca welcomes him.]' },
+  { id: 'mercatoLive', file: 'mercatoLive.js', charName: 'Rosa',
+    stageDirection: "[Chad approaches Rosa's market stall on a weekday morning. Rosa beams.]" },
+  { id: 'trattoriaLive', file: 'trattoriaLive.js', charName: 'Lorenzo',
+    stageDirection: '[Chad arrives at the trattoria entrance for their dinner reservation. Lorenzo greets them at the door.]' },
+  { id: 'navigliLive', file: 'navigliLive.js', charName: 'Sofia',
+    stageDirection: '[Chad sits down at a canal-side table at a bar in the Navigli district. Sofia approaches with a warm welcome.]' },
+  { id: 'viaDellaSpigasLive', file: 'viaDellaSpigasLive.js', charName: 'Valentina',
+    stageDirection: '[Chad enters an elegant boutique on Via della Spiga. Valentina greets him from a display near the entrance.]' },
+  { id: 'casaMilanLive', file: 'casaMilanLive.js', charName: 'Paolo',
+    stageDirection: '[Chad enters Casa Milan. Paolo is arranging jerseys near the entrance and lights up at a fellow fan.]' },
+  { id: 'bartoliniLive', file: 'bartoliniLive.js', charName: 'Alessandro',
+    stageDirection: '[Chad arrives at Enrico Bartolini al MUDEC. Alessandro greets him at the podium with measured warmth.]' },
+  { id: 'bartoliniSommelierLive', file: 'bartoliniSommelierLive.js', charName: 'Elena',
+    stageDirection: '[Elena, the sommelier, arrives at the table to begin the wine pairing.]' },
+  { id: 'sanSiroVendorLive', file: 'sanSiroVendorLive.js', charName: 'Vendor',
+    stageDirection: '[Chad approaches a scarf-and-program vendor outside San Siro on match day, half an hour before kickoff.]' },
+  { id: 'sanSiroMatchLive', file: 'sanSiroMatchLive.js', charName: 'Giuseppe',
+    stageDirection: '[Chad has just sat down in the San Siro stands. Giuseppe drops into the seat next to him as the match begins.]' },
+  { id: 'sanSiroEntry', file: 'sanSiroEntry.js', charName: 'Nonno Aldo',
+    stageDirection: '[Chad arrives at the San Siro biglietteria booth, ticket in hand.]' },
+  { id: 'gabriellaApartment', file: 'gabriellaApartment.js', charName: 'Gabriella',
+    stageDirection: "[Chad arrives at Gabriella's apartment for an afternoon visit.]" },
 ];
 
 // ---------------------------------------------------------------------------
@@ -133,15 +162,38 @@ async function callClaude(systemPrompt, messages, { model = 'claude-sonnet-4-6',
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 // ---------------------------------------------------------------------------
+// Live end-of-conversation detection
+// ---------------------------------------------------------------------------
+// Live scenarios don't emit [DEBRIEF] tags — they end either at maxTurns
+// or when the character delivers a clear farewell. Mirrors the same regex
+// LiveConversationScreen.jsx uses for endOnCharacterFarewell so QA
+// simulation matches runtime behavior.
+const FAREWELL_RE = /\b(arrivederci|alla\s+prossima|a\s+presto|a\s+domani|buon\s+riposo|buon\s+proseguimento|buon\s+pomeriggio|buon\s+appetito|buon\s+viaggio|buona\s+giornata|buona\s+serata|buona\s+partita|buona\s+cena|buona\s+spesa|forza\s+milan|ci\s+vediamo)\b/i;
+const TRAILING_CIAO_RE = /\bciao(\s+ciao)?[\s!.?]*$/i;
+
+function isFarewellLine(text) {
+  if (!text) return false;
+  if (FAREWELL_RE.test(text)) return true;
+  if (TRAILING_CIAO_RE.test(text.trim())) return true;
+  return false;
+}
+
+// ---------------------------------------------------------------------------
 // Dynamic location loader
 // ---------------------------------------------------------------------------
 async function loadLocation(loc) {
-  const mod = await import(`file://${resolve(DATA_DIR, loc.file).replace(/\\/g, '/')}`);
+  // Cache-bust on each load so re-test after an applied edit picks up
+  // the new module content. Without the query param Node memoizes the
+  // first import for the lifetime of the process.
+  const cacheBust = `?t=${Date.now()}`;
+  const mod = await import(`file://${resolve(DATA_DIR, loc.file).replace(/\\/g, '/')}${cacheBust}`);
   return {
     ...loc,
+    scenario: mod.scenario,                       // live.maxTurns / live.endOnCharacterFarewell live here
     keyPhrases: mod.keyPhrases,
     coreVocab: mod.coreVocab,
     extendedVocab: mod.extendedVocab || [],
+    whisperHints: mod.whisperHints || [],
     buildSystemPrompt: mod.buildSystemPrompt,
   };
 }
@@ -205,7 +257,15 @@ async function runConversation(location, chadType) {
   const transcript = [];
   let debrief = null;
   let turnCount = 0;
-  const MAX_TURNS = 20;
+  // Live scenarios cap at scenario.live.maxTurns. Add a small headroom
+  // so the runner doesn't stop one turn before the farewell would land.
+  // Falls back to 20 for the legacy [DEBRIEF]-driven path.
+  const MAX_TURNS = (location.scenario?.live?.maxTurns || 20) + 2;
+  // Live scenarios may opt in to early-exit on a clear character farewell
+  // (mirrors LiveConversationScreen.jsx). Default behavior: ON for any Live
+  // scenario, since QA wants the same end-detection the runtime uses.
+  const farewellEnabled = !!location.scenario?.live;
+  const farewellMinTurn = location.scenario?.live?.farewellMinTurn ?? 4;
 
   // Track repeated beats for stall detection
   const recentCharLines = [];
@@ -228,7 +288,8 @@ async function runConversation(location, chadType) {
   recentCharLines.push(first.spoken.slice(0, 80));
 
   // Step 2: Conversation loop
-  while (turnCount < MAX_TURNS && !debrief) {
+  let endedByFarewell = false;
+  while (turnCount < MAX_TURNS && !debrief && !endedByFarewell) {
     turnCount++;
 
     // Chad responds to what the character said
@@ -255,6 +316,14 @@ async function runConversation(location, chadType) {
       break;
     }
 
+    // Live end-detection: a clear farewell from the character ends the
+    // conversation gracefully. Skipped on early turns so an opening
+    // "Ciao!" or "Buongiorno!" doesn't false-trigger.
+    if (farewellEnabled && turnCount >= farewellMinTurn && isFarewellLine(parsed.spoken)) {
+      endedByFarewell = true;
+      break;
+    }
+
     // Stall detection: same beat 3+ times
     recentCharLines.push(parsed.spoken.slice(0, 80));
     if (recentCharLines.length >= 3) {
@@ -267,11 +336,15 @@ async function runConversation(location, chadType) {
   }
 
   return {
-    completed: !!debrief,
+    // For Claude-era scenarios "completed" meant a [DEBRIEF] block fired.
+    // For Live scenarios the natural end is a character farewell — count
+    // either as completion. Stalling is hitting MAX_TURNS without either.
+    completed: !!debrief || endedByFarewell,
     turnCount,
     transcript,
     debrief,
-    stalled: !debrief && turnCount >= MAX_TURNS
+    stalled: !debrief && !endedByFarewell && turnCount >= MAX_TURNS,
+    endedByFarewell
   };
 }
 
@@ -429,7 +502,15 @@ function produceFindings(location, obedientResult, improvisingResult) {
 // ---------------------------------------------------------------------------
 // Programmer Agent — uses Claude to generate targeted fixes
 // ---------------------------------------------------------------------------
-async function runProgrammerAgent(location, findings) {
+// Two entry points share one Claude call:
+//   - proposeFixes  — writes scripts/qa-findings/<id>.proposal.md, leaves
+//                     src/data/* untouched. Default. Conversational
+//                     workflow: Claude (in chat) reads the proposal and
+//                     discusses with the user before any source change.
+//   - applyFixes    — writes the edits straight to src/data/<file>. Opt-in.
+//                     Preserves the original auto-edit behavior.
+// Both call requestEditsFromClaude under the hood.
+async function requestEditsFromClaude(location, findings) {
   const filePath = resolve(DATA_DIR, location.file);
   const fileContent = readFileSync(filePath, 'utf-8');
 
@@ -505,14 +586,99 @@ Produce targeted edits to fix the issues. Remember: output ONLY valid JSON.`;
     return { applied: false, explanation: 'Failed to parse programmer response' };
   }
 
-  if (!edits.edits || edits.edits.length === 0) {
-    return { applied: false, explanation: edits.explanation || 'No edits proposed' };
+  return {
+    edits: edits.edits || [],
+    explanation: edits.explanation || (edits.edits?.length ? '' : 'No edits proposed'),
+    fileContent,
+    filePath
+  };
+}
+
+// proposeFixes — markdown report only, no source-file writes. This is the
+// conversational interface: Claude (in chat) reads the proposal, summarizes
+// findings, and discusses with the user before anything touches src/data.
+async function proposeFixes(location, findings) {
+  const result = await requestEditsFromClaude(location, findings);
+
+  // Build a markdown proposal. Each edit gets its own section with a
+  // short rationale and the exact before/after snippet so the chat
+  // workflow can quote them back without re-reading the source.
+  const date = new Date().toISOString();
+  const lines = [];
+  lines.push(`# QA Proposal — ${location.id} (${location.charName})`);
+  lines.push('');
+  lines.push(`Generated: ${date}`);
+  lines.push('');
+  lines.push('## Summary');
+  lines.push(`- Grade: ${findings.summary.overallGrade}`);
+  lines.push(`- Phrase utilization: ${findings.summary.phraseUtilization}`);
+  lines.push(`- Obedient Chad: ${findings.obedientRun.completed ? 'completed' : 'incomplete'} in ${findings.obedientRun.turnCount} turns`);
+  lines.push(`- Improvising Chad: ${findings.improvisingRun.completed ? 'completed' : 'incomplete'} in ${findings.improvisingRun.turnCount} turns`);
+  lines.push('');
+
+  if (findings.obedientRun.phrasesUnused?.length) {
+    lines.push('## Sidebar phrases not used by Obedient Chad');
+    for (const p of findings.obedientRun.phrasesUnused) lines.push(`- ${p}`);
+    lines.push('');
   }
 
-  // Apply edits
-  let content = fileContent;
+  if (findings.summary.fixesNeeded?.length) {
+    lines.push('## Issues flagged');
+    for (const f of findings.summary.fixesNeeded) lines.push(`- ${f}`);
+    lines.push('');
+  }
+
+  lines.push(`## Programmer Agent rationale`);
+  lines.push('');
+  lines.push(result.explanation || '_(no rationale returned)_');
+  lines.push('');
+
+  if (!result.edits.length) {
+    lines.push('## Proposed edits');
+    lines.push('');
+    lines.push('_None — Programmer Agent did not propose any source-file changes._');
+  } else {
+    lines.push(`## Proposed edits (${result.edits.length})`);
+    lines.push('');
+    lines.push(`Apply with: \`node scripts/qa-pipeline.mjs apply ${location.id}\` — or, in chat, ask Claude to apply specific edits via the Edit tool after review.`);
+    lines.push('');
+    result.edits.forEach((edit, i) => {
+      const matches = result.fileContent.includes(edit.old);
+      lines.push(`### Edit ${i + 1}${matches ? '' : ' — ⚠️ target string not found'}`);
+      lines.push('');
+      lines.push('**Find:**');
+      lines.push('```');
+      lines.push(edit.old);
+      lines.push('```');
+      lines.push('');
+      lines.push('**Replace with:**');
+      lines.push('```');
+      lines.push(edit.new);
+      lines.push('```');
+      lines.push('');
+    });
+  }
+
+  const proposalPath = resolve(FINDINGS_DIR, `${location.id}.proposal.md`);
+  writeFileSync(proposalPath, lines.join('\n'), 'utf-8');
+  console.log(`  Wrote proposal: ${proposalPath}`);
+  console.log(`  ${result.edits.length} edit(s) proposed — no source files modified.`);
+
+  return { proposed: result.edits.length, explanation: result.explanation, proposalPath };
+}
+
+// applyFixes — opt-in: writes the edits straight to src/data/<file>.
+// Preserves the original auto-edit behavior for users who want it.
+async function applyFixes(location, findings) {
+  const result = await requestEditsFromClaude(location, findings);
+
+  if (!result.edits.length) {
+    return { applied: false, explanation: result.explanation, editCount: 0 };
+  }
+
+  let content = result.fileContent;
   let appliedCount = 0;
-  for (const edit of edits.edits) {
+  for (const edit of result.edits) {
     if (content.includes(edit.old)) {
       content = content.replace(edit.old, edit.new);
       appliedCount++;
@@ -522,17 +688,189 @@ Produce targeted edits to fix the issues. Remember: output ONLY valid JSON.`;
   }
 
   if (appliedCount > 0) {
-    writeFileSync(filePath, content, 'utf-8');
-    console.log(`  Applied ${appliedCount}/${edits.edits.length} edits`);
+    writeFileSync(result.filePath, content, 'utf-8');
+    console.log(`  Applied ${appliedCount}/${result.edits.length} edits to ${result.filePath}`);
   }
 
-  return { applied: appliedCount > 0, explanation: edits.explanation, editCount: appliedCount };
+  return { applied: appliedCount > 0, explanation: result.explanation, editCount: appliedCount };
+}
+
+// ---------------------------------------------------------------------------
+// Staged subcommands
+// ---------------------------------------------------------------------------
+// Each stage caches its output in scripts/qa-findings/ so later stages
+// can re-use prior work without re-paying for Claude calls.
+//   simulate  →  <id>.transcripts.json
+//   analyze   →  <id>.json (existing findings shape)
+//   propose   →  <id>.proposal.md
+//   apply     →  src/data/<file>  (writes!)
+
+function findLocation(id) {
+  const loc = LOCATIONS.find(l => l.id === id);
+  if (!loc) {
+    console.error(`Unknown scenario: ${id}`);
+    console.error(`Available: ${LOCATIONS.map(l => l.id).join(', ')}`);
+    process.exit(1);
+  }
+  return loc;
+}
+
+function transcriptsPath(id) { return resolve(FINDINGS_DIR, `${id}.transcripts.json`); }
+function findingsPath(id) { return resolve(FINDINGS_DIR, `${id}.json`); }
+
+async function cmdSimulate(id) {
+  const loc = findLocation(id);
+  const location = await loadLocation(loc);
+  console.log(`\nSimulating ${id} (${loc.charName})...`);
+
+  console.log('  --- Run A: Obedient Chad ---');
+  const obedient = await runConversation(location, 'obedient');
+  console.log(`  ${obedient.completed ? 'COMPLETED' : 'INCOMPLETE'} in ${obedient.turnCount} turns${obedient.endedByFarewell ? ' (farewell)' : ''}`);
+
+  console.log('  --- Run B: Improvising Chad ---');
+  const improvising = await runConversation(location, 'improvising');
+  console.log(`  ${improvising.completed ? 'COMPLETED' : 'INCOMPLETE'} in ${improvising.turnCount} turns${improvising.endedByFarewell ? ' (farewell)' : ''}`);
+
+  writeFileSync(transcriptsPath(id), JSON.stringify({ obedient, improvising }, null, 2));
+  console.log(`  Cached: ${transcriptsPath(id)}`);
+  return { obedient, improvising };
+}
+
+async function cmdAnalyze(id, { from } = {}) {
+  const loc = findLocation(id);
+  const location = await loadLocation(loc);
+
+  let obedient, improvising;
+
+  if (from?.startsWith('real:')) {
+    // Real-session ingestion: pull all sessions matching this scenario
+    // from a sessions JSON exported via the dev-mode export button.
+    const path = from.slice('real:'.length);
+    console.log(`\nAnalyzing ${id} from real sessions: ${path}`);
+    const data = JSON.parse(readFileSync(path, 'utf-8'));
+    const sessions = (data.sessions || []).filter(s =>
+      s.scenarioId === id || s.scenarioId === loc.file.replace('.js', '') || s.scenarioId === loc.id
+    );
+    if (!sessions.length) {
+      console.error(`No real sessions found for ${id} in ${path}`);
+      process.exit(1);
+    }
+    console.log(`  Found ${sessions.length} real session(s) — using most recent.`);
+    // Use the most recent session as the obedient run; reuse for improvising
+    // since real sessions don't differentiate.
+    const recent = sessions.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))[0];
+    const transcript = (recent.transcript || []).map((line, i) => ({
+      turn: Math.floor(i / 2),
+      speaker: line.role === 'user' ? 'Chad' : loc.charName,
+      raw: line.text,
+      spoken: line.text
+    }));
+    obedient = { completed: true, turnCount: Math.floor(transcript.length / 2), transcript, debrief: recent.debrief, stalled: false, endedByFarewell: false };
+    improvising = obedient;
+  } else {
+    // Synthetic: load cached transcripts or run a fresh simulation.
+    if (!existsSync(transcriptsPath(id))) {
+      console.log(`  No cached transcripts — simulating first.`);
+      ({ obedient, improvising } = await cmdSimulate(id));
+    } else {
+      console.log(`\nAnalyzing ${id} from cached transcripts.`);
+      const cached = JSON.parse(readFileSync(transcriptsPath(id), 'utf-8'));
+      obedient = cached.obedient;
+      improvising = cached.improvising;
+    }
+  }
+
+  const findings = produceFindings(location, obedient, improvising);
+  writeFileSync(findingsPath(id), JSON.stringify(findings, null, 2));
+  console.log(`  Grade: ${findings.summary.overallGrade} | Phrase utilization: ${findings.summary.phraseUtilization}`);
+  console.log(`  Issues: ${findings.summary.fixesNeeded.length}`);
+  console.log(`  Cached: ${findingsPath(id)}`);
+  return findings;
+}
+
+async function cmdPropose(id, { from } = {}) {
+  const loc = findLocation(id);
+  const location = await loadLocation(loc);
+  let findings;
+  if (existsSync(findingsPath(id)) && !from) {
+    console.log(`\nProposing edits for ${id} from cached findings.`);
+    findings = JSON.parse(readFileSync(findingsPath(id), 'utf-8'));
+  } else {
+    findings = await cmdAnalyze(id, { from });
+  }
+  console.log('  --- Programmer Agent (propose) ---');
+  return await proposeFixes(location, findings);
+}
+
+async function cmdApply(id, { from } = {}) {
+  const loc = findLocation(id);
+  const location = await loadLocation(loc);
+  let findings;
+  if (existsSync(findingsPath(id)) && !from) {
+    findings = JSON.parse(readFileSync(findingsPath(id), 'utf-8'));
+  } else {
+    findings = await cmdAnalyze(id, { from });
+  }
+  console.log('  --- Programmer Agent (apply) ---');
+  return await applyFixes(location, findings);
+}
+
+function printUsage() {
+  console.log(`
+Milano Mio QA Pipeline
+
+Usage:
+  node scripts/qa-pipeline.mjs <command> <scenarioId> [flags]
+
+Commands:
+  simulate <id>                 Run obedient + improvising sims, cache transcripts
+  analyze  <id> [--from=real:<path>]
+                                Analyze cached transcripts (or a real-session export);
+                                writes <id>.json findings
+  propose  <id>                 Default chat workflow. Generates a markdown proposal at
+                                scripts/qa-findings/<id>.proposal.md — NO source writes.
+  apply    <id>                 OPT-IN auto-edit. Writes the Programmer Agent's edits
+                                straight into src/data/<file>.
+  run      <id>                 Alias for propose.
+  all                           Legacy bulk mode — runs every scenario through the old
+                                analyze + apply + retest flow. Honors --skip-fixes.
+
+Flags:
+  --from=real:<path>            Use real Gemini Live transcripts (exported via the
+                                dev-mode QA Export button) instead of fresh sims
+  --location=<id>               (legacy) restrict bulk mode to one scenario
+  --skip-fixes                  (legacy) skip the apply phase in bulk mode
+  --verbose                     log every turn
+
+Available scenarios: ${LOCATIONS.map(l => l.id).join(', ')}
+`);
 }
 
 // ---------------------------------------------------------------------------
 // Main pipeline
 // ---------------------------------------------------------------------------
 async function main() {
+  // Subcommand dispatch (preferred). Anything unrecognized falls through
+  // to the legacy bulk flow below for back-compat.
+  if (subcommand && ['simulate', 'analyze', 'propose', 'apply', 'run'].includes(subcommand)) {
+    if (!subcommandId) {
+      console.error(`'${subcommand}' requires a scenario id.`);
+      printUsage();
+      process.exit(1);
+    }
+    if (subcommand === 'simulate') { await cmdSimulate(subcommandId); return; }
+    if (subcommand === 'analyze')  { await cmdAnalyze(subcommandId, { from: flagFrom }); return; }
+    if (subcommand === 'propose' || subcommand === 'run') { await cmdPropose(subcommandId, { from: flagFrom }); return; }
+    if (subcommand === 'apply')    { await cmdApply(subcommandId, { from: flagFrom }); return; }
+  }
+  if (subcommand === 'help' || args.includes('--help') || args.includes('-h')) {
+    printUsage();
+    return;
+  }
+
+  // Legacy bulk-flow path. `node qa-pipeline.mjs all` or no subcommand at
+  // all (with optional --location / --skip-fixes) runs every scenario
+  // through the old analyze + auto-apply + retest pipeline.
   const locationsToTest = flagLocation
     ? LOCATIONS.filter(l => l.id === flagLocation)
     : LOCATIONS;
@@ -607,7 +945,9 @@ async function main() {
     // Fix phase
     if (findings.summary.fixesNeeded.length > 0 && !skipFixes) {
       console.log(`\n  --- Programmer Agent ---`);
-      const fixResult = await runProgrammerAgent(location, findings);
+      // Legacy main() flow uses the old auto-write path. The new
+      // subcommand dispatcher (next commit) defaults to proposeFixes.
+      const fixResult = await applyFixes(location, findings);
       console.log(`  ${fixResult.explanation}`);
 
       if (fixResult.applied) {

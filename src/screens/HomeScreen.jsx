@@ -5,6 +5,7 @@
 
 import vespaKeeshond from '../assets/puppets/vespa_keeshond.png';
 import vespaPug from '../assets/puppets/vespa_pug.png';
+import QaExportButton from '../components/QaExportButton.jsx';
 
 const DOGS = [
   {
@@ -72,6 +73,8 @@ export default function HomeScreen({ onPickCompanion, existingCompanion, onConti
           </button>
         </div>
       )}
+
+      <QaExportButton />
     </div>
   );
 }
