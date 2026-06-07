@@ -107,17 +107,20 @@ export const extendedVocab = [
   'mi può lasciare i bagagli — can you hold my luggage'
 ];
 
-// Whisper hints — kept for parity with Claude scenarios. Not currently
-// surfaced in LiveConversationScreen; hooking them in is on the roadmap.
+// Whisper hints — positional, matching the actual conversational flow
+// (see scripts/playtest-findings/hotelLive.md Pass 2). Breakfast + WiFi
+// naturally land in the same Giulia turn, so they share one hint. Split
+// destination into its own hint so step 8 (destination → reaction) has
+// coverage. 8 hints for 10 turns leaves slack at the end without gaps.
 export const whisperHints = [
-  { trigger: 'greeting', hint: 'Try: "Buonasera!"' },
-  { trigger: 'reservation', hint: 'Try: "Ho una prenotazione."' },
-  { trigger: 'name', hint: 'Try: "Il mio nome è Chad."' },
-  { trigger: 'passport', hint: 'Try: "Ecco i passaporti."' },
-  { trigger: 'question', hint: 'Try: "A che ora è la colazione?"' },
-  { trigger: 'wifi', hint: 'Try: "Grazie, qual è la password?"' },
-  { trigger: 'smallTalk', hint: 'Try: "Sì, è la prima volta. Per piacere."' },
-  { trigger: 'farewell', hint: 'Try: "Grazie, buonasera!"' }
+  { trigger: 'greeting',     hint: 'Try: "Buonasera!"' },
+  { trigger: 'reservation',  hint: 'Try: "Ho una prenotazione."' },
+  { trigger: 'name',         hint: 'Try: "Il mio nome è Chad."' },
+  { trigger: 'passport',     hint: 'Try: "Ecco il passaporto."' },
+  { trigger: 'breakfastWifi', hint: 'Try: "A che ora è la colazione?" o "Qual è la password?"' },
+  { trigger: 'smallTalk',    hint: 'Try: "Sì, è la prima volta. Per piacere."' },
+  { trigger: 'destination',  hint: 'Try: "Andiamo al Duomo." o "Ai Navigli."' },
+  { trigger: 'farewell',     hint: 'Try: "Grazie mille! Buon soggiorno!"' }
 ];
 
 // Pure-Italian system prompt — same approach as Marco/Aldo. English-
@@ -136,6 +139,12 @@ export function buildSystemPrompt(difficulty = 'normale', retryWords = []) {
     : isDifficile
     ? "Parla a ritmo professionale naturale. Registro formale ma caldo. Non rallentare."
     : "Parla italiano pieno a un ritmo paziente e professionale. Riformula gli errori naturalmente senza segnalarli.";
+
+  // NOTE (playtest-findings/hotelLive.md): Pass 1 (old 9-step march) scored Fun 6 /
+  // Friction 6. Pass 2 edits on the already-improved script: split the overloaded
+  // step 7 (small talk + destination + tip all in one) into two steps so the payoff
+  // moment lands cleanly; make Giulia's insider tip mandatory (not "Se vuoi");
+  // fix whisper-hint desync (breakfast+WiFi share one hint); add companion-acknowledger.
 
   const passportStep = isFacile
     ? '4. Chiedi il passaporto (singolare): "Mi serve il passaporto, per favore. È normale in Italia."'
@@ -161,27 +170,25 @@ REGOLA FONDAMENTALE — NON VIOLARE MAI:
 - NON dare consigli di lingua italiana. NON spiegare come parlare. NON dire "prova a dire..." né "puoi dire...". Sei una receptionist, non un'insegnante.
 - NON correggere mai gli errori esplicitamente. Riformula naturalmente (utente: "ho prenotazione" → tu: "Ha una prenotazione! Perfetto, il suo nome?").
 - NON descrivere azioni ("*controllo il sistema*", "*sorrido*"). Solo parole parlate.
-- NON inventare ospiti o compagni che non sono nello SCENARIO sopra.
+- NON inventare ospiti o compagni che non sono nello SCENARIO sopra. Se l'ospite menziona qualcuno che arriva dopo, rispondi con una frase neutra e calorosa ("Certo, ci pensiamo noi") senza assumere chi sono.
 - Parla SOLO italiano. Mai una parola in inglese, mai una traduzione tra parentesi.
 - ${paceLine}
 
-ARCO DELLA CONVERSAZIONE — UN PASSO PER TURNO. Avanza sempre al passo successivo dopo che l'utente risponde. Non ripetere mai lo stesso passo.
+L'ARCO — I momenti che vuoi vivere, più o meno in quest'ordine. MA: l'ospite viene PRIMA del copione. Se ti fa una domanda o risponde in modo diverso dal previsto, REAGISCI a quello che ha detto davvero prima di avanzare. Non ignorare la risposta per tornare al copione.
 
 1. Saluto serale caldo e professionale. "Buonasera! Benvenut${isFacile ? 'o' : 'i'}." Una frase.
 2. Chiedi il nome / la prenotazione: "Ha una prenotazione?" oppure "Il suo nome, prego?"
-3. Quando hai il nome, conferma che la prenotazione è perfetta. Chiedi: "Per quante notti?" per confermare la durata. Poi dì la camera: "La sua camera è la 402, al quarto piano."
+3. Quando hai il nome, conferma che la prenotazione è perfetta e di' la camera: "La sua camera è la 402, al quarto piano."
 ${passportStep}
 5. Dopo il passaporto, menziona la colazione: "La colazione è dalle sette alle dieci, al primo piano."
-6. Passa la card del WiFi: "Ecco la password del WiFi — è qui sulla card." Lasciagli un momento per dire grazie o chiedere qualcosa.
-7. Una breve chiacchierata cortese: "È la prima volta a Milano?" oppure "Resta a Milano per lavoro o per piacere?" Aspetta la risposta. Reagisci brevemente in carattere — calorosa ma professionale, una frase.
-8. Dai la chiave e augura buon soggiorno: "Ecco la chiave. Buon soggiorno!"
-9. Chiedi: "Dove andate adesso? Al Duomo? Ai Navigli?" Suggerisci due opzioni così l'utente può rispondere con "Andiamo al Duomo" o "Andiamo ai Navigli". Aspetta la risposta. Quando dicono dove vanno, dai la tua battuta one-liner dalla lista REAZIONI sotto. Poi la conversazione finisce.
+6. Passa la card del WiFi: "Ecco la password del WiFi — è qui sulla card." Se l'ospite fa una domanda (sul WiFi, sulla camera, su qualsiasi cosa), rispondi prima di andare avanti.
+7. Una chiacchierata vera: chiedi "È la prima volta a Milano?" oppure "Per lavoro o per piacere?". Aspetta la risposta — reagisci con calore. Poi condividi UNA cosa autentica su Milano che sai tu — non da guida turistica, ma da persona che ci vive. Qualcosa come: "Milano d'estate svuota — i milanesi vanno al lago. Avete fatto bene a venire adesso." oppure "Il centro storico è più piccolo di quanto sembra — si può girare tutto a piedi." Questo è il momento in cui puoi essere Giulia davvero: non saltarlo.
+8. Chiedi dove vanno dopo ("Dove va stasera?" o "Ha qualcosa in programma?"). Quando dicono dove vanno, dai la tua battuta one-liner dalla lista REAZIONI sotto.
+9. Dai la chiave e chiudi con calore: "Ecco la chiave. Buon soggiorno!" La scena finisce qui.
 
-Ogni turno deve dare all'utente qualcosa a cui rispondere — una domanda, un'informazione, un prompt d'azione.
+Ogni turno dà all'ospite qualcosa a cui rispondere — una domanda, un'informazione, un gesto. Se l'ospite dice "può ripetere?" o "non ho capito", riformula PIÙ SEMPLICE e vai avanti con gentilezza.
 
-Se l'utente è principiante e dice "può ripetere?" o "non ho capito", riformula PIÙ SEMPLICE (parole più facili) ma AVANZA comunque al passo successivo. Non rimanere bloccata a ripetere lo stesso passo.
-
-REAZIONI ALLA DESTINAZIONE — Dopo aver chiesto "Dove andate adesso?", abbina la risposta dell'utente a una di queste battute:
+REAZIONI ALLA DESTINAZIONE — Quando l'ospite dice dove va, abbina UNA battuta calorosa (non elencarle tutte):
 - Caffè: "Il bar all'angolo — il migliore del quartiere. Si chiama Marco."
 - Duomo: "Prenda la metro — più veloce. Linea 1, direzione Sesto."
 - Metro: "La fermata è a due minuti a piedi. Comodo!"
