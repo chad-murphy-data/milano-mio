@@ -25,7 +25,10 @@ export const scenario = {
     // than the in-stands fan).
     voiceName: 'Alnilam',
     silenceMs: 300,
-    maxTurns: 9,
+    // Playtest rework (see scripts/playtest-findings/sanSiroVendorLive.md):
+    // old 9-turn rigid 7-step march scored Fun 6 / Friction 7. Dropped to 8
+    // to match the looser beat sheet — breathing room without drag.
+    maxTurns: 8,
     model: 'gemini-3.1-flash-live-preview',
     backdropKey: 'sanSiro_exterior',
     openingHint:
@@ -78,15 +81,20 @@ export const extendedVocab = [
   'mezz\'ora prima del fischio — half an hour before kickoff'
 ];
 
-// Whisper hints — ordered to match the 7-step arc.
+// Whisper hints — ordered to match the loose beat sheet (pitch → price →
+// haggle/pay → match-talk → gate → farewell/crepi). Positional: served as
+// whisperHints[turn] by LiveConversationScreen — they track the arc loosely
+// without assuming the guest hits every beat on cue.
+// (Playtest rework — see scripts/playtest-findings/sanSiroVendorLive.md.)
 export const whisperHints = [
   { trigger: 'pitch', hint: 'Try: "Una sciarpa, per favore!"' },
   { trigger: 'price', hint: 'Try: "Quanto costa?"' },
-  { trigger: 'haggle', hint: 'Try: "Va bene, la prendo." o "Quanto per due?"' },
+  { trigger: 'haggle', hint: 'Try: "Quanto per due?" o "Va bene, la prendo."' },
   { trigger: 'pay', hint: 'Try: "Ecco." (consegna i soldi)' },
   { trigger: 'matchTalk', hint: 'Try: "Forza Milan!"' },
   { trigger: 'gate', hint: 'Try: "Dov\'è il mio settore?"' },
-  { trigger: 'farewell', hint: 'Try: "Grazie, in bocca al lupo!"' }
+  { trigger: 'farewell', hint: 'Try: "Grazie!" o "In bocca al lupo!"' },
+  { trigger: 'crepi', hint: 'Try: "Crepi!" (risposta a "in bocca al lupo")' }
 ];
 
 export function buildSystemPrompt(difficulty = 'normale', retryWords = []) {
@@ -124,15 +132,18 @@ REGOLA FONDAMENTALE — NON VIOLARE MAI:
 - Parla SOLO italiano. Mai una parola in inglese.
 - ${paceLine}
 
-ARCO DELLA CONVERSAZIONE — UN PASSO PER TURNO. Avanza sempre al passo successivo. Non ripetere mai lo stesso passo.
+L'ARCO — sono i momenti che vorresti vivere, più o meno in quest'ordine, ma SEGUI L'UTENTE:
+se ti fa una domanda fuori copione (tipo "Che partita è stasera?"), rispondici davvero prima di andare avanti.
+Non ripetere mai lo stesso momento. Se non hai niente di nuovo da dire, vai verso il saluto finale.
+(Playtest rework — see scripts/playtest-findings/sanSiroVendorLive.md.)
 
 1. La proposta — adocchi il cliente, alzi la voce: "Sciarpa! Programma! Sciarpe rossonere!" Una battuta breve ed entusiasta.
 2. Mostri il prodotto. Quando chiedono il prezzo, rispondi con una cifra realistica (15-20 euro per la sciarpa). Aggiungi una battuta sul valore: "Fatta a mano! Non come quelle dentro lo stadio."
 3. Piccola contrattazione amichevole — l'utente potrebbe chiedere "Quanto per due?" o "Sconto?" Negozia con un sorriso. Concedi un piccolo sconto se chiedono.
 4. Conferma l'acquisto. Loro pagano. "Ecco" scambio — ringrazia entusiasta.
-5. Battuta veloce sulla partita di stasera — chi gioca, una previsione: "Stasera vinciamo, eh? Forza Milan!" Crea il momento per "Forza Milan!"
-6. Loro chiedono dove sia il loro settore — mostrano il biglietto. Indica brevemente: "Cancello rosso, settore X, da quella parte!"
-7. Saluto entusiasta e in bocca al lupo: "Buona partita! In bocca al lupo!" Aspetta che l'utente risponda "Crepi!" Se non lo dicono, ridi e dì: "Si dice 'crepi'! Forza Milan!" Poi chiedi: "Dove vai dopo? Tornerai per un'altra partita?" Aspetta la risposta. Quando dicono cosa fanno, dai una breve battuta calorosa di chiusura. Poi la conversazione finisce.
+5. Battuta sulla partita di stasera — e QUI il vero segreto da insider: "Senti, te lo dico io — quella roba dentro lo stadio costa il doppio. Hai fatto bene a comprare qui!" Poi: "Stasera vinciamo, eh? Forza Milan!"
+6. Se chiedono del settore, indica brevemente: "Cancello rosso, settore X, da quella parte!" Altrimenti vai al saluto.
+7. IL SALUTO — caldo e veloce, da venditore. "Buona partita!" E come ultimo regalo: "In bocca al lupo!" Se l'utente risponde "Crepi!", festeggia. Se non lo sa, insegnaglielo con un sorriso — UNA volta sola, mai bloccare il saluto: "Da noi si dice 'crepi'! Porta bene!" Poi chiudi. — NOTA: se è l'utente a dirti "In bocca al lupo!" per primo, rispondi "Crepi! Bravo!" e chiudi con calore.
 
 Se l'utente dice "può ripetere?" o "non ho capito", riformula PIÙ SEMPLICE ma AVANZA comunque.
 

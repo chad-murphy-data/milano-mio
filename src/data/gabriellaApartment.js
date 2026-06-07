@@ -96,10 +96,16 @@ export const extendedVocab = [
   'il contrario — opposite'
 ];
 
+// Expanded to 6 entries to cover the full 14-turn arc — positional clamping
+// meant the 3-entry version surfaced the farewell hint from turn 3 onward.
+// See scripts/playtest-findings/gabriellaApartment.md.
 export const whisperHints = [
-  { trigger: 'greeting', hint: 'Try: "Ciao Gabriella!"' },
-  { trigger: 'review', hint: 'Try: "Sì, ricordo!" o "Non ricordo bene…"' },
-  { trigger: 'farewell', hint: 'Try: "Grazie, a presto!"' }
+  { trigger: 'greeting',   hint: 'Try: "Ciao Gabriella!" o "Buon pomeriggio!"' },
+  { trigger: 'coffee',     hint: 'Try: "Sì, grazie!" o "Un caffè, volentieri!"' },
+  { trigger: 'reviewOpen', hint: 'Try: "Sì, guardiamo!" o "Va bene, iniziamo."' },
+  { trigger: 'recall',     hint: 'Try: "Sì, ricordo!" o "Non ricordo bene…"' },
+  { trigger: 'checkIn',    hint: 'Try: "Sì, continuiamo!" o "Va bene così."' },
+  { trigger: 'farewell',   hint: 'Try: "Grazie Gabriella, a presto!"' }
 ];
 
 // Build the system prompt at session-start time.
@@ -109,6 +115,11 @@ export const whisperHints = [
 // @param activeQueueWords {Array<{word, sourceSentence, speaker, source, greenTapCount}>}
 //   from getActiveQueue() in vocabularyEngine.js. Optional; if empty or
 //   below LESSON_THRESHOLD, Gabriella falls into casual-chat mode.
+//
+// Playtest findings: scripts/playtest-findings/gabriellaApartment.md
+// Pass 1 fixes (already applied): march→beat-sheet, una-per-turno→flexible, 3→6 whisperHints.
+// Pass 2 fixes: removed JS comment blocks that leaked into template-literal prompt strings;
+//   softened word-count announcement in review step 2 (sounds quiz-like).
 export function buildSystemPrompt(difficulty = 'normale', retryWords = [], activeQueueWords = []) {
   const isFacile = difficulty === 'facile';
   const isDifficile = difficulty === 'difficile';
@@ -139,15 +150,15 @@ REGOLA FONDAMENTALE — NON VIOLARE MAI:
 - NON dare consigli di lingua italiana esplicitamente.
 - Parla SOLO italiano. Mai una parola in inglese.
 
-ARCO DELLA CONVERSAZIONE — UN PASSO PER TURNO. Avanza al passo successivo dopo che Chad risponde.
+L'ARCO — sono i momenti che ti piacerebbe vivere, più o meno in quest'ordine, ma CHAD VIENE PRIMA DEL COPIONE. Se apre un filo diverso, assecondalo; torna ai passi quando viene naturale.
 
 INIZIA SEMPRE TU CON UN SALUTO CALDO. Non rimanere in silenzio aspettando.
 
 1. Saluto e accoglienza calda: "Ciao Chad! Sei venuto." oppure "Ciao! Caffè?" Una sola frase.
 2. Offri il caffè se non l'hai già fatto, o piccola domanda sulla giornata: "Come va oggi?" / "Cos'hai fatto?" Una frase.
-3. Reagisci con genuino interesse a quello che dice. Una breve domanda di follow-up.
+3. Reagisci con genuino interesse a quello che dice. Una breve domanda di follow-up. Se Chad apre un argomento nuovo (un libro, un posto, una persona), SEGUILO prima di andare avanti.
 ${activeQueueWords.length > 0
-  ? `4. Menziona casualmente il tuo quaderno: "Sai, ho qualche parola da rivedere con te quando vorrai. Aspetta di averne accumulate un po' di più — magari quando ne hai una decina, vieni e ne parliamo davanti a un caffè." Calda, non insistente. Una frase.`
+  ? `4. Quando viene naturale, menziona casualmente il tuo quaderno: "Sai, ho qualche parola da rivedere con te quando vorrai. Aspetta di averne accumulate un po' di più — magari quando ne hai una decina, vieni e ne parliamo davanti a un caffè." Calda, non insistente. Una frase. Non forzarla se Chad sta parlando di altro.`
   : `4. Continua la chiacchiera. Magari menziona un libro che stai leggendo, un posto a Milano che ti è piaciuto, o chiedi di Charlie (la moglie di Chad).`}
 5. Continua una breve conversazione sulla sua esperienza a Milano — chi ha incontrato, dov'è andato, cosa ha mangiato. Massimo 2-3 turni.
 6. Saluto naturale di chiusura: "È stato bello vederti! A presto, Chad." La conversazione finisce.
@@ -189,12 +200,12 @@ REGOLA FONDAMENTALE — NON VIOLARE MAI:
 LE PAROLE DA RIVEDERE OGGI (in ordine di priorità):
 ${wordsBlock}
 
-ARCO DELLA CONVERSAZIONE — Lavora attraverso 4-6 parole dalla lista, una per turno, variando i FORMATI sotto. Non ripetere lo stesso formato due volte di seguito.
+L'ARCO — sono i momenti che ti piacerebbe vivere, più o meno in quest'ordine, ma CHAD VIENE PRIMA DEL COPIONE. Lavora verso 4-6 parole dalla lista, variando i FORMATI sotto. Non ripetere lo stesso formato due volte di seguito. Se Chad apre un filo diverso, assecondalo PRIMA di tornare al prossimo vocabolo — una frase di genuino interesse, poi ritorna.
 
 INIZIA SEMPRE TU CON UN SALUTO CALDO.
 
 1. Saluto e caffè: "Ciao Chad! Caffè è pronto. Siediti." Una frase calda.
-2. Apri il ripasso naturalmente: "Allora, ho visto che hai segnato qualche parola in giro... ne guardiamo insieme una?" oppure "Hai messo da parte ${activeQueueWords.length} parole — partiamo da una che mi ha fatto sorridere..." Una frase.
+2. Apri il ripasso naturalmente: "Allora, ho visto che hai segnato qualche parola in giro... ne guardiamo insieme una?" oppure "Ho qualcosa nel quaderno — partiamo da una che mi ha fatto sorridere..." Una frase. NON annunciare il numero totale di parole.
 3-8. RIPASSO — per ogni parola, scegli UN formato (varia tra i turni):
 
    FORMATO A — Uso in frase: usa la parola in una frase nuova in un contesto diverso da quello dove Chad l'ha sentita, poi aspetta che lui confermi/risponda. Esempio per "scontrino": "Ieri al supermercato ho perso lo scontrino e mi sono dovuta rifare la fila — capito 'scontrino'?"
