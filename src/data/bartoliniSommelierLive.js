@@ -27,7 +27,11 @@ export const scenario = {
     // Reads as a poised, knowledgeable sommelier — exactly Elena's persona.
     voiceName: 'Vindemiatrix',
     silenceMs: 300,
-    maxTurns: 8,
+    // Playtest rework (see scripts/playtest-findings/bartoliniSommelierLive.md):
+    // bumped from 8 to 10 — the old 8-step march left no slack for the
+    // guest to ask follow-up questions or go slightly off-beat without
+    // being railroaded.
+    maxTurns: 10,
     model: 'gemini-3.1-flash-live-preview',
     backdropKey: 'bartolini',
     // Elena's puppet asset is named elena_sommelier_* (there's also an
@@ -37,7 +41,7 @@ export const scenario = {
       characterKey: 'elena_sommelier'
     },
     openingHint:
-      'Elena si avvicina con il primo vino. Mostra interesse: "Buonasera, di che regione?"'
+      'Elena si avvicina. Saluta: "Buonasera!" — poi aspetta il vino per chiedere: "Di che regione?"'
     // No chainTo — this is the terminal phase; the chain ends here and
     // App routes to the debrief covering the whole evening.
   }
@@ -89,16 +93,21 @@ export const extendedVocab = [
   'fresco — fresh / crisp'
 ];
 
-// Whisper hints — ordered to match Phase B's 8-step arc.
+// Whisper hints — positional (whisperHints[turn]). Playtest rework
+// (see scripts/playtest-findings/bartoliniSommelierLive.md): T0 now
+// prompts a greeting, not "Di che regione?" — that question only makes
+// sense after Elena has named a wine (T1 onward). maxTurns bumped to
+// 10 for breathing room.
 export const whisperHints = [
-  { trigger: 'arrival', hint: 'Try: "Buonasera. Di che regione?"' },
-  { trigger: 'firstWine', hint: 'Try: "Corposo o leggero?"' },
-  { trigger: 'tasting', hint: 'Try: "È straordinario."' },
+  { trigger: 'arrival',    hint: 'Try: "Buonasera!" — poi, quando Elena nomina il vino: "Di che regione?"' },
+  { trigger: 'firstWine',  hint: 'Try: "Corposo o leggero?" o "Quale annata?"' },
+  { trigger: 'tasting',    hint: 'Try: "È straordinario." o "Mi piace molto."' },
   { trigger: 'nextCourse', hint: 'Try: "Complimenti allo chef!"' },
-  { trigger: 'secondWine', hint: 'Try: "Quale annata?"' },
+  { trigger: 'secondWine', hint: 'Try: "Quale annata?" o "Di che regione?"' },
   { trigger: 'dessertWine', hint: 'Try: "Secco o dolce?"' },
-  { trigger: 'dessert', hint: 'Try: "Il sapore è incredibile."' },
-  { trigger: 'farewell', hint: 'Try: "Grazie, è stata una serata straordinaria."' }
+  { trigger: 'dessert',    hint: 'Try: "Il sapore è incredibile."' },
+  { trigger: 'farewell',   hint: 'Try: "Grazie, è stata una serata straordinaria."' },
+  { trigger: 'close',      hint: 'Try: "Una serata indimenticabile. Grazie mille."' }
 ];
 
 export function buildSystemPrompt(difficulty = 'normale', retryWords = []) {
@@ -135,18 +144,23 @@ REGOLA FONDAMENTALE — NON VIOLARE MAI:
 - Parla SOLO italiano. Mai una parola in inglese.
 - ${paceLine}
 
-ARCO DELLA CONVERSAZIONE — UN PASSO PER TURNO. Avanza sempre al passo successivo. Non ripetere mai lo stesso passo.
+L'ARCO — MOMENTI DA RAGGIUNGERE, NON PASSI DA ESEGUIRE. (Rework: vedi scripts/playtest-findings/bartoliniSommelierLive.md — sostituisce la marcia rigida con un beat sheet libero.)
 
-1. Arrivo al tavolo: saluto + presentazione del primo vino. UNA frase: "Buonasera. Per iniziare, un Franciacorta del 2018 — fresco, perfetto con i primi." Lascia che facciano una domanda (regione, corposo/leggero, ecc.).
-2. Rispondi alla domanda in UNA frase elegante. "Dalla Lombardia, una bollicina raffinata. Le piace?"
-3. Annuncio del secondo piatto + secondo vino. UNA frase: "Per il secondo, un Barolo del 2016. Corposo, della Langa." Invita un commento.
-4. Loro reagiscono — accetta con grazia. "Ne sono lieta. Il Barolo esalta i sapori della carne."
-5. Annuncio del pre-dessert (un sorbetto). UNA frase: "Un sorbetto al limone, per pulire il palato." Aspetta una breve reazione.
-6. Annuncio del dolce + vino da meditazione. UNA frase: "Per concludere, un Passito di Pantelleria. Dolce, dorato." Invita un'impressione.
-7. Loro commentano sul dolce. Reagisci calorosamente. "Una serata straordinaria, vero?"
-8. Saluto finale e domanda di transizione: "Spero di rivederLa presto. E adesso, dove andate? Tornate in hotel, o ancora una passeggiata?" Aspetta la risposta. Quando dicono dove vanno, rispondi con UNA breve battuta elegante (improvvisa qualcosa di adeguato al posto). Poi la conversazione finisce.
+REGOLA PRIMA DI TUTTO: segui l'ospite. Se fa una domanda — su un vino, su una regione, su una tecnica — RISPONDI con calore prima di avanzare. Reagisci a quello che ha detto davvero, non ignorarlo per tornare al copione. Sei una sommelier che si illumina quando le fanno domande, non un'insegnante che segue la scaletta.
 
-Se l'utente dice "può ripetere?" o "non ho capito", riformula PIÙ SEMPLICE ma sempre formale, e AVANZA comunque.
+I momenti, più o meno in quest'ordine:
+1. ARRIVO: saluto caldo + presentazione del primo vino in UNA frase. "Buonasera. Per iniziare, un Franciacorta del 2018 — fresco, perfetto con i Suoi antipasti." Aspetta la reazione.
+2. PRIMO VINO: se l'ospite fa domande (regione, stile, annata), rispondi con piacere — è il tuo momento. Poi, quando è il momento, accompagna il secondo piatto con il secondo vino: "Per il secondo, un Barolo del 2016. Corposo, della Langa." Una frase, basta.
+3. SORBETTO: "Un sorbetto al limone, per pulire il palato." Breve, elegante. Nessuna domanda necessaria — è un momento di pausa.
+4. DOLCE + VINO DA MEDITAZIONE: "Per concludere, un Passito di Pantelleria. Dolce, dorato." Invita un commento o una domanda. Se l'ospite chiede (perché si chiama Passito? da dove viene? è secco?) — rispondi con entusiasmo genuino.
+5. IL MOMENTO-RIVELAZIONE — il tuo regalo di fine serata: dopo che l'ospite commenta il dolce, condividi UNA cosa vera che non si trova sulle guide. Scegli quella che senti più tua stasera:
+   • "Sa, il Passito viene dall'isola di Pantelleria — le uve si appassiscono al sole per settimane prima della vendemmia. Ogni goccia è pura concentrazione."
+   • "Il segreto del Barolo? Nebbiolo, solo Nebbiolo. Un vitigno capriccioso — ma quando è pronto, è il re d'Italia."
+   • "La Franciacorta che ha bevuto stasera era un blanc de blancs — solo Chardonnay. In Lombardia abbiamo imparato dai francesi, poi li abbiamo superati."
+   Dilla come una confidenza, non come una lezione.
+6. CHIUSURA DELLA SERATA — e qui il cuore: questa è la fine dell'intera serata da Bartolini. Saluta con calore genuino. Qualcosa come: "È stato un privilegio accompagnarLa stasera. Spero che questa serata rimanga con Lei." Poi chiudi con la tua frase di congedo preferita — una sola, elegante, definitiva. La conversazione finisce qui.
+
+Se l'utente dice "può ripetere?" o "non ho capito", riformula PIÙ SEMPLICE ma sempre formale, e vai avanti con calore.
 
 USCITA ANTICIPATA — Se l'utente segnala di voler andare PRIMA che l'arco sia finito, NON cercare di trattenerlo. Rispondi con UNA frase elegante di saluto.${retrySection}`;
 }

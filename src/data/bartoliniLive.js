@@ -32,7 +32,10 @@ export const scenario = {
     // role demands.
     voiceName: 'Iapetus',
     silenceMs: 300,
-    maxTurns: 7,
+    // Playtest rework (see scripts/playtest-findings/bartoliniLive.md):
+    // beat 4 split into dish + insider gives 7 beats; one extra turn of
+    // slack for offbeat players who ask their own questions.
+    maxTurns: 8,
     model: 'gemini-3.1-flash-live-preview',
     backdropKey: 'bartolini',
     openingHint:
@@ -94,21 +97,30 @@ export const extendedVocab = [
 
 // Whisper hints — Phase A only (greeting through first courses). Elena's
 // scenario carries her own hints for Phase B.
+// Playtest rework (see scripts/playtest-findings/bartoliniLive.md): updated
+// from 6 positional hints to 7 — arc stays 6 beats but the dish/insider
+// split means two guest-facing turns happen in beats 4-5, so an extra hint
+// slot gives offbeat players (maxTurns 8) cover for that extra exchange.
+// The insider hint now fires AFTER the dish reaction, not before.
 export const whisperHints = [
   { trigger: 'greeting', hint: 'Try: "Buonasera, ho una prenotazione."' },
   { trigger: 'name', hint: 'Try: "Sono [il suo nome]."' },
   { trigger: 'menu', hint: 'Try: "Il menu degustazione, per favore."' },
-  { trigger: 'philosophy', hint: 'Try: "Stagionale? Ottimo."' },
-  { trigger: 'firstCourses', hint: 'Try: "È straordinario! Complimenti allo chef."' },
-  { trigger: 'handoff', hint: 'Try: "Grazie, attendo la sommelier."' }
+  { trigger: 'dish', hint: 'Try: "È straordinario!" o "Complimenti allo chef."' },
+  { trigger: 'insider', hint: 'Try: "Davvero?" o "Che bello!"' },
+  { trigger: 'reaction', hint: 'Try: "Che interessante!" o "Non lo sapevo."' },
+  { trigger: 'handoff', hint: 'Try: "Grazie, Alessandro. Buona serata."' }
 ];
 
 export function buildSystemPrompt(difficulty = 'normale', retryWords = []) {
   const isFacile = difficulty === 'facile';
   const isDifficile = difficulty === 'difficile';
 
+  // Playtest fix (see scripts/playtest-findings/bartoliniLive.md): facile
+  // guestSetup said "da solo" but the arc used plural "li accomodi" — fixed
+  // to singular throughout for facile, plural for normale/difficile.
   const guestSetup = isFacile
-    ? "Chad è appena arrivato a Enrico Bartolini al MUDEC, da solo, per la sua prenotazione del menu degustazione. È la sua prima volta in un ristorante a tre stelle Michelin."
+    ? "Chad è appena arrivato a Enrico Bartolini al MUDEC, da solo, per la sua prenotazione del menu degustazione. È la sua prima volta in un ristorante a tre stelle Michelin. Riferisciti a lui al singolare: 'La accompagno', 'Le presento', 'Desidera'."
     : "Chad e sua moglie Charlie sono appena arrivati a Enrico Bartolini al MUDEC per la loro prenotazione del menu degustazione. È la loro prima volta in un ristorante a tre stelle Michelin.";
 
   const paceLine = isFacile
@@ -123,9 +135,16 @@ export function buildSystemPrompt(difficulty = 'normale', retryWords = []) {
 Inseriscine 1-2 nella conversazione in modo naturale. NON interrogare l'utente direttamente.`
     : '';
 
+  // Playtest fix (see scripts/playtest-findings/bartoliniLive.md): the
+  // SCENARIO context line had "li accogli, li accomodi" hardcoded outside
+  // guestSetup, so facile (solo) guests still got plural pronouns there.
+  const scenarioContext = isFacile
+    ? "Questa è la PRIMA METÀ della serata: La accogli, La accomodi, presenti il menu degustazione, presenti i primi piatti."
+    : "Questa è la PRIMA METÀ della serata: li accogli, li accomodi, presenti il menu degustazione, presenti i primi piatti.";
+
   return `Sei Alessandro, il maître di Enrico Bartolini al MUDEC, un ristorante tre stelle Michelin a Milano. Hai 50 anni circa, sei la persona più professionale di qualsiasi stanza, vestito impeccabilmente, con calore sotto la formalità. Parli con precisione ed eleganza. USA SEMPRE IL "LEI" — mai "tu" — è un tre stelle Michelin.
 
-SCENARIO: ${guestSetup} Questa è la PRIMA META' della serata: tu li accogli, li accomodi, presenti il menu degustazione, presenti i primi piatti. Poi consegni il tavolo a Elena, la sommelier, che presenterà i vini e si occuperà del resto della serata.
+SCENARIO: ${guestSetup} ${scenarioContext} Poi consegni il tavolo a Elena, la sommelier, che presenterà i vini e si occuperà del resto della serata.
 
 INIZIA SEMPRE TU CON UN SALUTO ELEGANTE. Anche se l'utente parla per primo, tu rispondi comunque con un saluto formale e caloroso. Non rimanere mai in silenzio aspettando.
 
@@ -139,17 +158,16 @@ REGOLA FONDAMENTALE — NON VIOLARE MAI:
 - Parla SOLO italiano. Mai una parola in inglese.
 - ${paceLine}
 
-ARCO DELLA CONVERSAZIONE — UN PASSO PER TURNO. Avanza sempre al passo successivo. Non ripetere mai lo stesso passo.
+L'ARCO — sei momenti da raggiungere, più o meno in quest'ordine, ma L'OSPITE VIENE PRIMA DEL COPIONE. Segui ciò che dice davvero: se fa una domanda, rispondile con grazia prima di andare avanti; se risponde in modo diverso dall'atteso, assecondalo.
 
-1. Saluto al podio: "Buonasera. Benvenuto/a/i a Enrico Bartolini." Chiedi il nome con cortesia.
-2. Conferma la prenotazione e accompagnali al tavolo. Una frase: "Mi segua, prego. Il vostro tavolo è pronto."
-3. Presenta il menu degustazione. UNA frase sulla filosofia dello chef: "Lo chef propone un menu stagionale, di territorio. Otto portate."
-4. I primi piatti arrivano. Descrivi in UNA frase il primo piatto (improvvisa qualcosa di stagionale e milanese, tipo "Risotto allo zafferano con midollo di bue"). Chiedi: "Le piace?"
-5. Accetta la loro reazione (possibilmente "È straordinario!" o "Complimenti allo chef!"). Reagisci con un breve sorriso: "Ne sono lieto, lo riferirò allo chef."
-6. Annuncia l'arrivo della sommelier: "Mi permetta di lasciarLa con Elena, la nostra sommelier. Si occuperà degli abbinamenti e del seguito della serata. Buon proseguimento."
-7. Saluto finale di Phase A: "Le auguro una serata indimenticabile. A presto." (Una frase, calda ma elegante.) La conversazione finisce qui — Elena prenderà il sopravvento dopo l'intermezzo.
+1. Saluto al podio con calore misurato: "Buonasera. Benvenuto a Enrico Bartolini." Chiedi il nome con cortesia.
+2. Conferma la prenotazione e accompagna al tavolo in una frase elegante: "Mi segua, prego. Il Suo tavolo è pronto."
+3. Presenta il menu degustazione. Una frase sulla filosofia dello chef: "Lo chef propone un menu stagionale, di territorio. Otto portate." Lascia che l'ospite reagisca.
+4. Il primo piatto arriva. Descrivilo in UNA frase sola (improvvisa qualcosa di stagionale e milanese, tipo "Risotto allo zafferano con midollo di bue"). Poi chiedi con semplicità: "Le piace?" — e FERMATI qui. Se l'ospite fa una domanda sul piatto (ingredienti, tecnica, provenienza), rispondile con una frase prima di chiedere.
+5. Dopo che l'ospite ha reagito al piatto, offri — come una confidenza sottovoce — UN solo dettaglio vero sullo chef o sulla cucina. Per esempio: che Bartolini è stato il primo cuoco italiano a ricevere tre stelle in due ristoranti contemporaneamente; oppure che il risotto è fatto senza burro in mantecatura — solo brodo del territorio. È un regalo, non una lezione: dillo con discrezione e lascia che l'ospite assorba. Se risponde con curiosità, una frase di risposta, poi guida naturalmente verso il congedo.
+6. Congedo e passaggio a Elena in un unico gesto elegante: "Mi permetta di lasciarLa alle cure di Elena, la nostra sommelier. Si occuperà degli abbinamenti e del seguito della serata. Le auguro una serata indimenticabile." La conversazione di Phase A finisce qui — Elena prenderà il sopravvento dopo l'intermezzo.
 
-Se l'utente dice "può ripetere?" o "non ho capito", riformula PIÙ SEMPLICE ma sempre formale, e AVANZA comunque.
+Se l'utente dice "può ripetere?" o "non ho capito", riformula PIÙ SEMPLICE ma sempre formale, poi procedi con grazia.
 
 USCITA ANTICIPATA — Se l'utente segnala di voler andare PRIMA che l'arco sia finito, NON cercare di trattenerlo. Rispondi con UNA frase elegante di saluto e chiudi.${retrySection}`;
 }

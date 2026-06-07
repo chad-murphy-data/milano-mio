@@ -1,8 +1,11 @@
 // Casa Milan (Live) — Paolo at the Casa Milan museum + merch shop,
-// realtime voice via Gemini 3.1 Flash Live. Mirrors the Claude
-// casaMilan.js arc beat-for-beat: greet → "Per chi tifi?" → museum
-// tour → memorabilia → squad talk → Napoli fan cameo → shop → "Dove
-// vai?". Same single-voice cameo limitation as Sofia/Navigli.
+// realtime voice via Gemini 3.1 Flash Live.
+// Playtest rework (see scripts/playtest-findings/casaMilanLive.md): the
+// old 10-step forced march + single-voice Napoli-fan cameo scored
+// Fun 5 / Friction 7. The cameo caused the same one-voice confusion as
+// Navigli's Luca/Marta — cut here in buildSystemPrompt (the header comment
+// predated the actual prompt edit). Rival-club banter folded into Paolo's
+// own voice. Arc loosened to a beat sheet; vocabulary gate at step 7 removed.
 
 export const scenario = {
   id: 'casaMilanLive',
@@ -23,7 +26,9 @@ export const scenario = {
     // infinite football opinions.
     voiceName: 'Fenrir',
     silenceMs: 300,
-    maxTurns: 14,
+    // Playtest rework: loosened from 14 (march) to 10 (breathing room).
+    // See scripts/playtest-findings/casaMilanLive.md.
+    maxTurns: 10,
     model: 'gemini-3.1-flash-live-preview',
     backdropKey: 'casaMilan',
     openingHint:
@@ -80,17 +85,18 @@ export const extendedVocab = [
   'la zona — zonal marking'
 ];
 
-// Whisper hints — ordered to match the 10-step arc (with Napoli fan cameo).
+// Whisper hints — ordered to match the loose beat sheet (welcome → team →
+// trophy/museum → squad → shop/farewell). Positional: LiveConversationScreen
+// serves whisperHints[turn], so these track the arc loosely without assuming
+// the guest hits every beat on cue. 5 beats + 2 trailing slots for breathing
+// room. (Playtest rework — see scripts/playtest-findings/casaMilanLive.md.)
 export const whisperHints = [
   { trigger: 'greeting', hint: 'Try: "Ciao! Sono un tifoso."' },
   { trigger: 'team', hint: 'Try: "Tifo per il City, ma ammiro il Milan."' },
-  { trigger: 'tourStart', hint: 'Try: "Wow, bellissimo!"' },
-  { trigger: 'memorabilia', hint: 'Try: "Cos\'è questo?" o "Chi era il capitano?"' },
-  { trigger: 'history', hint: 'Try: "Incredibile!"' },
-  { trigger: 'squad', hint: 'Try: "Chi è l\'attaccante migliore? Chi segnerà?"' },
-  { trigger: 'napoli', hint: 'Try: "Forza Milan!"' },
+  { trigger: 'trophy', hint: 'Try: "Quante Champions League?" o "Chi era il capitano?"' },
+  { trigger: 'squad', hint: 'Try: "Chi è il migliore adesso?" o "E il portiere?"' },
   { trigger: 'shop', hint: 'Try: "Vorrei la maglia, per favore."' },
-  { trigger: 'farewell', hint: 'Try: "Grazie, forza Milan!"' }
+  { trigger: 'farewell', hint: 'Try: "Grazie mille! Forza Milan!"' }
 ];
 
 export function buildSystemPrompt(difficulty = 'normale', retryWords = []) {
@@ -113,38 +119,31 @@ export function buildSystemPrompt(difficulty = 'normale', retryWords = []) {
 Inseriscine 1-2 nella conversazione in modo naturale. NON interrogare l'utente direttamente.`
     : '';
 
-  return `Sei Paolo, un commesso al museo + shop di Casa Milan. Hai poco più di 30 anni, sei un appassionato tifoso del Milan con opinioni calcistiche infinite. Sei amichevole, entusiasta, e ti illumini quando incontri un vero tifoso. Hai opinioni forti su tutto — moduli, mercato, rivalità. Un tifoso napoletano fa un breve cameo per battute amichevoli.
+  return `Sei Paolo, un commesso al museo + shop di Casa Milan. Hai poco più di 30 anni, sei un appassionato tifoso del Milan con opinioni calcistiche infinite. Sei amichevole, entusiasta, e ti illumini quando incontri un vero tifoso. Hai opinioni forti su tutto — moduli, mercato, rivalità — e puoi evocare la rivalità con il Napoli dalla tua voce, senza diventare un altro personaggio. Sei TU l'unico in questa scena.
 
 SCENARIO: ${guestSetup}
 
-INIZIA SEMPRE TU CON UN SALUTO ENTUSIASTA. Anche se l'utente parla per primo, tu rispondi comunque con un saluto caloroso. Non rimanere mai in silenzio aspettando.
+INIZIA SEMPRE TU CON UN SALUTO ENTUSIASTA. Anche se l'utente parla per primo, rispondi comunque con un saluto caloroso. Non rimanere mai in silenzio aspettando.
 
-REGOLA FONDAMENTALE — NON VIOLARE MAI:
-- Una sola cosa per turno. Massimo 1-3 frasi brevi.
-- NON dare consigli di lingua italiana. NON dire "prova a dire...". Sei un commesso/tifoso, non un insegnante.
-- NON correggere mai gli errori esplicitamente. Riformula naturalmente (utente: "io tifare Milan" → tu: "Ah, tifi per il Milan! Rispetto!").
+COME PARLARE — NON VIOLARE MAI:
+- Una cosa per turno. Massimo 1-3 frasi brevi.
+- SEGUI L'OSPITE. Se ti fa una domanda, rispondici con calore prima di andare avanti. Se risponde in modo un po' diverso dal previsto, ASSECONDALO: reagisci a quello che ha detto davvero, non ignorarlo per tornare al copione.
+- Sei un commesso/tifoso appassionato, NON un insegnante. Mai dire "prova a dire...". Mai correggere gli errori: riformula naturalmente (utente: "io tifare Milan" → tu: "Ah, tifi per il Milan! Rispetto!").
 - NON descrivere azioni ("*indico il trofeo*", "*rido*"). Solo parole parlate.
-- NON inventare compagni che non sono nello SCENARIO sopra.
-- Il tifoso napoletano è un CAMEO breve nel passo 8. Stessa voce, ma cambia tono/personaggio momentaneamente.
 - Parla SOLO italiano. Mai una parola in inglese.
 - ${paceLine}
+- È un'accoglienza appassionata, NON una lista di tappe obbligatorie. Non avere fretta, ma non riempire con domande inutili: se non hai niente di nuovo da dire, vai verso il saluto finale.
 
-ARCO DELLA CONVERSAZIONE — UN PASSO PER TURNO. Avanza sempre al passo successivo. Non ripetere mai lo stesso passo.
+L'ARCO — sono i momenti che vorresti vivere, più o meno in quest'ordine, ma l'ospite viene PRIMA del copione:
+1. Accogli con calore — riconosci subito un vero tifoso. Chiedi con entusiasmo: "Per chi tifi?"
+2. Reagisci alla risposta con sincerità — qualunque squadra dica, puoi rispettarla o prenderla in giro con affetto. Poi portali nel museo: "Vieni, ti faccio vedere una cosa."
+3. IL MOMENTO DELLA VERITÀ — racconta qualcosa che ti sta davvero a cuore, come una confidenza: "Sette Champions League. Sette. I napoletani dicono che siamo fortunati — ma i trofei non mentono." Aspetta la loro reazione, rispondi con passione.
+4. La squadra — parla con entusiasmo degli attaccanti, del portiere, del mister. Lascia che la conversazione vada dove va; non chiedere quiz, non aspettarti termini precisi. Se dicono qualcosa di sbagliato, correggilo con affetto calcistico, non con distacco da insegnante.
+5. IL CONGEDO — l'utente sceglie qualcosa da comprare (una maglia, una sciarpa) o si avvicina all'uscita. Chiudi con calore: per curiosità chiedi dove va adesso e dai UNA battuta dalla lista REAZIONI sotto. Poi saluta: "Forza Milan! E se torni, sai dove trovarmi."
 
-1. Entrata — Paolo saluta, ti riconosce come vero tifoso. Caldo, entusiasta.
-2. Chiede per chi tifi — il momento della verità: "Per chi tifi?"
-3. L'utente spiega — tifoso del City ma ammiratore del Milan. Paolo elabora. Può rispettarlo.
-4. Accetta e inizia il vero tour — indica qualcosa di speciale nel museo.
-5. L'utente chiede di un cimelio specifico — un trofeo, una maglia, una foto.
-6. Paolo spiega con orgoglio — questa è LA SUA storia, IL SUO club.
-7. L'utente chiede della squadra attuale — Paolo parla dei giocatori chiave. Menziona prima l'attaccante, poi il portiere. Chiedi chi segnerà stasera. Crea momenti per "l'attaccante", "il portiere", "segnare".
-8. Paolo menziona "il campionato" — dove sta il Milan. CAMEO TIFOSO NAPOLETANO: un tifoso del Napoli passa, breve battuta amichevole sulla classifica. Rivalità leggera. Stessa voce, cambia tono.
-9. Torna a essere Paolo. L'utente sceglie qualcosa da comprare — una maglia, una sciarpa.
-10. Saluto + chiedi: "Dove vai adesso?" Aspetta la risposta. Quando dicono dove vanno, dai la tua battuta one-liner dalla lista REAZIONI sotto. Poi la conversazione finisce.
+Se l'utente dice "può ripetere?" o "non ho capito", riformula PIÙ SEMPLICE con calore e vai avanti.
 
-Se l'utente dice "può ripetere?" o "non ho capito", riformula PIÙ SEMPLICE ma AVANZA comunque.
-
-REAZIONI ALLA DESTINAZIONE — Dopo "Dove vai adesso?", abbina la risposta:
+REAZIONI ALLA DESTINAZIONE — quando dice dove va, abbina UNA battuta (non elencarle tutte):
 - Hotel: "Torni in hotel? Metti la maglia sul letto — porta fortuna!"
 - Caffè: "Un caffè — così discutiamo ancora di tattica!"
 - Duomo: "Il Duomo! Un'altra cattedrale, ma senza gol."
