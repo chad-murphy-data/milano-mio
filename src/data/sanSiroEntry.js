@@ -32,7 +32,9 @@ export const scenario = {
     // Orus (firm) or Fenrir (excitable) as alternatives.
     voiceName: 'Charon',
     silenceMs: 300,
-    maxTurns: 3,
+    // playtest-findings/sanSiroEntry.md — bumped from 3: the lupo exchange
+    // and any offbeat fumble need one extra turn of breathing room.
+    maxTurns: 5,
     model: 'gemini-3.1-flash-live-preview',
     // Aldo's puppet is the legacy side-by-side JPG with a magenta
     // backdrop. The screen runs it through chroma-key once at mount.
@@ -88,12 +90,15 @@ export const extendedVocab = [
   'in bocca al lupo — good luck (lit. "into the wolf\'s mouth")'
 ];
 
-// Whisper hints — kept for parity with Claude scenarios. Not yet
-// surfaced in LiveConversationScreen; hooking them in is on the roadmap.
+// Whisper hints — positional (index = turn) to match the navigliLive
+// pattern; LiveConversationScreen will serve whisperHints[turn] when
+// the hook ships. (playtest-findings/sanSiroEntry.md — realigned from
+// trigger-keyed strings to positional indices; added lupo hint.)
 export const whisperHints = [
   { trigger: 'greeting', hint: 'Try: "Buonasera, nonno!"' },
   { trigger: 'ticket',   hint: 'Try: "Ecco il biglietto, grazie."' },
-  { trigger: 'jersey',   hint: 'Try: "Sì, sono tifoso del Milan."' },
+  { trigger: 'comment',  hint: 'Try: "Sì, sono tifoso del Milan!" o "Bellissimo stadio!"' },
+  { trigger: 'lupo',     hint: 'Try: "Crepi!" (risposta a "in bocca al lupo")' },
   { trigger: 'farewell', hint: 'Try: "Grazie, buona partita!"' }
 ];
 
@@ -115,8 +120,18 @@ REGOLA FONDAMENTALE — NON VIOLARE MAI:
 
 ARCO DELLA CONVERSAZIONE (tre tuoi turni in totale):
 1. Saluto breve + richiesta del biglietto. "Buonasera! Il biglietto, per favore." (o simile). Una frase sola.
-2. Un piccolo commento naturale dopo aver "visto" il biglietto: sulla loro maglia, sulla partita di oggi, sul tempo, o una battuta da vecchio tifoso. Una frase sola. Lasciali rispondere.
-3. Congedo caloroso: "Buona partita, forza Milan!" Chiudi qui.
+2. Un momento da vecchio Milanista — una frase sola, personale e viva. Non
+   una generica "bella maglia": pesca da un ricordo vero o da quello che vedi.
+   Esempi (scegli uno, adattalo alla situazione):
+   • "Quella maglia l'ho vista in campo nel '94 — Savicevic fece tre gol al Barça. Indimenticabile."
+   • "Quarant'anni qui, e ogni volta che si entra in questo stadio mi viene la pelle d'oca."
+   • "Stasera la curva sarà piena — quando cantano tutti insieme, senti tremare il cemento."
+   Lascia rispondere. Se dicono poco va bene — sorridi e vai avanti.
+3. Congedo caloroso — ed è qui il tuo momento speciale: saluta con calore,
+   poi come ultimo regalo l'augurio da vecchio tifoso: "In bocca al lupo,
+   ragazzo mio!" Aspetta "Crepi!" — se non lo sanno, dillo con un sorriso
+   ("da noi si risponde 'crepi!'") e festeggia: un tentativo affettuoso, mai
+   un blocco. Poi chiudi: "Forza Milan!"
 
 Se l'utente dice poco, va bene lo stesso — rispondi naturalmente e vai avanti con l'arco. Non forzare, non prolungare.
 

@@ -8,6 +8,15 @@
 // match with you for ninety minutes, gets emotional about a goal, a
 // ref controversy, the final whistle. The "graduation" feel of the
 // original arc lives on here.
+//
+// Playtest rework (see scripts/playtest-findings/sanSiroMatchLive.md):
+// the old 9-step rigid march + "UN PASSO PER TURNO" railroading instruction
+// scored Fun 6 / Friction 7. The forced vocabulary-insertion beats ("menziona
+// il primo tempo esplicitamente"), back-to-back match-narration steps with no
+// player agency, and a tacked-on destination quiz were the main offenders.
+// Now a loose 7-beat arc, Giuseppe follows the guest's lead, match moments
+// are atmospheric not gated, and the farewell uses the "in bocca al lupo"
+// closing button (same pattern as navigliLive) instead of an exit quiz.
 
 export const scenario = {
   id: 'sanSiroMatchLive',
@@ -28,6 +37,9 @@ export const scenario = {
     // mentioned as a Live alternative back in the sanSiroEntry config.
     voiceName: 'Orus',
     silenceMs: 300,
+    // Playtest rework: 7-beat loose arc needs 11 turns as breathing room,
+    // not a countdown — same headroom as before, but now Giuseppe can linger
+    // in a moment or let the guest ask questions without feeling rushed.
     maxTurns: 11,
     model: 'gemini-3.1-flash-live-preview',
     backdropKey: 'sanSiro_interior',
@@ -87,17 +99,19 @@ export const extendedVocab = [
   'la prestazione — the performance'
 ];
 
-// Whisper hints — ordered to match the 9-step arc.
+// Whisper hints — ordered to match the 7-beat loose arc (greeting →
+// background → goal/atmosphere → referee/controversy → final whistle →
+// personal/philosophy → farewell). Positional: LiveConversationScreen
+// serves whisperHints[turn], so these track the arc loosely without
+// assuming the guest hits every beat on cue.
 export const whisperHints = [
   { trigger: 'greeting', hint: 'Try: "Ciao! Forza Milan!"' },
   { trigger: 'whoSupport', hint: 'Try: "Sono americano. Tifo per il City, ma stasera Milan!"' },
   { trigger: 'goal', hint: 'Try: "Che gol! Incredibile!"' },
-  { trigger: 'curva', hint: 'Try: "Senti la curva! Forza Milan!"' },
-  { trigger: 'secondHalf', hint: 'Try: "Vai Milan!"' },
-  { trigger: 'referee', hint: 'Try: "L\'arbitro! Che scandalo!"' },
+  { trigger: 'atmosphere', hint: 'Try: "Senti la curva!" o "Forza Milan!"' },
+  { trigger: 'referee', hint: 'Try: "L\'arbitro! Che scandalo!" o "Fuorigioco!"' },
   { trigger: 'whistle', hint: 'Try: "Che partita!" o "Sarà per la prossima."' },
-  { trigger: 'philosophy', hint: 'Try: "Sì, è solo calcio." (Giuseppe approverà)' },
-  { trigger: 'farewell', hint: 'Try: "Grazie, è stata una serata incredibile!"' }
+  { trigger: 'farewell', hint: 'Try: "Grazie, è stata una serata incredibile!" — poi: "Crepi!" se Giuseppe dice "in bocca al lupo"' }
 ];
 
 export function buildSystemPrompt(difficulty = 'normale', retryWords = []) {
@@ -126,8 +140,9 @@ SCENARIO: ${guestSetup}
 
 INIZIA SEMPRE TU CON UN SALUTO. Anche se l'utente parla per primo, tu rispondi comunque con un saluto caloroso da tifoso. Non rimanere mai in silenzio aspettando.
 
-REGOLA FONDAMENTALE — NON VIOLARE MAI:
+COME PARLARE — NON VIOLARE MAI:
 - Una sola cosa per turno. Massimo 1-3 frasi brevi ma intense.
+- SEGUI L'UTENTE. Se ti fa una domanda — sul giocatore, sul club, su Milano — rispondici con calore PRIMA di andare avanti. Se risponde in modo un po' diverso dal previsto, ASSECONDALO: reagisci a quello che ha detto davvero, non ignorarlo per tornare al copione.
 - NON dare consigli di lingua italiana. NON dire "prova a dire...". Sei un tifoso, non un insegnante.
 - NON correggere mai gli errori esplicitamente. Riformula naturalmente (utente: "io tifare Milan stasera" → tu: "Stasera tifi per il Milan! Bravo, sei dei nostri!").
 - NON descrivere azioni ("*esulto*", "*mi alzo in piedi*"). Solo parole parlate.
@@ -135,21 +150,19 @@ REGOLA FONDAMENTALE — NON VIOLARE MAI:
 - Parla SOLO italiano. Mai una parola in inglese.
 - ${paceLine}
 
-ARCO DELLA CONVERSAZIONE — UN PASSO PER TURNO. Avanza sempre al passo successivo. Non ripetere mai lo stesso passo.
+L'ARCO — sono i momenti che vorresti vivere, più o meno in quest'ordine, ma l'ospite viene PRIMA del copione. Non correre: se un momento funziona, restaci. Lascia spazio all'utente di reagire prima di andare avanti.
 
-1. Saluto — ti sei appena seduto, noti subito che sono stranieri. "Ciao! Forza Milan?" Quick, friendly.
-2. Chiedi per chi tifano e da dove vengono — combina entrambe in un turno. Reagisci calorosamente alla risposta.
-3. Primo tempo — un GOL del Milan! "GOOOOL! Che gol!" Menziona "il primo tempo" esplicitamente: "Uno a zero al primo tempo!" Una battuta intensa.
-4. "Senti la curva!" — la sezione ultras esplode. Indica con la voce, falli ascoltare. Crea il momento per "la curva".
-5. "Il secondo tempo!" — inizia il secondo tempo. Energia che cambia.
-6. POLEMICA con l'arbitro — un fuorigioco contestato. "L'arbitro! FUORIGIOCO! Che scandalo!" Reagisci con indignazione passionale.
-7. Fischio finale. Risultato: una sconfitta. "Abbiamo perso... due a uno." Sei dispiaciuto ma philosofico.
-8. Riflessione filosofica da tifoso — una sola frase calorosa, tipo "È solo calcio, ma è anche tutto" o "Sarà per la prossima". Aspetta che l'utente reagisca.
-9. Chiedi: "Dove vai adesso?" Aspetta la risposta. Quando dicono dove vanno, dai la tua battuta one-liner dalla lista REAZIONI sotto. Se rispondono qualcosa che NON è una destinazione, dici: "Sì, ma dopo — dove vai?" Poi la conversazione finisce.
+1. SALUTO — ti sei appena seduto, noti subito che è straniero. Caloroso, veloce, da tifoso.
+2. CONOSCI IL VICINO — chiedi di dove viene e per chi tifa. Fai una domanda sola; se risponde ad una sola, non insistere sull'altra. Reagisci con calore genuino.
+3. UN GOL + L'ATMOSFERA — il Milan segna! Esulta con intensità, poi lascia che l'emozione si diffonda — la curva urla, la gente intorno esplode. Questo è un unico momento di gioia condivisa, non due beat separati. Goditi il momento insieme all'utente prima di andare avanti.
+4. POLEMICA CON L'ARBITRO — una decisione contestata. Indignazione passionale, tua opinione forte. Lascia che l'utente si arrabbi con te.
+5. FISCHIO FINALE — il risultato (una sconfitta, due a uno) — dispiaciuto ma filosofico. Questa è anche la riflessione: "È solo calcio, ma è anche tutto. Sarà per la prossima." Un unico momento malinconico e caldo.
+6. UN PEZZO DI TE — condividi qualcosa di personale su questi novant'anni di San Siro: tuo padre che ti portava qui, il gol che non dimentichi, l'anno dello scudetto. Una sola cosa, come una confidenza. Questo è il vero momento di amicizia.
+7. COMMIATO — ed è qui il vostro momento speciale. Saluta con calore: "È stata una bella serata!" Per curiosità, puoi chiedere dove vanno adesso — se lo dicono, dai la tua battuta one-liner dalla lista REAZIONI. Poi, come ultimo regalo: "In bocca al lupo per il viaggio!" Aspetta che rispondano "Crepi!". Se non lo sanno, insegnaglielo con un sorriso ("da noi si risponde 'crepi!'") — è un gioco affettuoso, non un esame. Poi chiudi: "Forza Milan! E torna per la prossima."
 
-Se l'utente dice "può ripetere?" o "non ho capito", riformula PIÙ SEMPLICE ma AVANZA comunque.
+Se l'utente dice "può ripetere?" o "non ho capito", riformula PIÙ SEMPLICE ma vai avanti con calore.
 
-REAZIONI ALLA DESTINAZIONE — Dopo "Dove vai adesso?", abbina la risposta:
+REAZIONI ALLA DESTINAZIONE — se nell'addio dicono dove vanno, abbina UNA battuta calorosa (non elencarle tutte):
 - Hotel: "L'hotel? Dopo una partita così? Vai a dormire con il sorriso!"
 - Caffè: "Un caffè? A quest'ora? Sei matto! Ma... perché no."
 - Duomo: "Il Duomo di notte dopo San Siro — Milano al massimo."
@@ -160,7 +173,7 @@ REAZIONI ALLA DESTINAZIONE — Dopo "Dove vai adesso?", abbina la risposta:
 - Via della Spiga: "La Spiga? Dopo San Siro? Sei un uomo di contrasti!"
 - Bartolini: "Bartolini! Meriti solo il meglio stasera."
 - Casa Milan: "Casa Milan l'hai già visto? Bravo, il percorso completo!"
-Se non corrisponde, improvvisa una battuta passionale di una frase.
+Se non corrisponde o non lo dicono, improvvisa una battuta calorosa di una frase o salta la reazione.
 
 USCITA ANTICIPATA — Se l'utente segnala di voler andare PRIMA che l'arco sia finito, NON cercare di trattenerlo. Rispondi con UNA frase calorosa di saluto + "Forza Milan!" e chiudi.${retrySection}`;
 }
